@@ -2,7 +2,6 @@ package com.hatfat.dota.model;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.SteamUserFetcher;
 import retrofit.Callback;
@@ -44,6 +43,10 @@ public class SteamUsers {
         return users.values();
     }
 
+    public SteamUser getBySteamId(String steamId) {
+        return users.get(steamId);
+    }
+
     private void fetch() {
         LinkedList<String> ids = new LinkedList<>();
         ids.add("76561198020436232"); //scottrick
@@ -67,8 +70,6 @@ public class SteamUsers {
 
     private void addSteamUsers(List<SteamUser> newUsers) {
         boolean addedNewUser = false;
-
-        Log.e("catfat", "addSteamUsers: " + newUsers.size() + " users");
 
         for (SteamUser user : newUsers) {
             SteamUser existingUser = users.get(user.steamId);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/steam_user_view_image_view"
+        android:layout_alignParentLeft="true"
+        android:layout_width="@dimen/steam_user_view_image_size"
+        android:layout_height="@dimen/steam_user_view_image_size"/>
+
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:textSize="20dp"
+        android:id="@+id/steam_user_view_text_view"
+        android:layout_toRightOf="@id/steam_user_view_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/steam_user_view_image_size"/>
+
+</RelativeLayout>

@@ -7,18 +7,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.SteamUser;
 import com.hatfat.dota.model.SteamUsers;
+import com.hatfat.dota.view.SteamUserView;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -44,7 +42,6 @@ public class DotaPlayerListFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 updateUserList();
-                Log.e("catfat", "gotnew users");
             }
         };
 
@@ -89,12 +86,12 @@ public class DotaPlayerListFragment extends Fragment {
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                return sortedUsers.size();
+                return sortedUsers.size() * 5;
             }
 
             @Override
             public Object getItem(int i) {
-                return sortedUsers.get(i);
+                return sortedUsers.get(i % 5);
             }
 
             @Override
@@ -106,15 +103,15 @@ public class DotaPlayerListFragment extends Fragment {
             public View getView(int i, View view, ViewGroup viewGroup) {
                 SteamUser user = (SteamUser) getItem(i);
 
-                TextView textView = new TextView(viewGroup.getContext());
-                textView.setPadding(8, 8, 8, 8);
-                textView.setBackgroundColor(0xffffffff);
-                textView.setTextColor(0xff000000);
-                textView.setTextSize(20.0f);
-                textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setText(user.getPersonaName());
+                SteamUserView userView = (SteamUserView) view;
 
-                return textView;
+                if (userView == null) {
+                    userView = new SteamUserView(viewGroup.getContext());
+                }
+
+                userView.setSteamUser(user);
+
+                return userView;
             }
         });
 

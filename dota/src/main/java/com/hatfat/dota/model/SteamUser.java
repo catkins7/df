@@ -34,9 +34,11 @@ public class SteamUser {
     String locStateCode;
     String locCityId;
 
+    public String getSteamId() { return steamId; }
     public String getPersonaName() {
         return personaName;
     }
+    public String getAvatarFullUrl() { return avatarFullUrl; }
 
     public String toString() {
         return "\nSteamUser[" + super.toString() + "]:"
