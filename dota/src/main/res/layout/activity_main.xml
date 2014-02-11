@@ -10,14 +10,13 @@
 
         <FrameLayout
             android:padding="100dp"
-            android:background="#ff00ffff"
+            android:background="#ff00dddd"
             android:id="@+id/fragment_container"
             android:layout_height="match_parent"
             android:layout_width="match_parent">
         </FrameLayout>
 
         <FrameLayout
-            android:background="#ffff00ff"
             android:id="@+id/left_drawer_container"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -25,7 +24,6 @@
         </FrameLayout>
 
         <FrameLayout
-            android:background="#ffffff00"
             android:id="@+id/right_drawer_container"
             android:layout_height="match_parent"
             android:layout_width="match_parent"

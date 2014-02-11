@@ -81,7 +81,9 @@ public class DotaPlayerListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        listView = (ListView) inflater.inflate(R.layout.dota_player_list_fragment, null);
+        View view = inflater.inflate(R.layout.dota_player_list_fragment, null);
+
+        listView = (ListView) view.findViewById(R.id.dota_player_list_fragment_list_view);
 
         listView.setAdapter(new BaseAdapter() {
             @Override
@@ -115,6 +117,6 @@ public class DotaPlayerListFragment extends Fragment {
             }
         });
 
-        return listView;
+        return view;
     }
 }
