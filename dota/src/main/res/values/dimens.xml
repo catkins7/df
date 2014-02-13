@@ -5,4 +5,9 @@
 
     <dimen name="steam_user_view_image_size">48dp</dimen>
 
+    <dimen name="charlton_fragment_height_full">96dp</dimen>
+    <dimen name="charlton_fragment_height_short">48dp</dimen>
+
+    <dimen name="background_border_width">1dp</dimen>
+
 </resources>

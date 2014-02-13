@@ -1,6 +1,5 @@
 package com.hatfat.dota.fragments;
 
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by scottrick on 2/10/14.
  */
-public class DotaPlayerListFragment extends Fragment {
+public class DotaPlayerListFragment extends CharltonFragment {
 
     ListView listView;
 
@@ -81,19 +82,27 @@ public class DotaPlayerListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dota_player_list_fragment, null);
+        View view = inflater.inflate(R.layout.fragment_dota_player_list, null);
+
+        Button addNewPlayerButton = (Button) view.findViewById(R.id.dota_player_list_fragment_add_player);
+        addNewPlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCharltonActivity().pushCharltonFragment(new AddNewPlayerFragment());
+            }
+        });
 
         listView = (ListView) view.findViewById(R.id.dota_player_list_fragment_list_view);
 
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                return sortedUsers.size() * 5;
+                return sortedUsers.size();
             }
 
             @Override
             public Object getItem(int i) {
-                return sortedUsers.get(i % 5);
+                return sortedUsers.get(i);
             }
 
             @Override
@@ -117,6 +126,19 @@ public class DotaPlayerListFragment extends Fragment {
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SteamUser steamUser = (SteamUser) listView.getAdapter().getItem(i);
+                getCharltonActivity().pushCharltonFragment(new DotaPlayerSummaryFragment(steamUser));
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public String getCharltonText() {
+        return "Hello.  I'm Charlton Heston.";
     }
 }

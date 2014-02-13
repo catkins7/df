@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/off_black_button_background"
                 android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -15,6 +16,7 @@
         android:layout_marginLeft="8dp"
         android:gravity="center_vertical"
         android:textSize="20dp"
+        android:textColor="@color/off_white"
         android:id="@+id/steam_user_view_text_view"
         android:layout_toRightOf="@id/steam_user_view_image_view"
         android:layout_width="match_parent"

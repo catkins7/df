@@ -11,6 +11,8 @@ import java.util.Comparator;
  */
 public class SteamUser {
 
+    private static final long ACCOUNT_ID_MAGIC_NUMBER = 76561197960265728L;
+
     public static final String STEAM_USER_UPDATED = "SteamUserUpdated_Notification";
     public static final String STEAM_USER_UPDATED_ID_KEY = "SteamUserUpdated_UserId_Key";
 
@@ -39,6 +41,13 @@ public class SteamUser {
         return personaName;
     }
     public String getAvatarFullUrl() { return avatarFullUrl; }
+
+    public String getDotaAccountId() {
+        long steamIdLong = Long.valueOf(steamId).longValue();
+        long dotaAccountIdLong = steamIdLong - ACCOUNT_ID_MAGIC_NUMBER;
+
+        return "" + dotaAccountIdLong;
+    }
 
     public String toString() {
         return "\nSteamUser[" + super.toString() + "]:"

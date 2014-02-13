@@ -25,8 +25,8 @@ public class SteamUserFetcher
             }
         }
 
-        SteamUserService steamUserService = DotaRestAdapter.createRestAdapter().create(SteamUserService.class);
-        steamUserService.getPlayerSummaries(ids, new Callback<PlayerSummaries>() {
+        CharltonService charltonService = DotaRestAdapter.createRestAdapter().create(CharltonService.class);
+        charltonService.getPlayerSummaries(ids, new Callback<PlayerSummaries>() {
             @Override
             public void success(PlayerSummaries playerSummaries, Response response) {
                 steamUserCallback.success(playerSummaries.getUsers(), response);
@@ -40,8 +40,8 @@ public class SteamUserFetcher
     }
 
     public static void getSteamUser(String steamId, final Callback<SteamUser> steamUserCallback) {
-        SteamUserService steamUserService = DotaRestAdapter.createRestAdapter().create(SteamUserService.class);
-        steamUserService.getPlayerSummaries(steamId, new Callback<PlayerSummaries>() {
+        CharltonService charltonService = DotaRestAdapter.createRestAdapter().create(CharltonService.class);
+        charltonService.getPlayerSummaries(steamId, new Callback<PlayerSummaries>() {
             @Override
             public void success(PlayerSummaries playerSummaries, Response response) {
                 if (playerSummaries.getUsers().size() > 0) {

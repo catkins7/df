@@ -12,6 +12,7 @@ public class DotaGson {
     public static Gson createGson() {
         if (gson == null) {
             gson = new GsonBuilder()
+                    .registerTypeAdapter(MatchHistory.class, new MatchHistoryAdapter())
                     .registerTypeAdapter(PlayerSummaries.class, new PlayerSummariesAdapter())
                     .registerTypeAdapter(SteamUser.class, new SteamUserAdapter())
                     .create();

@@ -21,7 +21,7 @@ public class SteamUserView extends RelativeLayout {
     public SteamUserView(Context context) {
         super(context);
 
-        LayoutInflater.from(context).inflate(R.layout.steam_user_view, this, true);
+        LayoutInflater.from(context).inflate(R.layout.view_steam_user, this, true);
     }
 
     public void setSteamUser(SteamUser user) {
