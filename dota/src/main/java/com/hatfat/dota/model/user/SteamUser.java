@@ -200,13 +200,13 @@ public class SteamUser {
         long steamIdLong = Long.valueOf(steamId).longValue();
         long accountIdLong = steamIdLong - ACCOUNT_ID_MAGIC_NUMBER;
 
-        return "" + accountIdLong;
+        return String.valueOf(accountIdLong);
     }
 
     public static String getSteamIdFromAccountId(String accountId) {
         long accountIdLong = Long.valueOf(accountId).longValue();
         long steamId = accountIdLong + ACCOUNT_ID_MAGIC_NUMBER;
 
-        return "" + steamId;
+        return String.valueOf(steamId);
     }
 }

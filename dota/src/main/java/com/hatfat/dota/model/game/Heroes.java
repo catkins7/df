@@ -27,7 +27,7 @@ public class Heroes {
         return singleton;
     }
 
-    private HashMap<String, Hero> heroes;
+    private HashMap<String, Hero> heroes; //string heroId --> hero object
 
     private Heroes() {
         heroes = new HashMap<>();
@@ -40,11 +40,11 @@ public class Heroes {
     private void setHeroData(HashMap<String, Hero> heroData) {
         heroes = heroData;
 
-        for (String key : heroes.keySet()) {
-            Hero hero = heroes.get(key);
-        }
-
         broadcastUsersChanged();
+    }
+
+    public Hero getHero(String heroIdString) {
+        return heroes.get(heroIdString);
     }
 
     private void broadcastUsersChanged() {

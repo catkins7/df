@@ -46,7 +46,7 @@ public class HeroDataAdapter extends TypeAdapter<HeroData>  {
 
                     while (jsonReader.peek() != JsonToken.END_ARRAY) {
                         Hero hero = heroAdapter.read(jsonReader);
-                        heroes.put(hero.name, hero);
+                        heroes.put(String.valueOf(hero.heroId), hero);
                     }
 
                     jsonReader.endArray();

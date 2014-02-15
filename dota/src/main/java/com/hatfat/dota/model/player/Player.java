@@ -14,4 +14,12 @@ public class Player {
     public SteamUser getSteamUser() {
         return SteamUsers.get().getByAccountId("" + accountId);
     }
+
+    public int getHeroId() {
+        return heroId;
+    }
+
+    public String getHeroIdString() {
+        return String.valueOf(heroId);
+    }
 }

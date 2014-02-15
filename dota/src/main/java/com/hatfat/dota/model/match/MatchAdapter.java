@@ -67,6 +67,8 @@ public class MatchAdapter extends TypeAdapter<Match> {
 
         jsonReader.endObject();
 
+        match.players = players;
+
         return match;
     }
 }

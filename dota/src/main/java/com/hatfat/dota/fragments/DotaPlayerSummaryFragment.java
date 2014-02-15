@@ -20,6 +20,7 @@ import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.services.MatchHistoryFetcher;
+import com.hatfat.dota.view.MatchSimpleSummaryView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -134,10 +135,15 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             public View getView(int i, View view, ViewGroup viewGroup) {
                 Match match = (Match) getItem(i);
 
-                TextView textView = new TextView(DotaFriendApplication.CONTEXT);
-                textView.setText(match.getMatchId());
+                MatchSimpleSummaryView matchView = (MatchSimpleSummaryView) view;
 
-                return textView;
+                if (matchView == null) {
+                    matchView = new MatchSimpleSummaryView(viewGroup.getContext());
+                }
+
+                matchView.setMatch(match);
+
+                return matchView;
             }
         };
 
