@@ -41,9 +41,9 @@ public class PlayerSummariesAdapter extends TypeAdapter<PlayerSummaries> {
                             break;
                         case "players":
                             jsonReader.beginArray();
+                            SteamUserAdapter userAdapter = new SteamUserAdapter();
 
                             while (jsonReader.peek() != JsonToken.END_ARRAY) {
-                                SteamUserAdapter userAdapter = new SteamUserAdapter();
                                 SteamUser user = userAdapter.read(jsonReader);
                                 users.add(user);
                             }

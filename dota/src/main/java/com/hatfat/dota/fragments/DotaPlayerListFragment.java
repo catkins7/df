@@ -46,7 +46,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
             }
         };
 
-        IntentFilter newUsersFilter = new IntentFilter(SteamUsers.STEAM_USERS_NEW_USERS_UPDATED);
+        IntentFilter newUsersFilter = new IntentFilter(SteamUsers.STEAM_USERS_USER_LIST_CHANGED);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, newUsersFilter);
     }
 

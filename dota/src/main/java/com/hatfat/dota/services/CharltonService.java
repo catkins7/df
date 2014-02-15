@@ -1,6 +1,6 @@
 package com.hatfat.dota.services;
 
-import com.hatfat.dota.model.MatchHistory;
+import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.PlayerSummaries;
 import retrofit.Callback;
 import retrofit.http.GET;

@@ -15,6 +15,7 @@ import com.hatfat.dota.fragments.CharltonFragment;
 import com.hatfat.dota.fragments.CharltonMessageFragment;
 import com.hatfat.dota.fragments.DotaPlayerListFragment;
 import com.hatfat.dota.model.SteamUsers;
+import com.hatfat.dota.model.match.Matches;
 
 /**
  * Created by scottrick on 2/12/14.
@@ -45,6 +46,7 @@ public class CharltonActivity extends Activity {
         setRootCharltonFragment(playerListFragment);
 
         SteamUsers.get().init(); //initialize the SteamUsers singleton
+        Matches.get().init();
     }
 
     @Override

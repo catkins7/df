@@ -3,8 +3,11 @@ package com.hatfat.dota.model;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import com.hatfat.dota.DotaFriendApplication;
+import com.hatfat.dota.model.match.Match;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by scottrick on 2/10/14.
@@ -36,17 +39,86 @@ public class SteamUser {
     String locStateCode;
     String locCityId;
 
+    TreeSet<String> matches;
+
+    public enum SteamPlayerState
+    { //  0 - Offline, 1 - Online, 2 - Busy, 3 - Away, 4 - Snooze, 5 - looking to trade, 6 - looking to play
+        SteamPlayerState_Offline("Offline"),
+        SteamPlayerState_Online("Online"),
+        SteamPlayerState_Busy("Online (Busy)"),
+        SteamPlayerState_Away("Online (Away)"),
+        SteamPlayerState_Snooze("Online (Snooze)"),
+        SteamPlayerState_LookingToTrade("Online (Looking to Trade)"),
+        SteamPlayerState_LookingToPlay("Online (Looking to Play)"),
+        SteamPlayerState_Unknown("Unknown");
+
+        private String stateName;
+
+        SteamPlayerState(String typeName) {
+            this.stateName = typeName;
+        }
+
+        public static SteamPlayerState fromInt(int state) {
+            switch (state) {
+                case 0:
+                    return SteamPlayerState_Offline;
+                case 1:
+                    return SteamPlayerState_Online;
+                case 2:
+                    return SteamPlayerState_Busy;
+                case 3:
+                    return SteamPlayerState_Away;
+                case 4:
+                    return SteamPlayerState_Snooze;
+                case 5:
+                    return SteamPlayerState_LookingToTrade;
+                case 6:
+                    return SteamPlayerState_LookingToPlay;
+                default:
+                    return SteamPlayerState_Unknown;
+            }
+        }
+
+        public String getStateName() {
+            return stateName;
+        }
+    }
+
+    public SteamUser() {
+        matches = new TreeSet<>();
+    }
+
     public String getSteamId() { return steamId; }
     public String getPersonaName() {
         return personaName;
     }
     public String getAvatarFullUrl() { return avatarFullUrl; }
+    public SteamPlayerState getPlayerState() {
+        return SteamPlayerState.fromInt(personaState);
+    }
+    public String getCurrentStateDescriptionString() {
+        SteamPlayerState state = getPlayerState();
 
-    public String getDotaAccountId() {
-        long steamIdLong = Long.valueOf(steamId).longValue();
-        long dotaAccountIdLong = steamIdLong - ACCOUNT_ID_MAGIC_NUMBER;
+        if (state.equals(SteamPlayerState.SteamPlayerState_Offline)) {
+            return state.getStateName();
+        }
+        else {
+            return state.getStateName();
+        }
+    }
+    public String getAccountId() {
+        return SteamUser.getAccountIdFromSteamId(steamId);
+    }
+    public TreeSet<String> getMatches() {
+        return matches;
+    }
 
-        return "" + dotaAccountIdLong;
+    public void addMatches(List<Match> matches) {
+        for (Match match : matches) {
+            this.matches.add(match.getMatchId());
+        }
+
+        broadcastUserChanged();
     }
 
     public String toString() {
@@ -122,5 +194,19 @@ public class SteamUser {
         }
 
         return comparator;
+    }
+
+    public static String getAccountIdFromSteamId(String steamId) {
+        long steamIdLong = Long.valueOf(steamId).longValue();
+        long accountIdLong = steamIdLong - ACCOUNT_ID_MAGIC_NUMBER;
+
+        return "" + accountIdLong;
+    }
+
+    public static String getSteamIdFromAccountId(String accountId) {
+        long accountIdLong = Long.valueOf(accountId).longValue();
+        long steamId = accountIdLong + ACCOUNT_ID_MAGIC_NUMBER;
+
+        return "" + steamId;
     }
 }

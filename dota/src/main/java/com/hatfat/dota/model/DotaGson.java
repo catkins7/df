@@ -2,6 +2,8 @@ package com.hatfat.dota.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hatfat.dota.model.match.MatchHistory;
+import com.hatfat.dota.model.match.MatchHistoryAdapter;
 
 /**
  * Created by scottrick on 2/10/14.
