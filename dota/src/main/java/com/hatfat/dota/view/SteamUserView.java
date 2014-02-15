@@ -7,8 +7,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
-import com.hatfat.dota.model.SteamUser;
-import com.hatfat.dota.model.SteamUsers;
+import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUsers;
 import com.squareup.picasso.Picasso;
 
 /**

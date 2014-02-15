@@ -1,4 +1,4 @@
-package com.hatfat.dota.model;
+package com.hatfat.dota.model.user;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

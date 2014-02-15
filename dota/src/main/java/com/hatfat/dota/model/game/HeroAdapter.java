@@ -1,6 +1,5 @@
-package com.hatfat.dota.model;
+package com.hatfat.dota.model.game;
 
-import android.util.Log;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -9,18 +8,17 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 
 /**
- * Created by scottrick on 2/13/14.
+ * Created by scottrick on 2/15/14.
  */
-public class PlayerAdapter extends TypeAdapter<Player> {
-
+public class HeroAdapter extends TypeAdapter<Hero> {
     @Override
-    public void write(JsonWriter jsonWriter, Player player) throws IOException {
+    public void write(JsonWriter jsonWriter, Hero hero) throws IOException {
 
     }
 
     @Override
-    public Player read(JsonReader jsonReader) throws IOException {
-        Player player = new Player();
+    public Hero read(JsonReader jsonReader) throws IOException {
+        Hero hero = new Hero();
 
         jsonReader.beginObject();
 
@@ -33,17 +31,16 @@ public class PlayerAdapter extends TypeAdapter<Player> {
             }
 
             switch (name) {
-                case "account_id":
-                    player.accountId = jsonReader.nextLong();
+                case "name":
+                    hero.name = jsonReader.nextString();
                     break;
-                case "player_slot":
-                    player.playerSlot = jsonReader.nextInt();
+                case "localized_name":
+                    hero.localizedName = jsonReader.nextString();
                     break;
-                case "hero_id":
-                    player.heroId = jsonReader.nextInt();
+                case "id":
+                    hero.heroId = jsonReader.nextInt();
                     break;
                 default:
-                    Log.e("catfat", "skipping: " + name);
                     jsonReader.skipValue();
                     break;
             }
@@ -51,6 +48,6 @@ public class PlayerAdapter extends TypeAdapter<Player> {
 
         jsonReader.endObject();
 
-        return player;
+        return hero;
     }
 }

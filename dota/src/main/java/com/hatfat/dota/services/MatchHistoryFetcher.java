@@ -1,6 +1,6 @@
 package com.hatfat.dota.services;
 
-import com.hatfat.dota.model.SteamUser;
+import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.Matches;
 import retrofit.Callback;

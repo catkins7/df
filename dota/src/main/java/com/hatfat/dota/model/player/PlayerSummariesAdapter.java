@@ -1,9 +1,11 @@
-package com.hatfat.dota.model;
+package com.hatfat.dota.model.player;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUserAdapter;
 
 import java.io.IOException;
 import java.util.LinkedList;

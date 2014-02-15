@@ -4,8 +4,8 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.hatfat.dota.model.Player;
-import com.hatfat.dota.model.PlayerAdapter;
+import com.hatfat.dota.model.player.Player;
+import com.hatfat.dota.model.player.PlayerAdapter;
 
 import java.io.IOException;
 import java.util.LinkedList;

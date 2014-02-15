@@ -1,4 +1,6 @@
-package com.hatfat.dota.model;
+package com.hatfat.dota.model.player;
+
+import com.hatfat.dota.model.user.SteamUser;
 
 import java.util.List;
 

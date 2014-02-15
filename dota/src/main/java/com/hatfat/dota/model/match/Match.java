@@ -1,6 +1,6 @@
 package com.hatfat.dota.model.match;
 
-import com.hatfat.dota.model.Player;
+import com.hatfat.dota.model.player.Player;
 
 import java.util.Comparator;
 import java.util.List;

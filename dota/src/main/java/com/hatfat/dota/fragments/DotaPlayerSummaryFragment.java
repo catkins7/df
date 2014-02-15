@@ -15,9 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
-import com.hatfat.dota.model.SteamUser;
+import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
+import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.services.MatchHistoryFetcher;
 import com.squareup.picasso.Picasso;
 
@@ -86,16 +87,26 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
-                if (updatedId.equals(user.getSteamId())) {
-                    updateMatchList();
-                    updateViews();
+                if (intent.getAction().equals(SteamUser.STEAM_USER_UPDATED)) {
+                    String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
+                    if (updatedId.equals(user.getSteamId())) {
+                        updateMatchList();
+                        updateViews();
+                    }
+                }
+                else if (intent.getAction().equals(Heroes.HERO_DATA_UPDATED_NOTIFICATION)) {
+                    //reload the match rows with the updated icons
+                    if (matchesListView != null && matchesAdapter != null) {
+                        matchesAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         };
 
-        IntentFilter newUsersFilter = new IntentFilter(SteamUser.STEAM_USER_UPDATED);
-        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, newUsersFilter);
+        IntentFilter summaryFilter = new IntentFilter();
+        summaryFilter.addAction(SteamUser.STEAM_USER_UPDATED);
+        summaryFilter.addAction(Heroes.HERO_DATA_UPDATED_NOTIFICATION);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, summaryFilter);
     }
 
     private void stopListening() {

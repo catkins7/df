@@ -1,4 +1,7 @@
-package com.hatfat.dota.model;
+package com.hatfat.dota.model.player;
+
+import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUsers;
 
 /**
  * Created by scottrick on 2/13/14.

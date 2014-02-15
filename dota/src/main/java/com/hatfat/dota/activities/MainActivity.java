@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.DotaPlayerListFragment;
 import com.hatfat.dota.fragments.WelcomeFragment;
-import com.hatfat.dota.model.SteamUsers;
+import com.hatfat.dota.model.user.SteamUsers;
 
 public class MainActivity extends Activity {
 

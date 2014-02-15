@@ -1,7 +1,7 @@
 package com.hatfat.dota.services;
 
-import com.hatfat.dota.model.PlayerSummaries;
-import com.hatfat.dota.model.SteamUser;
+import com.hatfat.dota.model.player.PlayerSummaries;
+import com.hatfat.dota.model.user.SteamUser;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

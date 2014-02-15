@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
-import com.hatfat.dota.model.SteamUser;
-import com.hatfat.dota.model.SteamUsers;
+import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.view.SteamUserView;
 
 import java.util.Collections;
