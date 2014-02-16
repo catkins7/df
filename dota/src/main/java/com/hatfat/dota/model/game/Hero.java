@@ -15,6 +15,10 @@ public class Hero {
     String localizedName;
     int heroId;
 
+    public String getLocalizedName() {
+        return localizedName;
+    }
+
     private String getBaseUrlString() {
         return baseHeroIconUrl + name.substring(14);
     }

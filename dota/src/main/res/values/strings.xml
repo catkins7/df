@@ -11,4 +11,6 @@
 
     <string name="add_player">Add a new player...</string>
 
+    <string name="no_hero">No Hero</string>
+
 </resources>

@@ -9,52 +9,52 @@
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_0"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_1"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_2"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_3"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_4"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_5"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_6"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_7"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_8"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_9"
-        android:layout_width="@dimen/match_simply_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simply_summary_hero_image_view_height"/>
+        android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
 
 </LinearLayout>

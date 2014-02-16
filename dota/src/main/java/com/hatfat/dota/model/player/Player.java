@@ -18,6 +18,9 @@ public class Player {
     public int getHeroId() {
         return heroId;
     }
+    public long getAccountId() {
+        return accountId;
+    }
 
     public String getHeroIdString() {
         return String.valueOf(heroId);

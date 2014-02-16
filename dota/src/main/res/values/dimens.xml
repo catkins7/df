@@ -12,8 +12,11 @@
 
     <dimen name="dota_player_summary_fragment_image_view_size">112dp</dimen>
 
-    <dimen name="match_simply_summary_hero_image_view_width">35dp</dimen>
-    <dimen name="match_simply_summary_hero_image_view_height">20dp</dimen>
+    <dimen name="match_simple_summary_hero_image_view_width">35dp</dimen>
+    <dimen name="match_simple_summary_hero_image_view_height">20dp</dimen>
+
+    <dimen name="match_for_player_basic_image_view_width">59dp</dimen>
+    <dimen name="match_for_player_basic_image_view_height">33dp</dimen>
 
     <dimen name="background_border_width">1dp</dimen>
 

@@ -109,6 +109,12 @@ public class SteamUser {
     public String getAccountId() {
         return SteamUser.getAccountIdFromSteamId(steamId);
     }
+    public long getAccountIdLong() {
+        return Long.valueOf(getAccountId()).longValue();
+    }
+    public long getSteamIdLong() {
+        return Long.valueOf(steamId).longValue();
+    }
     public TreeSet<String> getMatches() {
         return matches;
     }

@@ -1,6 +1,7 @@
 package com.hatfat.dota.model.match;
 
 import com.hatfat.dota.model.player.Player;
+import com.hatfat.dota.model.user.SteamUser;
 
 import java.util.Comparator;
 import java.util.List;
@@ -26,6 +27,16 @@ public class Match {
 
     public String toString() {
         return super.toString() + "[matchId: " + matchId + "]";
+    }
+
+    public Player getPlayerForSteamUser(SteamUser user) {
+        for (Player player : players) {
+            if (player.getAccountId() == user.getAccountIdLong()) {
+                return player;
+            }
+        }
+
+        return null;
     }
 
     private static Comparator<Match> comparator;
