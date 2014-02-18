@@ -59,6 +59,7 @@ public class SteamUsers {
         ids.add("76561198053768056"); //kyle
         ids.add("76561197980883683"); //fatty
         ids.add("76561198000718505"); //bluth
+        ids.add("76561198000376719"); //paul
 
         SteamUserFetcher.getSteamUsers(ids, new Callback<List<SteamUser>>() {
             @Override

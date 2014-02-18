@@ -9,10 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Heroes;
@@ -148,6 +145,14 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         };
 
         matchesListView.setAdapter(matchesAdapter);
+
+        matchesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Match match = (Match) matchesAdapter.getItem(i);
+                getCharltonActivity().pushCharltonFragment(new MatchSummaryFragment(match));
+            }
+        });
     }
 
     private void updateMatchList() {
