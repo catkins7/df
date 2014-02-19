@@ -1,5 +1,6 @@
 package com.hatfat.dota.view;
 
+import android.content.Context;
 import android.widget.LinearLayout;
 
 /**
@@ -7,4 +8,7 @@ import android.widget.LinearLayout;
  */
 public class PlayerMatchRow extends LinearLayout {
 
+    public PlayerMatchRow(Context context) {
+        super(context);
+    }
 }

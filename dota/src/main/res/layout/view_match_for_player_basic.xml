@@ -13,20 +13,46 @@
         android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
 
     <TextView
+        android:id="@+id/view_match_player_basic_victory_text_view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/default_padding"
+        android:gravity="center_vertical|right"
+        android:textSize="16dp"
+        android:textColor="@color/off_white"
+        android:layout_width="80dp"
+        android:layout_height="24dp"/>
+
+    <TextView
+        android:id="@+id/view_match_player_basic_match_id_text_view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/default_padding"
+        android:gravity="center_vertical|right"
+        android:textSize="8dp"
+        android:textColor="@color/off_white"
+        android:layout_width="80dp"
+        android:layout_height="12dp"/>
+
+    <TextView
         android:id="@+id/view_match_player_basic_hero_name_text_view"
         android:layout_toRightOf="@id/view_match_player_basic_image_view"
+        android:layout_toLeftOf="@+id/view_match_player_basic_victory_text_view"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/default_padding"
+        android:gravity="center_vertical|left"
         android:textSize="16dp"
         android:textColor="@color/off_white"
         android:layout_width="match_parent"
         android:layout_height="24dp"/>
 
     <TextView
-        android:id="@+id/view_match_player_basic_match_id_text_view"
+        android:id="@+id/view_match_player_basic_date_text_view"
         android:layout_toRightOf="@id/view_match_player_basic_image_view"
+        android:layout_toLeftOf="@+id/view_match_player_basic_match_id_text_view"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/default_padding"
+        android:gravity="center_vertical|left"
         android:textSize="8dp"
         android:textColor="@color/off_white"
         android:layout_width="match_parent"

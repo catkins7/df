@@ -39,8 +39,10 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         ImageView imageView = (ImageView) findViewById(R.id.view_match_player_basic_image_view);
         TextView heroNameTextView = (TextView) findViewById(R.id.view_match_player_basic_hero_name_text_view);
         TextView matchIdTextView = (TextView) findViewById(R.id.view_match_player_basic_match_id_text_view);
+        TextView timeAgoTextView = (TextView) findViewById(R.id.view_match_player_basic_date_text_view);
 
         matchIdTextView.setText(match.getMatchId());
+        timeAgoTextView.setText(match.getTimeAgoString());
 
         Player player = match.getPlayerForSteamUser(user);
         Hero hero = Heroes.get().getHero(player.getHeroIdString());

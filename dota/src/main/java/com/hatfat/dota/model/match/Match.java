@@ -4,6 +4,7 @@ import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 public class Match {
     String matchId;
     long matchSeqNumber;
-    long startTime;
+    long startTime; //seconds from 1970
     int lobbyType;
 
     List<Player> players;
@@ -20,13 +21,43 @@ public class Match {
     public String getMatchId() {
         return matchId;
     }
-
+    public Date getStartTimeDate() {
+        return new Date(startTime);
+    }
+    public long getStartTime() {
+        return startTime;
+    }
     public List<Player> getPlayers() {
         return players;
     }
 
     public String toString() {
         return super.toString() + "[matchId: " + matchId + "]";
+    }
+
+    public String getTimeAgoString() {
+        long currentTime = new Date().getTime() / 1000; //current time in seconds
+        long timeAgo = currentTime - startTime;
+
+        timeAgo /= 60; //minutes ago
+        timeAgo /= 60; // hours ago
+
+        if (timeAgo >= 24) {
+            timeAgo /= 24; //days ago
+
+            if (timeAgo == 1) {
+                return String.valueOf(timeAgo) + " day ago";
+            }
+            else {
+                return String.valueOf(timeAgo) + " days ago";
+            }
+        }
+        if (timeAgo == 1) {
+            return String.valueOf(timeAgo) + " hour ago";
+        }
+        else {
+            return String.valueOf(timeAgo) + " hours ago";
+        }
     }
 
     public Player getPlayerForSteamUser(SteamUser user) {
