@@ -35,17 +35,42 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         updateViews();
     }
 
+    public Match getMatch() {
+        return match;
+    }
+
+    public SteamUser getUser() {
+        return user;
+    }
+
+    public void notifyMatchUpdated() {
+        updateViews();
+    }
+
     private void updateViews() {
         ImageView imageView = (ImageView) findViewById(R.id.view_match_player_basic_image_view);
         TextView heroNameTextView = (TextView) findViewById(R.id.view_match_player_basic_hero_name_text_view);
         TextView matchIdTextView = (TextView) findViewById(R.id.view_match_player_basic_match_id_text_view);
         TextView timeAgoTextView = (TextView) findViewById(R.id.view_match_player_basic_date_text_view);
+        TextView victoryTextView = (TextView) findViewById(R.id.view_match_player_basic_victory_text_view);
 
-        matchIdTextView.setText(match.getMatchId());
+        matchIdTextView.setText(match.getLobbyTypeString());
         timeAgoTextView.setText(match.getTimeAgoString());
+        victoryTextView.setText(match.getMatchResult().getDescriptionStringResourceId());
+        victoryTextView.setTextColor(getResources().getColor(match.getMatchResult().getColorResourceId()));
 
         Player player = match.getPlayerForSteamUser(user);
         Hero hero = Heroes.get().getHero(player.getHeroIdString());
+
+        if (player.isDirePlayer() && match.getMatchResult() == Match.MatchResult.MATCH_RESULT_DIRE_VICTORY) {
+            victoryTextView.setText("Win");
+        }
+        else if (player.isRadiantPlayer() && match.getMatchResult() == Match.MatchResult.MATCH_RESULT_RADIANT_VICTORY) {
+            victoryTextView.setText("Win");
+        }
+        else {
+            victoryTextView.setText("Loss");
+        }
 
         if (hero != null) {
             Picasso.with(DotaFriendApplication.CONTEXT).load(hero.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(imageView);

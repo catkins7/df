@@ -13,4 +13,8 @@
 
     <string name="no_hero">No Hero</string>
 
+    <string name="match_result_unknown"></string>
+    <string name="match_result_radiant_victory">Radiant Victory</string>
+    <string name="match_result_dire_victory">Dire Victory</string>
+
 </resources>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
-import com.hatfat.dota.services.MatchHistoryFetcher;
+import com.hatfat.dota.services.MatchFetcher;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
 
@@ -64,7 +65,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     public void onResume() {
         super.onResume();
 
-        MatchHistoryFetcher.fetchMatches(user);
+        MatchFetcher.fetchMatches(user);
     }
 
     @Override
@@ -98,12 +99,33 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                         matchesAdapter.notifyDataSetChanged();
                     }
                 }
+                else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
+                    //reload the match row for this match
+                    String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    Log.e("catfat", "got match updated notification");
+
+                    if (matchesListView != null && matchesAdapter != null) {
+                        for (int i = 0; i < matchesListView.getChildCount(); i++) {
+                            View view = matchesListView.getChildAt(i);
+
+                            if (view instanceof MatchViewForPlayerBasic) {
+                                MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
+
+                                if (matchView.getMatch().getMatchId().equals(updatedMatchId)) {
+                                    matchView.notifyMatchUpdated();
+                                    Log.e("catfat", "---> updated a view!");
+                                }
+                            }
+                        }
+                    }
+                }
             }
         };
 
         IntentFilter summaryFilter = new IntentFilter();
         summaryFilter.addAction(SteamUser.STEAM_USER_UPDATED);
         summaryFilter.addAction(Heroes.HERO_DATA_UPDATED_NOTIFICATION);
+        summaryFilter.addAction(Match.MATCH_UPDATED);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, summaryFilter);
     }
 

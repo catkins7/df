@@ -1,5 +1,9 @@
 package com.hatfat.dota.model.match;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
+import com.hatfat.dota.DotaFriendApplication;
+import com.hatfat.dota.R;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 
@@ -11,15 +15,114 @@ import java.util.List;
  * Created by scottrick on 2/12/14.
  */
 public class Match {
+
+    public static final String MATCH_UPDATED = "MatchUpdated";
+    public static final String MATCH_UPDATED_ID_KEY = "MatchUpdated_MatchId_Key";
+
+    public enum MatchResult {
+        MATCH_RESULT_UNKNOWN,
+        MATCH_RESULT_RADIANT_VICTORY,
+        MATCH_RESULT_DIRE_VICTORY;
+
+        public int getDescriptionStringResourceId() {
+            switch (this) {
+                case MATCH_RESULT_RADIANT_VICTORY:
+                    return R.string.match_result_radiant_victory;
+                case MATCH_RESULT_DIRE_VICTORY:
+                    return R.string.match_result_dire_victory;
+                case MATCH_RESULT_UNKNOWN:
+                default:
+                    return R.string.match_result_unknown;
+            }
+        }
+
+        public int getColorResourceId() {
+            switch (this) {
+                case MATCH_RESULT_RADIANT_VICTORY:
+                    return R.color.radiant_green;
+                case MATCH_RESULT_DIRE_VICTORY:
+                    return R.color.dire_red;
+                case MATCH_RESULT_UNKNOWN:
+                default:
+                    return R.color.off_white;
+            }
+        }
+    }
+    public enum LobbyType {
+        PUBLIC_MATCHMAKING("Unranked"),
+        PRACTICE("Practice"),
+        TOURNAMENT("Tournament"),
+        TUTORIAL("Tutorial"),
+        CO_OP_BOTS("Co-op Bots"),
+        TEAM_MATCH("Team Matchmaking"),
+        SOLO_QUEUE("Solo Queue"),
+        RANKED("Ranked"),
+        UNKNOWN("Unknown");
+
+        private String lobbyTypeName;
+
+        LobbyType(String typeName) {
+            this.lobbyTypeName = typeName;
+        }
+
+        public static LobbyType fromInt(int type) {
+            switch (type) {
+                case 0:
+                    return PUBLIC_MATCHMAKING;
+                case 1:
+                    return PRACTICE;
+                case 2:
+                    return TOURNAMENT;
+                case 3:
+                    return TUTORIAL;
+                case 4:
+                    return CO_OP_BOTS;
+                case 5:
+                    return TEAM_MATCH;
+                case 6:
+                    return SOLO_QUEUE;
+                case 7:
+                    return RANKED;
+                default:
+                    return UNKNOWN;
+            }
+        }
+        public String getLobbyTypeName() {
+            return lobbyTypeName;
+        }
+    }
+
+    MatchResult matchResult;
+    int duration;
+    int towerStatusRadiant;
+    int towerStatusDire;
+    int barracksStatusRadiant;
+    int barracksStatusDire;
+    int cluster;
+    int firstBloodTime;
+    int humanPlayers;
+    int leagueId;
+    int positiveVotes;
+    int negativeVotes;
+    int gameMode;
+    boolean hasMatchDetails;
+
     String matchId;
     long matchSeqNumber;
     long startTime; //seconds from 1970
-    int lobbyType;
+    LobbyType lobbyType;
 
     List<Player> players;
 
+    public Match() {
+        matchResult = MatchResult.MATCH_RESULT_UNKNOWN;
+    }
+
     public String getMatchId() {
         return matchId;
+    }
+    public MatchResult getMatchResult() {
+        return matchResult;
     }
     public Date getStartTimeDate() {
         return new Date(startTime);
@@ -29,6 +132,15 @@ public class Match {
     }
     public List<Player> getPlayers() {
         return players;
+    }
+    public LobbyType getLobbyType() {
+        return lobbyType;
+    }
+    public String getLobbyTypeString() {
+        return lobbyType.getLobbyTypeName();
+    }
+    public void setHasMatchDetails(boolean hasMatchDetails) {
+        this.hasMatchDetails = hasMatchDetails;
     }
 
     public String toString() {
@@ -68,6 +180,43 @@ public class Match {
         }
 
         return null;
+    }
+
+    void updateWithMatch(Match match) {
+        if (match.hasMatchDetails) {
+            matchResult = match.matchResult;
+            duration = match.duration;
+            towerStatusRadiant = match.towerStatusRadiant;
+            towerStatusDire = match.towerStatusDire;
+            barracksStatusRadiant = match.barracksStatusRadiant;
+            barracksStatusDire = match.barracksStatusDire;
+            cluster = match.cluster;
+            firstBloodTime = match.firstBloodTime;
+            humanPlayers = match.humanPlayers;
+            leagueId = match.leagueId;
+            positiveVotes = match.positiveVotes;
+            negativeVotes = match.negativeVotes;
+            gameMode = match.gameMode;
+            hasMatchDetails = match.hasMatchDetails;
+            players = match.players;
+        }
+
+        matchId = match.matchId;
+        matchSeqNumber = match.matchSeqNumber;
+        startTime = match.startTime;
+        lobbyType = match.lobbyType;
+
+        if (players == null) {
+            players = match.players;
+        }
+
+        broadcastMatchChanged();
+    }
+
+    private void broadcastMatchChanged() {
+        Intent intent = new Intent(MATCH_UPDATED);
+        intent.putExtra(MATCH_UPDATED_ID_KEY, matchId);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }
 
     private static Comparator<Match> comparator;

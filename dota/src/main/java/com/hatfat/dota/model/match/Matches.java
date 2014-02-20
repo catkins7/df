@@ -33,12 +33,22 @@ public class Matches {
     }
 
     public void addMatch(Match match) {
-        matches.put(match.matchId, match);
+        if (matches.containsKey(match.matchId)) {
+            matches.get(match.matchId).updateWithMatch(match);
+        }
+        else {
+            matches.put(match.matchId, match);
+        }
     }
 
     public void addMatches(List<Match> newMatches) {
         for (Match match : newMatches) {
-            matches.put(match.matchId, match);
+            if (matches.containsKey(match.matchId)) {
+                matches.get(match.matchId).updateWithMatch(match);
+            }
+            else {
+                matches.put(match.matchId, match);
+            }
         }
     }
 

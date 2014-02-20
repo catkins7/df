@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
+import com.hatfat.dota.services.MatchFetcher;
 
 /**
  * Created by scottrick on 2/16/14.
@@ -30,6 +31,13 @@ public class MatchSummaryFragment extends CharltonFragment {
         updateViews();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MatchFetcher.fetchMatchDetails(match.getMatchId());
     }
 
     private void updateViews() {

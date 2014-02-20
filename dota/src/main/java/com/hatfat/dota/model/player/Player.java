@@ -8,7 +8,7 @@ import com.hatfat.dota.model.user.SteamUsers;
  */
 public class Player {
     long accountId;
-    int playerSlot;
+    byte playerSlot;
     int heroId;
 
     public SteamUser getSteamUser() {
@@ -24,5 +24,13 @@ public class Player {
 
     public String getHeroIdString() {
         return String.valueOf(heroId);
+    }
+
+    public boolean isDirePlayer() {
+        return playerSlot >> 7 > 0;
+    }
+
+    public boolean isRadiantPlayer() {
+        return playerSlot >> 7 == 0;
     }
 }

@@ -37,13 +37,13 @@ public class PlayerAdapter extends TypeAdapter<Player> {
                     player.accountId = jsonReader.nextLong();
                     break;
                 case "player_slot":
-                    player.playerSlot = jsonReader.nextInt();
+                    player.playerSlot = (byte) jsonReader.nextInt();
                     break;
                 case "hero_id":
                     player.heroId = jsonReader.nextInt();
                     break;
                 default:
-                    Log.e("catfat", "skipping: " + name);
+                    Log.e("catfat", "PlayerAdapter skipping: " + name);
                     jsonReader.skipValue();
                     break;
             }

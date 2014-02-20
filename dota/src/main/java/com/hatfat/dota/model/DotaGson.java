@@ -6,6 +6,8 @@ import com.hatfat.dota.model.game.Hero;
 import com.hatfat.dota.model.game.HeroAdapter;
 import com.hatfat.dota.model.game.HeroData;
 import com.hatfat.dota.model.game.HeroDataAdapter;
+import com.hatfat.dota.model.match.Match;
+import com.hatfat.dota.model.match.MatchAdapter;
 import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.MatchHistoryAdapter;
 import com.hatfat.dota.model.player.PlayerSummaries;
@@ -27,6 +29,7 @@ public class DotaGson {
                     .registerTypeAdapter(MatchHistory.class, new MatchHistoryAdapter())
                     .registerTypeAdapter(PlayerSummaries.class, new PlayerSummariesAdapter())
                     .registerTypeAdapter(SteamUser.class, new SteamUserAdapter())
+                    .registerTypeAdapter(Match.class, new MatchAdapter())
                     .create();
         }
 
