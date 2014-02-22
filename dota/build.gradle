@@ -1,5 +1,13 @@
 apply plugin: 'android'
 
+tasks.whenTaskAdded { task ->
+    if (task.name == "validateReleaseSigning")
+        task.dependsOn keystoreInfoRelease
+
+    if (task.name == "validateBetaSigning")
+        task.dependsOn keystoreInfoBeta
+}
+
 android {
     compileSdkVersion 19
     buildToolsVersion '19.0.1'
@@ -13,17 +21,17 @@ android {
 
     signingConfigs {
         beta {
-            storeFile file("beta.keystore")
-            storePassword "hatfat1"
-            keyAlias "hatfat2"
-            keyPassword "hatfat3"
+            storeFile file("release.keystore")
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
         }
 
         release {
             storeFile file("release.keystore")
-            storePassword "hatfat1"
-            keyAlias "hatfat2"
-            keyPassword "hatfat3"
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
         }
     }
 
@@ -33,7 +41,7 @@ android {
             versionNameSuffix "-debug"
         }
 
-        release {
+        beta {
             packageNameSuffix ".beta"
             versionNameSuffix "-beta"
             runProguard false
@@ -60,3 +68,34 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 }
 
+task keystoreInfoRelease << {
+    def console = System.console()
+    if (console == null)
+        throw new IllegalStateException('no console available, use --no-daemon flag')
+
+    def storeFile = console.readLine('Keystore: ')
+    def storePassword = console.readPassword('Keystore password: ')
+    def keyAlias = console.readLine('Key alias: ')
+    def keyPassword = console.readPassword('Key password: ')
+
+    android.signingConfigs.release.storeFile = file(storeFile)
+    android.signingConfigs.release.storePassword = new String(storePassword)
+    android.signingConfigs.release.keyAlias = keyAlias
+    android.signingConfigs.release.keyPassword = new String(keyPassword)
+}
+
+task keystoreInfoBeta << {
+    def console = System.console()
+    if (console == null)
+        throw new IllegalStateException('no console available, use --no-daemon flag')
+
+    def storeFile = console.readLine('Keystore: ')
+    def storePassword = console.readPassword('Keystore password: ')
+    def keyAlias = console.readLine('Key alias: ')
+    def keyPassword = console.readPassword('Key password: ')
+
+    android.signingConfigs.beta.storeFile = file(storeFile)
+    android.signingConfigs.beta.storePassword = new String(storePassword)
+    android.signingConfigs.beta.keyAlias = keyAlias
+    android.signingConfigs.beta.keyPassword = new String(keyPassword)
+}
