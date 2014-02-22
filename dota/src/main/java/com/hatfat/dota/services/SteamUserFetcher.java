@@ -1,5 +1,6 @@
 package com.hatfat.dota.services;
 
+import com.hatfat.dota.model.DotaResponse;
 import com.hatfat.dota.model.player.PlayerSummaries;
 import com.hatfat.dota.model.user.SteamUser;
 import retrofit.Callback;
@@ -26,9 +27,10 @@ public class SteamUserFetcher
         }
 
         CharltonService charltonService = DotaRestAdapter.createRestAdapter().create(CharltonService.class);
-        charltonService.getPlayerSummaries(ids, new Callback<PlayerSummaries>() {
+        charltonService.getPlayerSummaries(ids, new Callback<DotaResponse<PlayerSummaries>>() {
             @Override
-            public void success(PlayerSummaries playerSummaries, Response response) {
+            public void success(DotaResponse<PlayerSummaries> dotaResponse, Response response) {
+                PlayerSummaries playerSummaries = dotaResponse.response;
                 steamUserCallback.success(playerSummaries.getUsers(), response);
             }
 
@@ -41,9 +43,10 @@ public class SteamUserFetcher
 
     public static void getSteamUser(String steamId, final Callback<SteamUser> steamUserCallback) {
         CharltonService charltonService = DotaRestAdapter.createRestAdapter().create(CharltonService.class);
-        charltonService.getPlayerSummaries(steamId, new Callback<PlayerSummaries>() {
+        charltonService.getPlayerSummaries(steamId, new Callback<DotaResponse<PlayerSummaries>>() {
             @Override
-            public void success(PlayerSummaries playerSummaries, Response response) {
+            public void success(DotaResponse<PlayerSummaries> dotaResponse, Response response) {
+                PlayerSummaries playerSummaries = dotaResponse.response;
                 if (playerSummaries.getUsers().size() > 0) {
                     steamUserCallback.success(playerSummaries.getUsers().get(0), response);
                 }

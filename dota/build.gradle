@@ -2,19 +2,47 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.0'
+    buildToolsVersion '19.0.1'
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "0.1"
+    }
+
+    signingConfigs {
+        beta {
+            storeFile file("beta.keystore")
+            storePassword "hatfat1"
+            keyAlias "hatfat2"
+            keyPassword "hatfat3"
+        }
+
+        release {
+            storeFile file("release.keystore")
+            storePassword "hatfat1"
+            keyAlias "hatfat2"
+            keyPassword "hatfat3"
+        }
     }
 
     buildTypes {
+        debug {
+            packageNameSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
+        release {
+            packageNameSuffix ".beta"
+            versionNameSuffix "-beta"
+            runProguard false
+            signingConfig signingConfigs.beta
+        }
+
         release {
             runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
         }
     }
 

@@ -9,6 +9,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by scottrick on 2/15/14.
@@ -37,17 +38,21 @@ public class Heroes {
 
     public void init() {}
 
-    private void setHeroData(HashMap<String, Hero> heroData) {
-        heroes = heroData;
+    private void setNewHeroList(List<Hero> heroList) {
+        heroes.clear();
 
-        broadcastUsersChanged();
+        for (Hero hero : heroList) {
+            heroes.put(String.valueOf(hero.heroId), hero);
+        }
+
+        broadcastHeroesChanged();
     }
 
     public Hero getHero(String heroIdString) {
         return heroes.get(heroIdString);
     }
 
-    private void broadcastUsersChanged() {
+    private void broadcastHeroesChanged() {
         Intent intent = new Intent(HERO_DATA_UPDATED_NOTIFICATION);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }
@@ -56,7 +61,7 @@ public class Heroes {
         HeroFetcher.fetchHeroes(new Callback<HeroData>() {
             @Override
             public void success(HeroData heroData, Response response) {
-                setHeroData(heroData.heroes);
+                setNewHeroList(heroData.heroes);
             }
 
             @Override

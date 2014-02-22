@@ -37,7 +37,7 @@ public class MatchSummaryFragment extends CharltonFragment {
     public void onResume() {
         super.onResume();
 
-        MatchFetcher.fetchMatchDetails(match.getMatchId());
+        match.getMatchDetailsIfNeeded();
     }
 
     private void updateViews() {

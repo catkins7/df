@@ -1,10 +1,14 @@
 package com.hatfat.dota.model.game;
 
-import java.util.HashMap;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 /**
  * Created by scottrick on 2/15/14.
  */
 public class HeroData {
-    HashMap<String, Hero> heroes; //heroId --> hero object
+
+    @SerializedName("heroes")
+    public List<Hero> heroes;
 }

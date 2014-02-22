@@ -1,5 +1,6 @@
 package com.hatfat.dota.model.player;
 
+import com.google.gson.annotations.SerializedName;
 import com.hatfat.dota.model.user.SteamUser;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
  * wrapper for the ISteamUser/GetPlayerSummaries request response
  */
 public class PlayerSummaries {
+
+    @SerializedName("players")
     List<SteamUser> users;
 
     public List<SteamUser> getUsers() {

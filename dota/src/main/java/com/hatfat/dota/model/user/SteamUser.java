@@ -2,6 +2,7 @@ package com.hatfat.dota.model.user;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import com.google.gson.annotations.SerializedName;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.model.match.Match;
 
@@ -21,23 +22,57 @@ public class SteamUser {
 
     private static Comparator<SteamUser> comparator;
 
+    @SerializedName("steamid")
     String steamId;
+
+    @SerializedName("communityvisibilitystate")
     int communityVisibilityState;
+
+    @SerializedName("profilestate")
     int profileState;
+
+    @SerializedName("personaname")
     String personaName;
+
+    @SerializedName("lastlogoff")
     long lastLogoff;
+
+    @SerializedName("profileurl")
     String profileUrl;
+
+    @SerializedName("avatar")
     String avatarUrl;
+
+    @SerializedName("avatarmedium")
     String avatarMediumUrl;
+
+    @SerializedName("avatarfull")
     String avatarFullUrl;
+
+    @SerializedName("personastate")
     int personaState;
+
+    @SerializedName("realname")
     String realName;
+
+    @SerializedName("primaryclanid")
     String primaryClanId;
+
+    @SerializedName("timecreated")
     long timeCreated;
+
+    @SerializedName("personastateflags")
     int personaStateFlags;
+
+    @SerializedName("loccountrycode")
     String locCountryCode;
+
+    @SerializedName("locstatecode")
     String locStateCode;
+
+    @SerializedName("loccityid")
     String locCityId;
+
 
     TreeSet<String> matches;
 

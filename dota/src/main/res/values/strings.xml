@@ -16,5 +16,7 @@
     <string name="match_result_unknown"></string>
     <string name="match_result_radiant_victory">Radiant Victory</string>
     <string name="match_result_dire_victory">Dire Victory</string>
+    <string name="match_result_player_victory">Win</string>
+    <string name="match_result_player_defeat">Loss</string>
 
 </resources>

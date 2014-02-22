@@ -1,5 +1,7 @@
 package com.hatfat.dota.model.game;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by scottrick on 2/15/14.
  */
@@ -11,9 +13,14 @@ public class Hero {
     private static final String fullVerticalSuffix = "_vert.jpg";
     private static final String baseHeroIconUrl = "http://media.steampowered.com/apps/dota2/images/heroes/";
 
-    String name;
-    String localizedName;
-    int heroId;
+    @SerializedName("name")
+    public String name;
+
+    @SerializedName("localized_name")
+    public String localizedName;
+
+    @SerializedName("id")
+    public int heroId;
 
     public String getLocalizedName() {
         return localizedName;

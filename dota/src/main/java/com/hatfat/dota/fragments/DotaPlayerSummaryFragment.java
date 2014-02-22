@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +101,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
                     //reload the match row for this match
                     String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
-                    Log.e("catfat", "got match updated notification");
 
                     if (matchesListView != null && matchesAdapter != null) {
                         for (int i = 0; i < matchesListView.getChildCount(); i++) {
@@ -113,7 +111,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
                                 if (matchView.getMatch().getMatchId().equals(updatedMatchId)) {
                                     matchView.notifyMatchUpdated();
-                                    Log.e("catfat", "---> updated a view!");
                                 }
                             }
                         }
@@ -153,6 +150,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
                 Match match = (Match) getItem(i);
+
+                match.getMatchDetailsIfNeeded();
 
                 MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
 

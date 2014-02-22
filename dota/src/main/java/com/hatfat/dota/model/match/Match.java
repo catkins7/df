@@ -2,10 +2,12 @@ package com.hatfat.dota.model.match;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import com.google.gson.annotations.SerializedName;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.services.MatchFetcher;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -92,37 +94,76 @@ public class Match {
         }
     }
 
-    MatchResult matchResult;
+    @SerializedName("radiant_win")
+    boolean radiantWin;
+
+    @SerializedName("duration")
     int duration;
+
+    @SerializedName("tower_status_radiant")
     int towerStatusRadiant;
+
+    @SerializedName("tower_status_dire")
     int towerStatusDire;
+
+    @SerializedName("barracks_status_radiant")
     int barracksStatusRadiant;
+
+    @SerializedName("barracks_status_dire")
     int barracksStatusDire;
+
+    @SerializedName("cluster")
     int cluster;
+
+    @SerializedName("first_blood_time")
     int firstBloodTime;
+
+    @SerializedName("human_players")
     int humanPlayers;
+
+    @SerializedName("leagueid")
     int leagueId;
+
+    @SerializedName("positive_votes")
     int positiveVotes;
+
+    @SerializedName("negative_votes")
     int negativeVotes;
+
+    @SerializedName("game_mode")
     int gameMode;
+
+    @SerializedName("has_match_details")
     boolean hasMatchDetails;
 
+    @SerializedName("match_id")
     String matchId;
+
+    @SerializedName("match_seq_num")
     long matchSeqNumber;
+
+    @SerializedName("start_time")
     long startTime; //seconds from 1970
-    LobbyType lobbyType;
 
+    @SerializedName("lobby_type")
+    int lobbyType;
+
+    @SerializedName("players")
     List<Player> players;
-
-    public Match() {
-        matchResult = MatchResult.MATCH_RESULT_UNKNOWN;
-    }
 
     public String getMatchId() {
         return matchId;
     }
     public MatchResult getMatchResult() {
-        return matchResult;
+        if (!hasMatchDetails) {
+            return MatchResult.MATCH_RESULT_UNKNOWN;
+        }
+        else if (radiantWin) {
+            return MatchResult.MATCH_RESULT_RADIANT_VICTORY;
+        }
+        else {
+            return MatchResult.MATCH_RESULT_DIRE_VICTORY;
+        }
     }
     public Date getStartTimeDate() {
         return new Date(startTime);
@@ -134,17 +175,58 @@ public class Match {
         return players;
     }
     public LobbyType getLobbyType() {
-        return lobbyType;
+        return LobbyType.fromInt(lobbyType);
     }
     public String getLobbyTypeString() {
-        return lobbyType.getLobbyTypeName();
+        return getLobbyType().getLobbyTypeName();
     }
     public void setHasMatchDetails(boolean hasMatchDetails) {
         this.hasMatchDetails = hasMatchDetails;
     }
-
     public String toString() {
         return super.toString() + "[matchId: " + matchId + "]";
+    }
+
+    public int getMatchResultStringResourceIdForPlayer(Player player) {
+        if (!players.contains(player)) {
+            return R.string.match_result_unknown;
+        }
+
+        MatchResult matchResult = getMatchResult();
+
+        if (matchResult == MatchResult.MATCH_RESULT_UNKNOWN) {
+            return R.string.match_result_unknown;
+        }
+        else if (player.isRadiantPlayer() && matchResult == MatchResult.MATCH_RESULT_RADIANT_VICTORY) {
+            return R.string.match_result_player_victory;
+        }
+        else if (player.isDirePlayer() && matchResult == MatchResult.MATCH_RESULT_DIRE_VICTORY) {
+            return R.string.match_result_player_victory;
+        }
+        else {
+            return R.string.match_result_player_defeat;
+        }
+    }
+
+    public int getMatchResultColorResourceIdForPlayer(Player player) {
+        if (!players.contains(player)) {
+            return R.color.off_white;
+        }
+
+        MatchResult matchResult = getMatchResult();
+
+        if (matchResult == MatchResult.MATCH_RESULT_UNKNOWN) {
+            return R.color.off_white;
+        }
+        else if (player.isRadiantPlayer() && matchResult == MatchResult.MATCH_RESULT_RADIANT_VICTORY) {
+            return R.color.radiant_green;
+        }
+        else if (player.isDirePlayer() && matchResult == MatchResult.MATCH_RESULT_DIRE_VICTORY) {
+            return R.color.radiant_green;
+        }
+        else {
+            return R.color.dire_red;
+        }
     }
 
     public String getTimeAgoString() {
@@ -152,6 +234,14 @@ public class Match {
         long timeAgo = currentTime - startTime;
 
         timeAgo /= 60; //minutes ago
+
+        if (timeAgo == 1){
+            return String.valueOf(timeAgo) + " minute ago";
+        }
+        else if (timeAgo < 60) {
+            return String.valueOf(timeAgo) + " minutes ago";
+        }
+
         timeAgo /= 60; // hours ago
 
         if (timeAgo >= 24) {
@@ -184,7 +274,7 @@ public class Match {
 
     void updateWithMatch(Match match) {
         if (match.hasMatchDetails) {
-            matchResult = match.matchResult;
+            radiantWin = match.radiantWin;
             duration = match.duration;
             towerStatusRadiant = match.towerStatusRadiant;
             towerStatusDire = match.towerStatusDire;
@@ -211,6 +301,12 @@ public class Match {
         }
 
         broadcastMatchChanged();
+    }
+
+    public void getMatchDetailsIfNeeded() {
+        if (!hasMatchDetails) {
+            MatchFetcher.fetchMatchDetails(getMatchId());
+        }
     }
 
     private void broadcastMatchChanged() {
