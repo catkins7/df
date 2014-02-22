@@ -7,19 +7,37 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
-import com.hatfat.dota.services.MatchFetcher;
+import com.hatfat.dota.model.match.Matches;
 
 /**
  * Created by scottrick on 2/16/14.
  */
 public class MatchSummaryFragment extends CharltonFragment {
 
+    private static final String MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY = "MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY";
+
     private Match match;
 
     private TextView matchIdTextView;
 
-    public MatchSummaryFragment(Match match) {
-        this.match = match;
+    public static MatchSummaryFragment newInstance(Match match) {
+        MatchSummaryFragment newFragment = new MatchSummaryFragment();
+
+        Bundle args = new Bundle();
+        args.putString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY, match.getMatchId());
+        newFragment.setArguments(args);
+
+        return newFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        String matchId = getArguments().getString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY);
+        if (matchId != null) {
+            match = Matches.get().getMatch(matchId);
+        }
     }
 
     @Override

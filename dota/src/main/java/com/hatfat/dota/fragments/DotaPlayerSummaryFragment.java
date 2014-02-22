@@ -16,6 +16,7 @@ import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.services.MatchFetcher;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
@@ -27,6 +28,8 @@ import java.util.Collections;
  * Created by scottrick on 2/12/14.
  */
 public class DotaPlayerSummaryFragment extends CharltonFragment {
+
+    private static final String DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY";
 
     private SteamUser user;
 
@@ -40,8 +43,24 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private BaseAdapter matchesAdapter;
     private ArrayList<String> sortedMatches;
 
-    public DotaPlayerSummaryFragment(SteamUser user) {
-        this.user = user;
+    public static DotaPlayerSummaryFragment newInstance(SteamUser user) {
+        DotaPlayerSummaryFragment newFragment = new DotaPlayerSummaryFragment();
+
+        Bundle args = new Bundle();
+        args.putString(DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY, user.getSteamId());
+        newFragment.setArguments(args);
+
+        return newFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        String steamUserId = getArguments().getString(DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY);
+        if (steamUserId != null) {
+            user = SteamUsers.get().getBySteamId(steamUserId);
+        }
     }
 
     @Override
@@ -171,7 +190,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Match match = (Match) matchesAdapter.getItem(i);
-                getCharltonActivity().pushCharltonFragment(new MatchSummaryFragment(match));
+                getCharltonActivity().pushCharltonFragment(MatchSummaryFragment.newInstance(match));
             }
         });
     }
@@ -195,10 +214,5 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     @Override
     public String getCharltonText() {
         return "Here is " + user.getPersonaName() +"'s summary information.";
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " [" + user.getPersonaName() +"]";
     }
 }

@@ -130,7 +130,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 SteamUser steamUser = (SteamUser) listView.getAdapter().getItem(i);
-                getCharltonActivity().pushCharltonFragment(new DotaPlayerSummaryFragment(steamUser));
+                getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(steamUser));
             }
         });
 
