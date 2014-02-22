@@ -42,11 +42,8 @@ public class CharltonMessageFragment extends Fragment {
     }
 
     private void updateMessageViews() {
-        if (getView() == null) {
-            //view isn't loaded yet, so just return for now
-            return;
+        if (messageTextView != null && messageInterface != null) {
+            messageTextView.setText(messageInterface.getCharltonText());
         }
-
-        messageTextView.setText(messageInterface.getCharltonText());
     }
 }
