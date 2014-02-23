@@ -28,7 +28,7 @@ public class MatchFetcher
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                Log.e("MatchFetcher", retrofitError.getMessage());
+                Log.e("MatchFetcher", "" + retrofitError.getMessage());
             }
         });
     }
@@ -46,7 +46,7 @@ public class MatchFetcher
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                Log.e("MatchFetcher", retrofitError.getMessage());
+                Log.e("MatchFetcher", "" + retrofitError.getMessage());
             }
         });
     }
