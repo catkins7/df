@@ -19,6 +19,11 @@ public class MatchSummaryFragment extends CharltonFragment {
     private Match match;
 
     private TextView matchIdTextView;
+    private TextView gameModeTextView;
+    private TextView victoryTextView;
+    private TextView lobbyTypeTextView;
+    private TextView timeAgoTextView;
+    private TextView durationTextView;
 
     public static MatchSummaryFragment newInstance(Match match) {
         MatchSummaryFragment newFragment = new MatchSummaryFragment();
@@ -45,6 +50,11 @@ public class MatchSummaryFragment extends CharltonFragment {
         View view = inflater.inflate(R.layout.fragment_match_summary, null);
 
         matchIdTextView = (TextView) view.findViewById(R.id.fragment_match_summary_match_id_text_view);
+        gameModeTextView = (TextView) view.findViewById(R.id.fragment_match_summary_game_mode_text_view);
+        victoryTextView = (TextView) view.findViewById(R.id.fragment_match_summary_victory_text_view);
+        lobbyTypeTextView = (TextView) view.findViewById(R.id.fragment_match_summary_lobby_text_view);
+        timeAgoTextView = (TextView) view.findViewById(R.id.fragment_match_summary_time_ago_text_view);
+        durationTextView = (TextView) view.findViewById(R.id.fragment_match_summary_duration_text_view);
 
         updateViews();
 
@@ -60,6 +70,12 @@ public class MatchSummaryFragment extends CharltonFragment {
 
     private void updateViews() {
         matchIdTextView.setText("Match " + match.getMatchId());
+        victoryTextView.setText(match.getMatchResult().getDescriptionStringResourceId());
+        victoryTextView.setTextColor(getResources().getColor(match.getMatchResult().getColorResourceId()));
+        lobbyTypeTextView.setText(match.getLobbyTypeString());
+        timeAgoTextView.setText(match.getTimeAgoString());
+        durationTextView.setText(match.getDurationString());
+        gameModeTextView.setText(match.getGameModeString());
     }
 
     @Override

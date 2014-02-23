@@ -2,6 +2,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="default_padding">8dp</dimen>
 
+    <dimen name="font_size_small">8dp</dimen>
+    <dimen name="font_size_medium">16dp</dimen>
+    <dimen name="font_size_large">24dp</dimen>
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
@@ -17,6 +21,9 @@
 
     <dimen name="match_for_player_basic_image_view_width">59dp</dimen>
     <dimen name="match_for_player_basic_image_view_height">33dp</dimen>
+
+    <dimen name="match_summary_top_panel_right_column_width">92dp</dimen>
+    <dimen name="match_summary_top_panel_row_height">22dp</dimen>
 
     <dimen name="background_border_width">1dp</dimen>
 

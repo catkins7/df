@@ -180,6 +180,16 @@ public class Match {
     public String getLobbyTypeString() {
         return getLobbyType().getLobbyTypeName();
     }
+    public int getGameMode() {
+        return gameMode;
+    }
+    public String getGameModeString() {
+        if (!hasMatchDetails) {
+            return "";
+        }
+
+        return String.valueOf(gameMode);
+    }
     public void setHasMatchDetails(boolean hasMatchDetails) {
         this.hasMatchDetails = hasMatchDetails;
     }
@@ -207,7 +217,6 @@ public class Match {
             return R.string.match_result_player_defeat;
         }
     }
-
     public int getMatchResultColorResourceIdForPlayer(Player player) {
         if (!players.contains(player)) {
             return R.color.off_white;
@@ -260,6 +269,17 @@ public class Match {
         else {
             return String.valueOf(timeAgo) + " hours ago";
         }
+    }
+    public String getDurationString() {
+        if (!hasMatchDetails) {
+            return "";
+        }
+
+        int hours = duration / 60 / 60;
+        int minutes = duration / 60 % 60;
+        int seconds = duration % 60;
+
+        return String.format("%d:%02d:%02d", hours, minutes, seconds);
     }
 
     public Player getPlayerForSteamUser(SteamUser user) {

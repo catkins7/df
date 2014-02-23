@@ -5,18 +5,82 @@
               android:layout_height="match_parent">
     
     <RelativeLayout
+        android:id="@+id/fragment_match_summary_top_panel_layout"
         android:padding="@dimen/default_padding"
         android:background="@drawable/off_black_background"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/fragment_match_summary_game_mode_text_view"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical|right"
+            android:textSize="@dimen/font_size_medium"
+            android:textColor="@color/off_white"
+            android:layout_width="@dimen/match_summary_top_panel_right_column_width"
+            android:layout_height="@dimen/match_summary_top_panel_row_height"/>
+
+        <TextView
             android:id="@+id/fragment_match_summary_match_id_text_view"
-            android:textSize="24dp"
-            android:background="#ff2299ee"
+            android:textSize="@dimen/font_size_medium"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/fragment_match_summary_game_mode_text_view"
+            android:gravity="center_vertical|left"
             android:textColor="@color/off_white"
             android:layout_width="match_parent"
-            android:layout_height="28dp"/>
+            android:layout_height="@dimen/match_summary_top_panel_row_height"/>
+
+        <TextView
+            android:id="@+id/fragment_match_summary_lobby_text_view"
+            android:layout_below="@id/fragment_match_summary_game_mode_text_view"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical|right"
+            android:textSize="@dimen/font_size_medium"
+            android:textColor="@color/off_white"
+            android:layout_width="@dimen/match_summary_top_panel_right_column_width"
+            android:layout_height="@dimen/match_summary_top_panel_row_height"/>
+
+        <TextView
+            android:id="@+id/fragment_match_summary_victory_text_view"
+            android:layout_below="@id/fragment_match_summary_match_id_text_view"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/fragment_match_summary_game_mode_text_view"
+            android:gravity="center_vertical|left"
+            android:textSize="@dimen/font_size_medium"
+            android:textColor="@color/off_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/match_summary_top_panel_row_height"/>
+
+        <TextView
+            android:id="@+id/fragment_match_summary_duration_text_view"
+            android:layout_below="@id/fragment_match_summary_lobby_text_view"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical|right"
+            android:textSize="@dimen/font_size_medium"
+            android:textColor="@color/off_white"
+            android:layout_width="@dimen/match_summary_top_panel_right_column_width"
+            android:layout_height="@dimen/match_summary_top_panel_row_height"/>
+
+        <TextView
+            android:id="@+id/fragment_match_summary_time_ago_text_view"
+            android:layout_below="@id/fragment_match_summary_victory_text_view"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/fragment_match_summary_duration_text_view"
+            android:gravity="center_vertical|left"
+            android:textSize="@dimen/font_size_medium"
+            android:textColor="@color/off_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/match_summary_top_panel_row_height"/>
+
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/fragment_match_summary_players_list_view"
+        android:layout_below="@id/fragment_match_summary_top_panel_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 
 </RelativeLayout>
