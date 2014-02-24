@@ -22,7 +22,7 @@
     <dimen name="match_for_player_basic_image_view_width">59dp</dimen>
     <dimen name="match_for_player_basic_image_view_height">33dp</dimen>
 
-    <dimen name="match_summary_top_panel_right_column_width">92dp</dimen>
+    <dimen name="match_summary_top_panel_right_column_width">120dp</dimen>
     <dimen name="match_summary_top_panel_row_height">22dp</dimen>
 
     <dimen name="background_border_width">1dp</dimen>

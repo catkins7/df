@@ -80,6 +80,7 @@
     <ListView
         android:id="@+id/fragment_match_summary_players_list_view"
         android:layout_below="@id/fragment_match_summary_top_panel_layout"
+        android:layout_marginTop="@dimen/default_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 

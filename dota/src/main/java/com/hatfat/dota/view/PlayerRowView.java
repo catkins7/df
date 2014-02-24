@@ -11,6 +11,8 @@ import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Hero;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.player.Player;
+import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUsers;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -49,8 +51,15 @@ public class PlayerRowView extends RelativeLayout {
             }
 
             Hero hero = Heroes.get().getHero(player.getHeroIdString());
-            playerNameTextView.setText(String.valueOf(player.getAccountId()));
 
+            SteamUser user = SteamUsers.get().getByAccountId(String.valueOf(player.getAccountId()));
+
+            if (user != null) {
+                playerNameTextView.setText(user.getPersonaName());
+            }
+            else {
+                playerNameTextView.setText(String.valueOf(player.getAccountId()));
+            }
 
             if (hero != null) {
                 Picasso.with(DotaFriendApplication.CONTEXT).load(Heroes.get().getHero(player.getHeroIdString()).getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(heroImageView);

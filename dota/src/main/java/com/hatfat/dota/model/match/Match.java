@@ -103,7 +103,7 @@ public class Match {
         AllRandom("All Random"),
         IntroDeath("-"),
         Diretide("Diretide"),
-        ReverseCaptainsMode("Reverse Captains Mode"),
+        ReverseCaptainsMode("Reverse CM"),
         Greeviling("Greeviling"),
         Tutorial("Tutorial"),
         MidOnly("Mid Only"),
