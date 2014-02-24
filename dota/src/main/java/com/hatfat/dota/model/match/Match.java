@@ -94,6 +94,83 @@ public class Match {
         }
     }
 
+    public enum GameMode {
+        None("None"),
+        AllPick("All Pick"),
+        CaptainsMode("Captains Mode"),
+        RandomDraft("Random Draft"),
+        SingleDraft("Single Draft"),
+        AllRandom("All Random"),
+        IntroDeath("-"),
+        Diretide("Diretide"),
+        ReverseCaptainsMode("Reverse Captains Mode"),
+        Greeviling("Greeviling"),
+        Tutorial("Tutorial"),
+        MidOnly("Mid Only"),
+        LeastPlayed("Least Played"),
+        LimitedHeroes("Limited Heroes"),
+        FH("FH"),
+        CustomGame("Custom Game"),
+        CaptainsDraft("Captains Draft"),
+        BalancedDraft("Balanced Draft"),
+        AbilityDraft("Ability Draft"),
+        Unknown("");
+
+        private String gameModeName;
+
+        GameMode(String modeName) {
+            this.gameModeName = modeName;
+        }
+
+        public static GameMode fromInt(int type) {
+            switch (type) {
+                case 0:
+                    return None;
+                case 1:
+                    return AllPick;
+                case 2:
+                    return CaptainsMode;
+                case 3:
+                    return RandomDraft;
+                case 4:
+                    return SingleDraft;
+                case 5:
+                    return AllRandom;
+                case 6:
+                    return IntroDeath;
+                case 7:
+                    return Diretide;
+                case 8:
+                    return ReverseCaptainsMode;
+                case 9:
+                    return Greeviling;
+                case 10:
+                    return Tutorial;
+                case 11:
+                    return MidOnly;
+                case 12:
+                    return LeastPlayed;
+                case 13:
+                    return LimitedHeroes;
+                case 14:
+                    return FH;
+                case 15:
+                    return CustomGame;
+                case 16:
+                    return CaptainsDraft;
+                case 17:
+                    return BalancedDraft;
+                case 18:
+                    return AbilityDraft;
+                default:
+                    return Unknown;
+            }
+        }
+        public String getGameModeName() {
+            return gameModeName;
+        }
+    }
+
     @SerializedName("radiant_win")
     boolean radiantWin;
 
@@ -180,15 +257,19 @@ public class Match {
     public String getLobbyTypeString() {
         return getLobbyType().getLobbyTypeName();
     }
-    public int getGameMode() {
-        return gameMode;
+    public GameMode getGameMode() {
+        if (!hasMatchDetails) {
+            return GameMode.Unknown;
+        }
+
+        return GameMode.fromInt(gameMode);
     }
     public String getGameModeString() {
         if (!hasMatchDetails) {
-            return "";
+            return GameMode.Unknown.getGameModeName();
         }
 
-        return String.valueOf(gameMode);
+        return GameMode.fromInt(gameMode).getGameModeName();
     }
     public void setHasMatchDetails(boolean hasMatchDetails) {
         this.hasMatchDetails = hasMatchDetails;
