@@ -155,6 +155,10 @@ public class SteamUser {
     }
 
     public void addMatches(List<Match> matches) {
+        if (matches == null) {
+            return;
+        }
+
         for (Match match : matches) {
             this.matches.add(match.getMatchId());
         }

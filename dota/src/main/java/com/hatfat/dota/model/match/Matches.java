@@ -33,6 +33,10 @@ public class Matches {
     }
 
     public void addMatch(Match match) {
+        if (match == null) {
+            return;
+        }
+
         if (matches.containsKey(match.matchId)) {
             matches.get(match.matchId).updateWithMatch(match);
         }
@@ -42,6 +46,10 @@ public class Matches {
     }
 
     public void addMatches(List<Match> newMatches) {
+        if (newMatches == null) {
+            return;
+        }
+
         for (Match match : newMatches) {
             addMatch(match);
         }
