@@ -3,8 +3,9 @@
 <resources>
     <color name="off_white">#ffdddddd</color>
     <color name="off_black">#ff222222</color>
+    <color name="off_gray">#ffbbbbbb</color>
 
-    <color name="radiant_green">#ff00bb00</color>
-    <color name="dire_red">#ffbb0000</color>
+    <color name="radiant_green">#ff00aa00</color>
+    <color name="dire_red">#ffaa0000</color>
 
 </resources>

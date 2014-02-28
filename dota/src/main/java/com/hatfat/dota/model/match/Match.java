@@ -257,6 +257,9 @@ public class Match {
     public String getLobbyTypeString() {
         return getLobbyType().getLobbyTypeName();
     }
+    public boolean isRankedGame() {
+        return getLobbyType() == LobbyType.RANKED;
+    }
     public GameMode getGameMode() {
         if (!hasMatchDetails) {
             return GameMode.Unknown;
@@ -270,6 +273,14 @@ public class Match {
         }
 
         return GameMode.fromInt(gameMode).getGameModeName();
+    }
+    public String getLobbyModeString() {
+        if (getLobbyType() == LobbyType.PUBLIC_MATCHMAKING) {
+            return getGameModeString();
+        }
+        else {
+            return getGameModeString() + " (" + getLobbyTypeString() + ")";
+        }
     }
     public void setHasMatchDetails(boolean hasMatchDetails) {
         this.hasMatchDetails = hasMatchDetails;
@@ -361,6 +372,51 @@ public class Match {
         int seconds = duration % 60;
 
         return String.format("%d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public int getRadiantTotalKillCount() {
+        int killCount = 0;
+
+        for (Player player : players) {
+            if (player.isRadiantPlayer()) {
+                killCount += player.getKills();
+            }
+        }
+
+        return killCount;
+    }
+    public int getDireTotalKillCount() {
+        int killCount = 0;
+
+        for (Player player : players) {
+            if (player.isDirePlayer()) {
+                killCount += player.getKills();
+            }
+        }
+
+        return killCount;
+    }
+    public int getRadiantTotalDeathCount() {
+        int deathCount = 0;
+
+        for (Player player : players) {
+            if (player.isRadiantPlayer()) {
+                deathCount += player.getDeaths();
+            }
+        }
+
+        return deathCount;
+    }
+    public int getDireTotalDeathCount() {
+        int deathCount = 0;
+
+        for (Player player : players) {
+            if (player.isDirePlayer()) {
+                deathCount += player.getDeaths();
+            }
+        }
+
+        return deathCount;
     }
 
     public Player getPlayerForSteamUser(SteamUser user) {

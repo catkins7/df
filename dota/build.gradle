@@ -10,13 +10,13 @@ tasks.whenTaskAdded { task ->
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.1'
+    buildToolsVersion '19.0.2'
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 101
-        versionName "0.1"
+        versionCode 102
+        versionName "0.1.2"
     }
 
     signingConfigs {
@@ -63,6 +63,7 @@ android {
 dependencies {
     compile "com.squareup.picasso:picasso:2.2.0"
     compile "com.squareup.retrofit:retrofit:1.4.1"
+    compile "com.squareup.okhttp:okhttp:1.3.0"
 
     compile 'com.android.support:support-v4:19.0.+'
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])

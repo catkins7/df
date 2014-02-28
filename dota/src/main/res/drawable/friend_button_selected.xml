@@ -4,13 +4,16 @@
     android:shape="rectangle">
 
     <gradient
-        android:startColor="#ff272727"
-        android:endColor="#ff805050"
+        android:startColor="#af009a00"
+        android:endColor="#af00ef00"
         android:angle="45"
         />
 
+    <corners
+        android:radius="4dp" />
+
     <stroke
         android:width="@dimen/background_border_width"
-        android:color="@color/off_black" />
+        android:color="@color/off_gray" />
 
 </shape>

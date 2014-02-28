@@ -29,6 +29,7 @@ import java.util.List;
 public class DotaPlayerListFragment extends CharltonFragment {
 
     ListView listView;
+    BaseAdapter listAdapter;
 
     List<SteamUser> sortedUsers;
 
@@ -42,12 +43,33 @@ public class DotaPlayerListFragment extends CharltonFragment {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                updateUserList();
+                if (intent.getAction().equals(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED)) {
+                    updateUserList();
+                }
+                else if (intent.getAction().equals(SteamUser.STEAM_USER_UPDATED)) {
+                    String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
+
+                    if (listView != null && listAdapter != null) {
+                        for (int i = 0; i < listView.getChildCount(); i++) {
+                            View view = listView.getChildAt(i);
+
+                            if (view instanceof SteamUserView) {
+                                SteamUserView userView = (SteamUserView) view;
+
+                                if (userView.getSteamUserId().equals(updatedId)) {
+                                    userView.notifyMatchUpdated();
+                                }
+                            }
+                        }
+                    }
+                }
             }
         };
 
-        IntentFilter newUsersFilter = new IntentFilter(SteamUsers.STEAM_USERS_USER_LIST_CHANGED);
-        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, newUsersFilter);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED);
+        filter.addAction(SteamUser.STEAM_USER_UPDATED);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, filter);
     }
 
     private void stopListening() {
@@ -56,7 +78,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
 
     private void updateUserList() {
         sortedUsers = new LinkedList<>();
-        sortedUsers.addAll(SteamUsers.get().getUsers());
+        sortedUsers.addAll(SteamUsers.get().getStarredUsers());
         Collections.sort(sortedUsers, SteamUser.getComparator());
 
         if (listView != null) {
@@ -92,9 +114,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
             }
         });
 
-        listView = (ListView) view.findViewById(R.id.dota_player_list_fragment_list_view);
-
-        listView.setAdapter(new BaseAdapter() {
+        listAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
                 return sortedUsers.size();
@@ -124,7 +144,10 @@ public class DotaPlayerListFragment extends CharltonFragment {
 
                 return userView;
             }
-        });
+        };
+
+        listView = (ListView) view.findViewById(R.id.dota_player_list_fragment_list_view);
+        listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

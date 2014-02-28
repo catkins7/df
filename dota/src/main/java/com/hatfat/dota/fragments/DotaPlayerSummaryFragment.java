@@ -1,9 +1,7 @@
 package com.hatfat.dota.fragments;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.app.AlertDialog;
+import android.content.*;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -39,6 +37,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private TextView currentStateTextView;
     private ImageView profileImageView;
     private ListView matchesListView;
+    private Button friendToggleButton;
 
     private BaseAdapter matchesAdapter;
     private ArrayList<String> sortedMatches;
@@ -71,6 +70,14 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         currentStateTextView = (TextView) view.findViewById(R.id.fragment_dota_player_summary_current_state_text_view);
         profileImageView = (ImageView) view.findViewById(R.id.fragment_dota_player_summary_user_image_view);
         matchesListView = (ListView) view.findViewById(R.id.fragment_dota_player_summary_matches_list_view);
+        friendToggleButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_friend_button);
+
+        friendToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleStar();
+            }
+        });
 
         updateMatchList();
         setupMatchesList();
@@ -205,14 +212,62 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         }
     }
 
+    private void toggleStar() {
+        if (SteamUsers.get().isUserStarred(user)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.player_summary_remove_friend_title_text);
+            builder.setMessage(R.string.player_summary_remove_friend_message_text);
+            builder.setPositiveButton(R.string.player_summary_remove_friend_remove_text, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    SteamUsers.get().removeSteamUserFromStarredList(user);
+                    updateFriendButtonBackground();
+                }
+            });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        else {
+            SteamUsers.get().addSteamUserToStarredList(user);
+            updateFriendButtonBackground();
+
+            Toast.makeText(getActivity().getApplicationContext(), R.string.player_summary_added_friend_text, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void updateViews() {
-        personaTextView.setText(user.getPersonaName());
+        personaTextView.setText(user.getDisplayName());
         currentStateTextView.setText(user.getCurrentStateDescriptionString());
         Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(profileImageView);
+
+        updateFriendButtonBackground();
+    }
+
+    private void updateFriendButtonBackground() {
+        if (user.canFriend()) {
+            friendToggleButton.setVisibility(View.VISIBLE);
+            currentStateTextView.setVisibility(View.VISIBLE);
+        }
+        else {
+            friendToggleButton.setVisibility(View.GONE);
+            currentStateTextView.setVisibility(View.GONE);
+        }
+
+        if (SteamUsers.get().isUserStarred(user)) {
+            friendToggleButton.setBackgroundResource(R.drawable.friend_button_selected);
+        }
+        else {
+            friendToggleButton.setBackgroundResource(R.drawable.friend_button_unselected);
+        }
     }
 
     @Override
     public String getCharltonText() {
-        return "Here is " + user.getPersonaName() +"'s summary information.";
+        return "Here is " + user.getDisplayName() +"'s summary information.";
     }
 }

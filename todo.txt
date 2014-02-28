@@ -1,0 +1,12 @@
+layout errors??
+
+before playstore release
+---------------------------
+Add player feature
+save starred players and starred player matches
+Charlton talking feature
+match summary improvements
+show player items
+fetch all for player feature
+left menu to nav back to player list?
+refresh steamuser when entering their profile, and on startup?

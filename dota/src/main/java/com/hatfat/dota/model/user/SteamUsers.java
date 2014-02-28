@@ -17,7 +17,7 @@ import java.util.List;
  * Created by scottrick on 2/10/14.
  */
 public class SteamUsers {
-    public final static String STEAM_USERS_USER_LIST_CHANGED = "SteamUsers_NewUsers_Notification";
+    public final static String STEAM_STARRED_USERS_USER_LIST_CHANGED = "SteamUsers_StarredUsersListChanged_Notification";
 
     private static SteamUsers singleton;
 
@@ -30,25 +30,40 @@ public class SteamUsers {
     }
 
     private HashMap<String, SteamUser> users;
+    private HashMap<String, SteamUser> starredUsers;
 
     private SteamUsers() {
         users = new HashMap<>();
+        starredUsers = new HashMap<>();
 
         fetch();
     }
 
     public void init() {}
 
-    public Collection<SteamUser> getUsers() {
+    private Collection<SteamUser> getUsers() {
         return users.values();
     }
 
+    public Collection<SteamUser> getStarredUsers() {
+        return starredUsers.values();
+    }
+
     public SteamUser getBySteamId(String steamId) {
-        return users.get(steamId);
+        if (users.containsKey(steamId)) {
+            return users.get(steamId);
+        }
+        else {
+            SteamUser newUser = new SteamUser(steamId);
+            users.put(steamId, newUser);
+            fetchUser(steamId);
+
+            return newUser;
+        }
     }
 
     public SteamUser getByAccountId(String accountId) {
-        return users.get(SteamUser.getSteamIdFromAccountId(accountId));
+        return getBySteamId(SteamUser.getSteamIdFromAccountId(accountId));
     }
 
     private void fetch() {
@@ -61,7 +76,45 @@ public class SteamUsers {
         ids.add("76561198000718505"); //bluth
         ids.add("76561198000376719"); //paul
 
-        SteamUserFetcher.getSteamUsers(ids, new Callback<List<SteamUser>>() {
+        LinkedList<SteamUser> defaultUsers = new LinkedList<>();
+        for (String id : ids) {
+            SteamUser newUser = new SteamUser(id);
+            defaultUsers.add(newUser);
+
+            addSteamUserToStarredList(newUser);
+        }
+
+        addSteamUsers(defaultUsers);
+        fetchUsers(ids);
+
+        //add the Anonymous steam user
+        String anonId = "76561202255233023";
+        SteamUser anonUser = new SteamUser(anonId);
+        anonUser.personaName = "Anonymous";
+        anonUser.isAnonymous = true;
+        this.users.put(anonUser.steamId, anonUser);
+    }
+
+    private void fetchUser(String steamId) {
+        SteamUserFetcher.getSteamUser(steamId, new Callback<SteamUser>() {
+            @Override
+            public void success(SteamUser steamUser, Response response) {
+                if (steamUser != null) {
+                    LinkedList<SteamUser> users = new LinkedList<>();
+                    users.add(steamUser);
+                    addSteamUsers(users);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    private void fetchUsers(List<String> steamIds) {
+        SteamUserFetcher.getSteamUsers(steamIds, new Callback<List<SteamUser>>() {
             @Override
             public void success(List<SteamUser> steamUsers, Response response) {
                 addSteamUsers(steamUsers);
@@ -88,14 +141,31 @@ public class SteamUsers {
                 addedNewUser = true;
             }
         }
+    }
 
-        if (addedNewUser) {
-            broadcastUsersChanged();
+    public boolean isUserStarred(SteamUser user) {
+        return starredUsers.containsKey(user.steamId);
+    }
+
+    public void addSteamUserToStarredList(SteamUser user) {
+        SteamUser existingUser = starredUsers.get(user.steamId);
+
+        if (existingUser == null) {
+            starredUsers.put(user.steamId, user);
+            broadcastStarredUsersChanged();
         }
     }
 
-    private void broadcastUsersChanged() {
-        Intent intent = new Intent(STEAM_USERS_USER_LIST_CHANGED);
+    public void removeSteamUserFromStarredList(SteamUser user) {
+        SteamUser removedUser = starredUsers.remove(user.steamId);
+
+        if (removedUser != null) {
+            broadcastStarredUsersChanged();
+        }
+    }
+
+    private void broadcastStarredUsersChanged() {
+        Intent intent = new Intent(STEAM_STARRED_USERS_USER_LIST_CHANGED);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }
 }

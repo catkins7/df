@@ -18,8 +18,68 @@ public class Player {
     @SerializedName("hero_id")
     int heroId;
 
+    @SerializedName("item_0")
+    int item0;
+
+    @SerializedName("item_1")
+    int item1;
+
+    @SerializedName("item_2")
+    int item2;
+
+    @SerializedName("item_3")
+    int item3;
+
+    @SerializedName("item_4")
+    int item4;
+
+    @SerializedName("item_5")
+    int item5;
+
+    @SerializedName("kills")
+    int kills;
+
+    @SerializedName("deaths")
+    int deaths;
+
+    @SerializedName("assists")
+    int assists;
+
+    @SerializedName("leaver_status")
+    int leaverStatus;
+
+    @SerializedName("gold")
+    int gold;
+
+    @SerializedName("last_hits")
+    int lastHits;
+
+    @SerializedName("denies")
+    int denies;
+
+    @SerializedName("gold_per_min")
+    int goldPerMinute;
+
+    @SerializedName("xp_per_min")
+    int xpPerMinute;
+
+    @SerializedName("gold_spent")
+    int goldSpent;
+
+    @SerializedName("hero_damage")
+    int heroDamage;
+
+    @SerializedName("tower_damage")
+    int towerDamage;
+
+    @SerializedName("hero_healing")
+    int heroHealing;
+
+    @SerializedName("level")
+    int level;
+
     public SteamUser getSteamUser() {
-        return SteamUsers.get().getByAccountId("" + accountId);
+        return SteamUsers.get().getByAccountId(String.valueOf(accountId));
     }
 
     public int getHeroId() {
@@ -32,6 +92,20 @@ public class Player {
 
     public String getHeroIdString() {
         return String.valueOf(heroId);
+    }
+
+    public int getKills() {
+        return kills;
+    }
+    public int getDeaths() {
+        return deaths;
+    }
+    public int getAssists() {
+        return assists;
+    }
+
+    public String getKdaString() {
+        return String.valueOf(kills) + " / " + String.valueOf(deaths) + " / " + String.valueOf(assists);
     }
 
     public boolean isDirePlayer() {

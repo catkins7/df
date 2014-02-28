@@ -73,7 +73,7 @@ public class SteamUser {
     @SerializedName("loccityid")
     String locCityId;
 
-
+    boolean isAnonymous;
     TreeSet<String> matches;
 
     public enum SteamPlayerState
@@ -123,9 +123,20 @@ public class SteamUser {
         matches = new TreeSet<>();
     }
 
+    public SteamUser(String steamId) {
+        this.steamId = steamId;
+        matches = new TreeSet<>();
+    }
+
     public String getSteamId() { return steamId; }
     public String getPersonaName() {
         return personaName;
+    }
+    public String getDisplayName() {
+        return personaName == null ? steamId : personaName;
+    }
+    public boolean canFriend() {
+        return !isAnonymous;
     }
     public String getAvatarFullUrl() { return avatarFullUrl; }
     public SteamPlayerState getPlayerState() {
@@ -233,7 +244,7 @@ public class SteamUser {
             comparator = new Comparator<SteamUser>() {
                 @Override
                 public int compare(SteamUser steamUser, SteamUser steamUser2) {
-                    return steamUser.getPersonaName().compareToIgnoreCase(steamUser2.getPersonaName());
+                    return steamUser.getDisplayName().compareToIgnoreCase(steamUser2.getDisplayName());
                 }
             };
         }

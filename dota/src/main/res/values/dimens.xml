@@ -2,9 +2,15 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="default_padding">8dp</dimen>
 
-    <dimen name="font_size_small">8dp</dimen>
+    <dimen name="font_size_tiny">8dp</dimen>
+    <dimen name="font_size_small">12dp</dimen>
     <dimen name="font_size_medium">16dp</dimen>
     <dimen name="font_size_large">24dp</dimen>
+
+    <dimen name="text_view_height_tiny">12dp</dimen>
+    <dimen name="text_view_height_small">16dp</dimen>
+    <dimen name="text_view_height_medium">22dp</dimen>
+    <dimen name="text_view_height_large">32dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -15,15 +21,18 @@
     <dimen name="charlton_fragment_height_short">48dp</dimen>
 
     <dimen name="dota_player_summary_fragment_image_view_size">112dp</dimen>
+    <dimen name="dota_player_summary_fragment_friend_button_size">32dp</dimen>
+
 
     <dimen name="match_simple_summary_hero_image_view_width">35dp</dimen>
     <dimen name="match_simple_summary_hero_image_view_height">20dp</dimen>
 
     <dimen name="match_for_player_basic_image_view_width">59dp</dimen>
     <dimen name="match_for_player_basic_image_view_height">33dp</dimen>
+    <dimen name="match_for_player_basic_ranked_image_view_size">22dp</dimen>
 
-    <dimen name="match_summary_top_panel_right_column_width">120dp</dimen>
-    <dimen name="match_summary_top_panel_row_height">22dp</dimen>
+    <dimen name="match_summary_top_panel_right_column_width">160dp</dimen>
+    <dimen name="match_summary_team_divider_width">12dp</dimen>
 
     <dimen name="background_border_width">1dp</dimen>
 

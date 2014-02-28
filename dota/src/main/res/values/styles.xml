@@ -5,7 +5,7 @@
     </style>
 
 
-    <style name="CharltonTheme" parent="android:Theme.NoTitleBar">
+    <style name="CharltonTheme" parent="android:Theme.Holo.NoActionBar">
 
     </style>
 

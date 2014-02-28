@@ -2,6 +2,7 @@ package com.hatfat.dota.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,14 +49,22 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
     }
 
     private void updateViews() {
-        ImageView imageView = (ImageView) findViewById(R.id.view_match_player_basic_image_view);
+        ImageView heroImageView = (ImageView) findViewById(R.id.view_match_player_basic_hero_image_view);
+        ImageView rankedImageView = (ImageView) findViewById(R.id.view_match_player_basic_ranked_image_view);
         TextView heroNameTextView = (TextView) findViewById(R.id.view_match_player_basic_hero_name_text_view);
         TextView matchIdTextView = (TextView) findViewById(R.id.view_match_player_basic_match_id_text_view);
         TextView timeAgoTextView = (TextView) findViewById(R.id.view_match_player_basic_date_text_view);
         TextView victoryTextView = (TextView) findViewById(R.id.view_match_player_basic_victory_text_view);
 
-        matchIdTextView.setText(match.getLobbyTypeString());
+        matchIdTextView.setText(match.getGameModeString());
         timeAgoTextView.setText(match.getTimeAgoString());
+
+        if (match.isRankedGame()) {
+            rankedImageView.setVisibility(View.VISIBLE);
+        }
+        else {
+            rankedImageView.setVisibility(View.INVISIBLE);
+        }
 
         Player player = match.getPlayerForSteamUser(user);
         Hero hero = Heroes.get().getHero(player.getHeroIdString());
@@ -64,11 +73,11 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         victoryTextView.setTextColor(getResources().getColor(match.getMatchResultColorResourceIdForPlayer(player)));
 
         if (hero != null) {
-            Picasso.with(DotaFriendApplication.CONTEXT).load(hero.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(imageView);
+            Picasso.with(DotaFriendApplication.CONTEXT).load(hero.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(heroImageView);
             heroNameTextView.setText(hero.getLocalizedName());
         }
         else {
-            imageView.setImageResource(R.drawable.ic_launcher);
+            heroImageView.setImageResource(R.drawable.ic_launcher);
             heroNameTextView.setText(R.string.no_hero);
         }
     }

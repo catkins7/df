@@ -34,11 +34,20 @@ public class PlayerRowView extends RelativeLayout {
         updateViews();
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void notifyPlayerUpdated() {
+        updateViews();
+    }
+
     private void updateViews() {
         if (player != null) {
             View container = findViewById(R.id.view_player_row_container_relative_layout);
             ImageView heroImageView = (ImageView) findViewById(R.id.view_player_row_hero_image_view);
             TextView playerNameTextView = (TextView) findViewById(R.id.view_player_row_player_name_text_view);
+            TextView kdaTextView = (TextView) findViewById(R.id.view_player_row_kda_text_view);
 
             if (player.isRadiantPlayer()) {
                 container.setBackgroundResource(R.drawable.black_green_button_background);
@@ -51,15 +60,16 @@ public class PlayerRowView extends RelativeLayout {
             }
 
             Hero hero = Heroes.get().getHero(player.getHeroIdString());
-
             SteamUser user = SteamUsers.get().getByAccountId(String.valueOf(player.getAccountId()));
 
             if (user != null) {
-                playerNameTextView.setText(user.getPersonaName());
+                playerNameTextView.setText(user.getDisplayName());
             }
             else {
                 playerNameTextView.setText(String.valueOf(player.getAccountId()));
             }
+
+            kdaTextView.setText(player.getKdaString());
 
             if (hero != null) {
                 Picasso.with(DotaFriendApplication.CONTEXT).load(Heroes.get().getHero(player.getHeroIdString()).getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(heroImageView);

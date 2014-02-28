@@ -24,9 +24,17 @@ public class SteamUserView extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_steam_user, this, true);
     }
 
+    public String getSteamUserId() {
+        return steamUserId;
+    }
+
     public void setSteamUser(SteamUser user) {
         steamUserId = user.getSteamId();
 
+        updateViews();
+    }
+
+    public void notifyMatchUpdated() {
         updateViews();
     }
 
@@ -37,7 +45,7 @@ public class SteamUserView extends RelativeLayout {
             TextView textView = (TextView) findViewById(R.id.steam_user_view_text_view);
             ImageView imageView = (ImageView) findViewById(R.id.steam_user_view_image_view);
 
-            textView.setText(user.getPersonaName());
+            textView.setText(user.getDisplayName());
             Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(imageView);
         }
     }
