@@ -16,7 +16,7 @@
     <ImageView
         android:id="@+id/view_match_player_basic_ranked_image_view"
         android:visibility="invisible"
-        android:src="@drawable/ranked_drawable"
+        android:src="@drawable/ranked_icon"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_width="@dimen/match_for_player_basic_ranked_image_view_size"

@@ -159,7 +159,7 @@
             <ImageView
                 android:id="@+id/fragment_match_summary_ranked_image_view"
                 android:visibility="visible"
-                android:src="@drawable/ranked_drawable"
+                android:src="@drawable/ranked_icon"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_width="@dimen/match_for_player_basic_ranked_image_view_size"
                 android:layout_height="@dimen/match_for_player_basic_ranked_image_view_size"/>
