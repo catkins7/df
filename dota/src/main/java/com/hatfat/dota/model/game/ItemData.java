@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by scottrick on 2/15/14.
+ * Created by scottrick on 3/5/14.
  */
-public class HeroData {
-    @SerializedName("heroes")
-    List<Hero> heroes;
+public class ItemData {
+    @SerializedName("items")
+    List<Item> items;
 }

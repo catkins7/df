@@ -49,7 +49,6 @@
                 android:layout_toLeftOf="@id/fragment_dota_player_summary_friend_button"
                 android:layout_marginRight="@dimen/default_padding"
                 android:layout_below="@id/fragment_dota_player_summary_persona_text_view"
-                android:textColor="@color/off_gray"
                 android:textSize="@dimen/font_size_small"
                 android:gravity="left|center_vertical"
                 android:ellipsize="end"

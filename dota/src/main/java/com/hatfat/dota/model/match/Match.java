@@ -371,7 +371,12 @@ public class Match {
         int minutes = duration / 60 % 60;
         int seconds = duration % 60;
 
-        return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        if (hours < 1) {
+            return String.format("%d:%02d", minutes, seconds);
+        }
+        else {
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        }
     }
 
     public int getRadiantTotalKillCount() {

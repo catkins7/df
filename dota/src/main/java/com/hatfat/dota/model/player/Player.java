@@ -1,6 +1,10 @@
 package com.hatfat.dota.model.player;
 
+import android.content.res.Resources;
 import com.google.gson.annotations.SerializedName;
+import com.hatfat.dota.R;
+import com.hatfat.dota.model.game.Item;
+import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
@@ -103,9 +107,65 @@ public class Player {
     public int getAssists() {
         return assists;
     }
+    public int getGoldPerMinute() {
+        return goldPerMinute;
+    }
+    public int getXpPerMinute() {
+        return xpPerMinute;
+    }
+    public String getGpmString() {
+        return String.valueOf(goldPerMinute);
+    }
+    public String getXpmString() {
+        return String.valueOf(xpPerMinute);
+    }
+    public String getCreepScoreString(Resources resources) {
+        return String.valueOf(lastHits) + " / " + String.valueOf(denies) + " " + resources.getString(R.string.creep_score);
+    }
+    public String getLevelString(Resources resources) {
+        return resources.getString(R.string.level) + " " + String.valueOf(level);
+    }
 
     public String getKdaString() {
         return String.valueOf(kills) + " / " + String.valueOf(deaths) + " / " + String.valueOf(assists);
+    }
+
+    public String getItemImageUrl(int itemNum) {
+        Item item = getItem(itemNum);
+
+        if (item != null) {
+            return item.getLargeHorizontalPortraitUrl();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public Item getItem(int itemNum) {
+        int itemId = -1;
+
+        switch (itemNum) {
+            case 0:
+                itemId = item0;
+                break;
+            case 1:
+                itemId = item1;
+                break;
+            case 2:
+                itemId = item2;
+                break;
+            case 3:
+                itemId = item3;
+                break;
+            case 4:
+                itemId = item4;
+                break;
+            case 5:
+                itemId = item5;
+                break;
+        }
+
+        return Items.get().getItem(String.valueOf(itemId));
     }
 
     public boolean isDirePlayer() {

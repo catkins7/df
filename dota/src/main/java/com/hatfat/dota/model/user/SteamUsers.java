@@ -75,6 +75,7 @@ public class SteamUsers {
         ids.add("76561197980883683"); //fatty
         ids.add("76561198000718505"); //bluth
         ids.add("76561198000376719"); //paul
+        ids.add("76561197976570648"); //sarge
 
         LinkedList<SteamUser> defaultUsers = new LinkedList<>();
         for (String id : ids) {
@@ -111,6 +112,22 @@ public class SteamUsers {
 
             }
         });
+    }
+
+    public void refreshUser(SteamUser user) {
+        List<String> ids = new LinkedList<>();
+        ids.add(user.getSteamId());
+
+        fetchUsers(ids);
+    }
+
+    public void refreshUsers(List<SteamUser> users) {
+        List<String> ids = new LinkedList<>();
+        for (SteamUser user : users) {
+            ids.add(user.getSteamId());
+        }
+
+        fetchUsers(ids);
     }
 
     private void fetchUsers(List<String> steamIds) {

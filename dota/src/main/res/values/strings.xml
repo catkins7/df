@@ -12,6 +12,8 @@
     <string name="add_player">Add a new player...</string>
 
     <string name="no_hero">No Hero</string>
+    <string name="level">Level</string>
+    <string name="creep_score">cs</string>
 
     <string name="match_result_unknown"></string>
     <string name="match_result_radiant_victory">Radiant Victory</string>
@@ -20,9 +22,9 @@
     <string name="match_result_player_defeat">Loss</string>
     <string name="match_result_summary_kills_divider_text">-</string>
 
-    <string name="player_summary_added_friend_text">Added to player list!</string>
-    <string name="player_summary_remove_friend_message_text">Remove this player from your player list?</string>
-    <string name="player_summary_remove_friend_remove_text">Remove</string>
-    <string name="player_summary_remove_friend_title_text">Remove Player</string>
+    <string name="player_summary_added_friend_text">Starred player!</string>
+    <string name="player_summary_remove_friend_message_text">Unstar this player?</string>
+    <string name="player_summary_remove_friend_remove_text">Unstar</string>
+    <string name="player_summary_remove_friend_title_text">Unstar Player</string>
 
 </resources>

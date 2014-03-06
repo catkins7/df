@@ -4,6 +4,9 @@
     <color name="off_white">#ffdddddd</color>
     <color name="off_black">#ff222222</color>
     <color name="off_gray">#ffbbbbbb</color>
+    <color name="off_gold">#ffcccc00</color>
+
+    <color name="steam_light_blue">#ff86b5d9</color>
 
     <color name="radiant_green">#ff00aa00</color>
     <color name="dire_red">#ffaa0000</color>

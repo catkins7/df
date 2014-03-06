@@ -48,6 +48,14 @@ public class PlayerRowView extends RelativeLayout {
             ImageView heroImageView = (ImageView) findViewById(R.id.view_player_row_hero_image_view);
             TextView playerNameTextView = (TextView) findViewById(R.id.view_player_row_player_name_text_view);
             TextView kdaTextView = (TextView) findViewById(R.id.view_player_row_kda_text_view);
+            TextView gpmTextView = (TextView) findViewById(R.id.view_player_row_gpm_text_view);
+            TextView xpmTextView = (TextView) findViewById(R.id.view_player_row_xpm_text_view);
+            ImageView itemImageView0 = (ImageView) findViewById(R.id.view_player_row_item_image_view_0);
+            ImageView itemImageView1 = (ImageView) findViewById(R.id.view_player_row_item_image_view_1);
+            ImageView itemImageView2 = (ImageView) findViewById(R.id.view_player_row_item_image_view_2);
+            ImageView itemImageView3 = (ImageView) findViewById(R.id.view_player_row_item_image_view_3);
+            ImageView itemImageView4 = (ImageView) findViewById(R.id.view_player_row_item_image_view_4);
+            ImageView itemImageView5 = (ImageView) findViewById(R.id.view_player_row_item_image_view_5);
 
             if (player.isRadiantPlayer()) {
                 container.setBackgroundResource(R.drawable.black_green_button_background);
@@ -70,6 +78,15 @@ public class PlayerRowView extends RelativeLayout {
             }
 
             kdaTextView.setText(player.getKdaString());
+            gpmTextView.setText(player.getCreepScoreString(getResources()));
+            xpmTextView.setText(player.getLevelString(getResources()));
+
+            setItemImageView(itemImageView0, player.getItemImageUrl(0));
+            setItemImageView(itemImageView1, player.getItemImageUrl(1));
+            setItemImageView(itemImageView2, player.getItemImageUrl(2));
+            setItemImageView(itemImageView3, player.getItemImageUrl(3));
+            setItemImageView(itemImageView4, player.getItemImageUrl(4));
+            setItemImageView(itemImageView5, player.getItemImageUrl(5));
 
             if (hero != null) {
                 Picasso.with(DotaFriendApplication.CONTEXT).load(Heroes.get().getHero(player.getHeroIdString()).getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(heroImageView);
@@ -77,6 +94,15 @@ public class PlayerRowView extends RelativeLayout {
             else {
                 heroImageView.setImageDrawable(null);
             }
+        }
+    }
+
+    private void setItemImageView(ImageView imageView, String itemImageUrl) {
+        if (itemImageUrl != null) {
+            Picasso.with(DotaFriendApplication.CONTEXT).load(itemImageUrl).placeholder(R.drawable.ic_launcher).into(imageView);
+        }
+        else {
+            imageView.setImageResource(R.drawable.empty_item_bg);
         }
     }
 }

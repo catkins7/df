@@ -1,9 +1,11 @@
 package com.hatfat.dota.model.user;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.content.LocalBroadcastManager;
 import com.google.gson.annotations.SerializedName;
 import com.hatfat.dota.DotaFriendApplication;
+import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
 
 import java.util.Comparator;
@@ -150,6 +152,14 @@ public class SteamUser {
         }
         else {
             return state.getStateName();
+        }
+    }
+    public int getCurrentStateDescriptionTextColor(Resources resources) {
+        if (getPlayerState().equals(SteamUser.SteamPlayerState.SteamPlayerState_Offline)) {
+            return resources.getColor(R.color.off_gray);
+        }
+        else {
+            return resources.getColor(R.color.steam_light_blue);
         }
     }
     public String getAccountId() {

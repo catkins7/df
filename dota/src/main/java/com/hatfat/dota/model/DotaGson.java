@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 public class DotaGson {
     private static Gson gson;
 
-    public static Gson createGson() {
+    public static Gson getDotaGson() {
         if (gson == null) {
             gson = new GsonBuilder()
                     .create();
@@ -17,5 +17,4 @@ public class DotaGson {
 
         return gson;
     }
-
 }

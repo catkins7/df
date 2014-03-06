@@ -42,10 +42,14 @@ public class SteamUserView extends RelativeLayout {
         SteamUser user = SteamUsers.get().getBySteamId(steamUserId);
 
         if (user != null) {
-            TextView textView = (TextView) findViewById(R.id.steam_user_view_text_view);
+            TextView nameTextView = (TextView) findViewById(R.id.steam_user_view_name_text_view);
+            TextView statusTextView = (TextView) findViewById(R.id.steam_user_view_status_text_view);
             ImageView imageView = (ImageView) findViewById(R.id.steam_user_view_image_view);
 
-            textView.setText(user.getDisplayName());
+            nameTextView.setText(user.getDisplayName());
+            statusTextView.setText(user.getCurrentStateDescriptionString());
+            statusTextView.setTextColor(user.getCurrentStateDescriptionTextColor(getResources()));
+
             Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(imageView);
         }
     }

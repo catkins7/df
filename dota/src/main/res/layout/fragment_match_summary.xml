@@ -202,6 +202,7 @@
     <ListView
         android:id="@+id/fragment_match_summary_players_list_view"
         android:layout_below="@id/fragment_match_summary_top_panel_layout"
+        android:scrollbars="none"
         android:paddingTop="4dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -12,14 +12,27 @@
         android:layout_width="@dimen/steam_user_view_image_size"
         android:layout_height="@dimen/steam_user_view_image_size"/>
 
-    <TextView
-        android:layout_marginLeft="@dimen/default_padding"
-        android:gravity="center_vertical"
-        android:textSize="20dp"
-        android:textColor="@color/off_white"
-        android:id="@+id/steam_user_view_text_view"
+    <RelativeLayout
         android:layout_toRightOf="@id/steam_user_view_image_view"
+        android:layout_marginLeft="@dimen/default_padding"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/steam_user_view_image_size"/>
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/steam_user_view_name_text_view"
+            android:ellipsize="end"
+            android:layout_alignParentTop="true"
+            android:textSize="@dimen/font_size_large"
+            android:textColor="@color/off_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_view_height_large"/>
+
+        <TextView
+            android:id="@+id/steam_user_view_status_text_view"
+            android:layout_below="@id/steam_user_view_name_text_view"
+            android:textSize="@dimen/font_size_small"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_view_height_small"/>
+
+    </RelativeLayout>
 </RelativeLayout>

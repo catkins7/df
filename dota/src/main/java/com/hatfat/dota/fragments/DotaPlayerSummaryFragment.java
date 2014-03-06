@@ -90,6 +90,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     public void onResume() {
         super.onResume();
 
+        SteamUsers.get().refreshUser(user);
         MatchFetcher.fetchMatches(user);
     }
 
@@ -243,6 +244,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private void updateViews() {
         personaTextView.setText(user.getDisplayName());
         currentStateTextView.setText(user.getCurrentStateDescriptionString());
+        currentStateTextView.setTextColor(user.getCurrentStateDescriptionTextColor(getResources()));
         Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(profileImageView);
 
         updateFriendButtonBackground();
@@ -259,10 +261,10 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         }
 
         if (SteamUsers.get().isUserStarred(user)) {
-            friendToggleButton.setBackgroundResource(R.drawable.friend_button_selected);
+            friendToggleButton.setBackgroundResource(android.R.drawable.btn_star_big_on);
         }
         else {
-            friendToggleButton.setBackgroundResource(R.drawable.friend_button_unselected);
+            friendToggleButton.setBackgroundResource(android.R.drawable.btn_star_big_off);
         }
     }
 

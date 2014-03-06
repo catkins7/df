@@ -44,7 +44,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED)) {
-                    updateUserList();
+                    updateUserListAndSort();
                 }
                 else if (intent.getAction().equals(SteamUser.STEAM_USER_UPDATED)) {
                     String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
@@ -57,7 +57,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
                                 SteamUserView userView = (SteamUserView) view;
 
                                 if (userView.getSteamUserId().equals(updatedId)) {
-                                    userView.notifyMatchUpdated();
+                                    updateUserListAndSort();
                                 }
                             }
                         }
@@ -76,13 +76,13 @@ public class DotaPlayerListFragment extends CharltonFragment {
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).unregisterReceiver(receiver);
     }
 
-    private void updateUserList() {
+    private void updateUserListAndSort() {
         sortedUsers = new LinkedList<>();
         sortedUsers.addAll(SteamUsers.get().getStarredUsers());
         Collections.sort(sortedUsers, SteamUser.getComparator());
 
         if (listView != null) {
-            ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+            listAdapter.notifyDataSetChanged();
         }
     }
 
@@ -90,7 +90,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        updateUserList();
+        updateUserListAndSort();
 
         startListening();
     }
@@ -100,6 +100,13 @@ public class DotaPlayerListFragment extends CharltonFragment {
         super.onDestroy();
 
         stopListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SteamUsers.get().refreshUsers(sortedUsers);
     }
 
     @Override
@@ -162,6 +169,6 @@ public class DotaPlayerListFragment extends CharltonFragment {
 
     @Override
     public String getCharltonText() {
-        return "Hello.  I'm Charlton Heston.";
+        return "Hello.  I'm Charlton Heston.\nThese are your starred players.";
     }
 }
