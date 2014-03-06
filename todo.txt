@@ -1,7 +1,6 @@
 
 before playstore release
 ---------------------------
-remove leading zeroes from match LENGth display
 bear's items?
 
 
