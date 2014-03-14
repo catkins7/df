@@ -41,7 +41,7 @@ public class SteamUsers {
 
     public void init() {}
 
-    private Collection<SteamUser> getUsers() {
+    public Collection<SteamUser> getAllUsers() {
         return users.values();
     }
 
