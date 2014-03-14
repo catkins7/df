@@ -1,5 +1,6 @@
 package com.hatfat.dota.model.match;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,5 +58,9 @@ public class Matches {
 
     public Match getMatch(String matchId) {
         return matches.get(matchId);
+    }
+
+    public Collection<Match> getAllMatches() {
+        return matches.values();
     }
 }
