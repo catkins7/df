@@ -8,6 +8,8 @@ import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
+import java.util.List;
+
 /**
  * Created by scottrick on 2/13/14.
  */
@@ -82,6 +84,9 @@ public class Player {
     @SerializedName("level")
     int level;
 
+    @SerializedName("additional_units")
+    List<AdditionalUnit> additionalUnits;
+
     public SteamUser getSteamUser() {
         return SteamUsers.get().getByAccountId(String.valueOf(accountId));
     }
@@ -122,12 +127,21 @@ public class Player {
     public String getCreepScoreString(Resources resources) {
         return String.valueOf(lastHits) + " / " + String.valueOf(denies) + " " + resources.getString(R.string.creep_score);
     }
+    public String getLastHitString(Resources resources) {
+        return String.valueOf(lastHits) + " " + resources.getString(R.string.creep_score);
+    }
     public String getLevelString(Resources resources) {
         return resources.getString(R.string.level) + " " + String.valueOf(level);
     }
-
     public String getKdaString() {
         return String.valueOf(kills) + " / " + String.valueOf(deaths) + " / " + String.valueOf(assists);
+    }
+
+    public List<AdditionalUnit> getAdditionalUnits() {
+        return additionalUnits;
+    }
+    public boolean hasAdditionalUnits() {
+        return (additionalUnits != null && additionalUnits.size() > 0);
     }
 
     public String getItemImageUrl(int itemNum) {

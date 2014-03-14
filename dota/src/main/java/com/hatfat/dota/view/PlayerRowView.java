@@ -10,6 +10,7 @@ import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Hero;
 import com.hatfat.dota.model.game.Heroes;
+import com.hatfat.dota.model.player.AdditionalUnit;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
@@ -56,6 +57,7 @@ public class PlayerRowView extends RelativeLayout {
             ImageView itemImageView3 = (ImageView) findViewById(R.id.view_player_row_item_image_view_3);
             ImageView itemImageView4 = (ImageView) findViewById(R.id.view_player_row_item_image_view_4);
             ImageView itemImageView5 = (ImageView) findViewById(R.id.view_player_row_item_image_view_5);
+            View additionalUnitsContainer = findViewById(R.id.view_player_row_additional_unit_container_view);
 
             if (player.isRadiantPlayer()) {
                 container.setBackgroundResource(R.drawable.black_green_button_background);
@@ -78,7 +80,7 @@ public class PlayerRowView extends RelativeLayout {
             }
 
             kdaTextView.setText(player.getKdaString());
-            gpmTextView.setText(player.getCreepScoreString(getResources()));
+            gpmTextView.setText(player.getLastHitString(getResources()));
             xpmTextView.setText(player.getLevelString(getResources()));
 
             setItemImageView(itemImageView0, player.getItemImageUrl(0));
@@ -87,6 +89,32 @@ public class PlayerRowView extends RelativeLayout {
             setItemImageView(itemImageView3, player.getItemImageUrl(3));
             setItemImageView(itemImageView4, player.getItemImageUrl(4));
             setItemImageView(itemImageView5, player.getItemImageUrl(5));
+
+            if (player.hasAdditionalUnits()) {
+                additionalUnitsContainer.setVisibility(VISIBLE);
+
+                //we only support showing one additional unit at the time
+                AdditionalUnit additionalUnit = player.getAdditionalUnits().get(0);
+
+                ImageView additionalUnitIconImageView = (ImageView) findViewById(R.id.view_player_row_additional_unit_image_view);
+                ImageView additionalItemImageView0 = (ImageView) findViewById(R.id.view_player_row_additional_unit_item_image_view_0);
+                ImageView additionalItemImageView1 = (ImageView) findViewById(R.id.view_player_row_additional_unit_item_image_view_1);
+                ImageView additionalItemImageView2 = (ImageView) findViewById(R.id.view_player_row_additional_unit_item_image_view_2);
+                ImageView additionalItemImageView3 = (ImageView) findViewById(R.id.view_player_row_additional_unit_item_image_view_3);
+                ImageView additionalItemImageView4 = (ImageView) findViewById(R.id.view_player_row_additional_unit_item_image_view_4);
+                ImageView additionalItemImageView5 = (ImageView) findViewById(R.id.view_player_row_additional_unit_item_image_view_5);
+
+                additionalUnitIconImageView.setImageResource(additionalUnit.getIconResource());
+                setItemImageView(additionalItemImageView0, additionalUnit.getItemImageUrl(0));
+                setItemImageView(additionalItemImageView1, additionalUnit.getItemImageUrl(1));
+                setItemImageView(additionalItemImageView2, additionalUnit.getItemImageUrl(2));
+                setItemImageView(additionalItemImageView3, additionalUnit.getItemImageUrl(3));
+                setItemImageView(additionalItemImageView4, additionalUnit.getItemImageUrl(4));
+                setItemImageView(additionalItemImageView5, additionalUnit.getItemImageUrl(5));
+            }
+            else {
+                additionalUnitsContainer.setVisibility(GONE);
+            }
 
             if (hero != null) {
                 Picasso.with(DotaFriendApplication.CONTEXT).load(Heroes.get().getHero(player.getHeroIdString()).getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(heroImageView);

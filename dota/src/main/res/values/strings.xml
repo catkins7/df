@@ -14,6 +14,7 @@
     <string name="no_hero">No Hero</string>
     <string name="level">Level</string>
     <string name="creep_score">cs</string>
+    <string name="last_hits">lh</string>
 
     <string name="match_result_unknown"></string>
     <string name="match_result_radiant_victory">Radiant Victory</string>
