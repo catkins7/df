@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import com.hatfat.dota.R;
-import com.hatfat.dota.fragments.DotaPlayerListFragment;
+import com.hatfat.dota.fragments.StarredPlayerListFragment;
 import com.hatfat.dota.fragments.WelcomeFragment;
 import com.hatfat.dota.model.user.SteamUsers;
 
@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
         fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
         setupDrawer();
 
-        leftDrawerFragment = new DotaPlayerListFragment();
+        leftDrawerFragment = new StarredPlayerListFragment();
         getFragmentManager().beginTransaction().add(R.id.left_drawer_container, leftDrawerFragment).commit();
 
         SteamUsers.get().init(); //initialize the SteamUsers singleton

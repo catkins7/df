@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.CharltonFragment;
 import com.hatfat.dota.fragments.CharltonMessageFragment;
-import com.hatfat.dota.fragments.DotaPlayerListFragment;
+import com.hatfat.dota.fragments.StarredPlayerListFragment;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.match.Matches;
@@ -44,7 +44,7 @@ public class CharltonActivity extends Activity {
         messageFragment = new CharltonMessageFragment();
         getFragmentManager().beginTransaction().add(R.id.charlton_fragment_container_view, messageFragment).commit();
 
-        DotaPlayerListFragment playerListFragment = new DotaPlayerListFragment();
+        StarredPlayerListFragment playerListFragment = new StarredPlayerListFragment();
         setRootCharltonFragment(playerListFragment);
 
         Items.get().init(getResources());

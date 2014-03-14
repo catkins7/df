@@ -8,6 +8,5 @@ real spirit bear icon
 Add player feature
 save starred players and starred player matches
 Charlton talking feature
-match summary improvements
 fetch all for player feature
 left menu to nav back to player list?

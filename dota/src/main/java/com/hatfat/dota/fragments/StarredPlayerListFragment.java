@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Created by scottrick on 2/10/14.
  */
-public class DotaPlayerListFragment extends CharltonFragment {
+public class StarredPlayerListFragment extends CharltonFragment {
 
     ListView listView;
     BaseAdapter listAdapter;
@@ -35,7 +35,7 @@ public class DotaPlayerListFragment extends CharltonFragment {
 
     BroadcastReceiver receiver;
 
-    public DotaPlayerListFragment() {
+    public StarredPlayerListFragment() {
         sortedUsers = new LinkedList<>();
     }
 
