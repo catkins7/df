@@ -141,11 +141,27 @@ public class SteamUserListFragment extends CharltonFragment {
             }
 
             @Override
+            public int getItemViewType(int position) {
+                if (steamUsers.size() <= 0) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return 2;
+            }
+
+            @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
                 if (steamUsers.size() <= 0) {
                     //no users, so send "no users" row
                     TextView textView = new TextView(viewGroup.getContext());
 
+                    textView.setBackgroundResource(R.drawable.off_black_background);
                     textView.setText(R.string.no_steam_users);
                     textView.setTextColor(getResources().getColor(R.color.off_white));
                     textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.font_size_tiny));

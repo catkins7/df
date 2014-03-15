@@ -2,9 +2,6 @@
 before playstore release
 ---------------------------
 real spirit bear icon
-no players row
-no starred players row
-no matches row
 
 
 save starred players and starred player matches

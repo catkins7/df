@@ -12,12 +12,16 @@ import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Match;
+import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.services.MatchFetcher;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +45,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
     private BaseAdapter matchesAdapter;
     private ArrayList<String> sortedMatches;
+
+    private boolean fetchingMatches;
 
     public static DotaPlayerSummaryFragment newInstance(SteamUser user) {
         DotaPlayerSummaryFragment newFragment = new DotaPlayerSummaryFragment();
@@ -91,7 +97,25 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         super.onResume();
 
         SteamUsers.get().refreshUser(user);
-        MatchFetcher.fetchMatches(user);
+
+        fetchingMatches = true;
+        MatchFetcher.fetchMatches(user, new Callback<MatchHistory>() {
+            @Override
+            public void success(MatchHistory matchHistory, Response response) {
+                fetchingMatches = false;
+
+                if (matchHistory.getMatches() == null || matchHistory.getMatches().size() <= 0) {
+                    //no matches, but we want to remove the progress bar and show the "no matches row" so reload
+                    matchesAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                fetchingMatches = false;
+                matchesAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -161,7 +185,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         matchesAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                return sortedMatches.size();
+                if (sortedMatches.size() <= 0) {
+                    return 1;
+                }
+                else {
+                    return sortedMatches.size();
+                }
             }
 
             @Override
@@ -175,11 +204,49 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             }
 
             @Override
+            public int getItemViewType(int position) {
+                if (sortedMatches.size() <= 0) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return 2;
+            }
+
+            @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
+                if (sortedMatches.size() <= 0) {
+                    //no users
+
+                    if (fetchingMatches) {
+                        ProgressBar progressBar = new ProgressBar(viewGroup.getContext());
+                        progressBar.setBackgroundResource(R.drawable.off_black_background);
+                        progressBar.setIndeterminate(true);
+
+                        return progressBar;
+                    }
+                    else {
+                        TextView textView = new TextView(viewGroup.getContext());
+
+                        textView.setBackgroundResource(R.drawable.off_black_background);
+                        textView.setText(R.string.no_matches);
+                        textView.setTextColor(getResources().getColor(R.color.off_white));
+                        textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.font_size_tiny));
+
+                        int padding = (int) getResources().getDimension(R.dimen.default_padding);
+                        textView.setPadding(padding, padding, padding, padding);
+
+                        return textView;
+                    }
+                }
+
                 Match match = (Match) getItem(i);
-
                 match.getMatchDetailsIfNeeded();
-
                 MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
 
                 if (matchView == null) {
@@ -197,8 +264,10 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         matchesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Match match = (Match) matchesAdapter.getItem(i);
-                getCharltonActivity().pushCharltonFragment(MatchSummaryFragment.newInstance(match));
+                if (sortedMatches.size() > i) {
+                    Match match = (Match) matchesAdapter.getItem(i);
+                    getCharltonActivity().pushCharltonFragment(MatchSummaryFragment.newInstance(match));
+                }
             }
         });
     }

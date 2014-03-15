@@ -15,7 +15,7 @@ import retrofit.client.Response;
  */
 public class MatchFetcher
 {
-    public static void fetchMatches(final SteamUser user) {
+    public static void fetchMatches(final SteamUser user, final Callback<MatchHistory> callback) {
         CharltonService charltonService = DotaRestAdapter.createRestAdapter().create(CharltonService.class);
         charltonService.getMatchHistory(user.getAccountId(), new Callback<DotaResult<MatchHistory>>() {
             @Override
@@ -24,10 +24,14 @@ public class MatchFetcher
 
                 Matches.get().addMatches(matchHistory.getMatches());
                 user.addMatches(matchHistory.getMatches());
+
+                callback.success(matchHistory, response);
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                callback.failure(retrofitError);
+
                 Log.e("MatchFetcher", "" + retrofitError.getMessage());
             }
         });
