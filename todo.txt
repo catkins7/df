@@ -3,7 +3,17 @@ before playstore release
 ---------------------------
 real spirit bear icon
 
+
 save starred players and starred player matches
 Charlton talking feature
 fetch all for player feature
 left menu to nav back to player list?
+
+
+
+
+
+finished for next release
+---------------------------
+search player
+lone druid's bear items
