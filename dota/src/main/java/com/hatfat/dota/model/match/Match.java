@@ -505,4 +505,21 @@ public class Match {
 
         return matchIdComparator;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Match) {
+            Match otherMatch = (Match)o;
+            if (matchId != null && matchId.length() > 0) {
+                return matchId.equals(otherMatch.matchId);
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(matchId);
+    }
 }

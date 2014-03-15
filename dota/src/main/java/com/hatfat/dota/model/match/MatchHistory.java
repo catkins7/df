@@ -30,4 +30,8 @@ public class MatchHistory {
     public List<Match> getMatches() {
         return matches;
     }
+
+    public int getResultsRemaining() {
+        return resultsRemaining;
+    }
 }

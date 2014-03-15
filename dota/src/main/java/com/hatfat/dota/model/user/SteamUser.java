@@ -249,6 +249,11 @@ public class SteamUser {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(steamId);
+    }
+
     public static Comparator<SteamUser> getComparator() {
         if (comparator == null) {
             comparator = new Comparator<SteamUser>() {
