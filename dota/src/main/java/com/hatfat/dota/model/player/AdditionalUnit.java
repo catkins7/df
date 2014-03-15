@@ -77,4 +77,8 @@ public class AdditionalUnit {
 
         return R.drawable.ic_launcher;
     }
+
+    public String getUnitName() {
+        return unitName;
+    }
 }
