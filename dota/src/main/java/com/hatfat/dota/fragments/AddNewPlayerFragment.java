@@ -131,7 +131,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                searchFinishedWithResults(null);
             }
         });
     }

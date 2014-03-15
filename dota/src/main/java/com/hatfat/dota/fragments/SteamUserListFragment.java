@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.user.SteamUser;
@@ -121,7 +122,12 @@ public class SteamUserListFragment extends CharltonFragment {
         usersAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                return steamUsers.size();
+                if (steamUsers.size() <= 0) {
+                    return 1;
+                }
+                else {
+                    return steamUsers.size();
+                }
             }
 
             @Override
@@ -136,6 +142,20 @@ public class SteamUserListFragment extends CharltonFragment {
 
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
+                if (steamUsers.size() <= 0) {
+                    //no users, so send "no users" row
+                    TextView textView = new TextView(viewGroup.getContext());
+
+                    textView.setText(R.string.no_steam_users);
+                    textView.setTextColor(getResources().getColor(R.color.off_white));
+                    textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.font_size_tiny));
+
+                    int padding = (int)getResources().getDimension(R.dimen.default_padding);
+                    textView.setPadding(padding, padding, padding, padding);
+
+                    return textView;
+                }
+
                 SteamUser user = getItem(i);
                 SteamUserView userView = (SteamUserView) view;
 

@@ -29,5 +29,7 @@
     <string name="player_summary_remove_friend_title_text">Unstar Player</string>
 
     <string name="add_new_player_search_text">Search</string>
+    <string name="no_steam_users">No users found.</string>
+    <string name="no_starred_users">No starred users.</string>
 
 </resources>
