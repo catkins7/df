@@ -6,6 +6,7 @@
                 android:layout_height="match_parent">
 
     <TextView
+        android:padding="@dimen/default_padding"
         android:id="@+id/fragment_charlton_message_textview"
         android:text="Hello."
         android:textColor="@color/off_black"

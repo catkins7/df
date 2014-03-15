@@ -28,4 +28,6 @@
     <string name="player_summary_remove_friend_remove_text">Unstar</string>
     <string name="player_summary_remove_friend_title_text">Unstar Player</string>
 
+    <string name="add_new_player_search_text">Search</string>
+
 </resources>

@@ -251,7 +251,7 @@ public class SteamUser {
 
     @Override
     public int hashCode() {
-        return Integer.parseInt(steamId);
+        return (int) Long.parseLong(steamId);
     }
 
     public static Comparator<SteamUser> getComparator() {

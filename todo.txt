@@ -4,8 +4,6 @@ before playstore release
 real spirit bear icon
 
 
-
-Add player feature
 save starred players and starred player matches
 Charlton talking feature
 fetch all for player feature
