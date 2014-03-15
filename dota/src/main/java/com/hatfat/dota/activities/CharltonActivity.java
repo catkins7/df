@@ -58,6 +58,14 @@ public class CharltonActivity extends Activity {
         super.onResume();
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        SteamUsers.get().saveToDisk();
+    }
+
     private void setupDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 

@@ -67,10 +67,15 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         }
 
         Player player = match.getPlayerForSteamUser(user);
-        Hero hero = Heroes.get().getHero(player.getHeroIdString());
+        Hero hero = player == null ? null : Heroes.get().getHero(player.getHeroIdString());
 
-        victoryTextView.setText(match.getMatchResultStringResourceIdForPlayer(player));
-        victoryTextView.setTextColor(getResources().getColor(match.getMatchResultColorResourceIdForPlayer(player)));
+        if (player != null) {
+            victoryTextView.setText(match.getMatchResultStringResourceIdForPlayer(player));
+            victoryTextView.setTextColor(getResources().getColor(match.getMatchResultColorResourceIdForPlayer(player)));
+        }
+        else {
+            victoryTextView.setText("");
+        }
 
         if (hero != null) {
             Picasso.with(DotaFriendApplication.CONTEXT).load(hero.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(heroImageView);

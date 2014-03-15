@@ -228,6 +228,10 @@ public class Match {
     @SerializedName("players")
     List<Player> players;
 
+    public Match(String matchId) {
+        this.matchId = matchId;
+    }
+
     public String getMatchId() {
         return matchId;
     }
@@ -425,6 +429,10 @@ public class Match {
     }
 
     public Player getPlayerForSteamUser(SteamUser user) {
+        if (players == null) {
+            return null;
+        }
+
         for (Player player : players) {
             if (player.getAccountId() == user.getAccountIdLong()) {
                 return player;

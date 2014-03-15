@@ -57,7 +57,16 @@ public class Matches {
     }
 
     public Match getMatch(String matchId) {
-        return matches.get(matchId);
+        if (matches.containsKey(matchId)) {
+            return matches.get(matchId);
+        }
+        else {
+            Match newMatch = new Match(matchId);
+            matches.put(matchId, newMatch);
+
+            //auto fetch?
+            return newMatch;
+        }
     }
 
     public Collection<Match> getAllMatches() {
