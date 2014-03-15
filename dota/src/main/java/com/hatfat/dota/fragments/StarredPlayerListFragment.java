@@ -9,10 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.*;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.user.SteamUser;
@@ -124,7 +121,12 @@ public class StarredPlayerListFragment extends CharltonFragment {
         listAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                return sortedUsers.size();
+                if (sortedUsers.size() <= 0) {
+                    return 1;
+                }
+                else {
+                    return sortedUsers.size();
+                }
             }
 
             @Override
@@ -139,8 +141,21 @@ public class StarredPlayerListFragment extends CharltonFragment {
 
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
-                SteamUser user = (SteamUser) getItem(i);
+                if (sortedUsers.size() <= 0) {
+                    //no users, so send "no users" row
+                    TextView textView = new TextView(viewGroup.getContext());
 
+                    textView.setText(R.string.no_starred_users);
+                    textView.setTextColor(getResources().getColor(R.color.off_white));
+                    textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.font_size_tiny));
+
+                    int padding = (int)getResources().getDimension(R.dimen.default_padding);
+                    textView.setPadding(padding, padding, padding, padding);
+
+                    return textView;
+                }
+
+                SteamUser user = (SteamUser) getItem(i);
                 SteamUserView userView = (SteamUserView) view;
 
                 if (userView == null) {
@@ -159,8 +174,10 @@ public class StarredPlayerListFragment extends CharltonFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SteamUser steamUser = (SteamUser) listView.getAdapter().getItem(i);
-                getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(steamUser));
+                if (sortedUsers.size() > i) {
+                    SteamUser steamUser = (SteamUser) listView.getAdapter().getItem(i);
+                    getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(steamUser));
+                }
             }
         });
 

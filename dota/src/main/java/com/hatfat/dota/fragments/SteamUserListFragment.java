@@ -174,8 +174,10 @@ public class SteamUserListFragment extends CharltonFragment {
         usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SteamUser steamUser = (SteamUser) usersAdapter.getItem(i);
-                getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(steamUser));
+                if (steamUsers.size() > i) {
+                    SteamUser steamUser = (SteamUser) usersAdapter.getItem(i);
+                    getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(steamUser));
+                }
             }
         });
 
