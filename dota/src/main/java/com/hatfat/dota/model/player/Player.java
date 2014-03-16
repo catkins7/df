@@ -143,6 +143,13 @@ public class Player {
     public boolean hasAdditionalUnits() {
         return (additionalUnits != null && additionalUnits.size() > 0);
     }
+    public boolean hasAdditionalUnitsWeWantToShow() {
+        if (additionalUnits == null || additionalUnits.size() <= 0) {
+            return false;
+        }
+
+        return additionalUnits.get(0).getIconResource() >= 0;
+    }
 
     public String getItemImageUrl(int itemNum) {
         Item item = getItem(itemNum);

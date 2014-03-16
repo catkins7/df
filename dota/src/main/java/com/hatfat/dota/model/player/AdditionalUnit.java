@@ -75,7 +75,7 @@ public class AdditionalUnit {
                 return R.drawable.spirit_bear;
         }
 
-        return R.drawable.ic_launcher;
+        return -1;
     }
 
     public String getUnitName() {

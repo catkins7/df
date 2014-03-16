@@ -90,7 +90,7 @@ public class PlayerRowView extends RelativeLayout {
             setItemImageView(itemImageView4, player.getItemImageUrl(4));
             setItemImageView(itemImageView5, player.getItemImageUrl(5));
 
-            if (player.hasAdditionalUnits()) {
+            if (player.hasAdditionalUnitsWeWantToShow()) {
                 additionalUnitsContainer.setVisibility(VISIBLE);
 
                 //we only support showing one additional unit at the time
