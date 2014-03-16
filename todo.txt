@@ -2,7 +2,6 @@
 before playstore release
 ---------------------------
 real spirit bear icon
-don't show additional units if its not spirit bear (meepozzz)
 
 
 player summary improvements (number of matches, win %) ?

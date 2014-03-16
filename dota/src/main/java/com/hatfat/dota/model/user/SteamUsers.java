@@ -74,6 +74,7 @@ public class SteamUsers {
     }
 
     public void saveToDisk() {
+        Log.e("catfat", "SteamUsers saveToDisk!");
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {

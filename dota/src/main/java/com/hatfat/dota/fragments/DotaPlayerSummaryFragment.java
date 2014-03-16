@@ -129,6 +129,10 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     public void onStop() {
         super.onStop();
 
+        if (SteamUsers.get().isUserStarred(user)) {
+            Matches.get().saveMatchesToDiskForUser(user);
+        }
+
         stopListening();
     }
 
