@@ -3,7 +3,6 @@ before playstore release
 ---------------------------
 real spirit bear icon
 save in separate file, then copy to real file when successful.
-loading screen
 don't save everytime, only wnen necessary
 save/load heroes cache
 
@@ -23,3 +22,4 @@ finished for next release
 search player
 lone druid's bear items
 save/load starred players
+loading screen on startup
