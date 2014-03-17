@@ -48,7 +48,6 @@ public class Matches {
 
     public void load() {
         if (isLoaded) {
-            Log.e("catfat", "matches loaded already");
             Intent intent = new Intent(MATCHES_LOADING_PROGRESS_NOTIFICATION);
             intent.putExtra(MATCHES_LOADING_PERCENT_COMPLETE, 1.0f);
             LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
@@ -102,7 +101,11 @@ public class Matches {
         }
 
         if (matches.containsKey(match.matchId)) {
-            matches.get(match.matchId).updateWithMatch(match);
+            Match existingMatch = matches.get(match.matchId);
+            if (!existingMatch.hasMatchDetails && match.hasMatchDetails) {
+                //only update the match if it doesn't have the match details already, and the new match does!
+                matches.get(match.matchId).updateWithMatch(match);
+            }
         }
         else {
             matches.put(match.matchId, match);
@@ -137,8 +140,6 @@ public class Matches {
     }
 
     public void saveMatchesToDiskForUser(final SteamUser user) {
-        Log.e("catfat", "saveMatchesToDiskForUser " + user.getDisplayName());
-
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -162,8 +163,6 @@ public class Matches {
                     Gson gson = new Gson();
                     gson.toJson(obj, MatchesGsonObject.class, jsonWriter); // Write to file using BufferedWriter
                     jsonWriter.close();
-
-                    Log.e("catfat", "wrote file size " + jsonFile.length());
                 }
                 catch (IOException e) {
                     Log.e("Matches", "Error saving to disk: " + e.toString());

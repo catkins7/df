@@ -33,6 +33,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private static final String DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY";
 
     private SteamUser user;
+    private boolean userMatchesHaveChanged;
 
     private BroadcastReceiver receiver;
 
@@ -129,7 +130,10 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         super.onStop();
 
         if (SteamUsers.get().isUserStarred(user)) {
-            Matches.get().saveMatchesToDiskForUser(user);
+            if (userMatchesHaveChanged) {
+                userMatchesHaveChanged = false;
+                Matches.get().saveMatchesToDiskForUser(user);
+            }
         }
 
         stopListening();
@@ -142,13 +146,23 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 if (intent.getAction().equals(SteamUser.STEAM_USER_UPDATED)) {
                     String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
                     if (updatedId.equals(user.getSteamId())) {
-                        updateMatchList();
                         updateViews();
+                    }
+                }
+                else if (intent.getAction().equals(SteamUser.STEAM_USER_MATCHES_CHANGED)) {
+                    String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
+                    if (updatedId.equals(user.getSteamId())) {
+                        updateMatchList();
+                        userMatchesHaveChanged = true;
                     }
                 }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
                     //reload the match row for this match
                     String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    if (user.getMatches().contains(updatedMatchId)) {
+                        //a match in this users' match list was updated, so we need to save on exit
+                        userMatchesHaveChanged = true;
+                    }
 
                     if (matchesListView != null && matchesAdapter != null) {
                         for (int i = 0; i < matchesListView.getChildCount(); i++) {
@@ -169,6 +183,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         IntentFilter summaryFilter = new IntentFilter();
         summaryFilter.addAction(SteamUser.STEAM_USER_UPDATED);
+        summaryFilter.addAction(SteamUser.STEAM_USER_MATCHES_CHANGED);
         summaryFilter.addAction(Match.MATCH_UPDATED);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, summaryFilter);
     }

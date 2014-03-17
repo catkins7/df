@@ -20,6 +20,7 @@ public class SteamUser {
     private static final long ACCOUNT_ID_MAGIC_NUMBER = 76561197960265728L;
 
     public static final String STEAM_USER_UPDATED = "SteamUserUpdated_Notification";
+    public static final String STEAM_USER_MATCHES_CHANGED = "STEAM_USER_MATCHES_CHANGED";
     public static final String STEAM_USER_UPDATED_ID_KEY = "SteamUserUpdated_UserId_Key";
 
     private static Comparator<SteamUser> comparator;
@@ -180,11 +181,18 @@ public class SteamUser {
             return;
         }
 
+        boolean addedNewMatch = false;
+
         for (Match match : matches) {
-            this.matches.add(match.getMatchId());
+            if (!this.matches.contains(match.getMatchId())) {
+                this.matches.add(match.getMatchId());
+                addedNewMatch = true;
+            }
         }
 
-        broadcastUserChanged();
+        if (addedNewMatch) {
+            broadcastUserMatchesChanged();
+        }
     }
 
     public String toString() {
@@ -233,6 +241,12 @@ public class SteamUser {
 
     private void broadcastUserChanged() {
         Intent intent = new Intent(STEAM_USER_UPDATED);
+        intent.putExtra(STEAM_USER_UPDATED_ID_KEY, steamId);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
+    }
+
+    private void broadcastUserMatchesChanged() {
+        Intent intent = new Intent(STEAM_USER_MATCHES_CHANGED);
         intent.putExtra(STEAM_USER_UPDATED_ID_KEY, steamId);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }

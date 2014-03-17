@@ -50,7 +50,6 @@ public class SteamUsers {
 
     public void load() {
         if (isLoaded) {
-            Log.e("catfat", "steam users alraedy loaded...");
             broadcastUsersLoadedFromDisk();
         }
         else {
@@ -84,7 +83,6 @@ public class SteamUsers {
     }
 
     public void saveToDisk() {
-        Log.e("catfat", "SteamUsers saveToDisk!");
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {

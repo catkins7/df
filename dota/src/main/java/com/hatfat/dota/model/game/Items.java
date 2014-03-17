@@ -1,7 +1,6 @@
 package com.hatfat.dota.model.game;
 
 import android.content.res.Resources;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.DotaGson;
@@ -35,7 +34,6 @@ public class Items {
     public void load(Resources resources) {
         if (items != null) {
             //already loaded
-            Log.e("catfat", "skipping items load...");
             return;
         }
 

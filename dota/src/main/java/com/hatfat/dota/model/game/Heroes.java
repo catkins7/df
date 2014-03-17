@@ -2,7 +2,6 @@ package com.hatfat.dota.model.game;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.HeroFetcher;
 import retrofit.Callback;
@@ -39,7 +38,6 @@ public class Heroes {
 
     public void load() {
         if (isLoaded) {
-            Log.e("catfat", "heroes already loaded...");
             broadcastHeroesLoaded();
         }
         else {
