@@ -1,16 +1,17 @@
 
 before playstore release
 ---------------------------
-save in separate file, then copy to real file when successful.
+save in separate file, then copy to real file when successful.  Fix issues where save files are invalid/lost on save failure
 save/load heroes cache
 go over every file for quick clean-up
+
 
 
 player summary improvements (number of matches, win %) ?
 Charlton talking feature
 fetch all for player feature
 left menu to nav back to player list?
-
+clean-up unused matches.json
 
 
 

@@ -121,10 +121,12 @@ public class SteamUsers {
             Gson gson = new Gson();
             SteamUsersGsonObject obj = gson.fromJson(jsonReader, SteamUsersGsonObject.class);
 
-            addSteamUsers(obj.users);
+            if (obj != null) {
+                addSteamUsers(obj.users);
 
-            for (SteamUser user : obj.users) {
-                starredUsers.put(user.steamId, user);
+                for (SteamUser user : obj.users) {
+                    starredUsers.put(user.steamId, user);
+                }
             }
         }
         catch (FileNotFoundException e) {

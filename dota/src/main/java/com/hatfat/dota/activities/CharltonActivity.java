@@ -154,16 +154,20 @@ public class CharltonActivity extends Activity {
 
     private void setRootCharltonFragment(final CharltonFragment fragment) {
         if (rootContentFragment != fragment) {
-            FragmentManager manager = getFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment, fragment.toString());
-            transaction.commit();
-            manager.executePendingTransactions();
+            try {
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment, fragment.toString());
+                transaction.commit();
+                manager.executePendingTransactions();
 
-            messageFragment.setCharltonObject(fragment);
+                messageFragment.setCharltonObject(fragment);
+                rootContentFragment = fragment;
+            }
+            catch (IllegalStateException e) {
+
+            }
         }
-
-        rootContentFragment = fragment;
     }
 
     public void pushCharltonFragment(final CharltonFragment fragment) {

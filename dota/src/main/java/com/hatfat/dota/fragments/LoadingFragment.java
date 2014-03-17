@@ -75,7 +75,9 @@ public class LoadingFragment extends CharltonFragment {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                Items.get().load(getResources());
+                if (isAdded()) {
+                    Items.get().load(getResources());
+                }
                 return null;
             }
 
@@ -118,6 +120,10 @@ public class LoadingFragment extends CharltonFragment {
     }
 
     private void updateProgressBar() {
+        if (!isAdded()) {
+            return;
+        }
+
         float barPercent = 0.0f;
         barPercent += heroProgress * 0.1f;
         barPercent += itemsProgress * 0.1f;
