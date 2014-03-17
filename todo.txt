@@ -4,6 +4,9 @@ before playstore release
 real spirit bear icon
 
 
+loading screen
+crash on startup?
+don't save everytime, only wnen necessary
 player summary improvements (number of matches, win %) ?
 save starred player matches
 Charlton talking feature

@@ -3,6 +3,7 @@ package com.hatfat.dota.model.match;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.hatfat.dota.DotaFriendApplication;
@@ -134,14 +135,22 @@ public class Matches {
             JsonReader jsonReader = new JsonReader(br);
 
             Gson gson = new Gson();
-            MatchesGsonObject obj = gson.fromJson(jsonReader, MatchesGsonObject.class);
+            MatchesGsonObject obj = null;
 
-            addMatches(obj.matches);
+            try {
+                obj = gson.fromJson(jsonReader, MatchesGsonObject.class);
+            }
+            catch (JsonSyntaxException jsonSyntaxException) {
+                Log.e("Matches", "JsonSyntaxException Error parsing user " + user.getDisplayName());
+            }
 
-            Log.e("catfat", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName());
+            if (obj != null) {
+                addMatches(obj.matches);
+                Log.e("Matches", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName());
+            }
         }
         catch (FileNotFoundException e) {
-            Log.e("SteamUsers", "Error loading from disk: " + e.toString());
+            Log.e("Matches", "Error loading from disk: " + e.toString());
         }
     }
 }
