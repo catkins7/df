@@ -12,7 +12,7 @@ Charlton talking feature
 fetch all for player feature
 left menu to nav back to player list?
 clean-up unused matches.json
-
+when fetching match history for random players (who you didn't "fetch all" for), only actually add the latest 10 or 20 matches (For speed!)
 
 
 
