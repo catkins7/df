@@ -8,6 +8,8 @@
 
     <ImageView
         android:id="@+id/view_match_player_basic_hero_image_view"
+        android:padding="1dp"
+        android:background="@drawable/off_black_background"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_width="@dimen/match_for_player_basic_image_view_width"

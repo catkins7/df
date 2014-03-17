@@ -1,7 +1,6 @@
 
 before playstore release
 ---------------------------
-real spirit bear icon
 save in separate file, then copy to real file when successful.
 save/load heroes cache
 go over every file for quick clean-up
