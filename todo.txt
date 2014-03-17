@@ -3,12 +3,11 @@ before playstore release
 ---------------------------
 real spirit bear icon
 save in separate file, then copy to real file when successful.
-don't save everytime, only wnen necessary
 save/load heroes cache
+go over every file for quick clean-up
 
 
 player summary improvements (number of matches, win %) ?
-save starred player matches
 Charlton talking feature
 fetch all for player feature
 left menu to nav back to player list?
@@ -21,5 +20,5 @@ finished for next release
 ---------------------------
 search player
 lone druid's bear items
-save/load starred players
+save/load starred players and their matches
 loading screen on startup

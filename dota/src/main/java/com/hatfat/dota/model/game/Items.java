@@ -32,7 +32,7 @@ public class Items {
     }
 
     public void load(Resources resources) {
-        if (items != null) {
+        if (items != null && items.size() > 0) {
             //already loaded
             return;
         }
