@@ -178,6 +178,6 @@ public class LoadingFragment extends CharltonFragment {
 
     @Override
     public String getCharltonText() {
-        return "One second while I get everything up and running.";
+        return "Please wait one moment while I get everything up and running.";
     }
 }

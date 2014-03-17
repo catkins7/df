@@ -59,6 +59,15 @@ public class Matches {
     }
 
     private void loadFromDisk() {
+        if (SteamUsers.get().getStarredUsers().size() <= 0) {
+            //no users!  so we are done
+            Intent intent = new Intent(MATCHES_LOADING_PROGRESS_NOTIFICATION);
+            intent.putExtra(MATCHES_LOADING_PERCENT_COMPLETE, 1.0f);
+            LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
+
+            return;
+        }
+
         loadingProgress = 0;
 
         for (final SteamUser user : SteamUsers.get().getStarredUsers()) {
