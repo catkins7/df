@@ -9,7 +9,7 @@
         android:padding="@dimen/default_padding"
         android:drawablePadding="@dimen/default_padding"
         android:text="@string/add_player"
-        android:textSize="20dp"
+        android:textSize="@dimen/text_view_height_medium"
         android:textColor="@color/off_black"
         android:gravity="center_vertical"
         android:id="@+id/dota_player_list_fragment_add_player"

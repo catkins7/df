@@ -13,10 +13,8 @@ import android.widget.FrameLayout;
 import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.CharltonFragment;
 import com.hatfat.dota.fragments.CharltonMessageFragment;
+import com.hatfat.dota.fragments.LoadingFragment;
 import com.hatfat.dota.fragments.StarredPlayerListFragment;
-import com.hatfat.dota.model.game.Heroes;
-import com.hatfat.dota.model.game.Items;
-import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUsers;
 
 /**
@@ -44,13 +42,8 @@ public class CharltonActivity extends Activity {
         messageFragment = new CharltonMessageFragment();
         getFragmentManager().beginTransaction().add(R.id.charlton_fragment_container_view, messageFragment).commit();
 
-        StarredPlayerListFragment playerListFragment = new StarredPlayerListFragment();
-        setRootCharltonFragment(playerListFragment);
-
-        Items.get().init(getResources());
-        Heroes.get().init();
-        SteamUsers.get().init(); //initialize the SteamUsers singleton
-        Matches.get().init();
+        LoadingFragment loadingFragment = new LoadingFragment();
+        setRootCharltonFragment(loadingFragment);
     }
 
     @Override
@@ -58,12 +51,17 @@ public class CharltonActivity extends Activity {
         super.onResume();
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
 
         SteamUsers.get().saveToDisk();
+    }
+
+    //call when loading is finished
+    public void startMainFragment() {
+        StarredPlayerListFragment playerListFragment = new StarredPlayerListFragment();
+        setRootCharltonFragment(playerListFragment);
     }
 
     private void setupDrawer() {

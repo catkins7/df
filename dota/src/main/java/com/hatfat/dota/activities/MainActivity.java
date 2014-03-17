@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.StarredPlayerListFragment;
 import com.hatfat.dota.fragments.WelcomeFragment;
-import com.hatfat.dota.model.user.SteamUsers;
 
 public class MainActivity extends Activity {
 
@@ -40,8 +39,6 @@ public class MainActivity extends Activity {
 
         leftDrawerFragment = new StarredPlayerListFragment();
         getFragmentManager().beginTransaction().add(R.id.left_drawer_container, leftDrawerFragment).commit();
-
-        SteamUsers.get().init(); //initialize the SteamUsers singleton
     }
 
     @Override

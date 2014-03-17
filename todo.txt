@@ -2,11 +2,12 @@
 before playstore release
 ---------------------------
 real spirit bear icon
-
-
+save in separate file, then copy to real file when successful.
 loading screen
-crash on startup?
 don't save everytime, only wnen necessary
+save/load heroes cache
+
+
 player summary improvements (number of matches, win %) ?
 save starred player matches
 Charlton talking feature

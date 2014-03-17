@@ -24,7 +24,11 @@ import java.util.List;
  */
 public class SteamUsers {
     private final static String STARRED_USERS_FILE_NAME = "starredUsers.json";
+
     public final static String STEAM_STARRED_USERS_USER_LIST_CHANGED = "SteamUsers_StarredUsersListChanged_Notification";
+    public final static String STEAM_USERS_LOADED_FROM_DISK = "STEAM_USERS_LOADED_FROM_DISK";
+
+    private boolean isLoaded;
 
     private static SteamUsers singleton;
 
@@ -42,11 +46,17 @@ public class SteamUsers {
     private SteamUsers() {
         users = new HashMap<>();
         starredUsers = new HashMap<>();
-
-        loadFromDisk();
     }
 
-    public void init() {}
+    public void load() {
+        if (isLoaded) {
+            Log.e("catfat", "steam users alraedy loaded...");
+            broadcastUsersLoadedFromDisk();
+        }
+        else {
+            loadFromDisk();
+        }
+    }
 
     public Collection<SteamUser> getAllUsers() {
         return users.values();
@@ -129,6 +139,9 @@ public class SteamUsers {
         anonUser.personaName = "Anonymous";
         anonUser.isAnonymous = true;
         this.users.put(anonUser.steamId, anonUser);
+
+        isLoaded = true;
+        broadcastUsersLoadedFromDisk();
     }
 
     private void loadHackUsers() {
@@ -242,5 +255,10 @@ public class SteamUsers {
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
 
         saveToDisk();
+    }
+
+    private void broadcastUsersLoadedFromDisk() {
+        Intent intent = new Intent(STEAM_USERS_LOADED_FROM_DISK);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }
 }

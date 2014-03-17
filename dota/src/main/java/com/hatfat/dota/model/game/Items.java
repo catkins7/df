@@ -1,6 +1,7 @@
 package com.hatfat.dota.model.game;
 
 import android.content.res.Resources;
+import android.util.Log;
 import com.google.gson.Gson;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.DotaGson;
@@ -31,9 +32,14 @@ public class Items {
         items = new HashMap<>();
     }
 
-    public void init(Resources resources) {
-        //items are not available from the API, so parse local items.json file
+    public void load(Resources resources) {
+        if (items != null) {
+            //already loaded
+            Log.e("catfat", "skipping items load...");
+            return;
+        }
 
+        //items are not available from the API, so parse local items.json file
         //maybe switch to this if needed?
         //http://www.dota2.com/jsfeed/itemdata
         InputStream inputStream = resources.openRawResource(R.raw.items);

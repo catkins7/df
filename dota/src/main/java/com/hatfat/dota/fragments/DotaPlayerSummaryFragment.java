@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
-import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.Matches;
@@ -147,12 +146,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                         updateViews();
                     }
                 }
-                else if (intent.getAction().equals(Heroes.HERO_DATA_UPDATED_NOTIFICATION)) {
-                    //reload the match rows with the updated icons
-                    if (matchesListView != null && matchesAdapter != null) {
-                        matchesAdapter.notifyDataSetChanged();
-                    }
-                }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
                     //reload the match row for this match
                     String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
@@ -176,7 +169,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         IntentFilter summaryFilter = new IntentFilter();
         summaryFilter.addAction(SteamUser.STEAM_USER_UPDATED);
-        summaryFilter.addAction(Heroes.HERO_DATA_UPDATED_NOTIFICATION);
         summaryFilter.addAction(Match.MATCH_UPDATED);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, summaryFilter);
     }

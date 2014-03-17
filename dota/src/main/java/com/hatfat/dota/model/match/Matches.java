@@ -1,6 +1,8 @@
 package com.hatfat.dota.model.match;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -23,6 +25,11 @@ public class Matches {
 
     private static final String USER_MATCHES_FILE_EXTENSION = "_matches.json";
 
+    public final static String MATCHES_LOADING_PROGRESS_NOTIFICATION = "MATCHES_LOADING_PROGRESS_NOTIFICATION";
+    public final static String MATCHES_LOADING_PERCENT_COMPLETE = "MATCHES_LOADING_PERCENT_COMPLETE";
+    private int loadingProgress;
+    private boolean isLoaded;
+
     private static Matches singleton;
 
     private HashMap<String, Match> matches; //matchId --> match
@@ -37,15 +44,46 @@ public class Matches {
 
     private Matches() {
         matches = new HashMap<>();
-
-        loadFromDisk();
     }
 
-    public void init() {}
+    public void load() {
+        if (isLoaded) {
+            Log.e("catfat", "matches loaded already");
+            Intent intent = new Intent(MATCHES_LOADING_PROGRESS_NOTIFICATION);
+            intent.putExtra(MATCHES_LOADING_PERCENT_COMPLETE, 1.0f);
+            LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
+        }
+        else {
+            loadFromDisk();
+        }
+    }
 
     private void loadFromDisk() {
-        for (SteamUser user : SteamUsers.get().getStarredUsers()) {
-            loadMatchesFromDiskForUser(user);
+        loadingProgress = 0;
+
+        for (final SteamUser user : SteamUsers.get().getStarredUsers()) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    loadMatchesFromDiskForUser(user);
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    loadingProgress++;
+                    float percentComplete = (float)loadingProgress / (float)SteamUsers.get().getStarredUsers().size();
+
+                    if (loadingProgress == SteamUsers.get().getStarredUsers().size()) {
+                        //finished loading!
+                        isLoaded = true;
+                    }
+
+                    Intent intent = new Intent(MATCHES_LOADING_PROGRESS_NOTIFICATION);
+                    intent.putExtra(MATCHES_LOADING_PERCENT_COMPLETE, percentComplete);
+                    LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
+                }
+            }.execute();
         }
     }
 
@@ -92,7 +130,7 @@ public class Matches {
     public void saveMatchesToDiskForUser(final SteamUser user) {
         Log.e("catfat", "saveMatchesToDiskForUser " + user.getDisplayName());
 
-        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 try {

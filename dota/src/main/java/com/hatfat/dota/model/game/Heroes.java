@@ -2,6 +2,7 @@ package com.hatfat.dota.model.game;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.HeroFetcher;
 import retrofit.Callback;
@@ -16,7 +17,9 @@ import java.util.List;
  */
 public class Heroes {
 
-    public final static String HERO_DATA_UPDATED_NOTIFICATION = "HeroDataUpdatedNotification";
+    public final static String HERO_DATA_LOADED_NOTIFICATION = "HERO_DATA_LOADED_NOTIFICATION";
+
+    private boolean isLoaded;
 
     private static Heroes singleton;
 
@@ -32,11 +35,17 @@ public class Heroes {
 
     private Heroes() {
         heroes = new HashMap<>();
-
-        fetch();
     }
 
-    public void init() {}
+    public void load() {
+        if (isLoaded) {
+            Log.e("catfat", "heroes already loaded...");
+            broadcastHeroesLoaded();
+        }
+        else {
+            fetch();
+        }
+    }
 
     private void setNewHeroList(List<Hero> heroList) {
         heroes.clear();
@@ -45,15 +54,15 @@ public class Heroes {
             heroes.put(String.valueOf(hero.heroId), hero);
         }
 
-        broadcastHeroesChanged();
+        broadcastHeroesLoaded();
     }
 
     public Hero getHero(String heroIdString) {
         return heroes.get(heroIdString);
     }
 
-    private void broadcastHeroesChanged() {
-        Intent intent = new Intent(HERO_DATA_UPDATED_NOTIFICATION);
+    private void broadcastHeroesLoaded() {
+        Intent intent = new Intent(HERO_DATA_LOADED_NOTIFICATION);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }
 
@@ -62,6 +71,7 @@ public class Heroes {
             @Override
             public void success(HeroData heroData, Response response) {
                 setNewHeroList(heroData.heroes);
+                isLoaded = true;
             }
 
             @Override
