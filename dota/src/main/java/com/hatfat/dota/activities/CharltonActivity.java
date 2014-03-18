@@ -24,6 +24,8 @@ public class CharltonActivity extends Activity {
 
     private FrameLayout fragmentContainer;
 
+    boolean isPaused;
+
     private CharltonMessageFragment messageFragment;
     private CharltonFragment rootContentFragment;
     private Fragment drawerFragment;
@@ -47,8 +49,15 @@ public class CharltonActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        isPaused = true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        isPaused = false;
     }
 
     @Override
@@ -153,6 +162,10 @@ public class CharltonActivity extends Activity {
     }
 
     private void setRootCharltonFragment(final CharltonFragment fragment) {
+        if (isPaused) {
+            return;
+        }
+
         if (rootContentFragment != fragment) {
             try {
                 FragmentManager manager = getFragmentManager();
@@ -171,6 +184,10 @@ public class CharltonActivity extends Activity {
     }
 
     public void pushCharltonFragment(final CharltonFragment fragment) {
+        if (isPaused) {
+            return;
+        }
+
         FragmentManager manager = getFragmentManager();
 
         FragmentTransaction transaction = manager.beginTransaction();

@@ -1,24 +1,33 @@
 
-before playstore release
+TODO
 ---------------------------
+
+0.2.1 - bugfixes
 save in separate file, then copy to real file when successful.  Fix issues where save files are invalid/lost on save failure
 save/load heroes cache
 go over every file for quick clean-up
-
-
-
-player summary improvements (number of matches, win %) ?
-Charlton talking feature
-fetch all for player feature
-left menu to nav back to player list?
 clean-up unused matches.json
+
+
+
+Features Backlog
+---------------------------
+
+fetch all for player feature
 when fetching match history for random players (who you didn't "fetch all" for), only actually add the latest 10 or 20 matches (For speed!)
 
 
+player summary improvements (number of matches, win %)
 
-finished for next release
----------------------------
-search player
-lone druid's bear items
-save/load starred players and their matches
-loading screen on startup
+
+match summary improvements (so it doesn't look so meh)
+
+
+Charlton talking feature
+
+
+left menu feature
+ - starred players
+ - pro players list?  pro teams?  for easy access to pro player profiles
+ - about page?
+ - click charles to open the menu, or just drag from the left?

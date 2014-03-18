@@ -149,9 +149,11 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
         if (numberOfSearchesComplete >= totalNumberOfSearches) {
             //all searches are finished
-            LinkedList<SteamUser> usersList = new LinkedList<>(playerSearchResults);
-            SteamUserListFragment listFragment = SteamUserListFragment.newInstance(usersList, getSearchString());
-            getCharltonActivity().pushCharltonFragment(listFragment);
+            if (getCharltonActivity() != null) {
+                LinkedList<SteamUser> usersList = new LinkedList<>(playerSearchResults);
+                SteamUserListFragment listFragment = SteamUserListFragment.newInstance(usersList, getSearchString());
+                getCharltonActivity().pushCharltonFragment(listFragment);
+            }
         }
     }
 
