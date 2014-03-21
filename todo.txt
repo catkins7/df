@@ -2,8 +2,8 @@
 TODO
 ---------------------------
 
-rename repo
-
+0.2.3
+bug fixes as they arise (release sunday?)
 
 
 Features Backlog
