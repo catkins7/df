@@ -1,19 +1,14 @@
 package com.hatfat.dota.model.user;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.SteamUserFetcher;
+import com.hatfat.dota.util.FileUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -23,6 +18,7 @@ import java.util.List;
  * Created by scottrick on 2/10/14.
  */
 public class SteamUsers {
+
     private final static String STARRED_USERS_FILE_NAME = "starredUsers.json";
 
     public final static String STEAM_STARRED_USERS_USER_LIST_CHANGED = "SteamUsers_StarredUsersListChanged_Notification";
@@ -82,55 +78,23 @@ public class SteamUsers {
         return getBySteamId(SteamUser.getSteamIdFromAccountId(accountId));
     }
 
-    public void saveToDisk() {
-        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    LinkedList usersList = new LinkedList(starredUsers.values());
-                    SteamUsersGsonObject obj = new SteamUsersGsonObject();
-                    obj.users = usersList;
+    private void saveToDisk() {
+        LinkedList usersList = new LinkedList(starredUsers.values());
+        SteamUsersGsonObject obj = new SteamUsersGsonObject();
+        obj.users = usersList;
 
-                    File fileDir = DotaFriendApplication.CONTEXT.getFilesDir();
-                    fileDir.mkdirs();
-
-                    File jsonFile = new File(fileDir, STARRED_USERS_FILE_NAME);
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(jsonFile));
-                    JsonWriter jsonWriter = new JsonWriter(bw);
-
-                    Gson gson = new Gson();
-                    gson.toJson(obj, SteamUsersGsonObject.class, jsonWriter); // Write to file using BufferedWriter
-                    jsonWriter.close();
-                }
-                catch (IOException e) {
-                    Log.e("SteamUsers", "Error saving to disk: " + e.toString());
-                }
-
-                return null;
-            }
-        }.execute();
+        FileUtil.saveObjectToDisk(STARRED_USERS_FILE_NAME, obj);
     }
 
     private void loadFromDisk() {
-        try {
-            File fileDir = DotaFriendApplication.CONTEXT.getFilesDir();
-            File jsonFile = new File(fileDir, STARRED_USERS_FILE_NAME);
-            BufferedReader br = new BufferedReader(new FileReader(jsonFile));
-            JsonReader jsonReader = new JsonReader(br);
+        SteamUsersGsonObject obj = FileUtil.loadObjectFromDisk(STARRED_USERS_FILE_NAME, SteamUsersGsonObject.class);
 
-            Gson gson = new Gson();
-            SteamUsersGsonObject obj = gson.fromJson(jsonReader, SteamUsersGsonObject.class);
+        if (obj != null) {
+            addSteamUsers(obj.users);
 
-            if (obj != null) {
-                addSteamUsers(obj.users);
-
-                for (SteamUser user : obj.users) {
-                    starredUsers.put(user.steamId, user);
-                }
+            for (SteamUser user : obj.users) {
+                starredUsers.put(user.steamId, user);
             }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("SteamUsers", "Error loading from disk: " + e.toString());
         }
 
         //add the Anonymous steam user

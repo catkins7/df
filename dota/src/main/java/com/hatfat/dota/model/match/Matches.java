@@ -4,15 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
+import com.hatfat.dota.util.FileUtil;
 
-import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -130,7 +126,7 @@ public class Matches {
             Match newMatch = new Match(matchId);
             matches.put(matchId, newMatch);
 
-            //auto fetch?
+            //don't auto fetch
             return newMatch;
         }
     }
@@ -140,63 +136,24 @@ public class Matches {
     }
 
     public void saveMatchesToDiskForUser(final SteamUser user) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    LinkedList matchesList = new LinkedList();
+        LinkedList matchesList = new LinkedList();
 
-                    for (String matchId : user.getMatches()) {
-                        matchesList.add(getMatch(matchId));
-                    }
+        for (String matchId : user.getMatches()) {
+            matchesList.add(getMatch(matchId));
+        }
 
-                    MatchesGsonObject obj = new MatchesGsonObject();
-                    obj.matches = matchesList;
+        MatchesGsonObject obj = new MatchesGsonObject();
+        obj.matches = matchesList;
 
-                    File fileDir = DotaFriendApplication.CONTEXT.getFilesDir();
-                    fileDir.mkdirs();
-
-                    File jsonFile = new File(fileDir, user.getAccountId() + USER_MATCHES_FILE_EXTENSION);
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(jsonFile));
-                    JsonWriter jsonWriter = new JsonWriter(bw);
-
-                    Gson gson = new Gson();
-                    gson.toJson(obj, MatchesGsonObject.class, jsonWriter); // Write to file using BufferedWriter
-                    jsonWriter.close();
-                }
-                catch (IOException e) {
-                    Log.e("Matches", "Error saving to disk: " + e.toString());
-                }
-
-                return null;
-            }
-        }.execute();
+        FileUtil.saveObjectToDisk(user.getAccountId() + USER_MATCHES_FILE_EXTENSION, obj);
     }
 
     public void loadMatchesFromDiskForUser(final SteamUser user) {
-        try {
-            File fileDir = DotaFriendApplication.CONTEXT.getFilesDir();
-            File jsonFile = new File(fileDir, user.getAccountId() + USER_MATCHES_FILE_EXTENSION);
-            BufferedReader br = new BufferedReader(new FileReader(jsonFile));
-            JsonReader jsonReader = new JsonReader(br);
+        MatchesGsonObject obj = FileUtil.loadObjectFromDisk(user.getAccountId() + USER_MATCHES_FILE_EXTENSION, MatchesGsonObject.class);
 
-            Gson gson = new Gson();
-            MatchesGsonObject obj = null;
-
-            try {
-                obj = gson.fromJson(jsonReader, MatchesGsonObject.class);
-            }
-            catch (JsonSyntaxException jsonSyntaxException) {
-                Log.e("Matches", "JsonSyntaxException Error parsing user " + user.getDisplayName());
-            }
-
-            if (obj != null) {
-                addMatches(obj.matches);
-                Log.e("Matches", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName());
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("Matches", "Error loading from disk: " + e.toString());
+        if (obj != null) {
+            addMatches(obj.matches);
+            Log.v("Matches", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName());
         }
     }
 }

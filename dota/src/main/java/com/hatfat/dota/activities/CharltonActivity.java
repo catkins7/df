@@ -15,7 +15,6 @@ import com.hatfat.dota.fragments.CharltonFragment;
 import com.hatfat.dota.fragments.CharltonMessageFragment;
 import com.hatfat.dota.fragments.LoadingFragment;
 import com.hatfat.dota.fragments.StarredPlayerListFragment;
-import com.hatfat.dota.model.user.SteamUsers;
 
 /**
  * Created by scottrick on 2/12/14.
@@ -36,6 +35,8 @@ public class CharltonActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        FileUtil.dumpFileDirectoryContents();
 
         setContentView(R.layout.activity_charlton);
         fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
@@ -58,13 +59,6 @@ public class CharltonActivity extends Activity {
     protected void onResume() {
         super.onResume();
         isPaused = false;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        SteamUsers.get().saveToDisk();
     }
 
     //call when loading is finished

@@ -2,11 +2,7 @@
 TODO
 ---------------------------
 
-0.2.1 - bugfixes
-save in separate file, then copy to real file when successful.  Fix issues where save files are invalid/lost on save failure
-save/load heroes cache
-go over every file for quick clean-up
-clean-up unused matches.json
+rename repo
 
 
 
@@ -17,10 +13,10 @@ fetch all for player feature
 when fetching match history for random players (who you didn't "fetch all" for), only actually add the latest 10 or 20 matches (For speed!)
 
 
-player summary improvements (number of matches, win %)
+player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 
 
-match summary improvements (so it doesn't look so meh)
+match summary improvements (so it doesn't look so meh, right tray with more statistics?  Item of the game? (the item with the most money spent on it))
 
 
 Charlton talking feature
@@ -31,3 +27,10 @@ left menu feature
  - pro players list?  pro teams?  for easy access to pro player profiles
  - about page?
  - click charles to open the menu, or just drag from the left?
+
+
+
+Someday
+---------------------------
+
+clean-up unused matches.json

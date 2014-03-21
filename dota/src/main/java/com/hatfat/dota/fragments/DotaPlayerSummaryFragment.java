@@ -350,6 +350,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
     @Override
     public String getCharltonText() {
-        return "Here is " + user.getDisplayName() +"'s summary information.";
+        return "Here is " + user.getDisplayName() +"'s [" + user.getAccountId() + "] summary information.";
     }
 }
