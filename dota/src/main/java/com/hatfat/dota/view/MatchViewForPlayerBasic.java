@@ -59,7 +59,7 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         matchIdTextView.setText(match.getGameModeString());
         timeAgoTextView.setText(match.getTimeAgoString());
 
-        if (match.isRankedGame()) {
+        if (match.isRankedMatchmaking()) {
             rankedImageView.setVisibility(View.VISIBLE);
         }
         else {

@@ -1,7 +1,10 @@
 
 TODO
 ---------------------------
-
+player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
+	total number of games
+	win percent
+	
 
 
 Features Backlog
@@ -11,7 +14,6 @@ fetch all for player feature
 when fetching match history for random players (who you didn't "fetch all" for), only actually add the latest 10 or 20 matches (For speed!)
 
 
-player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 
 
 match summary improvements (so it doesn't look so meh, right tray with more statistics?  Item of the game? (the item with the most money spent on it))

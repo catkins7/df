@@ -201,7 +201,7 @@ public class MatchSummaryFragment extends CharltonFragment {
         radiantKillsTextView.setText(String.valueOf(match.getDireTotalDeathCount()));
         direKillsTextView.setText(String.valueOf(match.getRadiantTotalDeathCount()));
 
-        if (match.isRankedGame()) {
+        if (match.isRankedMatchmaking()) {
             rankedImageView.setVisibility(View.VISIBLE);
         }
         else {

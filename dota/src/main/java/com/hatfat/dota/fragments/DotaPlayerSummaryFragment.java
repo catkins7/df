@@ -38,7 +38,9 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private BroadcastReceiver receiver;
 
     private TextView personaTextView;
-    private TextView currentStateTextView;
+    private TextView publicMatchesTextView;
+    private TextView rankedMatchesTextView;
+    private TextView thirdRowTextView;
     private ImageView profileImageView;
     private ListView matchesListView;
     private Button friendToggleButton;
@@ -73,7 +75,9 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         View view = inflater.inflate(R.layout.fragment_dota_player_summary, null);
 
         personaTextView = (TextView) view.findViewById(R.id.fragment_dota_player_summary_persona_text_view);
-        currentStateTextView = (TextView) view.findViewById(R.id.fragment_dota_player_summary_current_state_text_view);
+        publicMatchesTextView = (TextView) view.findViewById(R.id.fragment_dota_player_public_matches_text_view);
+        rankedMatchesTextView = (TextView) view.findViewById(R.id.fragment_dota_player_ranked_matches_text_view);
+        thirdRowTextView = (TextView) view.findViewById(R.id.fragment_dota_player_summary_third_row_text_view);
         profileImageView = (ImageView) view.findViewById(R.id.fragment_dota_player_summary_user_image_view);
         matchesListView = (ListView) view.findViewById(R.id.fragment_dota_player_summary_matches_list_view);
         friendToggleButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_friend_button);
@@ -88,6 +92,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         updateMatchList();
         setupMatchesList();
         updateViews();
+        updateMatchInfoViews();
 
         return view;
     }
@@ -152,6 +157,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 else if (intent.getAction().equals(SteamUser.STEAM_USER_MATCHES_CHANGED)) {
                     String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
                     if (updatedId.equals(user.getSteamId())) {
+                        updateMatchInfoViews();
                         updateMatchList();
                         userMatchesHaveChanged = true;
                     }
@@ -162,6 +168,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                     if (user.getMatches().contains(updatedMatchId)) {
                         //a match in this users' match list was updated, so we need to save on exit
                         userMatchesHaveChanged = true;
+                        updateMatchInfoViews();
                     }
 
                     if (matchesListView != null && matchesAdapter != null) {
@@ -322,22 +329,24 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void updateViews() {
-        personaTextView.setText(user.getDisplayName());
-        currentStateTextView.setText(user.getCurrentStateDescriptionString());
-        currentStateTextView.setTextColor(user.getCurrentStateDescriptionTextColor(getResources()));
         Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(profileImageView);
 
+        personaTextView.setText(user.getDisplayName());
+
         updateFriendButtonBackground();
+    }
+
+    private void updateMatchInfoViews() {
+        publicMatchesTextView.setText(user.getPublicWinString(getResources()));
+        rankedMatchesTextView.setText(user.getRankedWinString(getResources()));
     }
 
     private void updateFriendButtonBackground() {
         if (user.canFriend()) {
             friendToggleButton.setVisibility(View.VISIBLE);
-            currentStateTextView.setVisibility(View.VISIBLE);
         }
         else {
             friendToggleButton.setVisibility(View.GONE);
-            currentStateTextView.setVisibility(View.GONE);
         }
 
         if (SteamUsers.get().isUserStarred(user)) {

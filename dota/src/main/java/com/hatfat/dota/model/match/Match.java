@@ -50,6 +50,22 @@ public class Match {
             }
         }
     }
+    public enum PlayerMatchResult {
+        PLAYER_MATCH_RESULT_UNKNOWN,
+        PLAYER_MATCH_RESULT_VICTORY,
+        PLAYER_MATCH_RESULT_DEFEAT;
+
+        public int getDescriptionStringResourceId() {
+            switch (this) {
+                case PLAYER_MATCH_RESULT_VICTORY:
+                    return R.string.match_result_player_victory;
+                case PLAYER_MATCH_RESULT_DEFEAT:
+                    return R.string.match_result_player_defeat;
+                default:
+                    return R.string.match_result_unknown;
+            }
+        }
+    }
     public enum LobbyType {
         PUBLIC_MATCHMAKING("Unranked"),
         PRACTICE("Practice"),
@@ -261,9 +277,6 @@ public class Match {
     public String getLobbyTypeString() {
         return getLobbyType().getLobbyTypeName();
     }
-    public boolean isRankedGame() {
-        return getLobbyType() == LobbyType.RANKED;
-    }
     public GameMode getGameMode() {
         if (!hasMatchDetails) {
             return GameMode.Unknown;
@@ -293,44 +306,47 @@ public class Match {
         return super.toString() + "[matchId: " + matchId + "]";
     }
 
-    public int getMatchResultStringResourceIdForPlayer(Player player) {
+    public boolean isRankedMatchmaking() {
+        return getLobbyType().equals(LobbyType.RANKED);
+    }
+    public boolean isPublicMatchmaking() {
+        return getLobbyType().equals(LobbyType.PUBLIC_MATCHMAKING);
+    }
+    public PlayerMatchResult getPlayerMatchResultForPlayer(Player player) {
         if (!players.contains(player)) {
-            return R.string.match_result_unknown;
+            return PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN;
         }
 
         MatchResult matchResult = getMatchResult();
 
         if (matchResult == MatchResult.MATCH_RESULT_UNKNOWN) {
-            return R.string.match_result_unknown;
+            return PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN;
         }
         else if (player.isRadiantPlayer() && matchResult == MatchResult.MATCH_RESULT_RADIANT_VICTORY) {
-            return R.string.match_result_player_victory;
+            return PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY;
         }
         else if (player.isDirePlayer() && matchResult == MatchResult.MATCH_RESULT_DIRE_VICTORY) {
-            return R.string.match_result_player_victory;
+            return PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY;
         }
         else {
-            return R.string.match_result_player_defeat;
+            return PlayerMatchResult.PLAYER_MATCH_RESULT_DEFEAT;
         }
     }
+
+    public int getMatchResultStringResourceIdForPlayer(Player player) {
+        return getPlayerMatchResultForPlayer(player).getDescriptionStringResourceId();
+    }
+
     public int getMatchResultColorResourceIdForPlayer(Player player) {
-        if (!players.contains(player)) {
-            return R.color.off_white;
-        }
+        PlayerMatchResult result = getPlayerMatchResultForPlayer(player);
 
-        MatchResult matchResult = getMatchResult();
-
-        if (matchResult == MatchResult.MATCH_RESULT_UNKNOWN) {
-            return R.color.off_white;
-        }
-        else if (player.isRadiantPlayer() && matchResult == MatchResult.MATCH_RESULT_RADIANT_VICTORY) {
-            return R.color.radiant_green;
-        }
-        else if (player.isDirePlayer() && matchResult == MatchResult.MATCH_RESULT_DIRE_VICTORY) {
-            return R.color.radiant_green;
-        }
-        else {
-            return R.color.dire_red;
+        switch (result) {
+            case PLAYER_MATCH_RESULT_VICTORY:
+                return R.color.radiant_green;
+            case PLAYER_MATCH_RESULT_DEFEAT:
+                return R.color.dire_red;
+            default:
+                return R.color.off_white;
         }
     }
 
