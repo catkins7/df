@@ -145,14 +145,23 @@ public class Matches {
         MatchesGsonObject obj = new MatchesGsonObject();
         obj.matches = matchesList;
 
+        Log.v("Matches", "saved " + obj.matches.size() + " matches to disk for user " + user.getDisplayName());
+
         FileUtil.saveObjectToDisk(user.getAccountId() + USER_MATCHES_FILE_EXTENSION, obj);
     }
 
     public void loadMatchesFromDiskForUser(final SteamUser user) {
         MatchesGsonObject obj = FileUtil.loadObjectFromDisk(user.getAccountId() + USER_MATCHES_FILE_EXTENSION, MatchesGsonObject.class);
 
+
         if (obj != null) {
             addMatches(obj.matches);
+
+            //make sure the steam user's match list is up to date!
+            for (Match match : obj.matches) {
+                user.getMatches().add(match.getMatchId());
+            }
+
             Log.v("Matches", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName());
         }
     }

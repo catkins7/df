@@ -61,10 +61,11 @@ public class FileUtil {
             return obj;
         }
         catch (FileNotFoundException e) {
-
+            Log.e("FileUtil", "FileNotFoundException: " + file.getName());
         }
         catch (Exception e) {
             //failed to parse valid json
+            Log.e("FileUtil", "Exception: " + e.toString() + ", " + file.getName());
         }
 
         return null;
