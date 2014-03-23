@@ -15,15 +15,15 @@
             android:id="@+id/fragment_dota_player_summary_friend_button"
             android:background="@drawable/friend_button_unselected_background"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_width="@dimen/text_view_height_large"
             android:layout_height="@dimen/text_view_height_large"/>
 
         <TextView
             android:id="@+id/fragment_dota_player_summary_persona_text_view"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/fragment_dota_player_summary_friend_button"
-            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_xtoLeftOf="@id/fragment_dota_player_summary_friend_button"
+            android:layout_marginRight="@dimen/default_padding"
             android:textSize="@dimen/font_size_large"
             android:textColor="@color/off_white"
             android:gravity="left|center_vertical"
