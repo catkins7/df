@@ -65,7 +65,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/fragment_dota_player_ranked_matches_text_view"
             android:textSize="@dimen/font_size_small"
-            android:textColor="@color/off_white"
+            android:textColor="@color/off_gray"
             android:gravity="right|center_vertical"
             android:layout_width="240dp"
             android:layout_height="@dimen/text_view_height_small"/>

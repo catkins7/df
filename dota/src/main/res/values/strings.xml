@@ -28,9 +28,9 @@
     <string name="player_summary_remove_friend_message_text">Unstar this player?</string>
     <string name="player_summary_remove_friend_remove_text">Unstar</string>
     <string name="player_summary_remove_friend_title_text">Unstar Player</string>
-    <string name="player_summary_match_count_string">known games</string>
-    <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% (%2$d Ranked Games)</string>
-    <string name="player_summary_public_matchmaking_summary">%1$.1f%% (%2$d Public Games)</string>
+    <string name="player_summary_matches_summary_string">%1$d / %2$d known games</string>
+    <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% (%2$d Ranked)</string>
+    <string name="player_summary_public_matchmaking_summary">%1$.1f%% (%2$d Public)</string>
 
     <string name="add_new_player_search_text">Search</string>
 

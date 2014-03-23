@@ -302,6 +302,9 @@ public class Match {
     public void setHasMatchDetails(boolean hasMatchDetails) {
         this.hasMatchDetails = hasMatchDetails;
     }
+    public boolean hasMatchDetails() {
+        return hasMatchDetails;
+    }
     public String toString() {
         return super.toString() + "[matchId: " + matchId + "]";
     }

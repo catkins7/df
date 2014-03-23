@@ -176,8 +176,53 @@ public class SteamUser {
     public TreeSet<String> getMatches() {
         return matches;
     }
-    public String getMatchCountString(Resources resources) {
-        return matches.size() + " " + resources.getString(R.string.player_summary_match_count_string);
+    public String[] getMatchSummaryStrings(Resources resources) {
+        String[] strings = new String[3];
+
+        int publicWinCount = 0;
+        int publicGameCount = 0;
+        int rankedWinCount = 0;
+        int rankedGameCount = 0;
+        int matchesWithDetailsCount = 0;
+
+        for (String matchId : matches) {
+            Match match = Matches.get().getMatch(matchId);
+
+            if (match.isRankedMatchmaking()) {
+                Match.PlayerMatchResult result = match.getPlayerMatchResultForPlayer(match.getPlayerForSteamUser(this));
+
+                if (result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
+                    rankedWinCount++;
+                }
+
+                if (!result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN)) {
+                    rankedGameCount++;
+                }
+            }
+            else if (match.isPublicMatchmaking()) {
+                Match.PlayerMatchResult result = match.getPlayerMatchResultForPlayer(match.getPlayerForSteamUser(this));
+
+                if (result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
+                    publicWinCount++;
+                }
+
+                if (!result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN)) {
+                    publicGameCount++;
+                }
+            }
+
+            if (match.hasMatchDetails()) {
+                matchesWithDetailsCount++;
+            }
+        }
+
+        float publicPercent = 100.0f * (float)publicWinCount / (float)publicGameCount;
+        float rankedPercent = 100.0f * (float)rankedWinCount / (float)rankedGameCount;
+        strings[0] = String.format(resources.getString(R.string.player_summary_public_matchmaking_summary), publicPercent, publicGameCount);
+        strings[1] = String.format(resources.getString(R.string.player_summary_ranked_matchmaking_summary), rankedPercent, rankedGameCount);
+        strings[2] = String.format(resources.getString(R.string.player_summary_matches_summary_string), matchesWithDetailsCount, matches.size());
+
+        return strings;
     }
     public String getRankedWinString(Resources resources) {
         int winCount = 0;

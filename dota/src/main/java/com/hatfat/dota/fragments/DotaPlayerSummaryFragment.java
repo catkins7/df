@@ -337,9 +337,10 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void updateMatchInfoViews() {
-        publicMatchesTextView.setText(user.getPublicWinString(getResources()));
-        rankedMatchesTextView.setText(user.getRankedWinString(getResources()));
-        thirdRowTextView.setText(user.getMatchCountString(getResources()));
+        String[] summaryStrings = user.getMatchSummaryStrings(getResources());
+        publicMatchesTextView.setText(summaryStrings[0]);
+        rankedMatchesTextView.setText(summaryStrings[1]);
+        thirdRowTextView.setText(summaryStrings[2]);
     }
 
     private void updateFriendButtonBackground() {
