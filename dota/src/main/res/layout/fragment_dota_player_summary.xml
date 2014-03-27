@@ -40,7 +40,7 @@
 
         <Button
             android:id="@+id/fragment_dota_player_summary_right_tray_button"
-            android:background="@drawable/black_red_button_background"
+            android:background="@drawable/player_stats_button_background"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_below="@id/fragment_dota_player_summary_persona_text_view"
