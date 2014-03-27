@@ -105,6 +105,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 toggleStar();
             }
         });
+        statsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCharltonActivity().showFragmentInRightDrawer(new DotaPlayerStatisticsFragment());
+            }
+        });
 
         updateMatchList();
         setupMatchesList();
