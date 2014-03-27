@@ -1,13 +1,15 @@
 package com.hatfat.dota.model.user;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.support.v4.content.LocalBroadcastManager;
 import com.google.gson.annotations.SerializedName;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
+
+import android.content.Intent;
+import android.content.res.Resources;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.Comparator;
 import java.util.List;
@@ -77,7 +79,7 @@ public class SteamUser {
     @SerializedName("loccityid")
     String locCityId;
 
-    boolean isAnonymous;
+    boolean isFakeUser; //true for Anonymous users and Bots
     TreeSet<String> matches;
 
     public enum SteamPlayerState
@@ -139,8 +141,8 @@ public class SteamUser {
     public String getDisplayName() {
         return personaName == null ? steamId : personaName;
     }
-    public boolean canFriend() {
-        return !isAnonymous;
+    public boolean isRealUser() {
+        return !isFakeUser;
     }
     public String getAvatarFullUrl() { return avatarFullUrl; }
     public SteamPlayerState getPlayerState() {

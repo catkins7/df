@@ -1,13 +1,5 @@
 package com.hatfat.dota.fragments;
 
-import android.app.AlertDialog;
-import android.content.*;
-import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.*;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
@@ -18,12 +10,33 @@ import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.services.MatchFetcher;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by scottrick on 2/12/14.
@@ -44,6 +57,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private ImageView profileImageView;
     private ListView matchesListView;
     private Button friendToggleButton;
+    private Button fetchAllMatchesButton;
+    private Button statsButton;
 
     private BaseAdapter matchesAdapter;
     private ArrayList<String> sortedMatches;
@@ -81,6 +96,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         profileImageView = (ImageView) view.findViewById(R.id.fragment_dota_player_summary_user_image_view);
         matchesListView = (ListView) view.findViewById(R.id.fragment_dota_player_summary_matches_list_view);
         friendToggleButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_friend_button);
+        fetchAllMatchesButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_fetch_all_button);
+        statsButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_right_tray_button);
 
         friendToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,6 +350,15 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         personaTextView.setText(user.getDisplayName());
 
+        if (user.isRealUser()) {
+            fetchAllMatchesButton.setVisibility(View.VISIBLE);
+            statsButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            fetchAllMatchesButton.setVisibility(View.GONE);
+            statsButton.setVisibility(View.GONE);
+        }
+
         updateFriendButtonBackground();
     }
 
@@ -344,7 +370,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void updateFriendButtonBackground() {
-        if (user.canFriend()) {
+        if (user.isRealUser()) {
             friendToggleButton.setVisibility(View.VISIBLE);
         }
         else {

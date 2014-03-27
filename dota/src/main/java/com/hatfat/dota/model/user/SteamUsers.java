@@ -1,18 +1,20 @@
 package com.hatfat.dota.model.user;
 
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.SteamUserFetcher;
 import com.hatfat.dota.util.FileUtil;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by scottrick on 2/10/14.
@@ -97,12 +99,21 @@ public class SteamUsers {
             }
         }
 
-        //add the Anonymous steam user
-        String anonId = "76561202255233023";
-        SteamUser anonUser = new SteamUser(anonId);
-        anonUser.personaName = "Anonymous";
-        anonUser.isAnonymous = true;
-        this.users.put(anonUser.steamId, anonUser);
+        { //add the Anonymous steam user
+            String anonId = "76561202255233023";
+            SteamUser anonUser = new SteamUser(anonId);
+            anonUser.personaName = "Anonymous";
+            anonUser.isFakeUser = true;
+            this.users.put(anonUser.steamId, anonUser);
+        }
+
+        { //add the Bot steam user
+            String botId = "76561197960265728";
+            SteamUser botUser = new SteamUser(botId);
+            botUser.personaName = "[Bot]";
+            botUser.isFakeUser = true;
+            this.users.put(botUser.steamId, botUser);
+        }
 
         isLoaded = true;
         broadcastUsersLoadedFromDisk();
