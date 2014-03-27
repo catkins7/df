@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:drawable="@drawable/off_black_rounded_background_selected" />
+    <item
+        android:drawable="@drawable/download_matches" />
+
+</layer-list>

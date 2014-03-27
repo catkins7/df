@@ -1,6 +1,8 @@
 
 TODO
 ---------------------------
+make stub Bot SteamUser for bot players, UNStarrable (and don't fetch matches for them, also don't fetch matches for anonymous users)
+
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 	match result graph? (goes up one pixel for a win, down one for a loss?  shows last ~50 games or so?)
 

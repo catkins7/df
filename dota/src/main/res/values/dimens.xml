@@ -2,6 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="default_padding">8dp</dimen>
 
+    <dimen name="button_corner_radius">4dp</dimen>
+
     <dimen name="loading_bar_width">200dp</dimen>
 
     <dimen name="font_size_tiny">8dp</dimen>
@@ -24,7 +26,7 @@
 
     <dimen name="dota_player_summary_fragment_image_view_size">61dp</dimen>
     <dimen name="dota_player_summary_fragment_friend_button_size">32dp</dimen>
-
+    <dimen name="dota_player_summary_fragment_info_text_view_width">180dp</dimen>
 
     <dimen name="match_simple_summary_hero_image_view_width">35dp</dimen>
     <dimen name="match_simple_summary_hero_image_view_height">20dp</dimen>
