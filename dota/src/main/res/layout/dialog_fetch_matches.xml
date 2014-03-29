@@ -19,7 +19,7 @@
         android:background="@drawable/black_green_background"
         android:layout_marginTop="@dimen/default_padding"
         android:layout_below="@id/dialog_fetch_matches_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/text_view_height_medium"/>
 
 </RelativeLayout>
