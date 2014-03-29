@@ -1,16 +1,5 @@
 package com.hatfat.dota.fragments;
 
-import com.hatfat.dota.DotaFriendApplication;
-import com.hatfat.dota.R;
-import com.hatfat.dota.model.match.Match;
-import com.hatfat.dota.model.match.MatchHistory;
-import com.hatfat.dota.model.match.Matches;
-import com.hatfat.dota.model.user.SteamUser;
-import com.hatfat.dota.model.user.SteamUsers;
-import com.hatfat.dota.services.MatchFetcher;
-import com.hatfat.dota.view.MatchViewForPlayerBasic;
-import com.squareup.picasso.Picasso;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -30,6 +19,18 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.hatfat.dota.DotaFriendApplication;
+import com.hatfat.dota.R;
+import com.hatfat.dota.dialogs.FetchMatchesDialogHelper;
+import com.hatfat.dota.model.match.Match;
+import com.hatfat.dota.model.match.MatchHistory;
+import com.hatfat.dota.model.match.Matches;
+import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUsers;
+import com.hatfat.dota.services.MatchFetcher;
+import com.hatfat.dota.view.MatchViewForPlayerBasic;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,6 +110,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             @Override
             public void onClick(View v) {
                 getCharltonActivity().showFragmentInRightDrawer(new DotaPlayerStatisticsFragment());
+            }
+        });
+        fetchAllMatchesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmFetchAll();
             }
         });
 
@@ -215,11 +222,13 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         summaryFilter.addAction(SteamUser.STEAM_USER_UPDATED);
         summaryFilter.addAction(SteamUser.STEAM_USER_MATCHES_CHANGED);
         summaryFilter.addAction(Match.MATCH_UPDATED);
-        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, summaryFilter);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver,
+                summaryFilter);
     }
 
     private void stopListening() {
-        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).unregisterReceiver(
+                receiver);
     }
 
     private void setupMatchesList() {
@@ -307,7 +316,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (sortedMatches.size() > i) {
                     Match match = (Match) matchesAdapter.getItem(i);
-                    getCharltonActivity().pushCharltonFragment(MatchSummaryFragment.newInstance(match));
+                    getCharltonActivity()
+                            .pushCharltonFragment(MatchSummaryFragment.newInstance(match));
                 }
             }
         });
@@ -349,6 +359,26 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
             Toast.makeText(getActivity().getApplicationContext(), R.string.player_summary_added_friend_text, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void confirmFetchAll() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.player_summary_fetch_all_dialog_title);
+        builder.setMessage(R.string.player_summary_fetch_all_dialog_message);
+        builder.setPositiveButton(R.string.player_summary_fetch_all_dialog_confirm_button_text, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                FetchMatchesDialogHelper dialogHelper = new FetchMatchesDialogHelper(user);
+                dialogHelper.showFromActivity(getActivity());
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void updateViews() {

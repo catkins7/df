@@ -32,6 +32,12 @@
     <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% (%2$d Ranked)</string>
     <string name="player_summary_public_matchmaking_summary">%1$.1f%% (%2$d Public)</string>
 
+    <string name="player_summary_fetch_all_dialog_title">Fetch All Matches?</string>
+    <string name="player_summary_fetch_all_dialog_message">It is only possible to fetch a user\'s last 500 games.\n\nIt is recommended that you only proceed with on WiFi or a fast internet connection.</string>
+    <string name="player_summary_fetch_all_dialog_confirm_button_text">Fetch</string>
+    <string name="player_summary_fetch_all_dialog_fetching_match_list_text">Fetching match list...</string>
+    <string name="player_summary_fetch_all_dialog_fetching_match_details_text">Fetching match details (%1$d//%2$d)...</string>
+
     <string name="add_new_player_search_text">Search</string>
 
     <string name="no_steam_users">No players found.</string>
