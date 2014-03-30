@@ -15,7 +15,7 @@ public class DotaRestAdapter {
                 .setClient(new OkClient())
                 .setEndpoint("http://api.steampowered.com")
                 .setConverter(new GsonConverter(DotaGson.getDotaGson()))
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.NONE)
                 .build();
     }
 }

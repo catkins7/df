@@ -215,7 +215,7 @@ public class FetchMatchesDialogHelper {
             protected Void doInBackground(Void... params) {
                 Match match = Matches.get().getMatch(matchId);
 
-                if (!match.hasMatchDetails()) {
+                if (match != null && !match.hasMatchDetails()) {
                     charltonService.getMatchDetails(match.getMatchId(), new Callback<DotaResult<Match>>() {
                         @Override
                         public void success(DotaResult<Match> result, Response response) {
@@ -264,7 +264,6 @@ public class FetchMatchesDialogHelper {
 
         if (isCanceled || matchId == null) {
             //nothing more to fetch, we are done!
-            finishedFetchingMatchId(null);
             return;
         }
 
