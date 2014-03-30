@@ -5,6 +5,8 @@ don't fetch matches for fake users
 
 -ORDERING issue for weazen's tide hunter match???  and a few other games
 
+add warning when unstarring a player, telling the user that all cached/saved matches for this player will be lost
+
 test clear memory on every page of the app to find crash issues
 
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
@@ -20,7 +22,7 @@ fetch all for player feature
 when fetching match history for random players (who you didn't "fetch all" for), only actually add the latest 10 or 20 matches (For speed!)
 
 improve loading speed?
-
+	-load on demand, when you go into a player's profile page?
 
 Features Backlog
 ---------------------------
