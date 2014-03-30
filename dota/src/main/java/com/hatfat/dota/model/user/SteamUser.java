@@ -1,15 +1,15 @@
 package com.hatfat.dota.model.user;
 
+import android.content.Intent;
+import android.content.res.Resources;
+import android.support.v4.content.LocalBroadcastManager;
+
 import com.google.gson.annotations.SerializedName;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
-
-import android.content.Intent;
-import android.content.res.Resources;
-import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.Comparator;
 import java.util.List;
@@ -220,8 +220,25 @@ public class SteamUser {
 
         float publicPercent = 100.0f * (float)publicWinCount / (float)publicGameCount;
         float rankedPercent = 100.0f * (float)rankedWinCount / (float)rankedGameCount;
-        strings[0] = String.format(resources.getString(R.string.player_summary_public_matchmaking_summary), publicPercent, publicGameCount);
-        strings[1] = String.format(resources.getString(R.string.player_summary_ranked_matchmaking_summary), rankedPercent, rankedGameCount);
+
+        if (publicGameCount > 0) {
+            strings[0] = String
+                    .format(resources.getString(R.string.player_summary_public_matchmaking_summary),
+                            publicPercent, publicGameCount);
+        }
+        else {
+            strings[0] = resources.getString(R.string.player_summary_no_public_matches_string);
+        }
+
+        if (rankedGameCount > 0) {
+            strings[1] = String
+                    .format(resources.getString(R.string.player_summary_ranked_matchmaking_summary),
+                            rankedPercent, rankedGameCount);
+        }
+        else {
+            strings[1] = resources.getString(R.string.player_summary_no_ranked_matches_string);
+        }
+
         strings[2] = String.format(resources.getString(R.string.player_summary_matches_summary_string), matchesWithDetailsCount, matches.size());
 
         return strings;

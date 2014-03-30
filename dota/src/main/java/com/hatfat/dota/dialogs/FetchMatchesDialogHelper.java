@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -121,7 +120,7 @@ public class FetchMatchesDialogHelper {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("catfat", "1 handle errors??");
+                finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
             }
         });
     }
@@ -135,7 +134,7 @@ public class FetchMatchesDialogHelper {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("catfat", "2 handle errors??");
+                finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
             }
         });
     }
@@ -161,9 +160,7 @@ public class FetchMatchesDialogHelper {
 
             matchListProgress = 1.0f;
 
-            if (!isCanceled) {
-                nextState();
-            }
+            nextState();
         }
     }
 
@@ -184,7 +181,9 @@ public class FetchMatchesDialogHelper {
     }
 
     private void finishedFetchingMatchId(String matchId) {
-        removeInProgressMatchId(matchId);
+        if (matchId != null) {
+            removeInProgressMatchId(matchId);
+        }
 
         if (matchIds.size() <= 0 && matchIdsInProgress.size() <= 0) {
             //all done!
@@ -199,7 +198,9 @@ public class FetchMatchesDialogHelper {
             matchDetailsProgress = (float)numberOfMatchesCompleted / (float)totalNumberOfMatches;
             updateProgressBar();
 
-            fetchNextMatchDetails();
+            if (matchIds.size() > 0) {
+                fetchNextMatchDetails();
+            }
         }
     }
 
@@ -263,6 +264,7 @@ public class FetchMatchesDialogHelper {
 
         if (isCanceled || matchId == null) {
             //nothing more to fetch, we are done!
+            finishedFetchingMatchId(null);
             return;
         }
 

@@ -2,6 +2,7 @@ package com.hatfat.dota.model.match;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,6 +27,10 @@ public class MatchHistory {
 
     @SerializedName("matches")
     List<Match> matches;
+
+    public MatchHistory() {
+        matches = new LinkedList();
+    }
 
     public List<Match> getMatches() {
         return matches;

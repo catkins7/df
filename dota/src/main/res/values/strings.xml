@@ -31,6 +31,8 @@
     <string name="player_summary_matches_summary_string">%1$d / %2$d known games</string>
     <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% (%2$d Ranked)</string>
     <string name="player_summary_public_matchmaking_summary">%1$.1f%% (%2$d Public)</string>
+    <string name="player_summary_no_public_matches_string">No public games.</string>
+    <string name="player_summary_no_ranked_matches_string">No ranked games.</string>
 
     <string name="player_summary_fetch_all_dialog_title">Fetch All Matches?</string>
     <string name="player_summary_fetch_all_dialog_message">It is only possible to fetch a user\'s last 500 games.\n\nIt is recommended that you only proceed with on WiFi or a fast internet connection.</string>

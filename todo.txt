@@ -30,6 +30,7 @@ Features Backlog
 
 
 match summary improvements (so it doesn't look so meh, right tray with more statistics?  Item of the game? (the item with the most money spent on it))
+	- add lobby type (co-op vs bots, etc) to the details
 
 
 Charlton talking feature
