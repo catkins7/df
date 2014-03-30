@@ -1,6 +1,11 @@
 TODO
 ---------------------------
 
+Disable stats button for now
+0.3 release??
+
+
+
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 	match result graph? (public, matchmaking) (goes up one pixel for a win, down one for a loss?  shows last ~50 games or so?)
 	kds graph?
