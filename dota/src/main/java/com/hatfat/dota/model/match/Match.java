@@ -525,7 +525,19 @@ public class Match {
             matchIdComparator = new Comparator<String>() {
                 @Override
                 public int compare(String matchId, String matchId2) {
-                    return matchId2.compareToIgnoreCase(matchId);
+                    long firstNum = Long.valueOf(matchId);
+                    long secondNum = Long.valueOf(matchId2);
+
+                    if (firstNum == secondNum) {
+                        return 0;
+                    }
+
+                    if (firstNum > secondNum) {
+                        return -1;
+                    }
+                    else {
+                        return 1;
+                    }
                 }
             };
         }
