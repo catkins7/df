@@ -173,7 +173,7 @@ public class FetchMatchesDialogHelper {
 
         matchIdsInProgress = new LinkedList();
 
-        int numberOfConcurrentRequests = 8;
+        int numberOfConcurrentRequests = Runtime.getRuntime().availableProcessors() * 2;
         for (int i = 0; i < numberOfConcurrentRequests; i++) {
             fetchNextMatchDetails();
         }

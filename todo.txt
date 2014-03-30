@@ -3,6 +3,8 @@ TODO
 ---------------------------
 don't fetch matches for fake users
 
+-ORDERING issue for weazen's tide hunter match???  and a few other games
+
 test clear memory on every page of the app to find crash issues
 
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
