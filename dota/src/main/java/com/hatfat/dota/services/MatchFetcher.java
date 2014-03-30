@@ -1,11 +1,17 @@
 package com.hatfat.dota.services;
 
 import android.util.Log;
+
 import com.hatfat.dota.model.DotaResult;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
+import com.hatfat.dota.model.user.SteamUsers;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -15,17 +21,27 @@ import retrofit.client.Response;
  */
 public class MatchFetcher
 {
-    public static void fetchMatches(final SteamUser user, final Callback<MatchHistory> callback) {
+    public static void fetchMatches(final SteamUser user, final Callback<List<Match>> callback) {
         CharltonService charltonService = DotaRestAdapter.createRestAdapter().create(CharltonService.class);
         charltonService.getMatchHistory(user.getAccountId(), new Callback<DotaResult<MatchHistory>>() {
             @Override
             public void success(DotaResult<MatchHistory> result, Response response) {
                 MatchHistory matchHistory = result.result;
+                List<Match> matches;
 
-                Matches.get().addMatches(matchHistory.getMatches());
-                user.addMatches(matchHistory.getMatches());
+                if (!SteamUsers.get().isUserStarred(user)) {
+                    //not a starred user, so we only want to add their last 20 games
+                    int numberToGet = Math.min(matchHistory.getMatches().size(), 20);
+                    matches = new LinkedList<Match>(matchHistory.getMatches().subList(0, numberToGet));
+                }
+                else {
+                    matches = matchHistory.getMatches();
+                }
 
-                callback.success(matchHistory, response);
+                Matches.get().addMatches(matches);
+                user.addMatches(matches);
+
+                callback.success(matches, response);
             }
 
             @Override

@@ -24,7 +24,6 @@ import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.dialogs.FetchMatchesDialogHelper;
 import com.hatfat.dota.model.match.Match;
-import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
@@ -34,6 +33,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -135,13 +135,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         if (user.isRealUser()) {
             fetchingMatches = true;
-            MatchFetcher.fetchMatches(user, new Callback<MatchHistory>() {
+            MatchFetcher.fetchMatches(user, new Callback<List<Match>>() {
                 @Override
-                public void success(MatchHistory matchHistory, Response response) {
+                public void success(List<Match> matches, Response response) {
                     fetchingMatches = false;
 
-                    if (matchHistory.getMatches() == null
-                            || matchHistory.getMatches().size() <= 0) {
+                    if (matches == null || matches.size() <= 0) {
                         //no matches, but we want to remove the progress bar and show the "no matches row" so reload
                         matchesAdapter.notifyDataSetChanged();
                     }
