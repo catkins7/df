@@ -36,7 +36,7 @@
     <string name="player_summary_fetch_all_dialog_message">It is only possible to fetch a user\'s last 500 games.\n\nIt is recommended that you only proceed with on WiFi or a fast internet connection.</string>
     <string name="player_summary_fetch_all_dialog_confirm_button_text">Fetch</string>
     <string name="player_summary_fetch_all_dialog_fetching_match_list_text">Fetching match list...</string>
-    <string name="player_summary_fetch_all_dialog_fetching_match_details_text">Fetching match details (%1$d//%2$d)...</string>
+    <string name="player_summary_fetch_all_dialog_fetching_match_details_text">Fetching match details...</string>
     <string name="player_summary_fetch_all_dialog_saving_matches_text">Saving matches...</string>
 
     <string name="add_new_player_search_text">Search</string>

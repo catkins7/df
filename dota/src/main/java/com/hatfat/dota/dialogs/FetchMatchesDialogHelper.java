@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,8 @@ public class FetchMatchesDialogHelper {
     private SteamUser user;
 
     private Set<Match> fetchResults;
-
+    private LinkedList<String> matchIds;
+    private LinkedList<String> matchIdsInProgress;
 
     public FetchMatchesDialogHelper(SteamUser user) {
         this.user = user;
@@ -121,11 +123,9 @@ public class FetchMatchesDialogHelper {
                 Log.e("catfat", "1 handle errors??");
             }
         });
-
     }
 
     private void fetchMatchListFromMatchId(final String matchId) {
-        Log.e("catfat", "fetching more matches!");
         charltonService.getMatchHistoryAtMatchId(user.getAccountId(), matchId, new Callback<DotaResult<MatchHistory>>() {
             @Override
             public void success(DotaResult<MatchHistory> matchHistoryDotaResult, Response response) {
@@ -137,7 +137,6 @@ public class FetchMatchesDialogHelper {
                 Log.e("catfat", "2 handle errors??");
             }
         });
-
     }
 
     private void finishedWithMatches(MatchHistory matchHistory) {
@@ -167,22 +166,114 @@ public class FetchMatchesDialogHelper {
     private void startFetchingMatchDetails() {
         state = FetchMatchesState.FETCH_MATCHES_STATE_FETCHING_DETAILS;
 
-        matchDetailsProgress = 1.0f;
+        matchIds = new LinkedList();
+        for (Match match : fetchResults) {
+            matchIds.add(match.getMatchId());
+        }
 
-        nextState();
+        matchIdsInProgress = new LinkedList();
+
+        int numberOfConcurrentRequests = 4;
+        for (int i = 0; i < numberOfConcurrentRequests; i++) {
+            fetchNextMatchDetails();
+        }
+    }
+
+    private void finishedFetchingMatchId(String matchId) {
+        removeInProgressMatchId(matchId);
+
+        if (matchIds.size() <= 0 && matchIdsInProgress.size() <= 0) {
+            //all done!
+            matchDetailsProgress = 1.0f;
+            nextState();
+        }
+        else {
+            int totalNumberOfMatches = fetchResults.size();
+            int numberOfMatchesLeft = matchIdsInProgress.size() + matchIds.size();
+            int numberOfMatchesCompleted = totalNumberOfMatches - numberOfMatchesLeft;
+
+            matchDetailsProgress = (float)numberOfMatchesCompleted / (float)totalNumberOfMatches;
+            updateProgressBar();
+
+            fetchNextMatchDetails();
+        }
+    }
+
+    private void finishedFetchingMatchIdWithError(String matchId) {
+        //just continue for now
+        finishedFetchingMatchId(matchId);
+    }
+
+    private void fetchDetailsForMatch(final String matchId) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Match match = Matches.get().getMatch(matchId);
+
+                if (!match.hasMatchDetails()) {
+                    charltonService.getMatchDetails(match.getMatchId(), new Callback<DotaResult<Match>>() {
+                        @Override
+                        public void success(DotaResult<Match> result, Response response) {
+                            Match match = result.result;
+                            match.setHasMatchDetails(true);
+
+                            Matches.get().addMatch(match);
+
+                            finishedFetchingMatchId(matchId);
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            finishedFetchingMatchIdWithError(matchId);
+                        }
+                    });
+                }
+                else {
+                    finishedFetchingMatchId(matchId);
+                }
+
+                return null;
+            }
+        }.execute();
+    }
+
+    private synchronized String popNextMatchId() {
+        if (matchIds.size() > 0) {
+            return matchIds.removeFirst();
+        }
+        else {
+            return null;
+        }
+    }
+
+    private synchronized void addInProgressMatchId(String matchId) {
+        matchIdsInProgress.add(matchId);
+    }
+
+    private synchronized void removeInProgressMatchId(String matchId) {
+        matchIdsInProgress.remove(matchId);
+    }
+
+    private void fetchNextMatchDetails() {
+        String matchId = popNextMatchId();
+
+        if (matchId == null) {
+            //nothing more to fetch, we are done!
+            return;
+        }
+
+        addInProgressMatchId(matchId);
+        fetchDetailsForMatch(matchId);
     }
 
     private void startSaving() {
         state = FetchMatchesState.FETCH_MATCHES_STATE_SAVING;
-
         saveProgress = 1.0f;
-
         nextState();
     }
 
     private void finished() {
         state = FetchMatchesState.FETCH_MATCHES_STATE_FINISHED;
-
         dialog.dismiss();
     }
 
@@ -194,9 +285,9 @@ public class FetchMatchesDialogHelper {
         }
 
         float barPercent = 0.0f;
-        barPercent += matchListProgress * 0.1f;
-        barPercent += matchDetailsProgress * 0.8f;
-        barPercent += saveProgress * 0.1f;
+        barPercent += matchListProgress * 0.05f;
+        barPercent += matchDetailsProgress * 0.9f;
+        barPercent += saveProgress * 0.05f;
 
         float loadingBarMaxWidth = (float) messageTextView.getWidth();
         final int barWidth = (int) (loadingBarMaxWidth * barPercent);
@@ -219,9 +310,7 @@ public class FetchMatchesDialogHelper {
             case FETCH_MATCHES_STATE_FETCHING_MATCH_LIST:
                 return resources.getString(R.string.player_summary_fetch_all_dialog_fetching_match_list_text);
             case FETCH_MATCHES_STATE_FETCHING_DETAILS:
-                String messageString = resources.getString(R.string.player_summary_fetch_all_dialog_fetching_match_details_text);
-
-                return messageString;
+                return resources.getString(R.string.player_summary_fetch_all_dialog_fetching_match_details_text);
             case FETCH_MATCHES_STATE_SAVING:
                 return resources.getString(R.string.player_summary_fetch_all_dialog_saving_matches_text);
             default:

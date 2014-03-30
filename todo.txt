@@ -11,7 +11,11 @@ player summary improvements (number of matches, win %, right tray with more stat
 	favorite item??  (item the most money is spent on)
 
 fetch all for player feature
+	-handle errors on match list fetching
+
 when fetching match history for random players (who you didn't "fetch all" for), only actually add the latest 10 or 20 matches (For speed!)
+
+improve loading speed?
 
 
 Features Backlog
