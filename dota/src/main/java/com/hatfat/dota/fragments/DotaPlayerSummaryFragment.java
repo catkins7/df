@@ -133,24 +133,27 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         SteamUsers.get().refreshUser(user);
 
-        fetchingMatches = true;
-        MatchFetcher.fetchMatches(user, new Callback<MatchHistory>() {
-            @Override
-            public void success(MatchHistory matchHistory, Response response) {
-                fetchingMatches = false;
+        if (user.isRealUser()) {
+            fetchingMatches = true;
+            MatchFetcher.fetchMatches(user, new Callback<MatchHistory>() {
+                @Override
+                public void success(MatchHistory matchHistory, Response response) {
+                    fetchingMatches = false;
 
-                if (matchHistory.getMatches() == null || matchHistory.getMatches().size() <= 0) {
-                    //no matches, but we want to remove the progress bar and show the "no matches row" so reload
+                    if (matchHistory.getMatches() == null
+                            || matchHistory.getMatches().size() <= 0) {
+                        //no matches, but we want to remove the progress bar and show the "no matches row" so reload
+                        matchesAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    fetchingMatches = false;
                     matchesAdapter.notifyDataSetChanged();
                 }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                fetchingMatches = false;
-                matchesAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+        }
     }
 
     @Override

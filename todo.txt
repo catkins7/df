@@ -1,13 +1,7 @@
 TODO
 ---------------------------
-don't fetch matches for fake users
 
 -ORDERING issue for weazen's tide hunter match???  and a few other games
-
-
-fetch all for player feature
-	-handle errors on match list fetching
-	-retry errors on match details??
 
 when fetching match history for random players (who you didn't "fetch all" for), only actually add the latest 10 or 20 matches (For speed!)
 
