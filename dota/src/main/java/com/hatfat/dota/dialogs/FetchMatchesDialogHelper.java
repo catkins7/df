@@ -42,6 +42,7 @@ public class FetchMatchesDialogHelper {
     private float matchListProgress;
     private float matchDetailsProgress;
     private float saveProgress;
+    private boolean isCanceled;
 
     private AlertDialog dialog;
     private TextView messageTextView;
@@ -74,7 +75,7 @@ public class FetchMatchesDialogHelper {
 
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
+                isCanceled = true;
             }
         });
 
@@ -142,7 +143,7 @@ public class FetchMatchesDialogHelper {
     private void finishedWithMatches(MatchHistory matchHistory) {
         fetchResults.addAll(matchHistory.getMatches());
 
-        if (matchHistory.getResultsRemaining() > 0) {
+        if (!isCanceled && matchHistory.getResultsRemaining() > 0) {
             fetchMatchListFromMatchId(matchHistory.getMatches().get(matchHistory.getMatches().size() - 1).getMatchId());
         }
         else {
@@ -159,7 +160,10 @@ public class FetchMatchesDialogHelper {
             Matches.get().addMatches(matches);
 
             matchListProgress = 1.0f;
-            nextState();
+
+            if (!isCanceled) {
+                nextState();
+            }
         }
     }
 
@@ -257,7 +261,7 @@ public class FetchMatchesDialogHelper {
     private void fetchNextMatchDetails() {
         String matchId = popNextMatchId();
 
-        if (matchId == null) {
+        if (isCanceled || matchId == null) {
             //nothing more to fetch, we are done!
             return;
         }
