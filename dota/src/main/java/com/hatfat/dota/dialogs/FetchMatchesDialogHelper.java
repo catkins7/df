@@ -173,7 +173,7 @@ public class FetchMatchesDialogHelper {
 
         matchIdsInProgress = new LinkedList();
 
-        int numberOfConcurrentRequests = 4;
+        int numberOfConcurrentRequests = 8;
         for (int i = 0; i < numberOfConcurrentRequests; i++) {
             fetchNextMatchDetails();
         }
