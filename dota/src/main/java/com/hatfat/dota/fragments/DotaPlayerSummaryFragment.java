@@ -164,14 +164,17 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     public void onStop() {
         super.onStop();
 
+        saveIfNecessary();
+        stopListening();
+    }
+
+    private void saveIfNecessary() {
         if (SteamUsers.get().isUserStarred(user)) {
             if (userMatchesHaveChanged) {
                 userMatchesHaveChanged = false;
                 Matches.get().saveMatchesToDiskForUser(user);
             }
         }
-
-        stopListening();
     }
 
     private void startListening() {
@@ -367,6 +370,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         builder.setMessage(R.string.player_summary_fetch_all_dialog_message);
         builder.setPositiveButton(R.string.player_summary_fetch_all_dialog_confirm_button_text, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                //star the user automatically when you fetch all
+                if (!SteamUsers.get().isUserStarred(user)) {
+                    SteamUsers.get().addSteamUserToStarredList(user);
+                    updateFriendButtonBackground();
+                }
+
                 FetchMatchesDialogHelper dialogHelper = new FetchMatchesDialogHelper(user);
                 dialogHelper.showFromActivity(getActivity());
             }

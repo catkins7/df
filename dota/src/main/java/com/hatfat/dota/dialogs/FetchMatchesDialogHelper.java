@@ -286,8 +286,8 @@ public class FetchMatchesDialogHelper {
 
         float barPercent = 0.0f;
         barPercent += matchListProgress * 0.05f;
-        barPercent += matchDetailsProgress * 0.9f;
-        barPercent += saveProgress * 0.05f;
+        barPercent += matchDetailsProgress * 0.95f;
+        barPercent += saveProgress * 0.00f;
 
         float loadingBarMaxWidth = (float) messageTextView.getWidth();
         final int barWidth = (int) (loadingBarMaxWidth * barPercent);

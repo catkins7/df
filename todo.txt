@@ -1,4 +1,3 @@
-
 TODO
 ---------------------------
 don't fetch matches for fake users
@@ -23,6 +22,8 @@ when fetching match history for random players (who you didn't "fetch all" for),
 
 improve loading speed?
 	-load on demand, when you go into a player's profile page?
+
+
 
 Features Backlog
 ---------------------------
