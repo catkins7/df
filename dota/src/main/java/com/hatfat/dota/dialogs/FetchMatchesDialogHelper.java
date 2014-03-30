@@ -72,7 +72,7 @@ public class FetchMatchesDialogHelper {
         builder.setView(contentView);
         builder.setCancelable(false);
 
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.player_summary_fetch_all_dialog_stop_text, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 isCanceled = true;
             }
