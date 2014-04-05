@@ -1,6 +1,6 @@
 0.3 release
 ---------------------------
-anonymous user issue, able to star them, and their name goes blank after a little while?
+anonymous user issue, go into anonymous user page and it will fetch their data i think, so then they show up as blank
 
 test clear memory on every page of the app to find issues
 
