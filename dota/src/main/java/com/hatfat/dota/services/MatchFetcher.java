@@ -7,7 +7,6 @@ import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
-import com.hatfat.dota.model.user.SteamUsers;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,8 +28,10 @@ public class MatchFetcher
                 MatchHistory matchHistory = result.result;
                 List<Match> matches;
 
-                if (!SteamUsers.get().isUserStarred(user)) {
-                    //not a starred user, so we only want to add their last 20 games
+                boolean onlyAddRecentTwentyMatches = true;
+
+                if (onlyAddRecentTwentyMatches) {
+                    //we only want to add their last 20 games
                     int numberToGet = Math.min(matchHistory.getMatches().size(), 20);
                     matches = new LinkedList<Match>(matchHistory.getMatches().subList(0, numberToGet));
                 }

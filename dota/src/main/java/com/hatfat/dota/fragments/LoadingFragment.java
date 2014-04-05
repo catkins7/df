@@ -7,11 +7,13 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Heroes;
@@ -61,6 +63,8 @@ public class LoadingFragment extends CharltonFragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        Log.e("catfat", "ON THE START?!?!");
 
         load();
     }

@@ -25,9 +25,9 @@
     <string name="match_result_summary_kills_divider_text">-</string>
 
     <string name="player_summary_added_friend_text">Starred player!</string>
-    <string name="player_summary_remove_friend_message_text">Unstar this player?\n\nIf unstarred, this player will no longer save its match history, nor will it appear in the starred players list.</string>
+    <string name="player_summary_remove_friend_message_text">Only starred players save their match history and appear in the starred players list.</string>
     <string name="player_summary_remove_friend_remove_text">Unstar</string>
-    <string name="player_summary_remove_friend_title_text">Unstar Player</string>
+    <string name="player_summary_remove_friend_title_text">Unstar Player?</string>
     <string name="player_summary_matches_summary_string">%1$d / %2$d known games</string>
     <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% (%2$d Ranked)</string>
     <string name="player_summary_public_matchmaking_summary">%1$.1f%% (%2$d Public)</string>

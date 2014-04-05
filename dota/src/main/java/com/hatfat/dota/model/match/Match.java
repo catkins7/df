@@ -2,7 +2,9 @@ package com.hatfat.dota.model.match;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+
 import com.google.gson.annotations.SerializedName;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.player.Player;
@@ -248,6 +250,10 @@ public class Match {
         this.matchId = matchId;
     }
 
+    public Match() {
+
+    }
+
     public String getMatchId() {
         return matchId;
     }
@@ -316,7 +322,7 @@ public class Match {
         return getLobbyType().equals(LobbyType.PUBLIC_MATCHMAKING);
     }
     public PlayerMatchResult getPlayerMatchResultForPlayer(Player player) {
-        if (!players.contains(player)) {
+        if (players == null || !players.contains(player)) {
             return PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN;
         }
 

@@ -1,23 +1,20 @@
+0.3 release
+---------------------------
+issue with app leaving memory on player summary page and player match lists don't get restored properly (and then saved incorrectly)
+
+test clear memory on every page of the app to find issues
+
+
 TODO
 ---------------------------
-
-Disable stats button for now
-0.3 release??
-
-
-
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 	match result graph? (public, matchmaking) (goes up one pixel for a win, down one for a loss?  shows last ~50 games or so?)
 	kds graph?
 	favorite item??  (item the most money is spent on)
+	CS Score?  the average gpm, or average CS of all players in your games (that didn't have leavers, and more than 5 minutes?).  
+		-Might be good indication of player skill rating
 
-
-test clear memory on every page of the app to find crash issues
-
-
-improve loading speed?
-	-load on demand, when you go into a player's profile page?
-
+don't load player match lists until you go into the player summary page?
 
 
 Features Backlog

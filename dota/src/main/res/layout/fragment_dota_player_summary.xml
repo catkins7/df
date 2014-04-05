@@ -51,9 +51,8 @@
             android:id="@+id/fragment_dota_player_summary_fetch_all_button"
             android:background="@drawable/download_matches_button_background"
             android:drawablePadding="16dp"
-            android:layout_toLeftOf="@id/fragment_dota_player_summary_right_tray_button"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
             android:layout_below="@id/fragment_dota_player_summary_persona_text_view"
             android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
             android:layout_height="@dimen/dota_player_summary_fragment_image_view_size" />

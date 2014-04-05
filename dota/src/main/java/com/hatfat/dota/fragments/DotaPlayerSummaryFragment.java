@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,15 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         if (steamUserId != null) {
             user = SteamUsers.get().getBySteamId(steamUserId);
         }
+
+        startListening();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        stopListening();
     }
 
     @Override
@@ -156,18 +166,10 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        startListening();
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
 
         saveIfNecessary();
-        stopListening();
     }
 
     private void saveIfNecessary() {
@@ -393,13 +395,18 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void updateViews() {
+        if (profileImageView == null) {
+            Log.e("catfat", "stopped crash!");
+            return;
+        }
+
         Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(profileImageView);
 
         personaTextView.setText(user.getDisplayName());
 
         if (user.isRealUser()) {
             fetchAllMatchesButton.setVisibility(View.VISIBLE);
-            statsButton.setVisibility(View.VISIBLE);
+            statsButton.setVisibility(View.GONE);
         }
         else {
             fetchAllMatchesButton.setVisibility(View.GONE);
@@ -410,6 +417,11 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void updateMatchInfoViews() {
+        if (publicMatchesTextView == null) {
+            Log.e("catfat", "stopped crash2!");
+            return;
+        }
+
         String[] summaryStrings = user.getMatchSummaryStrings(getResources());
         publicMatchesTextView.setText(summaryStrings[0]);
         rankedMatchesTextView.setText(summaryStrings[1]);

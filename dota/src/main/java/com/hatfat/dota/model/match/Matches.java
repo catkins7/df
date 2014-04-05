@@ -142,7 +142,7 @@ public class Matches {
             matchesList.add(getMatch(matchId));
         }
 
-        MatchesGsonObject obj = new MatchesGsonObject();
+        MatchesGsonObject obj = new MatchesGsonObject(1); //use version 1 save format
         obj.matches = matchesList;
 
         Log.v("Matches", "saved " + obj.matches.size() + " matches to disk for user " + user.getDisplayName());
@@ -151,8 +151,9 @@ public class Matches {
     }
 
     public void loadMatchesFromDiskForUser(final SteamUser user) {
+        long startTime = System.currentTimeMillis();
         MatchesGsonObject obj = FileUtil.loadObjectFromDisk(user.getAccountId() + USER_MATCHES_FILE_EXTENSION, MatchesGsonObject.class);
-
+        long endTime = System.currentTimeMillis();
 
         if (obj != null) {
             addMatches(obj.matches);
@@ -162,7 +163,7 @@ public class Matches {
                 user.getMatches().add(match.getMatchId());
             }
 
-            Log.v("Matches", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName());
+            Log.v("Matches", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName() + " in " + (endTime - startTime) + " millis");
         }
     }
 }

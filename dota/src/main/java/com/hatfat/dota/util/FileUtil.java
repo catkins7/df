@@ -2,12 +2,21 @@ package com.hatfat.dota.util;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.hatfat.dota.DotaFriendApplication;
 
-import java.io.*;
+import com.hatfat.dota.DotaFriendApplication;
+import com.hatfat.dota.model.DotaDiskGson;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FileUtil {
 
@@ -55,7 +64,7 @@ public class FileUtil {
             BufferedReader br = new BufferedReader(new FileReader(file));
             JsonReader jsonReader = new JsonReader(br);
 
-            Gson gson = new Gson();
+            Gson gson = DotaDiskGson.getDotaDiskGson();
             T obj = gson.fromJson(jsonReader, typeClass);
 
             return obj;
@@ -88,7 +97,7 @@ public class FileUtil {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
                     JsonWriter jsonWriter = new JsonWriter(bw);
 
-                    Gson gson = new Gson();
+                    Gson gson = DotaDiskGson.getDotaDiskGson();
                     gson.toJson(obj, obj.getClass(), jsonWriter); // Write to file using BufferedWriter
                     jsonWriter.close();
 

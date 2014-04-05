@@ -21,6 +21,7 @@ import com.hatfat.dota.services.DotaRestAdapter;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import retrofit.Callback;
@@ -74,7 +75,10 @@ public class FetchMatchesDialogHelper {
 
         builder.setNegativeButton(R.string.player_summary_fetch_all_dialog_stop_text, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                isCanceled = true;
+                if (!isCanceled) {
+                    isCanceled = true;
+                    finished();
+                }
             }
         });
 
@@ -140,9 +144,12 @@ public class FetchMatchesDialogHelper {
     }
 
     private void finishedWithMatches(MatchHistory matchHistory) {
-        fetchResults.addAll(matchHistory.getMatches());
+        if (!isCanceled) {
+            fetchResults.addAll(matchHistory.getMatches());
+        }
 
         if (!isCanceled && matchHistory.getResultsRemaining() > 0) {
+            //there are more matches to fetch, and we're not canceled, so lets get them!
             fetchMatchListFromMatchId(matchHistory.getMatches().get(matchHistory.getMatches().size() - 1).getMatchId());
         }
         else {
@@ -150,12 +157,13 @@ public class FetchMatchesDialogHelper {
             updateProgressBar();
 
             //no more matches to fetch!  we are done here...
-            LinkedList<Match> matches = new LinkedList<>(fetchResults);
+            LinkedList<Match> matches = new LinkedList(fetchResults);
 
-            //add the matches to the user object!
-            user.addMatches(matches);
+            if (!isCanceled) {
+                user.addMatches(matches);
+            }
 
-            //add the match search results to the matches singleton
+            //add the match search results to the matches singleton no matter what
             Matches.get().addMatches(matches);
 
             matchListProgress = 1.0f;
@@ -251,6 +259,10 @@ public class FetchMatchesDialogHelper {
         }
     }
 
+    private synchronized List<String> copyMatchIdList() {
+        return new LinkedList(matchIds);
+    }
+
     private synchronized void addInProgressMatchId(String matchId) {
         matchIdsInProgress.add(matchId);
     }
@@ -279,6 +291,12 @@ public class FetchMatchesDialogHelper {
 
     private void finished() {
         state = FetchMatchesState.FETCH_MATCHES_STATE_FINISHED;
+
+        //clear out any matches from the user that we didn't get to (only should happen if it was canceled)
+        if (matchIds != null && matchIds.size() > 0) {
+            user.removeMatchesIfNoDetails(copyMatchIdList());
+        }
+
         dialog.dismiss();
     }
 

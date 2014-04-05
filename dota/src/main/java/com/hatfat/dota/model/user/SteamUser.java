@@ -264,7 +264,9 @@ public class SteamUser {
         }
 
         float percent = 100.0f * (float)winCount / (float)gameCount;
-        return String.format(resources.getString(R.string.player_summary_ranked_matchmaking_summary), percent, gameCount);
+        return String.format(
+                resources.getString(R.string.player_summary_ranked_matchmaking_summary), percent,
+                gameCount);
     }
     public String getPublicWinString(Resources resources) {
         int winCount = 0;
@@ -287,7 +289,9 @@ public class SteamUser {
         }
 
         float percent = 100.0f * (float)winCount / (float)gameCount;
-        return String.format(resources.getString(R.string.player_summary_public_matchmaking_summary), percent, gameCount);
+        return String.format(
+                resources.getString(R.string.player_summary_public_matchmaking_summary), percent,
+                gameCount);
     }
     public String getWinPercentageString(Resources resources) {
         int winCount = 0;
@@ -319,6 +323,29 @@ public class SteamUser {
         }
 
         if (addedNewMatch) {
+            broadcastUserMatchesChanged();
+        }
+    }
+
+    public void removeMatchesIfNoDetails(List<String> matchIds) {
+        if (matchIds == null) {
+            return;
+        }
+
+        boolean removedMatch = false;
+
+        for (String matchId : matchIds) {
+            if (matches.contains(matchId)) {
+                Match match = Matches.get().getMatch(matchId);
+
+                if (!match.hasMatchDetails()) {
+                    removedMatch = true;
+                    matches.remove(matchId);
+                }
+            }
+        }
+
+        if (removedMatch) {
             broadcastUserMatchesChanged();
         }
     }
