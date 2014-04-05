@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+
 import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.CharltonFragment;
 import com.hatfat.dota.fragments.CharltonMessageFragment;
@@ -163,6 +164,10 @@ public class CharltonActivity extends Activity {
         if (rootContentFragment != fragment) {
             try {
                 FragmentManager manager = getFragmentManager();
+
+                manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                manager.popBackStack();
+
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment, fragment.toString());
                 transaction.commit();

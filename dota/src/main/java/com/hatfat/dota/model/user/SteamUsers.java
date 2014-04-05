@@ -1,11 +1,11 @@
 package com.hatfat.dota.model.user;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.SteamUserFetcher;
 import com.hatfat.dota.util.FileUtil;
-
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,12 +38,12 @@ public class SteamUsers {
         return singleton;
     }
 
-    private HashMap<String, SteamUser> users;
-    private HashMap<String, SteamUser> starredUsers;
+    private HashMap<String, SteamUser> users; //master map of steamIds to the SteamUser objects
+    private List<String> starredUsers; //starred users steamIds
 
     private SteamUsers() {
-        users = new HashMap<>();
-        starredUsers = new HashMap<>();
+        users = new HashMap();
+        starredUsers = new LinkedList();
     }
 
     public void load() {
@@ -60,7 +60,13 @@ public class SteamUsers {
     }
 
     public Collection<SteamUser> getStarredUsers() {
-        return starredUsers.values();
+        LinkedList<SteamUser> stars = new LinkedList<>();
+        for (String steamId : starredUsers) {
+            SteamUser star = getBySteamId(steamId);
+            stars.add(star);
+        }
+
+        return stars;
     }
 
     public SteamUser getBySteamId(String steamId) {
@@ -81,7 +87,12 @@ public class SteamUsers {
     }
 
     private void saveToDisk() {
-        LinkedList usersList = new LinkedList(starredUsers.values());
+        LinkedList<SteamUser> usersList = new LinkedList<>();
+        for (String userId : starredUsers) {
+            SteamUser user = getBySteamId(userId);
+            usersList.add(user);
+        }
+
         SteamUsersGsonObject obj = new SteamUsersGsonObject();
         obj.users = usersList;
 
@@ -95,7 +106,7 @@ public class SteamUsers {
             addSteamUsers(obj.users);
 
             for (SteamUser user : obj.users) {
-                starredUsers.put(user.steamId, user);
+                starredUsers.add(user.getSteamId());
             }
         }
 
@@ -135,7 +146,7 @@ public class SteamUsers {
             SteamUser newUser = new SteamUser(id);
             defaultUsers.add(newUser);
 
-            starredUsers.put(newUser.steamId, newUser);
+            starredUsers.add(id);
         }
 
         addSteamUsers(defaultUsers);
@@ -204,22 +215,19 @@ public class SteamUsers {
     }
 
     public boolean isUserStarred(SteamUser user) {
-        return starredUsers.containsKey(user.steamId);
+        return starredUsers.contains(user.steamId);
     }
 
     public void addSteamUserToStarredList(SteamUser user) {
-        SteamUser existingUser = starredUsers.get(user.steamId);
-
-        if (existingUser == null) {
-            starredUsers.put(user.steamId, user);
+        if (!starredUsers.contains(user.steamId)) {
+            starredUsers.add(user.getSteamId());
             starredUsersChanged();
         }
     }
 
     public void removeSteamUserFromStarredList(SteamUser user) {
-        SteamUser removedUser = starredUsers.remove(user.steamId);
-
-        if (removedUser != null) {
+        if (starredUsers.contains(user.steamId)) {
+            starredUsers.remove(user.steamId);
             starredUsersChanged();
         }
     }

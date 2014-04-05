@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -396,7 +395,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
     private void updateViews() {
         if (profileImageView == null) {
-            Log.e("catfat", "stopped crash!");
             return;
         }
 
@@ -418,7 +416,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
     private void updateMatchInfoViews() {
         if (publicMatchesTextView == null) {
-            Log.e("catfat", "stopped crash2!");
             return;
         }
 

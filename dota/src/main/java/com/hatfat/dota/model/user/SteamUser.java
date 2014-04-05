@@ -351,11 +351,11 @@ public class SteamUser {
     }
 
     public String toString() {
-        return "\nSteamUser[" + super.toString() + "]:"
-                + "\n\tsteamId: " + steamId
+        return "SteamUser[" + super.toString() + "]";
+//                + "\n\tsteamId: " + steamId
 //                + "\n\tcommunityVisibilityState: " + communityVisibilityState
 //                + "\n\tprofileState: " + profileState
-                + "\n\tpersonaName: " + personaName
+//                + "\n\tpersonaName: " + personaName
 //                + "\n\tlastLogoff: " + lastLogoff
 //                + "\n\tprofileUrl: " + profileUrl
 //                + "\n\tavatarUrl: " + avatarUrl
@@ -369,7 +369,7 @@ public class SteamUser {
 //                + "\n\tlocCountryCode: " + locCountryCode
 //                + "\n\tlocStateCode: " + locStateCode
 //                + "\n\tlocCityId: " + locCityId
-                ;
+//                ;
     }
 
     public void updateWithSteamUser(SteamUser user) {

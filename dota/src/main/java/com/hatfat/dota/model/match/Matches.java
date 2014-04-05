@@ -159,9 +159,7 @@ public class Matches {
             addMatches(obj.matches);
 
             //make sure the steam user's match list is up to date!
-            for (Match match : obj.matches) {
-                user.getMatches().add(match.getMatchId());
-            }
+            user.addMatches(obj.matches);
 
             Log.v("Matches", "loaded " + obj.matches.size() + " matches from disk for user " + user.getDisplayName() + " in " + (endTime - startTime) + " millis");
         }
