@@ -391,6 +391,9 @@ public class SteamUser {
         locStateCode = user.locStateCode;
         locCityId = user.locCityId;
 
+        isFakeUser = user.isFakeUser;
+        matches.addAll(user.matches);
+
         broadcastUserChanged();
     }
 
