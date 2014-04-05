@@ -1,12 +1,12 @@
 0.3 release
 ---------------------------
-anonymous user issue, go into anonymous user page and it will fetch their data i think, so then they show up as blank
 
-test clear memory on every page of the app to find issues
 
 
 TODO
 ---------------------------
+refresh steam user from server if cell is made and it doesn't have the info?  (similar to the match view stuff?)
+
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 	match result graph? (public, matchmaking) (goes up one pixel for a win, down one for a loss?  shows last ~50 games or so?)
 	kds graph?
