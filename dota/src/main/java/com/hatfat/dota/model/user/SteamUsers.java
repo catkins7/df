@@ -172,6 +172,10 @@ public class SteamUsers {
     }
 
     public void refreshUser(SteamUser user) {
+        if (!user.isRealUser()) {
+            return;
+        }
+
         List<String> ids = new LinkedList<>();
         ids.add(user.getSteamId());
 
@@ -181,7 +185,9 @@ public class SteamUsers {
     public void refreshUsers(List<SteamUser> users) {
         List<String> ids = new LinkedList<>();
         for (SteamUser user : users) {
-            ids.add(user.getSteamId());
+            if (user.isRealUser()) {
+                ids.add(user.getSteamId());
+            }
         }
 
         fetchUsers(ids);
