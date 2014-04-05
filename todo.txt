@@ -1,6 +1,6 @@
 0.3 release
 ---------------------------
-issue with app leaving memory on player summary page and player match lists don't get restored properly (and then saved incorrectly)
+anonymous user issue, able to star them, and their name goes blank after a little while?
 
 test clear memory on every page of the app to find issues
 
