@@ -1,12 +1,11 @@
-0.3 release
+0.3.1
 ---------------------------
+Mike's crash
 
 
 
-TODO
+0.4 release
 ---------------------------
-refresh steam user from server if cell is made and it doesn't have the info?  (similar to the match view stuff?)
-
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 	match result graph? (public, matchmaking) (goes up one pixel for a win, down one for a loss?  shows last ~50 games or so?)
 	kds graph?
@@ -14,18 +13,29 @@ player summary improvements (number of matches, win %, right tray with more stat
 	CS Score?  the average gpm, or average CS of all players in your games (that didn't have leavers, and more than 5 minutes?).  
 		-Might be good indication of player skill rating
 
+
+
+0.5 release
+---------------------------
+Charlton talking feature
+
+
+
+
+
+TODO OTHER
+---------------------------
+refresh steam user from server if cell is made and it doesn't have the info?  (similar to the match view stuff?)
+
 don't load player match lists until you go into the player summary page?
+
+
 
 
 Features Backlog
 ---------------------------
-
-
 match summary improvements (so it doesn't look so meh, right tray with more statistics?  Item of the game? (the item with the most money spent on it))
 	- add lobby type (co-op vs bots, etc) to the details
-
-
-Charlton talking feature
 
 
 left menu feature
@@ -33,6 +43,7 @@ left menu feature
  - pro players list?  pro teams?  for easy access to pro player profiles
  - about page?
  - click charles to open the menu, or just drag from the left?
+
 
 
 
