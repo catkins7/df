@@ -56,6 +56,10 @@ class ItemsParse {
 							ParseString idObj = (ParseString)obj;
 							json += ",\"id\":\"" + idObj.value + "\"";
 						}
+						else if (obj.key.equals("ItemCost")) {
+							ParseString idObj = (ParseString)obj;
+							json += ",\"itemCost\":\"" + idObj.value + "\"";
+						}
 					}
 				}
 
