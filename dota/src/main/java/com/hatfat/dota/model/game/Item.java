@@ -15,11 +15,18 @@ public class Item {
     @SerializedName("id")
     int itemId;
 
+    @SerializedName("itemCost")
+    int itemCost;
+
     private String getBaseUrlString() {
         return baseItemIconUrl + name.substring(5);
     }
 
     public String getLargeHorizontalPortraitUrl() {
         return getBaseUrlString() + largeHorizontalSuffix;
+    }
+
+    public int getItemCost() {
+        return itemCost;
     }
 }
