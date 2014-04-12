@@ -35,7 +35,11 @@ public class MatchDiskAdapter extends TypeAdapter<Match> {
         jsonWriter.value(match.gameMode);
         jsonWriter.value(match.hasMatchDetails);
 
-        int numPlayers = match.players.size();
+        int numPlayers = 0;
+        if (match.players != null) {
+            numPlayers = match.players.size();
+        }
+
         jsonWriter.value(numPlayers);
 
         if (numPlayers > 0) {
