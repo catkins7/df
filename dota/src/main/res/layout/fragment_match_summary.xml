@@ -70,27 +70,27 @@
                 android:id="@+id/fragment_match_summary_hero_0"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_1"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_2"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_3"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_4"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
         </LinearLayout>
 
         <LinearLayout
@@ -106,27 +106,27 @@
                 android:id="@+id/fragment_match_summary_hero_5"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_6"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_7"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_8"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_9"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+                android:layout_height="@dimen/hero_image_height"/>
         </LinearLayout>
 
     </RelativeLayout>

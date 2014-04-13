@@ -10,4 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <ListView
+        android:id="@+id/fragment_dota_player_statistics_favorite_heroes_list_view"
+        android:layout_below="@id/fragment_dota_player_statistics_favorite_items_list_view"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>

@@ -12,8 +12,8 @@
         android:background="@drawable/off_black_background"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_width="@dimen/match_for_player_basic_image_view_width"
-        android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+        android:layout_width="@dimen/hero_image_width"
+        android:layout_height="@dimen/hero_image_height"/>
 
     <ImageView
         android:id="@+id/view_match_player_basic_ranked_image_view"

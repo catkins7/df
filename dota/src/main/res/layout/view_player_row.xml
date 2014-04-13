@@ -13,8 +13,8 @@
         android:background="@drawable/off_black_background"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_width="@dimen/match_for_player_basic_image_view_width"
-        android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+        android:layout_width="@dimen/hero_image_width"
+        android:layout_height="@dimen/hero_image_height"/>
 
     <RelativeLayout
         android:id="@+id/view_player_row_minute_container"
@@ -151,8 +151,8 @@
             android:background="@drawable/off_black_background"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_width="@dimen/match_for_player_basic_image_view_width"
-            android:layout_height="@dimen/match_for_player_basic_image_view_height"/>
+            android:layout_width="@dimen/hero_image_width"
+            android:layout_height="@dimen/hero_image_height"/>
 
         <RelativeLayout
             android:id="@+id/view_player_row_additional_unit_items_container"

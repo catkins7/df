@@ -32,8 +32,8 @@
     <dimen name="match_simple_summary_hero_image_view_width">35dp</dimen>
     <dimen name="match_simple_summary_hero_image_view_height">20dp</dimen>
 
-    <dimen name="match_for_player_basic_image_view_width">61dp</dimen>
-    <dimen name="match_for_player_basic_image_view_height">35dp</dimen>
+    <dimen name="hero_image_width">61dp</dimen>
+    <dimen name="hero_image_height">35dp</dimen>
     <dimen name="match_for_player_basic_ranked_image_view_size">22dp</dimen>
 
     <dimen name="match_summary_top_panel_right_column_width">160dp</dimen>

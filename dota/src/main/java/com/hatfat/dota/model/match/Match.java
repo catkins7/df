@@ -305,6 +305,21 @@ public class Match {
             return getGameModeString() + " (" + getLobbyTypeString() + ")";
         }
     }
+    public boolean shouldBeUsedInStatistics() {
+        switch (getGameMode()) {
+            case IntroDeath:
+            case Diretide:
+            case Greeviling:
+            case Tutorial:
+            case MidOnly:
+            case AbilityDraft:
+            case Unknown:
+            case CustomGame:
+                return false;
+            default:
+                return true;
+        }
+    }
     public void setHasMatchDetails(boolean hasMatchDetails) {
         this.hasMatchDetails = hasMatchDetails;
     }

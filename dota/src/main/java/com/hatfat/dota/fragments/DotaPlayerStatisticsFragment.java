@@ -13,6 +13,7 @@ import com.hatfat.dota.R;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUserStatistics;
 import com.hatfat.dota.model.user.SteamUsers;
+import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteHeroRowView;
 import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteItemRowView;
 
 public class DotaPlayerStatisticsFragment extends Fragment {
@@ -24,6 +25,9 @@ public class DotaPlayerStatisticsFragment extends Fragment {
 
     private ListView favoriteItemsListView;
     private BaseAdapter favoriteItemsAdapter;
+
+    private ListView favoriteHeroesListView;
+    private BaseAdapter favoriteHeroesAdapter;
 
     private DotaPlayerStatisticsFragment() {
 
@@ -56,6 +60,55 @@ public class DotaPlayerStatisticsFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dota_player_statistics, null);
 
+        setupItemsListView(view);
+        setupHeroesListView(view);
+
+        return view;
+    }
+
+    private void setupHeroesListView(View view) {
+        favoriteHeroesListView = (ListView) view.findViewById(R.id.fragment_dota_player_statistics_favorite_heroes_list_view);
+        favoriteHeroesAdapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                if (statistics != null) {
+                    return statistics.getFavoriteHeroes().size();
+                }
+                else {
+                    return 0;
+                }
+            }
+
+            @Override
+            public SteamUserStatistics.HeroStats getItem(int position) {
+                return statistics.getFavoriteHeroes().get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                SteamUserStatistics.HeroStats stats = getItem(position);
+
+                DotaPlayerStatisticsFavoriteHeroRowView statsView = (DotaPlayerStatisticsFavoriteHeroRowView) convertView;
+
+                if (statsView == null) {
+                    statsView = new DotaPlayerStatisticsFavoriteHeroRowView(parent.getContext());
+                }
+
+                statsView.setHeroStats(stats);
+
+                return statsView;
+            }
+        };
+
+        favoriteHeroesListView.setAdapter(favoriteHeroesAdapter);
+    }
+
+    private void setupItemsListView(View view) {
         favoriteItemsListView = (ListView) view.findViewById(R.id.fragment_dota_player_statistics_favorite_items_list_view);
         favoriteItemsAdapter = new BaseAdapter() {
             @Override
@@ -95,8 +148,6 @@ public class DotaPlayerStatisticsFragment extends Fragment {
         };
 
         favoriteItemsListView.setAdapter(favoriteItemsAdapter);
-
-        return view;
     }
 
     private void fetchStatistics() {
@@ -116,5 +167,9 @@ public class DotaPlayerStatisticsFragment extends Fragment {
 
     private void updateViews() {
         favoriteItemsAdapter.notifyDataSetChanged();
+        favoriteHeroesAdapter.notifyDataSetChanged();
+        getView().invalidate();
+        favoriteHeroesListView.invalidate();
+        favoriteItemsListView.invalidate();
     }
 }
