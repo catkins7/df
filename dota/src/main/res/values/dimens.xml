@@ -43,6 +43,9 @@
     <dimen name="player_row_view_item_width">25dp</dimen>
     <dimen name="player_row_view_item_height">19dp</dimen>
 
+    <dimen name="player_stats_item_row_width">42dp</dimen>
+    <dimen name="player_stats_item_row_height">32dp</dimen>
+
     <dimen name="background_border_width">1dp</dimen>
 
 </resources>

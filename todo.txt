@@ -1,5 +1,9 @@
 0.4 release
 ---------------------------
+delay clicking into match details?
+
+make all the buttons in the player summary screen the same square size?
+
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 	match result graph? (public, matchmaking) (goes up one pixel for a win, down one for a loss?  shows last ~50 games or so?)
 	kds graph?

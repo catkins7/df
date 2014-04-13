@@ -26,6 +26,10 @@ public class Item {
         return getBaseUrlString() + largeHorizontalSuffix;
     }
 
+    public int getItemId() {
+        return itemId;
+    }
+
     public int getItemCost() {
         return itemCost;
     }

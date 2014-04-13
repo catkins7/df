@@ -118,7 +118,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         statsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getCharltonActivity().showFragmentInRightDrawer(new DotaPlayerStatisticsFragment());
+                getCharltonActivity().showFragmentInRightDrawer(DotaPlayerStatisticsFragment.newInstance(user));
             }
         });
         fetchAllMatchesButton.setOnClickListener(new View.OnClickListener() {
@@ -404,7 +404,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         if (user.isRealUser()) {
             fetchAllMatchesButton.setVisibility(View.VISIBLE);
-            statsButton.setVisibility(View.GONE);
+            statsButton.setVisibility(View.VISIBLE);
         }
         else {
             fetchAllMatchesButton.setVisibility(View.GONE);
