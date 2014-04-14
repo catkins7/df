@@ -41,7 +41,10 @@
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
         android:layout_centerInParent="true"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/off_white"
+        android:textSize="@dimen/font_size_small"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/text_view_height_medium" />
+        android:layout_height="@dimen/text_view_height_small" />
 
 </RelativeLayout>

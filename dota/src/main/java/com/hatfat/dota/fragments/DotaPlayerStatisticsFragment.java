@@ -1,6 +1,7 @@
 package com.hatfat.dota.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteItemRowView;
 public class DotaPlayerStatisticsFragment extends Fragment {
 
     private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY";
-    private final float TITLE_FONT_SIZE = 20.0f;
 
     private SteamUser user;
     private SteamUserStatistics statistics;
@@ -109,51 +109,31 @@ public class DotaPlayerStatisticsFragment extends Fragment {
                 return 4;
             }
 
-            private TextView createTextView(View parent) {
-                TextView textView = new TextView(parent.getContext());
-//                ListView.LayoutParams params = new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT);
-//                params.setMargins((int)getResources().getDimension(R.dimen.default_padding), 0, 0, 0);
-//                textView.setLayoutParams(params);
-                textView.setTextSize(TITLE_FONT_SIZE);
-                textView.setTextColor(getResources().getColor(R.color.off_white));
-                return textView;
-            }
-
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                if (statistics == null) {
-                    //loading textview
-                    TextView textView = (TextView) convertView;
-                    if (textView == null) {
-                        textView = createTextView(parent);
+                if (statistics == null || position == 0 || position == statistics.getFavoriteHeroes().size() + 1) {
+                    int textId = 0;
+
+                    if (statistics == null) {
+                        textId = R.string.player_statistics_loading_text;
+                    }
+                    else if (position == 0) {
+                        textId = R.string.player_statistics_favorite_heroes_title_text;
+                    }
+                    else if (position == statistics.getFavoriteHeroes().size() + 1) {
+                        textId = R.string.player_statistics_favorite_items_title_text;
                     }
 
-                    textView.setText(R.string.player_statistics_loading_text);
-
-                    return textView;
-                }
-                else if (position == 0) {
-                    //heroes title row
-                    TextView textView = (TextView) convertView;
-                    if (textView == null) {
-                        textView = createTextView(parent);
+                    if (convertView == null) {
+                        LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(
+                                Context.LAYOUT_INFLATER_SERVICE);
+                        convertView = inflater.inflate(R.layout.view_statistics_title_row, null);
                     }
 
-                    textView.setText(R.string.player_statistics_favorite_heroes_title_text);
+                    TextView textView = (TextView) convertView.findViewById(R.id.view_statistics_title_row_text_view);
+                    textView.setText(textId);
 
-                    return textView;
-                }
-                else if (position == statistics.getFavoriteHeroes().size() + 1) {
-                    //items title row
-                    TextView textView = (TextView) convertView;
-                    if (textView == null) {
-                        textView = createTextView(parent);
-                    }
-
-                    textView.setText(R.string.player_statistics_favorite_items_title_text);
-
-                    return textView;
+                    return convertView;
                 }
                 else if (position <= statistics.getFavoriteHeroes().size()) {
                     //hero row

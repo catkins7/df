@@ -17,6 +17,7 @@ public class DotaPlayerStatisticsFavoriteItemRowView extends RelativeLayout {
 
     private ImageView iconImageView;
     private TextView countTextView;
+    private TextView winTextView;
 
     public DotaPlayerStatisticsFavoriteItemRowView(Context context) {
         super(context);
@@ -24,6 +25,7 @@ public class DotaPlayerStatisticsFavoriteItemRowView extends RelativeLayout {
 
         iconImageView = (ImageView) findViewById(R.id.view_dota_player_favorite_item_row_icon_image_view);
         countTextView = (TextView) findViewById(R.id.view_dota_player_favorite_item_row_count_text_view);
+        winTextView = (TextView) findViewById(R.id.view_dota_player_favorite_item_row_win_text_view);
     }
 
     public void setItemStats(SteamUserStatistics.ItemStats newStats) {
@@ -35,5 +37,6 @@ public class DotaPlayerStatisticsFavoriteItemRowView extends RelativeLayout {
     private void updateViews() {
         Picasso.with(DotaFriendApplication.CONTEXT).load(itemStats.item.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(iconImageView);
         countTextView.setText("x" + itemStats.purchaseCount);
+        winTextView.setText(itemStats.getWinString());
     }
 }

@@ -12,11 +12,26 @@
         android:layout_height="@dimen/player_stats_item_row_height" />
 
     <TextView
+        android:id="@+id/view_dota_player_favorite_item_row_win_text_view"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical|right"
+        android:textColor="@color/off_white"
+        android:textSize="@dimen/font_size_small"
+        android:layout_width="60dp"
+        android:layout_height="@dimen/text_view_height_small" />
+
+    <TextView
         android:id="@+id/view_dota_player_favorite_item_row_count_text_view"
         android:layout_toRightOf="@id/view_dota_player_favorite_item_row_icon_image_view"
+        android:layout_toLeftOf="@id/view_dota_player_favorite_item_row_win_text_view"
         android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
         android:layout_centerInParent="true"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/off_white"
+        android:textSize="@dimen/font_size_small"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/text_view_height_medium" />
+        android:layout_height="@dimen/text_view_height_small" />
 
 </RelativeLayout>

@@ -14,6 +14,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class SteamUserStatistics {
 
@@ -41,8 +43,11 @@ public class SteamUserStatistics {
         final HashMap<Item, ItemStats> itemStatsMap = new HashMap();
         final HashMap<Hero, HeroStats> heroStatsMap = new HashMap();
 
+        Set<Item> items = new TreeSet();
+
         for (String matchId : user.getMatches()) {
             Match match = Matches.get().getMatch(matchId);
+            items.clear();
 
             if (match != null && match.shouldBeUsedInStatistics()) {
                 Player player = match.getPlayerForSteamUser(user);
@@ -65,6 +70,9 @@ public class SteamUserStatistics {
                 for (int i = 0; i < 6; i++) {
                     Item item = player.getItem(i);
                     if (item != null) {
+                        boolean itemAddedAlready = items.contains(item);
+                        items.add(item);
+
                         ItemStats itemStats = itemStatsMap.get(item);
 
                         if (itemStats == null) {
@@ -73,6 +81,16 @@ public class SteamUserStatistics {
                         }
 
                         itemStats.purchaseCount++;
+
+                        if (!itemAddedAlready) {
+                            Match.PlayerMatchResult result = match
+                                    .getPlayerMatchResultForPlayer(player);
+                            if (result == Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY) {
+                                itemStats.winCount++;
+                            }
+
+                            itemStats.gameCount++;
+                        }
 
                         heroStats.addItem(item);
                     }
@@ -120,6 +138,9 @@ public class SteamUserStatistics {
 
     public static class ItemStats {
         public Item item;
+
+        public int gameCount;
+        public int winCount;
         public int purchaseCount;
 
         public ItemStats(Item item) {
@@ -129,6 +150,12 @@ public class SteamUserStatistics {
 
         public int getTotalCost() {
             return item.getItemCost() * purchaseCount;
+        }
+
+        public String getWinString() {
+            float percent = (float)winCount / (float)gameCount * 100.0f;
+            Log.e("catfat", "winCount: " + winCount + ",  gameCount: " + gameCount);
+            return String.format("%.1f", percent) + "%";
         }
     };
 
