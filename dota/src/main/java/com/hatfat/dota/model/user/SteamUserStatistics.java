@@ -17,8 +17,8 @@ import java.util.List;
 
 public class SteamUserStatistics {
 
-    private static final int MAX_FAVORITE_ITEMS = 4;
-    private static final int MAX_FAVORITE_HEROES = 6;
+    private static final int MAX_FAVORITE_ITEMS = 3;
+    private static final int MAX_FAVORITE_HEROES = 5;
     private static final int MAX_HERO_FAVORITE_ITEMS = 3;
 
     private SteamUser user;

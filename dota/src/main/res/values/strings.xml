@@ -42,6 +42,10 @@
     <string name="player_summary_fetch_all_dialog_fetching_match_details_text">Fetching match details...</string>
     <string name="player_summary_fetch_all_dialog_saving_matches_text">Saving matches...</string>
 
+    <string name="player_statistics_loading_text">Calculating...</string>
+    <string name="player_statistics_favorite_heroes_title_text">Favorite Heroes</string>
+    <string name="player_statistics_favorite_items_title_text">Favorite Items</string>
+
     <string name="add_new_player_search_text">Search</string>
 
     <string name="no_steam_users">No players found.</string>
