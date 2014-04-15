@@ -11,17 +11,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/fragment_dota_player_summary_friend_button"
-            android:layout_alignParentTop="true"
+        <RelativeLayout
+            android:id="@+id/fragment_dota_player_summary_right_button_layout"
             android:layout_alignParentRight="true"
-            android:layout_width="@dimen/text_view_height_large"
-            android:layout_height="@dimen/text_view_height_large"/>
-        
+            android:layout_width="@dimen/dota_player_summary_fragment_right_layout_size"
+            android:layout_height="@dimen/dota_player_summary_fragment_right_layout_size">
+
+            <Button
+                android:id="@+id/fragment_dota_player_summary_friend_button"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
+                android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
+
+            <FrameLayout
+                android:id="@+id/fragment_dota_player_summary_top_left_placeholder_layout"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
+                android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
+
+            <Button
+                android:id="@+id/fragment_dota_player_summary_right_tray_button"
+                android:background="@drawable/player_stats_button_background"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
+                android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
+
+            <Button
+                android:id="@+id/fragment_dota_player_summary_fetch_all_button"
+                android:background="@drawable/download_matches_button_background"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
+                android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/fragment_dota_player_summary_persona_text_view"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/fragment_dota_player_summary_friend_button"
+            android:layout_toLeftOf="@id/fragment_dota_player_summary_right_button_layout"
             android:layout_marginRight="@dimen/default_padding"
             android:textSize="@dimen/font_size_large"
             android:textColor="@color/off_white"
@@ -38,26 +69,6 @@
             android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
             android:layout_height="@dimen/dota_player_summary_fragment_image_view_size"/>
 
-        <Button
-            android:id="@+id/fragment_dota_player_summary_right_tray_button"
-            android:background="@drawable/player_stats_button_background"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/default_padding"
-            android:layout_below="@id/fragment_dota_player_summary_persona_text_view"
-            android:layout_width="@dimen/dota_player_summary_fragment_friend_button_size"
-            android:layout_height="@dimen/dota_player_summary_fragment_image_view_size" />
-
-        <Button
-            android:id="@+id/fragment_dota_player_summary_fetch_all_button"
-            android:background="@drawable/download_matches_button_background"
-            android:drawablePadding="16dp"
-            android:layout_marginTop="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_toLeftOf="@id/fragment_dota_player_summary_right_tray_button"
-            android:layout_below="@id/fragment_dota_player_summary_persona_text_view"
-            android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
-            android:layout_height="@dimen/dota_player_summary_fragment_image_view_size" />
-
         <TextView
             android:id="@+id/fragment_dota_player_public_matches_text_view"
             android:layout_marginTop="@dimen/default_padding"
@@ -65,7 +76,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_below="@id/fragment_dota_player_summary_persona_text_view"
             android:layout_toRightOf="@id/fragment_dota_player_summary_user_image_view"
-            android:layout_toLeftOf="@id/fragment_dota_player_summary_fetch_all_button"
+            android:layout_toLeftOf="@id/fragment_dota_player_summary_right_button_layout"
             android:textSize="@dimen/font_size_medium"
             android:textColor="@color/off_white"
             android:gravity="left|center_vertical"
@@ -79,7 +90,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_below="@id/fragment_dota_player_public_matches_text_view"
             android:layout_toRightOf="@id/fragment_dota_player_summary_user_image_view"
-            android:layout_toLeftOf="@id/fragment_dota_player_summary_fetch_all_button"
+            android:layout_toLeftOf="@id/fragment_dota_player_summary_right_button_layout"
             android:textSize="@dimen/font_size_medium"
             android:textColor="@color/off_white"
             android:gravity="left|center_vertical"
@@ -93,7 +104,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_below="@id/fragment_dota_player_ranked_matches_text_view"
             android:layout_toRightOf="@id/fragment_dota_player_summary_user_image_view"
-            android:layout_toLeftOf="@id/fragment_dota_player_summary_fetch_all_button"
+            android:layout_toLeftOf="@id/fragment_dota_player_summary_right_button_layout"
             android:textSize="@dimen/font_size_small"
             android:textColor="@color/off_gray"
             android:gravity="left|center_vertical"

@@ -154,7 +154,6 @@ public class SteamUserStatistics {
 
         public String getWinString() {
             float percent = (float)winCount / (float)gameCount * 100.0f;
-            Log.e("catfat", "winCount: " + winCount + ",  gameCount: " + gameCount);
             return String.format("%.1f", percent) + "%";
         }
     };

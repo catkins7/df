@@ -25,8 +25,9 @@
     <dimen name="charlton_fragment_height_short">48dp</dimen>
 
     <dimen name="dota_player_summary_fragment_image_view_size">61dp</dimen>
-    <dimen name="dota_player_summary_fragment_friend_button_size">32dp</dimen>
-    <dimen name="dota_player_summary_fragment_info_text_view_width">180dp</dimen>
+    <dimen name="dota_player_summary_fragment_right_layout_size">101dp</dimen>
+    <dimen name="dota_player_summary_fragment_right_button_size">46dp</dimen>
+
     <dimen name="dialog_fetch_matches_loading_bar_width">220dp</dimen>
 
     <dimen name="match_simple_summary_hero_image_view_width">35dp</dimen>
