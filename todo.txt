@@ -1,10 +1,7 @@
 0.4 release
 ---------------------------
-delay clicking into match details?
 
 joke for mike, all heroes favorite items:  bloodstone, battlefury, basic wand
-
-make all the buttons in the player summary screen the same square size?
 
 look over all classes for quick clean-ups
 
@@ -15,6 +12,8 @@ player summary improvements (number of matches, win %, right tray with more stat
 	CS Score?  the average gpm, or average CS of all players in your games (that didn't have leavers, and more than 5 minutes?).  
 		-Might be good indication of player skill rating
 
+handle stats drawer case with no matches better
+
 weird case where the right drawer won't open anymore?
 
 
@@ -23,6 +22,7 @@ weird case where the right drawer won't open anymore?
 0.5 release
 ---------------------------
 match summary improvements?
+	- delay clicking into match details?  probably because its a pretty heavy layout.  Maybe switch more to list view somehow?
 	- "Item of the match", similar to the hero/item favorite calculations
 	- general UI improvements and polish for that page
 

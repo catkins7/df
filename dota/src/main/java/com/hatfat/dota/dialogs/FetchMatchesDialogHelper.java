@@ -182,9 +182,15 @@ public class FetchMatchesDialogHelper {
 
         matchIdsInProgress = new LinkedList();
 
-        int numberOfConcurrentRequests = Runtime.getRuntime().availableProcessors() * 2;
-        for (int i = 0; i < numberOfConcurrentRequests; i++) {
-            fetchNextMatchDetails();
+        if (matchIds.size() <= 0) {
+            //there's nothing to get, so we're done!
+            finishedFetchingMatchId("NO MATCHES TO FETCH");
+        }
+        else {
+            int numberOfConcurrentRequests = Runtime.getRuntime().availableProcessors() * 2;
+            for (int i = 0; i < numberOfConcurrentRequests; i++) {
+                fetchNextMatchDetails();
+            }
         }
     }
 
