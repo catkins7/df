@@ -1,14 +1,32 @@
 0.4 release
 ---------------------------
 
-joke for mike, all heroes favorite items:  bloodstone, battlefury, basic wand
+New player search, since dotabuff is blocked now
 
 look over all classes for quick clean-ups
+
+menu, info option; shows dialog with explanation of CSScore and other potentially confusing values
+
+ONLY CALCULATE THE LAST 100 [RANKED] GAMES FOR CSScore/GoldScore/XPScore?  Otherwise if their skill has changed it wouldn't be reflected?
+take some sample points and come up with a way to estimate ranked ELO?
+
+
+KDA Average
+CSScore  (average total CS per game, chop off top/bot 10%?)   
+GoldScore (average GPM per game, chop off top/bot 10%?)
+average game length
+
+warning message at the top if there is not very much data (< 100 games?)
+
+Add dotabuff attribution to the search screen
+
+make sure we are only using games that have a result for stats calculation
+
+
 
 player summary improvements (number of matches, win %, right tray with more statistics?, hero win rates, players you play with the most, etc)
 	match result graph? (public, matchmaking) (goes up one pixel for a win, down one for a loss?  shows last ~50 games or so?)
 	kda graph?
-	win rates for favorite heroes and items?
 	CS Score?  the average gpm, or average CS of all players in your games (that didn't have leavers, and more than 5 minutes?).  
 		-Might be good indication of player skill rating
 

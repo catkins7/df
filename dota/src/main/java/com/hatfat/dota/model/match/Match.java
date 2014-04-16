@@ -317,7 +317,13 @@ public class Match {
             case CustomGame:
                 return false;
             default:
-                return true;
+                if (duration >= 5 * 60) {
+                    //only use games that are at least 5 minutes long
+                    return true;
+                }
+                else {
+                    return false;
+                }
         }
     }
     public void setHasMatchDetails(boolean hasMatchDetails) {
@@ -421,6 +427,9 @@ public class Match {
         else {
             return String.format("%d:%02d:%02d", hours, minutes, seconds);
         }
+    }
+    public int getDuration() {
+        return duration;
     }
 
     public int getRadiantTotalKillCount() {

@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class DotaPlayerStatisticsFragment extends Fragment {
             @Override
             public int getCount() {
                 if (statistics != null) {
-                    return statistics.getFavoriteHeroes().size() + statistics.getFavoriteItems().size() + 2;
+                    return statistics.getFavoriteHeroes().size() + statistics.getFavoriteItems().size() + 2 + 5;
                 }
                 else {
                     return 1;
@@ -93,10 +94,10 @@ public class DotaPlayerStatisticsFragment extends Fragment {
                 if (statistics == null) {
                     return 0; //nothing loaded yet, so textview
                 }
-                else if (position == 0 || position == statistics.getFavoriteHeroes().size() + 1) {
+                else if (position <= 5 || position == statistics.getFavoriteHeroes().size() + 1 + 5) {
                     return 1; //textview title row
                 }
-                else if (position <= statistics.getFavoriteHeroes().size()) {
+                else if (position <= statistics.getFavoriteHeroes().size() + 5) {
                     return 2; //favorite hero row
                 }
                 else {
@@ -113,15 +114,26 @@ public class DotaPlayerStatisticsFragment extends Fragment {
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (statistics == null || position == 0 || position == statistics.getFavoriteHeroes().size() + 1) {
                     int textId = 0;
+                    int subtitleTextId = 0;
+                    float titleFontSize = getResources().getDimensionPixelSize(
+                            R.dimen.font_size_medium);
+                    float subtitleFontSize = getResources().getDimensionPixelSize(
+                            R.dimen.font_size_medium);
 
                     if (statistics == null) {
                         textId = R.string.player_statistics_loading_text;
                     }
                     else if (position == 0) {
                         textId = R.string.player_statistics_favorite_heroes_title_text;
+                        subtitleTextId = R.string.player_statistics_favorite_heroes_subtitle_text;
+                        subtitleFontSize = getResources().getDimensionPixelSize(
+                                R.dimen.font_size_small);
                     }
                     else if (position == statistics.getFavoriteHeroes().size() + 1) {
                         textId = R.string.player_statistics_favorite_items_title_text;
+                        subtitleTextId = R.string.player_statistics_favorite_items_subtitle_text;
+                        subtitleFontSize = getResources().getDimensionPixelSize(
+                                R.dimen.font_size_small);
                     }
 
                     if (convertView == null) {
@@ -130,8 +142,16 @@ public class DotaPlayerStatisticsFragment extends Fragment {
                         convertView = inflater.inflate(R.layout.view_statistics_title_row, null);
                     }
 
-                    TextView textView = (TextView) convertView.findViewById(R.id.view_statistics_title_row_text_view);
-                    textView.setText(textId);
+                    TextView titleTextView = (TextView) convertView.findViewById(R.id.view_statistics_title_row_text_view);
+                    titleTextView.setText(textId);
+                    titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleFontSize);
+
+                    if (subtitleTextId > 0) {
+                        TextView subtitleTextView = (TextView) convertView
+                                .findViewById(R.id.view_statistics_subtitle_row_text_view);
+                        subtitleTextView.setText(subtitleTextId);
+                        subtitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, subtitleFontSize);
+                    }
 
                     return convertView;
                 }

@@ -127,6 +127,12 @@ public class Player {
     public String getCreepScoreString(Resources resources) {
         return String.valueOf(lastHits) + " / " + String.valueOf(denies) + " " + resources.getString(R.string.creep_score);
     }
+    public int getLastHits() {
+        return lastHits;
+    }
+    public int getDenies() {
+        return denies;
+    }
     public String getLastHitString(Resources resources) {
         return String.valueOf(lastHits) + " " + resources.getString(R.string.creep_score);
     }

@@ -20,18 +20,42 @@ import java.util.TreeSet;
 public class SteamUserStatistics {
 
     private static final int MAX_FAVORITE_ITEMS = 3;
-    private static final int MAX_FAVORITE_HEROES = 5;
+    private static final int MAX_FAVORITE_HEROES = 6;
     private static final int MAX_HERO_FAVORITE_ITEMS = 3;
 
     private SteamUser user;
 
-    List<ItemStats> favoriteItems;
-    List<HeroStats> favoriteHeroes;
+    private List<ItemStats> favoriteItems;
+    private List<HeroStats> favoriteHeroes;
+
+    private List<Integer> csTotalsPerGame;
+    private List<Integer> gpmTotalsPerGame;
+    private List<Integer> xpmTotalsPerGame;
+    private List<Integer> killsPerGame;
+    private List<Integer> deathsPerGame;
+    private List<Integer> assistsPerGame;
+    private List<Integer> durationsPerGame;
+
+    private int csScore;
+    private int gpmScore;
+    private int xpmScore;
+    private float avgKills;
+    private float avgDeaths;
+    private float avgAssists;
+    private int avgDuration;
 
     public SteamUserStatistics(SteamUser user) {
         this.user = user;
         this.favoriteItems = new LinkedList();
         this.favoriteHeroes = new LinkedList();
+
+        this.csTotalsPerGame = new LinkedList();
+        this.gpmTotalsPerGame = new LinkedList();
+        this.xpmTotalsPerGame = new LinkedList();
+        this.killsPerGame = new LinkedList();
+        this.deathsPerGame = new LinkedList();
+        this.assistsPerGame = new LinkedList();
+        this.durationsPerGame = new LinkedList();
 
         calculateStatistics();
     }
@@ -57,6 +81,23 @@ public class SteamUserStatistics {
                     //no hero for this match, so just skip to the next match
                     continue;
                 }
+
+                int totalCS = 0;
+                int totalGPM = 0;
+                int totalXPM = 0;
+                for (Player p : match.getPlayers()) {
+                    totalCS += p.getLastHits() + p.getDenies();
+                    totalGPM += p.getGoldPerMinute();
+                    totalXPM += p.getXpPerMinute();
+                }
+
+                csTotalsPerGame.add(totalCS);
+                gpmTotalsPerGame.add(totalGPM);
+                xpmTotalsPerGame.add(totalXPM);
+                killsPerGame.add(player.getKills());
+                deathsPerGame.add(player.getDeaths());
+                assistsPerGame.add(player.getAssists());
+                durationsPerGame.add(match.getDuration());
 
                 HeroStats heroStats = heroStatsMap.get(hero);
 
@@ -124,8 +165,83 @@ public class SteamUserStatistics {
         int maxFavoriteItems = Math.min(sortedItemStats.size(), MAX_FAVORITE_ITEMS);
         favoriteItems = new LinkedList(sortedItemStats.subList(0, maxFavoriteItems));
 
+        calculateAverages();
+
         long endTime = System.currentTimeMillis();
         Log.v("SteamUserStatistics", "calculateStatistics runtime " + (endTime - startTime) + " milliseconds");
+    }
+
+    private void calculateAverages() {
+        //trim outliers from the cs/gpm/xpm score calculations
+        csTotalsPerGame = sortAndTrimIntegerList(csTotalsPerGame);
+        gpmTotalsPerGame = sortAndTrimIntegerList(gpmTotalsPerGame);
+        xpmTotalsPerGame = sortAndTrimIntegerList(xpmTotalsPerGame);
+
+        //calculate all the average values
+
+        //CS SCORE
+        csScore = 0;
+        for (int i : csTotalsPerGame) {
+            csScore += i;
+        }
+        csScore /= csTotalsPerGame.size();
+
+        //GPM SCORE
+        gpmScore = 0;
+        for (int i : gpmTotalsPerGame) {
+            gpmScore += i;
+        }
+        gpmScore /= gpmTotalsPerGame.size();
+
+        //XPM SCORE
+        xpmScore = 0;
+        for (int i : xpmTotalsPerGame) {
+            xpmScore += i;
+        }
+        xpmScore /= xpmTotalsPerGame.size();
+
+        //AVERAGE KILLS
+        avgKills = 0.0f;
+        for (int i : killsPerGame) {
+            avgKills += i;
+        }
+        avgKills /= (float)killsPerGame.size();
+
+        //AVERAGE DEATHS
+        avgDeaths = 0.0f;
+        for (int i : deathsPerGame) {
+            avgDeaths += i;
+        }
+        avgDeaths /= (float)deathsPerGame.size();
+
+        //AVERAGE ASSISTS
+        avgAssists = 0.0f;
+        for (int i : assistsPerGame) {
+            avgAssists += i;
+        }
+        avgAssists /= (float)assistsPerGame.size();
+
+        avgDuration = 0;
+        for (int i : durationsPerGame) {
+            avgDuration += i;
+        }
+        avgDuration /= durationsPerGame.size();
+    }
+
+    private List<Integer> sortAndTrimIntegerList(List<Integer> list) {
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return rhs - lhs;
+            }
+        });
+
+        //we want to chop off the top and bottom 10% to reduce the effect outliers have on the calculations
+        int numToChop = list.size() / 10;
+        list = list.subList(numToChop, list.size());
+        list = list.subList(0, list.size() - numToChop);
+
+        return list;
     }
 
     public List<ItemStats> getFavoriteItems() {
@@ -134,6 +250,34 @@ public class SteamUserStatistics {
 
     public List<HeroStats> getFavoriteHeroes() {
         return favoriteHeroes;
+    }
+
+    public int getCsScore() {
+        return csScore;
+    }
+
+    public int getGpmScore() {
+        return gpmScore;
+    }
+
+    public int getXpmScore() {
+        return xpmScore;
+    }
+
+    public float getAvgKills() {
+        return avgKills;
+    }
+
+    public float getAvgDeaths() {
+        return avgDeaths;
+    }
+
+    public float getAvgAssists() {
+        return avgAssists;
+    }
+
+    public int getAvgDuration() {
+        return avgDuration;
     }
 
     public static class ItemStats {
