@@ -1,11 +1,11 @@
 0.4 release
 ---------------------------
 
-New player search, since dotabuff is blocked now
-
 look over all classes for quick clean-ups
 
 menu, info option; shows dialog with explanation of CSScore and other potentially confusing values
+
+need to be able to open right drawer anytime by swiping from the right edge
 
 ONLY CALCULATE THE LAST 100 [RANKED] GAMES FOR CSScore/GoldScore/XPScore?  Otherwise if their skill has changed it wouldn't be reflected?
 take some sample points and come up with a way to estimate ranked ELO?
@@ -18,9 +18,8 @@ average game length
 
 warning message at the top if there is not very much data (< 100 games?)
 
-Add dotabuff attribution to the search screen
-
 make sure we are only using games that have a result for stats calculation
+
 
 
 

@@ -181,51 +181,65 @@ public class SteamUserStatistics {
 
         //CS SCORE
         csScore = 0;
-        for (int i : csTotalsPerGame) {
-            csScore += i;
+        if (csTotalsPerGame.size() > 0) {
+            for (int i : csTotalsPerGame) {
+                csScore += i;
+            }
+            csScore /= csTotalsPerGame.size();
         }
-        csScore /= csTotalsPerGame.size();
 
         //GPM SCORE
         gpmScore = 0;
-        for (int i : gpmTotalsPerGame) {
-            gpmScore += i;
+        if (gpmTotalsPerGame.size() > 0) {
+            for (int i : gpmTotalsPerGame) {
+                gpmScore += i;
+            }
+            gpmScore /= gpmTotalsPerGame.size();
         }
-        gpmScore /= gpmTotalsPerGame.size();
 
         //XPM SCORE
         xpmScore = 0;
-        for (int i : xpmTotalsPerGame) {
-            xpmScore += i;
+        if (xpmTotalsPerGame.size() > 0) {
+            for (int i : xpmTotalsPerGame) {
+                xpmScore += i;
+            }
+            xpmScore /= xpmTotalsPerGame.size();
         }
-        xpmScore /= xpmTotalsPerGame.size();
 
         //AVERAGE KILLS
         avgKills = 0.0f;
-        for (int i : killsPerGame) {
-            avgKills += i;
+        if (killsPerGame.size() > 0) {
+            for (int i : killsPerGame) {
+                avgKills += i;
+            }
+            avgKills /= (float) killsPerGame.size();
         }
-        avgKills /= (float)killsPerGame.size();
 
         //AVERAGE DEATHS
         avgDeaths = 0.0f;
-        for (int i : deathsPerGame) {
-            avgDeaths += i;
+        if (deathsPerGame.size() > 0) {
+            for (int i : deathsPerGame) {
+                avgDeaths += i;
+            }
+            avgDeaths /= (float) deathsPerGame.size();
         }
-        avgDeaths /= (float)deathsPerGame.size();
 
         //AVERAGE ASSISTS
         avgAssists = 0.0f;
-        for (int i : assistsPerGame) {
-            avgAssists += i;
+        if (assistsPerGame.size() > 0) {
+            for (int i : assistsPerGame) {
+                avgAssists += i;
+            }
+            avgAssists /= (float) assistsPerGame.size();
         }
-        avgAssists /= (float)assistsPerGame.size();
 
         avgDuration = 0;
-        for (int i : durationsPerGame) {
-            avgDuration += i;
+        if (durationsPerGame.size() > 0) {
+            for (int i : durationsPerGame) {
+                avgDuration += i;
+            }
+            avgDuration /= durationsPerGame.size();
         }
-        avgDuration /= durationsPerGame.size();
     }
 
     private List<Integer> sortAndTrimIntegerList(List<Integer> list) {

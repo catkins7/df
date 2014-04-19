@@ -72,7 +72,7 @@ public class DotaPlayerStatisticsFragment extends Fragment {
             @Override
             public int getCount() {
                 if (statistics != null) {
-                    return statistics.getFavoriteHeroes().size() + statistics.getFavoriteItems().size() + 2 + 5;
+                    return statistics.getFavoriteHeroes().size() + statistics.getFavoriteItems().size() + 2;
                 }
                 else {
                     return 1;
@@ -173,8 +173,8 @@ public class DotaPlayerStatisticsFragment extends Fragment {
                 else {
                     //item row
                     int itemPosition = position - 2 - statistics.getFavoriteHeroes().size();
-                    SteamUserStatistics.ItemStats stats = statistics.getFavoriteItems().get(itemPosition);
 
+                    SteamUserStatistics.ItemStats stats = statistics.getFavoriteItems().get(itemPosition);
                     DotaPlayerStatisticsFavoriteItemRowView statsView = (DotaPlayerStatisticsFavoriteItemRowView) convertView;
 
                     if (statsView == null) {

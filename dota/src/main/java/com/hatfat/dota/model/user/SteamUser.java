@@ -176,7 +176,8 @@ public class SteamUser {
         return Long.valueOf(steamId).longValue();
     }
     public TreeSet<String> getMatches() {
-        return matches;
+        //return a copy of the matches set, to prevent concurrent threading issues
+        return new TreeSet(matches);
     }
     public String[] getMatchSummaryStrings(Resources resources) {
         String[] strings = new String[3];
