@@ -3,6 +3,9 @@
 
 look over all classes for quick clean-ups
 
+weird case where the right drawer won't open anymore?
+	- related to issue with the drawerFragment not getting unset when the side menu has gone
+
 menu, info option; shows dialog with explanation of CSScore and other potentially confusing values
 
 need to be able to open right drawer anytime by swiping from the right edge
@@ -31,7 +34,6 @@ player summary improvements (number of matches, win %, right tray with more stat
 
 handle stats drawer case with no matches better
 
-weird case where the right drawer won't open anymore?
 
 
 
