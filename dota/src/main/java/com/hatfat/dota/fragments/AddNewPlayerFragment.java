@@ -8,19 +8,21 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.hatfat.dota.R;
-import com.hatfat.dota.model.dotabuff.DotaBuffSearchResult;
+import com.hatfat.dota.model.dotabuff.DotaBuffHackSearchResult;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.services.dotabuff.DotaBuffRestAdapter;
 import com.hatfat.dota.services.dotabuff.DotaBuffService;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by scottrick on 2/12/14.
@@ -114,16 +116,16 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
     private void doDotaBuffSearch(final String searchString) {
         DotaBuffService dotaBuffService = DotaBuffRestAdapter.createRestAdapter().create(DotaBuffService.class);
-        dotaBuffService.searchForPlayerName(searchString, new Callback<List<DotaBuffSearchResult>>() {
+
+        dotaBuffService.searchForPlayerHack(searchString, new Callback<DotaBuffHackSearchResult>() {
             @Override
-            public void success(List<DotaBuffSearchResult> dotaBuffSearchResults, Response response) {
+            public void success(DotaBuffHackSearchResult dotaBuffHackSearchResults,
+                    Response response) {
                 LinkedList<SteamUser> users = new LinkedList<>();
 
-                for (DotaBuffSearchResult result : dotaBuffSearchResults) {
-                    if (result.isPlayer()) {
-                        SteamUser user = SteamUsers.get().getByAccountId(result.getAccountId());
-                        users.add(user);
-                    }
+                for (String accountId : dotaBuffHackSearchResults.accountIds) {
+                    SteamUser user = SteamUsers.get().getByAccountId(accountId);
+                    users.add(user);
                 }
 
                 searchFinishedWithResults(users);
@@ -131,8 +133,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                searchFinishedWithResults(null);
-            }
+                searchFinishedWithResults(null);            }
         });
     }
 
