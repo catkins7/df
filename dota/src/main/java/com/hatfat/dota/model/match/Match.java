@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by scottrick on 2/12/14.
  */
-public class Match {
+public class Match implements Comparable {
 
     public static final String MATCH_UPDATED = "MatchUpdated";
     public static final String MATCH_UPDATED_ID_KEY = "MatchUpdated_MatchId_Key";
@@ -590,5 +590,27 @@ public class Match {
     @Override
     public int hashCode() {
         return Integer.parseInt(matchId);
+    }
+
+
+    @Override
+    public int compareTo(Object o) {
+        //Sorts matches by date, so the newest match is first
+        if (o != null && o instanceof Match) {
+            Match otherMatch = (Match)o;
+            long timeDiff = otherMatch.getStartTime() - startTime;
+
+            if (timeDiff > 0) {
+                return 1;
+            }
+            else if (timeDiff < 0) {
+                return -1;
+            }
+
+            //start times were the same, so compare match ids
+            return matchId.compareTo(otherMatch.matchId);
+        }
+
+        return 0;
     }
 }

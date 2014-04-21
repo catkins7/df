@@ -19,10 +19,9 @@ import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.services.CharltonService;
 import com.hatfat.dota.services.DotaRestAdapter;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.TreeSet;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -51,7 +50,7 @@ public class FetchMatchesDialogHelper {
     private CharltonService charltonService;
     private SteamUser user;
 
-    private Set<Match> fetchResults;
+    private TreeSet<Match> fetchResults;
     private LinkedList<String> matchIds;
     private LinkedList<String> matchIdsInProgress;
 
@@ -59,7 +58,7 @@ public class FetchMatchesDialogHelper {
         this.user = user;
 
         state = FetchMatchesState.FETCH_MATCHES_STATE_STARTING;
-        fetchResults = new HashSet<>();
+        fetchResults = new TreeSet();
     }
 
     public void showFromActivity(Activity activity) {
@@ -143,6 +142,22 @@ public class FetchMatchesDialogHelper {
         });
     }
 
+    //not used currently since min/max date params don't work
+    private void fetchMatchListBeforeDate(long date) {
+        charltonService.getMatchHistoryBeforeDate(user.getAccountId(), date, new Callback<DotaResult<MatchHistory>>() {
+            @Override
+            public void success(DotaResult<MatchHistory> matchHistoryDotaResult,
+                    Response response) {
+                finishedWithMatches(matchHistoryDotaResult.result);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
+            }
+        });
+    }
+
     private void finishedWithMatches(MatchHistory matchHistory) {
         if (!isCanceled) {
             fetchResults.addAll(matchHistory.getMatches());
@@ -151,6 +166,7 @@ public class FetchMatchesDialogHelper {
         if (!isCanceled && matchHistory.getResultsRemaining() > 0) {
             //there are more matches to fetch, and we're not canceled, so lets get them!
             fetchMatchListFromMatchId(matchHistory.getMatches().get(matchHistory.getMatches().size() - 1).getMatchId());
+//            fetchMatchListBeforeDate(fetchResults.first().getStartTime());
         }
         else {
             matchListProgress = 0.5f;
