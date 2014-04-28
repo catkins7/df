@@ -73,7 +73,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 case SECTION_NO_DATA:
                     return 1;
                 case SECTION_MATCHES_SUMMARY:
-                    return 3;
+                    return 4;
                 case SECTION_FAVORITE_HEROES:
                     if (stats.getFavoriteHeroes().size() <= 0) {
                         return 0;
@@ -91,7 +91,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 case SECTION_GRAPHS:
                     return 1;
                 case SECTION_CSSCORE:
-                    return 1;
+                    return 4;
                 default:
                     return 0;
             }
@@ -127,7 +127,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 return StatsSectionRowType.ROW_NO_REUSE;
             }
             else if (this.type == StatsSectionType.SECTION_CSSCORE) {
-                return StatsSectionRowType.ROW_NO_REUSE;
+                return StatsSectionRowType.ROW_TEXT;
             }
 
             //default I suppose
@@ -331,12 +331,15 @@ public class DotaStatisticsAdapter extends BaseAdapter {
 
             subtitleTextView.setTextColor(resources.getColor(R.color.off_white));
 
-
             if (position == 1) {
+                titleTextView.setText(R.string.player_statistics_game_count_title_text);
+                subtitleTextView.setText(section.stats.getGameCountString());
+            }
+            else if (position == 2) {
                 titleTextView.setText(R.string.player_statistics_avg_kda_title_text);
                 subtitleTextView.setText(section.stats.getAvgKDAString(resources));
             }
-            else if (position == 2) {
+            else if (position == 3) {
                 titleTextView.setText(R.string.player_statistics_avg_duration_title_text);
                 subtitleTextView.setText(section.stats.getAvgDurationString(resources));
             }
@@ -345,6 +348,45 @@ public class DotaStatisticsAdapter extends BaseAdapter {
 
             return convertView;
         }
+    }
+
+    public View getViewForCSScoreSection(int position, View convertView, ViewGroup parent, StatsSection section) {
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.view_stats_text_row, parent, false);
+        }
+
+        prepareTextRow(convertView);
+
+        TextView titleTextView = (TextView) convertView.findViewById(R.id.view_stats_text_row_title_text_view);
+        TextView subtitleTextView = (TextView) convertView.findViewById(R.id.view_stats_text_row_subtitle_text_view);
+
+        convertView.setBackgroundColor(0x0);
+        subtitleTextView.setTextColor(resources.getColor(R.color.off_white));
+
+        if (position == 0) {
+            //CS score
+            titleTextView.setText(R.string.player_statistics_cs_score_text);
+            subtitleTextView.setText(section.stats.getCsScoreString());
+        }
+        else if (position == 1) {
+            //gpm score
+            titleTextView.setText(R.string.player_statistics_gpm_score_text);
+            subtitleTextView.setText(section.stats.getGpmScoreString());
+        }
+        else if (position == 2) {
+            //xpm score
+            titleTextView.setText(R.string.player_statistics_xpm_score_text);
+            subtitleTextView.setText(section.stats.getXpmScoreString());
+        }
+        else if (position == 3) {
+            //composite score
+            titleTextView.setText(R.string.player_statistics_xpm_gpm_composite_score_text);
+            subtitleTextView.setText(section.stats.getCompositeScoreString());
+        }
+
+        return convertView;
     }
 
     //view must be view_stats_text_row
@@ -383,11 +425,14 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             case SECTION_MATCHES_SUMMARY:
                 return getViewForMatchesSummarySection(sectionRow, convertView, parent, section);
 
+            case SECTION_CSSCORE:
+                return getViewForCSScoreSection(sectionRow, convertView, parent, section);
+
             default:
                 textView = new TextView(parent.getContext());
                 textView.setPadding(12, 12, 12, 12);
                 textView.setTextColor(0xffffffff);
-                textView.setTextSize(20.0f);
+                textView.setTextSize(18.0f);
                 textView.setText("Not Implemented");
                 return textView;
         }
@@ -433,16 +478,17 @@ public class DotaStatisticsAdapter extends BaseAdapter {
 
     private void setupRealSections() {
         sections = new LinkedList();
-        sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, allMatchStats, "All Matches"));
-        sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, rankedMatchStats, "Ranked Matches"));
-        sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, publicMatchStats, "Public Matches"));
         sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, recentRankedMatchStats, "Recent Ranked Matches"));
+        sections.add(new StatsSection(StatsSectionType.SECTION_CSSCORE, recentRankedMatchStats));
 
         sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_HEROES, allMatchStats));
         sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_ITEMS, allMatchStats));
 
         sections.add(new StatsSection(StatsSectionType.SECTION_GRAPHS, rankedMatchStats));
-        sections.add(new StatsSection(StatsSectionType.SECTION_CSSCORE, recentRankedMatchStats));
+
+        sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, allMatchStats, "All Matches"));
+        sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, rankedMatchStats, "Ranked Matches"));
+        sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, publicMatchStats, "Public Matches"));
 
         notifyDataSetChanged();
     }

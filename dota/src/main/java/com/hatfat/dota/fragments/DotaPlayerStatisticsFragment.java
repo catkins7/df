@@ -3,7 +3,6 @@ package com.hatfat.dota.fragments;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,13 @@ import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class DotaPlayerStatisticsFragment extends Fragment {
 
-    public final static int RECENT_STATS_MATCH_COUNT = 100;
+    public final static int RECENT_STATS_MATCH_COUNT = 50;
 
     private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY";
 
@@ -79,10 +79,9 @@ public class DotaPlayerStatisticsFragment extends Fragment {
             @Override
             protected List<DotaStatistics> doInBackground(SteamUser... params) {
                 SteamUser user = params[0];
-                List<Match> allMatches = new LinkedList();
-                List<Match> rankedMatches = new LinkedList();
-                List<Match> publicMatches = new LinkedList();
-                List<Match> recentRankedMatches = new LinkedList();
+                LinkedList<Match> allMatches = new LinkedList();
+                LinkedList<Match> rankedMatches = new LinkedList();
+                LinkedList<Match> publicMatches = new LinkedList();
 
                 for (String matchId : user.getMatches()) {
                     Match match = Matches.get().getMatch(matchId);
@@ -96,10 +95,6 @@ public class DotaPlayerStatisticsFragment extends Fragment {
 
                     if (match.isRankedMatchmaking()) {
                         rankedMatches.add(match);
-
-                        if (recentRankedMatches.size() < RECENT_STATS_MATCH_COUNT) {
-                            recentRankedMatches.add(match);
-                        }
                     }
 
                     if (match.isPublicMatchmaking()) {
@@ -107,16 +102,15 @@ public class DotaPlayerStatisticsFragment extends Fragment {
                     }
                 }
 
-                Log.e("catfat", allMatches.size() + " in allMatches");
-                Log.e("catfat", rankedMatches.size() + " in rankedMatches");
-                Log.e("catfat", publicMatches.size() + " in publicMatches");
-                Log.e("catfat", recentRankedMatches.size() + " in recentRankedMatches");
+                //sort the ranked list, so we can get the recent ranked matches
+                Collections.sort(rankedMatches, Match.getComparator());
+                int numberOfRecentRankedMatches = Math.min(RECENT_STATS_MATCH_COUNT, rankedMatches.size());
 
                 LinkedList<DotaStatistics> stats = new LinkedList();
-                stats.add(new DotaStatistics(user, allMatches));
-                stats.add(new DotaStatistics(user, rankedMatches));
-                stats.add(new DotaStatistics(user, publicMatches));
-                stats.add(new DotaStatistics(user, recentRankedMatches));
+                stats.add(new DotaStatistics(user, new LinkedList(allMatches)));
+                stats.add(new DotaStatistics(user, new LinkedList(rankedMatches)));
+                stats.add(new DotaStatistics(user, new LinkedList(publicMatches)));
+                stats.add(new DotaStatistics(user, rankedMatches.subList(0, numberOfRecentRankedMatches)));
 
                 return stats;
             }

@@ -50,9 +50,11 @@
     <string name="player_statistics_cs_score_text">CS Score</string>
     <string name="player_statistics_gpm_score_text">GPM Score</string>
     <string name="player_statistics_xpm_score_text">XPM Score</string>
+    <string name="player_statistics_xpm_gpm_composite_score_text">Composite Score</string>
     <string name="player_statistics_avg_kda_title_text">Average K/D/A</string>
     <string name="player_statistics_avg_kda_text">%1$.1f / %2$.1f / %3$.1f</string>
     <string name="player_statistics_avg_duration_title_text">Match Duration</string>
+    <string name="player_statistics_game_count_title_text">Game Count</string>
 
     <string name="add_new_player_search_text">Search</string>
 

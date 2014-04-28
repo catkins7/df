@@ -278,6 +278,30 @@ public class DotaStatistics {
         return xpmScore;
     }
 
+    public int getGameCount() {
+        return matches.size();
+    }
+
+    public String getGameCountString() {
+        return String.valueOf(getGameCount());
+    }
+
+    public String getCsScoreString() {
+        return String.valueOf(csScore);
+    }
+
+    public String getGpmScoreString() {
+        return String.valueOf(gpmScore);
+    }
+
+    public String getXpmScoreString() {
+        return String.valueOf(xpmScore);
+    }
+
+    public String getCompositeScoreString() {
+        return String.valueOf(xpmScore + gpmScore);
+    }
+
     public float getAvgKills() {
         return avgKills;
     }
