@@ -1,6 +1,17 @@
 0.4 release
 ---------------------------
 
+STATS overview:
+ - Ranked Stats Summary (all ranked games, game count, win %, k/d/a averages, average game length)
+ - Unranked Stats Summary (same, but for unranked)
+ - CSScore, GoldScore, whatever I decide is more valuable, for last 120 ranked games with the top 10, bot 10 outliers chopped off
+ - Favorite Heroes (all games)
+ - Favorite Items (all games)
+
+warning message at the top if there is not very much data (< 100 games?)
+
+
+
 look over all classes for quick clean-ups
 
 weird case where the right drawer won't open anymore?
@@ -14,14 +25,15 @@ ONLY CALCULATE THE LAST 100 [RANKED] GAMES FOR CSScore/GoldScore/XPScore?  Other
 take some sample points and come up with a way to estimate ranked ELO?
 
 
-KDA Average
-CSScore  (average total CS per game, chop off top/bot 10%?)   
-GoldScore (average GPM per game, chop off top/bot 10%?)
-average game length
-
-warning message at the top if there is not very much data (< 100 games?)
 
 make sure we are only using games that have a result for stats calculation
+
+
+More Stats!
+ - favorite game mode?
+ - records (most kills, deaths, etc)
+ - graphs (kda, win/lost graph, etc)
+
 
 
 
@@ -34,6 +46,7 @@ player summary improvements (number of matches, win %, right tray with more stat
 
 handle stats drawer case with no matches better
 
+fix issue with steam users re-ordering after update, because updated steam name is never saved
 
 
 

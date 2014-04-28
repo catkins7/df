@@ -1,13 +1,12 @@
-package com.hatfat.dota.model.user;
+package com.hatfat.dota.model.game;
 
+import android.content.res.Resources;
 import android.util.Log;
 
-import com.hatfat.dota.model.game.Hero;
-import com.hatfat.dota.model.game.Heroes;
-import com.hatfat.dota.model.game.Item;
+import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
-import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.player.Player;
+import com.hatfat.dota.model.user.SteamUser;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,12 +16,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class SteamUserStatistics {
+//calculates statistics for a given user for a given set of matches
+public class DotaStatistics {
 
     private static final int MAX_FAVORITE_ITEMS = 3;
     private static final int MAX_FAVORITE_HEROES = 6;
     private static final int MAX_HERO_FAVORITE_ITEMS = 3;
 
+    private List<Match> matches;
     private SteamUser user;
 
     private List<ItemStats> favoriteItems;
@@ -44,8 +45,10 @@ public class SteamUserStatistics {
     private float avgAssists;
     private int avgDuration;
 
-    public SteamUserStatistics(SteamUser user) {
+    public DotaStatistics(SteamUser user, List<Match> matches) {
         this.user = user;
+        this.matches = matches;
+
         this.favoriteItems = new LinkedList();
         this.favoriteHeroes = new LinkedList();
 
@@ -69,72 +72,69 @@ public class SteamUserStatistics {
 
         Set<Item> items = new TreeSet();
 
-        for (String matchId : user.getMatches()) {
-            Match match = Matches.get().getMatch(matchId);
+        for (Match match : matches) {
             items.clear();
 
-            if (match != null && match.shouldBeUsedInStatistics()) {
-                Player player = match.getPlayerForSteamUser(user);
-                Hero hero = Heroes.get().getHero(player.getHeroIdString());
+            Player player = match.getPlayerForSteamUser(user);
+            Hero hero = Heroes.get().getHero(player.getHeroIdString());
 
-                if (hero == null) {
-                    //no hero for this match, so just skip to the next match
-                    continue;
-                }
+            if (hero == null) {
+                //no hero for this match, so just skip to the next match
+                continue;
+            }
 
-                int totalCS = 0;
-                int totalGPM = 0;
-                int totalXPM = 0;
-                for (Player p : match.getPlayers()) {
-                    totalCS += p.getLastHits() + p.getDenies();
-                    totalGPM += p.getGoldPerMinute();
-                    totalXPM += p.getXpPerMinute();
-                }
+            int totalCS = 0;
+            int totalGPM = 0;
+            int totalXPM = 0;
+            for (Player p : match.getPlayers()) {
+                totalCS += p.getLastHits() + p.getDenies();
+                totalGPM += p.getGoldPerMinute();
+                totalXPM += p.getXpPerMinute();
+            }
 
-                csTotalsPerGame.add(totalCS);
-                gpmTotalsPerGame.add(totalGPM);
-                xpmTotalsPerGame.add(totalXPM);
-                killsPerGame.add(player.getKills());
-                deathsPerGame.add(player.getDeaths());
-                assistsPerGame.add(player.getAssists());
-                durationsPerGame.add(match.getDuration());
+            csTotalsPerGame.add(totalCS);
+            gpmTotalsPerGame.add(totalGPM);
+            xpmTotalsPerGame.add(totalXPM);
+            killsPerGame.add(player.getKills());
+            deathsPerGame.add(player.getDeaths());
+            assistsPerGame.add(player.getAssists());
+            durationsPerGame.add(match.getDuration());
 
-                HeroStats heroStats = heroStatsMap.get(hero);
+            HeroStats heroStats = heroStatsMap.get(hero);
 
-                if (heroStats == null) {
-                    heroStats = new HeroStats(hero);
-                    heroStatsMap.put(hero, heroStats);
-                }
+            if (heroStats == null) {
+                heroStats = new HeroStats(hero);
+                heroStatsMap.put(hero, heroStats);
+            }
 
-                heroStats.heroCount++;
+            heroStats.heroCount++;
 
-                for (int i = 0; i < 6; i++) {
-                    Item item = player.getItem(i);
-                    if (item != null) {
-                        boolean itemAddedAlready = items.contains(item);
-                        items.add(item);
+            for (int i = 0; i < 6; i++) {
+                Item item = player.getItem(i);
+                if (item != null) {
+                    boolean itemAddedAlready = items.contains(item);
+                    items.add(item);
 
-                        ItemStats itemStats = itemStatsMap.get(item);
+                    ItemStats itemStats = itemStatsMap.get(item);
 
-                        if (itemStats == null) {
-                            itemStats = new ItemStats(item);
-                            itemStatsMap.put(item, itemStats);
-                        }
-
-                        itemStats.purchaseCount++;
-
-                        if (!itemAddedAlready) {
-                            Match.PlayerMatchResult result = match
-                                    .getPlayerMatchResultForPlayer(player);
-                            if (result == Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY) {
-                                itemStats.winCount++;
-                            }
-
-                            itemStats.gameCount++;
-                        }
-
-                        heroStats.addItem(item);
+                    if (itemStats == null) {
+                        itemStats = new ItemStats(item);
+                        itemStatsMap.put(item, itemStats);
                     }
+
+                    itemStats.purchaseCount++;
+
+                    if (!itemAddedAlready) {
+                        Match.PlayerMatchResult result = match
+                                .getPlayerMatchResultForPlayer(player);
+                        if (result == Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY) {
+                            itemStats.winCount++;
+                        }
+
+                        itemStats.gameCount++;
+                    }
+
+                    heroStats.addItem(item);
                 }
             }
         }
@@ -168,7 +168,7 @@ public class SteamUserStatistics {
         calculateAverages();
 
         long endTime = System.currentTimeMillis();
-        Log.v("SteamUserStatistics", "calculateStatistics runtime " + (endTime - startTime) + " milliseconds");
+        Log.v("DotaStatistics", "calculateStatistics runtime " + (endTime - startTime) + " milliseconds for " + matches.size() + " matches.");
     }
 
     private void calculateAverages() {
@@ -292,6 +292,24 @@ public class SteamUserStatistics {
 
     public int getAvgDuration() {
         return avgDuration;
+    }
+
+    public String getAvgKDAString(Resources resources) {
+        String string = resources.getString(R.string.player_statistics_avg_kda_text);
+        return String.format(string, avgKills, avgAssists, avgDeaths);
+    }
+
+    public String getAvgDurationString(Resources resources) {
+        int hours = avgDuration / 60 / 60;
+        int minutes = avgDuration / 60 % 60;
+        int seconds = avgDuration % 60;
+
+        if (hours < 1) {
+            return String.format("%d:%02d", minutes, seconds);
+        }
+        else {
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        }
     }
 
     public static class ItemStats {

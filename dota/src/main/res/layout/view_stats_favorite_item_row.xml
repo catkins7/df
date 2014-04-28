@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/off_black_background"
     android:padding="@dimen/default_padding"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content">
     
     <ImageView
-        android:id="@+id/view_dota_player_favorite_item_row_icon_image_view"
+        android:id="@+id/view_stats_favorite_item_row_icon_image_view"
         android:layout_width="@dimen/player_stats_item_row_width"
         android:layout_height="@dimen/player_stats_item_row_height" />
 
     <TextView
-        android:id="@+id/view_dota_player_favorite_item_row_win_text_view"
+        android:id="@+id/view_stats_favorite_item_row_win_text_view"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:gravity="center_vertical|right"
@@ -22,9 +21,9 @@
         android:layout_height="@dimen/text_view_height_small" />
 
     <TextView
-        android:id="@+id/view_dota_player_favorite_item_row_count_text_view"
-        android:layout_toRightOf="@id/view_dota_player_favorite_item_row_icon_image_view"
-        android:layout_toLeftOf="@id/view_dota_player_favorite_item_row_win_text_view"
+        android:id="@+id/view_stats_favorite_item_row_count_text_view"
+        android:layout_toRightOf="@id/view_stats_favorite_item_row_icon_image_view"
+        android:layout_toLeftOf="@id/view_stats_favorite_item_row_win_text_view"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
         android:layout_centerInParent="true"
