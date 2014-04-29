@@ -14,6 +14,7 @@ Fix more Lint issues
 
 Favorite items for Lone Druid?   Is it using the items on the bear???
 
+update libraries and build tools in build.gradle
 
 
 0.5 release
