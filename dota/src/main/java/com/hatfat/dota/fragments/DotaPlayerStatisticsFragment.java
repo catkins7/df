@@ -38,7 +38,6 @@ public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayo
 
     private SteamUser user;
 
-    private ListView listView;
     private DotaStatisticsAdapter adapter;
 
     public DotaPlayerStatisticsFragment() {
@@ -84,7 +83,7 @@ public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dota_player_statistics, null);
+        View view = inflater.inflate(R.layout.fragment_dota_player_statistics, container, false);
 
         setupListView(view);
 
@@ -94,7 +93,8 @@ public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayo
     private void setupListView(View view) {
         adapter = new DotaStatisticsAdapter(getResources());
 
-        listView = (ListView) view.findViewById(R.id.fragment_dota_player_statistics_list_view);
+        ListView listView = (ListView) view
+                .findViewById(R.id.fragment_dota_player_statistics_list_view);
         listView.setAdapter(adapter);
     }
 

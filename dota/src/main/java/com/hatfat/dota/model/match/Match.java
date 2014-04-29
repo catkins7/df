@@ -317,13 +317,8 @@ public class Match implements Comparable {
             case CustomGame:
                 return false;
             default:
-                if (duration >= 5 * 60) {
-                    //only use games that are at least 5 minutes long
-                    return true;
-                }
-                else {
-                    return false;
-                }
+                //only use games that are at least 5 minutes long
+                return duration >= 5 * 60;
         }
     }
     public void setHasMatchDetails(boolean hasMatchDetails) {

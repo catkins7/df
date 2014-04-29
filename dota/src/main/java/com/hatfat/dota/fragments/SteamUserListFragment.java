@@ -117,7 +117,7 @@ public class SteamUserListFragment extends CharltonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        usersListView = (ListView) inflater.inflate(R.layout.fragment_steam_user_list, null);
+        usersListView = (ListView) inflater.inflate(R.layout.fragment_steam_user_list, container, false);
 
         usersAdapter = new BaseAdapter() {
             @Override

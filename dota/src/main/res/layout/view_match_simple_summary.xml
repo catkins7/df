@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@drawable/off_black_button_background"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/off_black_button_background"
               android:padding="@dimen/default_padding"
               android:orientation="horizontal"
               android:layout_width="match_parent"
@@ -10,51 +11,61 @@
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_0"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_1"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_2"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_3"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_4"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_5"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_6"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_7"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_8"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_simple_summary_hero_9"
         android:layout_width="@dimen/match_simple_summary_hero_image_view_width"
-        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"/>
+        android:layout_height="@dimen/match_simple_summary_hero_image_view_height"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>

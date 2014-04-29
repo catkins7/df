@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <RelativeLayout
@@ -70,27 +71,32 @@
                 android:id="@+id/fragment_match_summary_hero_0"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_1"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_2"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_3"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_4"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,27 +112,32 @@
                 android:id="@+id/fragment_match_summary_hero_5"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_6"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_7"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_8"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:id="@+id/fragment_match_summary_hero_9"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hero_image_height"/>
+                android:layout_height="@dimen/hero_image_height"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -162,7 +173,8 @@
                 android:src="@drawable/ranked_icon"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_width="@dimen/match_for_player_basic_ranked_image_view_size"
-                android:layout_height="@dimen/match_for_player_basic_ranked_image_view_size"/>
+                android:layout_height="@dimen/match_for_player_basic_ranked_image_view_size"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <TextView

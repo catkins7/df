@@ -103,7 +103,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dota_player_summary, null);
+        View view = inflater.inflate(R.layout.fragment_dota_player_summary, container, false);
 
         personaTextView = (TextView) view.findViewById(R.id.fragment_dota_player_summary_persona_text_view);
         publicMatchesTextView = (TextView) view.findViewById(R.id.fragment_dota_player_public_matches_text_view);

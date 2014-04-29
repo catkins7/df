@@ -1,14 +1,6 @@
-0.4 release
----------------------------
-look over all classes for quick clean-ups
-good testing
-
-
-
-
 0.4.1 release ?
 ---------------------------
-More Stats!
+-More Stats!
  - records (most kills, deaths, etc) with link to the match
  - graphs (kda, win/lost graph, etc)
  - most/least successful heroes
@@ -18,7 +10,9 @@ Issue leaving memory and drawer is still on the right, but empty?   CharltonACti
  - to reproduce, start the app, stay on the starred user list, clear memory, and return to the app.  You should be able to use the right/left menus now!
  - check memory, maybe we are creating duplicates of the app somehow, and the wrong one is being setup the second time?
 
+Fix more Lint issues
 
+Favorite items for Lone Druid?   Is it using the items on the bear???
 
 
 

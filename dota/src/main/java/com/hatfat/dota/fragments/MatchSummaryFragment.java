@@ -66,7 +66,7 @@ public class MatchSummaryFragment extends CharltonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_match_summary, null);
+        View view = inflater.inflate(R.layout.fragment_match_summary, container, false);
 
         gameModeTextView = (TextView) view.findViewById(R.id.fragment_match_summary_game_mode_text_view);
         victoryTextView = (TextView) view.findViewById(R.id.fragment_match_summary_victory_text_view);

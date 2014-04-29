@@ -65,9 +65,7 @@ public class FileUtil {
             JsonReader jsonReader = new JsonReader(br);
 
             Gson gson = DotaDiskGson.getDotaDiskGson();
-            T obj = gson.fromJson(jsonReader, typeClass);
-
-            return obj;
+            return gson.fromJson(jsonReader, typeClass);
         }
         catch (FileNotFoundException e) {
             Log.e("FileUtil", "FileNotFoundException: " + file.getName());

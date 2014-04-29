@@ -115,7 +115,7 @@ public class StarredPlayerListFragment extends CharltonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_starred_player_list, null);
+        View view = inflater.inflate(R.layout.fragment_starred_player_list, container, false);
 
         Button addNewPlayerButton = (Button) view.findViewById(R.id.dota_player_list_fragment_add_player);
         addNewPlayerButton.setOnClickListener(new View.OnClickListener() {

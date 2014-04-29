@@ -31,7 +31,6 @@ public class CharltonActivity extends Activity {
     private Fragment drawerFragment;
 
     private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +81,10 @@ public class CharltonActivity extends Activity {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, drawerLayout.findViewById(R.id.left_drawer_container));
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, drawerLayout.findViewById(R.id.right_drawer_container));
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, R.string.drawer_open, R.string.drawer_closed) {
-            @Override public void onDrawerSlide(View drawerView, float slideOffset) {
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+                R.drawable.ic_launcher, R.string.drawer_open, R.string.drawer_closed) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
 
                 int width = drawerView.getWidth();
@@ -98,31 +99,35 @@ public class CharltonActivity extends Activity {
                 }
 
                 if (drawerFragment instanceof DrawerLayout.DrawerListener) {
-                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerSlide(drawerView, slideOffset);
+                    ((DrawerLayout.DrawerListener) drawerFragment)
+                            .onDrawerSlide(drawerView, slideOffset);
                 }
             }
 
-            @Override public void onDrawerOpened(View drawerView) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
 
                 if (drawerFragment instanceof DrawerLayout.DrawerListener) {
-                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerOpened(drawerView);
+                    ((DrawerLayout.DrawerListener) drawerFragment).onDrawerOpened(drawerView);
                 }
             }
 
-            @Override public void onDrawerClosed(View drawerView) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
 
                 if (drawerFragment instanceof DrawerLayout.DrawerListener) {
-                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerClosed(drawerView);
+                    ((DrawerLayout.DrawerListener) drawerFragment).onDrawerClosed(drawerView);
                 }
             }
 
-            @Override public void onDrawerStateChanged(int newState) {
+            @Override
+            public void onDrawerStateChanged(int newState) {
                 super.onDrawerStateChanged(newState);
 
                 if (drawerFragment instanceof DrawerLayout.DrawerListener) {
-                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerStateChanged(newState);
+                    ((DrawerLayout.DrawerListener) drawerFragment).onDrawerStateChanged(newState);
                 }
             }
         };

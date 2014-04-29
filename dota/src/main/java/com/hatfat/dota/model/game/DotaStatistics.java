@@ -551,7 +551,7 @@ public class DotaStatistics {
             float percent = (float)winCount / (float)gameCount * 100.0f;
             return String.format("%.1f", percent) + "%";
         }
-    };
+    }
 
     public static class ModeStats {
         public Match.GameMode mode;

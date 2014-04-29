@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/default_padding"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content">
@@ -8,7 +9,8 @@
     <ImageView
         android:id="@+id/view_stats_favorite_item_row_icon_image_view"
         android:layout_width="@dimen/player_stats_item_row_width"
-        android:layout_height="@dimen/player_stats_item_row_height" />
+        android:layout_height="@dimen/player_stats_item_row_height"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/view_stats_favorite_item_row_win_text_view"

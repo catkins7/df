@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -67,7 +68,8 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_below="@id/fragment_dota_player_summary_persona_text_view"
             android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
-            android:layout_height="@dimen/dota_player_summary_fragment_image_view_size"/>
+            android:layout_height="@dimen/dota_player_summary_fragment_image_view_size"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/fragment_dota_player_public_matches_text_view"

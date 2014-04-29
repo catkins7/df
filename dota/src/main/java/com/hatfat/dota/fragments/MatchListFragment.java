@@ -25,7 +25,6 @@ public class MatchListFragment extends CharltonFragment {
 
     private List<Match> matches;
 
-    private ListView matchesListView;
     private BaseAdapter matchesAdapter;
 
     public static MatchListFragment newInstance(List<Match> matches) {
@@ -61,7 +60,8 @@ public class MatchListFragment extends CharltonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        matchesListView = (ListView) inflater.inflate(R.layout.fragment_match_list, null);
+        ListView matchesListView = (ListView) inflater
+                .inflate(R.layout.fragment_match_list, container, false);
 
         matchesAdapter = new BaseAdapter() {
             @Override

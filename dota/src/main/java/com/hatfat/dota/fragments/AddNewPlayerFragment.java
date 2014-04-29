@@ -42,7 +42,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_new_player, null);
+        View view = inflater.inflate(R.layout.fragment_add_new_player, container, false);
 
         notSearchingContainerView = view.findViewById(R.id.fragment_add_new_player_not_searching_bottom_view);
         searchingContainerView = view.findViewById(R.id.fragment_add_new_player_searching_bottom_view);

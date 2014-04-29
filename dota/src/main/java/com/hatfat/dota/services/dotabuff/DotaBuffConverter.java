@@ -33,7 +33,7 @@ public class DotaBuffConverter implements Converter {
 
             InputStreamReader reader = new InputStreamReader(is, charset);
             String line;
-            int start = -1;
+            int start;
             int idStart = "/players/".length();
             int end;
 

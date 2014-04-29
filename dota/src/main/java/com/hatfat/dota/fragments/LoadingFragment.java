@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
@@ -27,7 +26,6 @@ public class LoadingFragment extends CharltonFragment {
 
     private BroadcastReceiver receiver;
 
-    private TextView loadingTextView;
     private FrameLayout percentFrameLayout;
 
     private float heroProgress;
@@ -37,9 +35,8 @@ public class LoadingFragment extends CharltonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_loading, null);
+        View view = inflater.inflate(R.layout.fragment_loading, container, false);
 
-        loadingTextView = (TextView) view.findViewById(R.id.fragment_loading_info_text_view);
         percentFrameLayout = (FrameLayout) view.findViewById(R.id.fragment_loading_percent_frame_layout);
 
         return view;

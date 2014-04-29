@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/default_padding"
     android:background="@drawable/off_black_button_background"
     android:layout_width="match_parent"
@@ -13,7 +14,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_width="@dimen/hero_image_width"
-        android:layout_height="@dimen/hero_image_height"/>
+        android:layout_height="@dimen/hero_image_height"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_match_player_basic_ranked_image_view"
@@ -22,7 +24,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_width="@dimen/match_for_player_basic_ranked_image_view_size"
-        android:layout_height="@dimen/match_for_player_basic_ranked_image_view_size"/>
+        android:layout_height="@dimen/match_for_player_basic_ranked_image_view_size"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/view_match_player_basic_victory_text_view"

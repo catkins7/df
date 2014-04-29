@@ -47,7 +47,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         SECTION_FAVORITE_HEROES,
         SECTION_FAVORITE_ITEMS,
         SECTION_GRAPHS,
-        SECTION_CSSCORE;
+        SECTION_CSSCORE
     }
 
     private class StatsSection {
