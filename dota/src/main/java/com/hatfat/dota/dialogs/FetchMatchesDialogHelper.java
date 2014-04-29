@@ -90,6 +90,24 @@ public class FetchMatchesDialogHelper {
         nextState();
     }
 
+    private void showFetchingErrorDialog() {
+        Activity ownerActivity = dialog.getOwnerActivity();
+
+        if (ownerActivity == null) {
+            //can't show without an activity
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
+
+        builder.setTitle(R.string.player_summary_fetch_all_dialog_error_title_text);
+        builder.setMessage(R.string.player_summary_fetch_all_dialog_error_message_text);
+
+        AlertDialog errorDialog = builder.create();
+        errorDialog.setOwnerActivity(ownerActivity);
+        errorDialog.show();
+    }
+
     private void nextState() {
         switch (state) {
             case FETCH_MATCHES_STATE_STARTING:
@@ -124,6 +142,7 @@ public class FetchMatchesDialogHelper {
             @Override
             public void failure(RetrofitError error) {
                 finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
+                showFetchingErrorDialog();
             }
         });
     }
@@ -138,6 +157,7 @@ public class FetchMatchesDialogHelper {
             @Override
             public void failure(RetrofitError error) {
                 finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
+                showFetchingErrorDialog();
             }
         });
     }
@@ -306,6 +326,7 @@ public class FetchMatchesDialogHelper {
     }
 
     private void startSaving() {
+        //not implemented yet
         state = FetchMatchesState.FETCH_MATCHES_STATE_SAVING;
         saveProgress = 1.0f;
         nextState();

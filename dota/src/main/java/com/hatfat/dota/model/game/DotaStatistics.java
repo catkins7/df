@@ -28,7 +28,12 @@ public class DotaStatistics {
 
     private List<ItemStats> favoriteItems;
     private List<HeroStats> favoriteHeroes;
+    private List<ModeStats> favoriteModes;
 
+    private List<Integer> xpmPerGame;
+    private List<Integer> gpmPerGame;
+    private List<Integer> lastHitsPerGame;
+    private List<Integer> deniesPerGame;
     private List<Integer> csTotalsPerGame;
     private List<Integer> gpmTotalsPerGame;
     private List<Integer> xpmTotalsPerGame;
@@ -36,13 +41,23 @@ public class DotaStatistics {
     private List<Integer> deathsPerGame;
     private List<Integer> assistsPerGame;
     private List<Integer> durationsPerGame;
+    private List<Float> teamworkScorePerGame;
 
+    private int numberOfWins;
+    private int numberOfValidMatches;
     private int csScore;
     private int gpmScore;
     private int xpmScore;
+    private float teamworkScore;
+    private float avgKillsAndAssistsOverDeaths;
+    private float avgKillsOverDeaths;
+    private float avgLastHits;
+    private float avgDenies;
     private float avgKills;
     private float avgDeaths;
     private float avgAssists;
+    private float avgGpm;
+    private float avgXpm;
     private int avgDuration;
 
     public DotaStatistics(SteamUser user, List<Match> matches) {
@@ -51,7 +66,12 @@ public class DotaStatistics {
 
         this.favoriteItems = new LinkedList();
         this.favoriteHeroes = new LinkedList();
+        this.favoriteModes = new LinkedList();
 
+        this.xpmPerGame = new LinkedList();
+        this.gpmPerGame = new LinkedList();
+        this.lastHitsPerGame = new LinkedList();
+        this.deniesPerGame = new LinkedList();
         this.csTotalsPerGame = new LinkedList();
         this.gpmTotalsPerGame = new LinkedList();
         this.xpmTotalsPerGame = new LinkedList();
@@ -59,6 +79,7 @@ public class DotaStatistics {
         this.deathsPerGame = new LinkedList();
         this.assistsPerGame = new LinkedList();
         this.durationsPerGame = new LinkedList();
+        this.teamworkScorePerGame = new LinkedList();
 
         calculateStatistics();
     }
@@ -69,7 +90,9 @@ public class DotaStatistics {
         //a hashmap of items with the number of times they've been purchased
         final HashMap<Item, ItemStats> itemStatsMap = new HashMap();
         final HashMap<Hero, HeroStats> heroStatsMap = new HashMap();
+        final HashMap<Match.GameMode, ModeStats> modeStatsMap = new HashMap();
 
+        numberOfWins = 0;
         Set<Item> items = new TreeSet();
 
         for (Match match : matches) {
@@ -81,6 +104,11 @@ public class DotaStatistics {
             if (hero == null) {
                 //no hero for this match, so just skip to the next match
                 continue;
+            }
+
+            numberOfValidMatches++;
+            if (match.getPlayerMatchResultForPlayer(player).equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
+                numberOfWins++;
             }
 
             int totalCS = 0;
@@ -95,11 +123,44 @@ public class DotaStatistics {
             csTotalsPerGame.add(totalCS);
             gpmTotalsPerGame.add(totalGPM);
             xpmTotalsPerGame.add(totalXPM);
+            gpmPerGame.add(player.getGoldPerMinute());
+            xpmPerGame.add(player.getXpPerMinute());
+            lastHitsPerGame.add(player.getLastHits());
+            deniesPerGame.add(player.getDenies());
             killsPerGame.add(player.getKills());
             deathsPerGame.add(player.getDeaths());
             assistsPerGame.add(player.getAssists());
             durationsPerGame.add(match.getDuration());
 
+            float kills = 0.0f;
+            float assists = 0.0f;
+
+            if (player.isRadiantPlayer()) {
+                kills = match.getRadiantTotalKillCount();
+                assists = match.getRadiantTotalAssistCount();
+            }
+            else if (player.isDirePlayer()) {
+                kills = match.getDireTotalKillCount();
+                assists = match.getDireTotalAssistCount();
+            }
+
+            teamworkScorePerGame.add((kills + assists) / kills);
+
+            //calculate mode stats
+            ModeStats modeStats = modeStatsMap.get(match.getGameMode());
+
+            if (modeStats == null) {
+                modeStats = new ModeStats(match.getGameMode());
+                modeStatsMap.put(match.getGameMode(), modeStats);
+            }
+
+            modeStats.gameCount++;
+
+            if (match.getPlayerMatchResultForPlayer(player).equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
+                modeStats.winCount++;
+            }
+
+            //calculate hero stats
             HeroStats heroStats = heroStatsMap.get(hero);
 
             if (heroStats == null) {
@@ -165,6 +226,16 @@ public class DotaStatistics {
         int maxFavoriteItems = Math.min(sortedItemStats.size(), MAX_FAVORITE_ITEMS);
         favoriteItems = new LinkedList(sortedItemStats.subList(0, maxFavoriteItems));
 
+        List<ModeStats> sortedModeStats = new LinkedList(modeStatsMap.values());
+        Collections.sort(sortedModeStats, new Comparator<ModeStats>() {
+            @Override
+            public int compare(ModeStats lhs, ModeStats rhs) {
+                return rhs.gameCount - lhs.gameCount;
+            }
+        });
+
+        favoriteModes = sortedModeStats;
+
         calculateAverages();
 
         long endTime = System.currentTimeMillis();
@@ -176,8 +247,18 @@ public class DotaStatistics {
         csTotalsPerGame = sortAndTrimIntegerList(csTotalsPerGame);
         gpmTotalsPerGame = sortAndTrimIntegerList(gpmTotalsPerGame);
         xpmTotalsPerGame = sortAndTrimIntegerList(xpmTotalsPerGame);
+        teamworkScorePerGame = sortAndTrimFloatList(teamworkScorePerGame);
 
         //calculate all the average values
+
+        //TEAMWORK SCORE
+        teamworkScore = 0.0f;
+        if (teamworkScorePerGame.size() > 0) {
+            for (float f : teamworkScorePerGame) {
+                teamworkScore += f;
+            }
+            teamworkScore /= teamworkScorePerGame.size();
+        }
 
         //CS SCORE
         csScore = 0;
@@ -204,6 +285,42 @@ public class DotaStatistics {
                 xpmScore += i;
             }
             xpmScore /= xpmTotalsPerGame.size();
+        }
+
+        //AVERAGE XPM
+        avgXpm = 0.0f;
+        if (xpmPerGame.size() > 0) {
+            for (int i : xpmPerGame) {
+                avgXpm += i;
+            }
+            avgXpm /= (float) xpmPerGame.size();
+        }
+
+        //AVERAGE GPM
+        avgGpm = 0.0f;
+        if (gpmPerGame.size() > 0) {
+            for (int i : gpmPerGame) {
+                avgGpm += i;
+            }
+            avgGpm /= (float) gpmPerGame.size();
+        }
+
+        //AVERAGE LAST HITS
+        avgLastHits = 0.0f;
+        if (lastHitsPerGame.size() > 0) {
+            for (int i : lastHitsPerGame) {
+                avgLastHits += i;
+            }
+            avgLastHits /= (float) lastHitsPerGame.size();
+        }
+
+        //AVERGAGE DENIES
+        avgDenies = 0.0f;
+        if (deniesPerGame.size() > 0) {
+            for (int i : deniesPerGame) {
+                avgDenies += i;
+            }
+            avgDenies /= (float) deniesPerGame.size();
         }
 
         //AVERAGE KILLS
@@ -233,6 +350,13 @@ public class DotaStatistics {
             avgAssists /= (float) assistsPerGame.size();
         }
 
+        //AVERAGE K/D
+        avgKillsOverDeaths = avgKills / avgDeaths;
+
+        //AVERAGE K+A/D
+        avgKillsAndAssistsOverDeaths = (avgKills + avgAssists) / avgDeaths;
+
+        //AVERAGE DURATION
         avgDuration = 0;
         if (durationsPerGame.size() > 0) {
             for (int i : durationsPerGame) {
@@ -258,12 +382,42 @@ public class DotaStatistics {
         return list;
     }
 
+    private List<Float> sortAndTrimFloatList(List<Float> list) {
+        Collections.sort(list, new Comparator<Float>() {
+            @Override
+            public int compare(Float lhs, Float rhs) {
+                return Float.compare(lhs.floatValue(), rhs.floatValue());
+            }
+        });
+
+        //we want to chop off the top and bottom 10% to reduce the effect outliers have on the calculations
+        int numToChop = list.size() / 10;
+        list = list.subList(numToChop, list.size());
+        list = list.subList(0, list.size() - numToChop);
+
+        return list;
+    }
+
     public List<ItemStats> getFavoriteItems() {
         return favoriteItems;
     }
 
     public List<HeroStats> getFavoriteHeroes() {
         return favoriteHeroes;
+    }
+
+    public List<ModeStats> getFavoriteGameModes() {
+        return favoriteModes;
+    }
+
+    public String getFavoriteGameModeString() {
+        ModeStats favorite = favoriteModes.size() > 0 ? favoriteModes.get(0) : null;
+        if (favorite != null) {
+            return favorite.mode.getGameModeName();
+        }
+        else {
+            return null;
+        }
     }
 
     public int getCsScore() {
@@ -280,6 +434,45 @@ public class DotaStatistics {
 
     public int getGameCount() {
         return matches.size();
+    }
+
+    public String getAverageXpmString(Resources resources) {
+        return String.format(
+                resources.getString(R.string.player_statistics_single_float_one_decimal), avgXpm);
+    }
+
+    public String getAverageGpmString(Resources resources) {
+        return String.format(
+                resources.getString(R.string.player_statistics_single_float_one_decimal), avgGpm);
+    }
+
+    public String getAverageLastHitsString(Resources resources) {
+        return String.format(
+                resources.getString(R.string.player_statistics_single_float_one_decimal),
+                avgLastHits);
+    }
+
+    public String getAverageDeniesString(Resources resources) {
+        return String.format(
+                resources.getString(R.string.player_statistics_single_float_one_decimal), avgDenies);
+    }
+
+    public String getAverageKillsOverDeathsString(Resources resources) {
+        return String.format(
+                resources.getString(R.string.player_statistics_single_float_two_decimal), avgKillsOverDeaths);
+    }
+
+    public String getAverageKillsAndAssistsOverDeathsString(Resources resources) {
+        return String.format(
+                resources.getString(R.string.player_statistics_single_float_two_decimal), avgKillsAndAssistsOverDeaths);
+    }
+
+    public String getWinPercentString(Resources resources) {
+        return String.format(resources.getString(R.string.player_statistics_single_float_one_decimal_with_percent), (float)numberOfWins / (float)numberOfValidMatches * 100.0f);
+    }
+
+    public String getTeamworkScoreString(Resources resources) {
+        return String.format(resources.getString(R.string.player_statistics_single_float_two_decimal), teamworkScore);
     }
 
     public String getGameCountString() {
@@ -320,7 +513,7 @@ public class DotaStatistics {
 
     public String getAvgKDAString(Resources resources) {
         String string = resources.getString(R.string.player_statistics_avg_kda_text);
-        return String.format(string, avgKills, avgAssists, avgDeaths);
+        return String.format(string, avgKills, avgDeaths, avgAssists);
     }
 
     public String getAvgDurationString(Resources resources) {
@@ -345,6 +538,8 @@ public class DotaStatistics {
 
         public ItemStats(Item item) {
             this.item = item;
+            gameCount = 0;
+            winCount = 0;
             purchaseCount = 0;
         }
 
@@ -357,6 +552,26 @@ public class DotaStatistics {
             return String.format("%.1f", percent) + "%";
         }
     };
+
+    public static class ModeStats {
+        public Match.GameMode mode;
+        public int gameCount;
+        public int winCount;
+
+        public ModeStats(Match.GameMode mode) {
+            this.mode = mode;
+            gameCount = 0;
+            winCount = 0;
+        }
+
+        public String getGameCountString() {
+            return String.valueOf(gameCount);
+        }
+
+        public String getWinPercentString(Resources resources) {
+            return String.format(resources.getString(R.string.player_statistics_single_float_one_decimal_with_percent), (float)winCount / (float)gameCount * 100.0f);
+        }
+    }
 
     public static class HeroStats {
         public Hero hero;

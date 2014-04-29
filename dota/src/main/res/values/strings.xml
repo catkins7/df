@@ -41,6 +41,10 @@
     <string name="player_summary_fetch_all_dialog_fetching_match_list_text">Fetching match list...</string>
     <string name="player_summary_fetch_all_dialog_fetching_match_details_text">Fetching match details...</string>
     <string name="player_summary_fetch_all_dialog_saving_matches_text">Saving matches...</string>
+    <string name="player_summary_fetch_all_dialog_error_title_text">Fetch Error</string>
+    <string name="player_summary_fetch_all_dialog_error_message_text">Unable to fetch match history.\n\nThis probably means that the Dota 2 API is temporarily unavailable.</string>
+
+    <string name="player_summary_menu_info_text">Statistics Information</string>
 
     <string name="player_statistics_loading_text">Calculating...</string>
     <string name="player_statistics_favorite_heroes_title_text">Favorite Heroes</string>
@@ -51,10 +55,28 @@
     <string name="player_statistics_gpm_score_text">GPM Score</string>
     <string name="player_statistics_xpm_score_text">XPM Score</string>
     <string name="player_statistics_xpm_gpm_composite_score_text">Composite Score</string>
-    <string name="player_statistics_avg_kda_title_text">Average K/D/A</string>
+    <string name="player_statistics_teamwork_score_text">Teamwork Score</string>
+    <string name="player_statistics_avg_kda_title_text">KDA</string>
+    <string name="player_statistics_avg_kills_over_deaths_title_text">K/D</string>
+    <string name="player_statistics_avg_kills_and_assists_over_deaths_title_text">K+A/D</string>
     <string name="player_statistics_avg_kda_text">%1$.1f / %2$.1f / %3$.1f</string>
     <string name="player_statistics_avg_duration_title_text">Match Duration</string>
+    <string name="player_statistics_favorite_game_mode_title_text">Favorite Game Mode</string>
+    <string name="player_statistics_win_percent_title_text">Win %</string>
     <string name="player_statistics_game_count_title_text">Game Count</string>
+    <string name="player_statistics_avg_denies_title_text">Denies</string>
+    <string name="player_statistics_avg_last_hits_title_text">Last Hits</string>
+    <string name="player_statistics_avg_xpm_title_text">XPM</string>
+    <string name="player_statistics_avg_gpm_title_text">GPM</string>
+    <string name="player_statistics_averages_text">Averages</string>
+    <string name="player_statistics_single_float_one_decimal">%1$.1f</string>
+    <string name="player_statistics_single_float_two_decimal">%1$.2f</string>
+    <string name="player_statistics_single_float_one_decimal_with_percent">%1$.1f%%</string>
+
+    <string name="player_statistics_recent_matches_title_text">Recent Ranked Matches</string>
+    <string name="player_statistics_all_matches_title_text">All Matches</string>
+    <string name="player_statistics_all_public_matches_title_text">All Public Matches</string>
+    <string name="player_statistics_all_ranked_matches_title_text">All Ranked Matches</string>
 
     <string name="add_new_player_search_text">Search</string>
 

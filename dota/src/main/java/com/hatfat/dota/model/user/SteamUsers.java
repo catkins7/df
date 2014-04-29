@@ -86,6 +86,10 @@ public class SteamUsers {
         return getBySteamId(SteamUser.getSteamIdFromAccountId(accountId));
     }
 
+    public void requestStarredUsersSave() {
+        saveToDisk();
+    }
+
     private void saveToDisk() {
         LinkedList<SteamUser> usersList = new LinkedList<>();
         for (String userId : starredUsers) {

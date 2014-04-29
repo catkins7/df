@@ -476,6 +476,28 @@ public class Match implements Comparable {
 
         return deathCount;
     }
+    public int getRadiantTotalAssistCount() {
+        int assistCount = 0;
+
+        for (Player player : players) {
+            if (player.isRadiantPlayer()) {
+                assistCount += player.getAssists();
+            }
+        }
+
+        return assistCount;
+    }
+    public int getDireTotalAssistCount() {
+        int assistCount = 0;
+
+        for (Player player : players) {
+            if (player.isDirePlayer()) {
+                assistCount += player.getAssists();
+            }
+        }
+
+        return assistCount;
+    }
 
     public Player getPlayerForSteamUser(SteamUser user) {
         if (players == null) {

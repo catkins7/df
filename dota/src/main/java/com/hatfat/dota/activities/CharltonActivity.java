@@ -51,6 +51,13 @@ public class CharltonActivity extends Activity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        emptyDrawers();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         isPaused = true;
@@ -89,46 +96,43 @@ public class CharltonActivity extends Activity {
                 if (isLeftDrawerView(drawerView)) {
                     fragmentContainer.setTranslationX(moveTo);
                 }
+
+                if (drawerFragment instanceof DrawerLayout.DrawerListener) {
+                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerSlide(drawerView, slideOffset);
+                }
             }
 
             @Override public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+
+                if (drawerFragment instanceof DrawerLayout.DrawerListener) {
+                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerOpened(drawerView);
+                }
             }
 
             @Override public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
 
-                emptyDrawers();
-
-                //drawers are closed, so lock them again
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, drawerLayout.findViewById(R.id.left_drawer_container));
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, drawerLayout.findViewById(R.id.right_drawer_container));
+                if (drawerFragment instanceof DrawerLayout.DrawerListener) {
+                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerClosed(drawerView);
+                }
             }
 
             @Override public void onDrawerStateChanged(int newState) {
                 super.onDrawerStateChanged(newState);
+
+                if (drawerFragment instanceof DrawerLayout.DrawerListener) {
+                    ((DrawerLayout.DrawerListener)drawerFragment).onDrawerStateChanged(newState);
+                }
             }
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
     }
 
-    public void showFragmentInLeftDrawer(Fragment fragment) {
+    public void putFragmentInRightDrawer(Fragment fragment) {
         if (drawerFragment != null) {
-            //drawer is already open, so can't show something else!
-            return;
-        }
-
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, drawerLayout.findViewById(R.id.left_drawer_container));
-        drawerFragment = fragment;
-
-        getFragmentManager().beginTransaction().add(R.id.left_drawer_container, drawerFragment).commit();
-        drawerLayout.openDrawer(Gravity.START);
-    }
-
-    public void showFragmentInRightDrawer(Fragment fragment) {
-        if (drawerFragment != null) {
-            //drawer is already open, so can't show something else!
+            //drawer already has something in it, so we can't do anything
             return;
         }
 
@@ -136,16 +140,24 @@ public class CharltonActivity extends Activity {
         drawerFragment = fragment;
 
         getFragmentManager().beginTransaction().add(R.id.right_drawer_container, drawerFragment).commit();
+    }
+
+    public void removeDrawerFragment() {
+        emptyDrawers();
+    }
+
+    public void openRightDrawer() {
         drawerLayout.openDrawer(Gravity.END);
     }
 
     private void emptyDrawers() {
-        if (drawerFragment == null) {
-            return;
-        }
+        drawerLayout.closeDrawers();
 
         getFragmentManager().beginTransaction().remove(drawerFragment);
         drawerFragment = null;
+
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, drawerLayout.findViewById(R.id.left_drawer_container));
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, drawerLayout.findViewById(R.id.right_drawer_container));
     }
 
     private boolean isRightDrawerView(View drawerView) {

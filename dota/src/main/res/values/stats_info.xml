@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="stats_info_string_array">
+
+        <item><![CDATA[
+        The <b><u>Player Summary</u></b> page displays a quick glance of a player\'s performance for public and ranked games.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Statistics Drawer</u></b> has many more statistics available and only uses games that lasted more than five minutes.  This is why the total number of games on the player summary page may not match the number of games displayed in the drawer.
+        ]]></item>
+
+        <item><![CDATA[
+        <b><u>KDA</u></b> represents the player\'s average <b>K</b>ills, <b>D</b>eaths, and <b>A</b>ssists per game.
+        ]]></item>
+
+        <item><![CDATA[
+        <b><u>K/D</u></b> represents the player\'s average number of <b>K</b>ills divided by the average number of <b>D</b>eaths per game.
+        ]]></item>
+
+        <item><![CDATA[
+        <b><u>K+A/D</u></b> represents the player\'s average number of <b>K</b>ills and <b>A</b>ssists divided by the average number of <b>D</b>eaths per game.
+        ]]></item>
+
+        <item><![CDATA[
+        <i>The score values below are experimental.  They are intended to give insight into the average skill of all players in a series of matches.</i>
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) for all players in each game.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>GPM Score</u></b> represents the average combined GPM for all players in each game.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>XPM Score</u></b> represents the average combined XPM for all players in each game.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Composite Score</u></b> is the combined total of the GPM and XPM Scores.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Teamwork Score</u></b> is the average number of people involved in each kill on the player\'s team.
+        ]]></item>
+
+    </string-array>
+</resources>

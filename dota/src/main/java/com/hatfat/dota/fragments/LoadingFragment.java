@@ -53,6 +53,14 @@ public class LoadingFragment extends CharltonFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        //UNCOMMENT to reveal drawer bug on OOMemory
+        getCharltonActivity().removeDrawerFragment();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 

@@ -1,13 +1,20 @@
 package com.hatfat.dota.fragments;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.adapters.DotaStatisticsAdapter;
 import com.hatfat.dota.model.game.DotaStatistics;
@@ -20,18 +27,21 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DotaPlayerStatisticsFragment extends Fragment {
+public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayout.DrawerListener {
 
     public final static int RECENT_STATS_MATCH_COUNT = 50;
 
     private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY";
+
+    private BroadcastReceiver receiver;
+    private boolean needsRecalculation;
 
     private SteamUser user;
 
     private ListView listView;
     private DotaStatisticsAdapter adapter;
 
-    private DotaPlayerStatisticsFragment() {
+    public DotaPlayerStatisticsFragment() {
 
     }
 
@@ -49,12 +59,26 @@ public class DotaPlayerStatisticsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        needsRecalculation = true;
+
         String steamUserId = getArguments().getString(DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY);
         if (steamUserId != null) {
             user = SteamUsers.get().getBySteamId(steamUserId);
         }
+    }
 
-        fetchStatistics();
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        stopListening();
     }
 
     @Override
@@ -75,6 +99,8 @@ public class DotaPlayerStatisticsFragment extends Fragment {
     }
 
     private void fetchStatistics() {
+        needsRecalculation = false;
+
         new AsyncTask<SteamUser, Void, List<DotaStatistics>>() {
             @Override
             protected List<DotaStatistics> doInBackground(SteamUser... params) {
@@ -104,7 +130,8 @@ public class DotaPlayerStatisticsFragment extends Fragment {
 
                 //sort the ranked list, so we can get the recent ranked matches
                 Collections.sort(rankedMatches, Match.getComparator());
-                int numberOfRecentRankedMatches = Math.min(RECENT_STATS_MATCH_COUNT, rankedMatches.size());
+                int numberOfRecentRankedMatches = Math.min(RECENT_STATS_MATCH_COUNT,
+                        rankedMatches.size());
 
                 LinkedList<DotaStatistics> stats = new LinkedList();
                 stats.add(new DotaStatistics(user, new LinkedList(allMatches)));
@@ -120,5 +147,61 @@ public class DotaPlayerStatisticsFragment extends Fragment {
                 adapter.setNewStatistics(statsList);
             }
         }.execute(user);
+    }
+
+    private void startListening() {
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(SteamUser.STEAM_USER_MATCHES_CHANGED)) {
+                    String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
+                    if (updatedId.equals(user.getSteamId())) {
+                        needsRecalculation = true;
+                    }
+                }
+                else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
+                    String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    if (user.getMatches().contains(updatedMatchId)) {
+                        needsRecalculation = true;
+                    }
+                }
+            }
+        };
+
+        IntentFilter summaryFilter = new IntentFilter();
+        summaryFilter.addAction(SteamUser.STEAM_USER_MATCHES_CHANGED);
+        summaryFilter.addAction(Match.MATCH_UPDATED);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver,
+                summaryFilter);
+    }
+
+    private void stopListening() {
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).unregisterReceiver(
+                receiver);
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+        if (needsRecalculation) {
+            adapter.setNewStatistics(null);
+            fetchStatistics();
+        }
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+        if (needsRecalculation) {
+            adapter.setNewStatistics(null);
+        }
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

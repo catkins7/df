@@ -100,6 +100,13 @@ public class StarredPlayerListFragment extends CharltonFragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+        SteamUsers.get().requestStarredUsersSave();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 

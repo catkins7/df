@@ -1,34 +1,23 @@
 0.4 release
 ---------------------------
-
-STATS todo:
-- win % for all match summaries
-
-More Stats!
- - favorite game mode?
- - records (most kills, deaths, etc)
- - graphs (kda, win/lost graph, etc)
-
-
-
-warning message at the top if there is not very much data (< 100 games?)
-
-
-
 look over all classes for quick clean-ups
+good testing
 
-weird case where the right drawer won't open anymore?
-	- related to issue with the drawerFragment not getting unset when the side menu has gone
 
-menu, info option; shows dialog with explanation of CSScore and other potentially confusing values
 
-need to be able to open right drawer anytime by swiping from the right edge
 
-make sure we are only using games that have a result for stats calculation
+0.4.1 release ?
+---------------------------
+More Stats!
+ - records (most kills, deaths, etc) with link to the match
+ - graphs (kda, win/lost graph, etc)
+ - most/least successful heroes
 
-handle stats drawer case with no matches better
+Issue leaving memory and drawer is still on the right, but empty?   CharltonACtivity not getting destroyed when the app leaves memory??
+ - first, comment out the hack fix in onResume of the LoadingFragment
+ - to reproduce, start the app, stay on the starred user list, clear memory, and return to the app.  You should be able to use the right/left menus now!
+ - check memory, maybe we are creating duplicates of the app somehow, and the wrong one is being setup the second time?
 
-fix issue with steam users re-ordering after update, because updated steam name is never saved
 
 
 
