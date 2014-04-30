@@ -1,6 +1,5 @@
 0.4.1 Bugfix release
 ---------------------------
-add CSScore section to public matches as well
 make win% match in player summary and statistics???
 
 some more testing

@@ -575,6 +575,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                     new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, publicMatchStats,
                             resources.getString(
                                     R.string.player_statistics_all_public_matches_title_text)));
+            sections.add(
+                    new StatsSection(StatsSectionType.SECTION_CSSCORE, publicMatchStats));
         }
 
         notifyDataSetChanged();
