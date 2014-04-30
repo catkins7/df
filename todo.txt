@@ -1,10 +1,3 @@
-0.4.1 Bugfix release
----------------------------
-some more testing
-
-
-
-
 0.4.+ More Stats release
 ---------------------------
 -More Stats!
@@ -21,7 +14,7 @@ Fix more Lint issues
 
 Favorite items for Lone Druid?   Is it using the items on the bear???
 
-update libraries and build tools in build.gradle
+consider using a tabbed interface instead of the drawer?
 
 
 0.5 release
