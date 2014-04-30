@@ -4,11 +4,11 @@
         name="stats_info_string_array">
 
         <item><![CDATA[
-        The <b><u>Player Summary</u></b> page displays a quick glance of a player\'s performance for public and ranked games.
+        The <b><u>Player Summary</u></b> page displays a quick glance of a player\'s win percentage for public and ranked games.  It also contains a list of all known matches for this player.
         ]]></item>
 
         <item><![CDATA[
-        The <b><u>Statistics Drawer</u></b> has many more statistics available and only uses games that lasted more than five minutes.  This is why the total number of games on the player summary page may not match the number of games displayed in the drawer.
+        The <b><u>Statistics Drawer</u></b> has many more statistics available than the player summary page.  Only games that lasted more than five minutes are used in statistics calculations!
         ]]></item>
 
         <item><![CDATA[
@@ -24,11 +24,11 @@
         ]]></item>
 
         <item><![CDATA[
-        <i>The score values below are experimental.  They are intended to give insight into the average skill of all players in a series of matches.</i>
+        <i>The score values below are experimental.  They are intended to give insight into different aspects of a player\'s match history.</i>
         ]]></item>
 
         <item><![CDATA[
-        The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) for all players in each game.
+        The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) of all players in each game.
         ]]></item>
 
         <!--<item><![CDATA[-->

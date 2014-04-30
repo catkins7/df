@@ -74,7 +74,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/fragment_dota_player_public_matches_text_view"
+            android:id="@+id/fragment_dota_player_ranked_matches_text_view"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
@@ -91,10 +91,10 @@
             android:layout_height="@dimen/text_view_height_medium"/>
 
         <TextView
-            android:id="@+id/fragment_dota_player_ranked_matches_text_view"
+            android:id="@+id/fragment_dota_player_public_matches_text_view"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:layout_below="@id/fragment_dota_player_public_matches_text_view"
+            android:layout_below="@id/fragment_dota_player_ranked_matches_text_view"
             android:layout_toRightOf="@id/fragment_dota_player_summary_user_image_view"
             android:layout_toLeftOf="@id/fragment_dota_player_summary_right_button_layout"
             android:textSize="@dimen/font_size_medium"
@@ -110,7 +110,7 @@
             android:id="@+id/fragment_dota_player_summary_third_row_text_view"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:layout_below="@id/fragment_dota_player_ranked_matches_text_view"
+            android:layout_below="@id/fragment_dota_player_public_matches_text_view"
             android:layout_toRightOf="@id/fragment_dota_player_summary_user_image_view"
             android:layout_toLeftOf="@id/fragment_dota_player_summary_right_button_layout"
             android:textSize="@dimen/font_size_small"

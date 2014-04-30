@@ -1,7 +1,5 @@
 0.4.1 Bugfix release
 ---------------------------
-make win% match in player summary and statistics???
-
 some more testing
 
 

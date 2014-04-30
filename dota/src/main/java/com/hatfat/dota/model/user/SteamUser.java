@@ -191,6 +191,15 @@ public class SteamUser {
         for (String matchId : matches) {
             Match match = Matches.get().getMatch(matchId);
 
+            if (match.hasMatchDetails()) {
+                matchesWithDetailsCount++;
+            }
+
+            if (!match.shouldBeUsedInStatistics()) {
+                //don't use matches we shouldn't be!
+                continue;
+            }
+
             if (match.isRankedMatchmaking()) {
                 Match.PlayerMatchResult result = match.getPlayerMatchResultForPlayer(match.getPlayerForSteamUser(this));
 
@@ -212,10 +221,6 @@ public class SteamUser {
                 if (!result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN)) {
                     publicGameCount++;
                 }
-            }
-
-            if (match.hasMatchDetails()) {
-                matchesWithDetailsCount++;
             }
         }
 
