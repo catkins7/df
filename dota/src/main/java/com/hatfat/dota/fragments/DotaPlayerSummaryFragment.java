@@ -421,10 +421,16 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         if (user.isRealUser()) {
             fetchAllMatchesButton.setVisibility(View.VISIBLE);
             statsButton.setVisibility(View.VISIBLE);
+            publicMatchesTextView.setVisibility(View.VISIBLE);
+            rankedMatchesTextView.setVisibility(View.VISIBLE);
+            thirdRowTextView.setVisibility(View.VISIBLE);
         }
         else {
             fetchAllMatchesButton.setVisibility(View.GONE);
             statsButton.setVisibility(View.GONE);
+            publicMatchesTextView.setVisibility(View.GONE);
+            rankedMatchesTextView.setVisibility(View.GONE);
+            thirdRowTextView.setVisibility(View.GONE);
         }
 
         updateFriendButtonBackground();

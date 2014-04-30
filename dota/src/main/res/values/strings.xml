@@ -30,15 +30,15 @@
     <string name="player_summary_remove_friend_message_text">Only starred players save their match history and appear in the starred players list.</string>
     <string name="player_summary_remove_friend_remove_text">Unstar</string>
     <string name="player_summary_remove_friend_title_text">Unstar Player?</string>
-    <string name="player_summary_matches_summary_string">%1$d / %2$d known games</string>
-    <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% (%2$d Ranked)</string>
-    <string name="player_summary_public_matchmaking_summary">%1$.1f%% (%2$d Public)</string>
-    <string name="player_summary_no_public_matches_string">No public games.</string>
-    <string name="player_summary_no_ranked_matches_string">No ranked games.</string>
+    <string name="player_summary_matches_summary_string">%1$d / %2$d matches</string>
+    <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% Ranked</string>
+    <string name="player_summary_public_matchmaking_summary">%1$.1f%% Public</string>
+    <string name="player_summary_no_public_matches_string"></string>
+    <string name="player_summary_no_ranked_matches_string"></string>
 
     <string name="player_summary_fetch_all_dialog_title">Fetch All Matches?</string>
     <string name="player_summary_fetch_all_dialog_stop_text">Stop</string>
-    <string name="player_summary_fetch_all_dialog_message">It is only possible to fetch a user\'s last 500 games.\n\nIt is recommended that you proceed only on WiFi or a fast internet connection.</string>
+    <string name="player_summary_fetch_all_dialog_message">It is only possible to fetch a user\'s last 500 matches.\n\nIt is recommended that you proceed only on WiFi or a fast internet connection.</string>
     <string name="player_summary_fetch_all_dialog_confirm_button_text">Fetch</string>
     <string name="player_summary_fetch_all_dialog_fetching_match_list_text">Fetching match list…</string>
     <string name="player_summary_fetch_all_dialog_fetching_match_details_text">Fetching match details…</string>
@@ -62,10 +62,10 @@
     <string name="player_statistics_avg_kills_over_deaths_title_text">K/D</string>
     <string name="player_statistics_avg_kills_and_assists_over_deaths_title_text">K+A/D</string>
     <string name="player_statistics_avg_kda_text">%1$.1f / %2$.1f / %3$.1f</string>
-    <string name="player_statistics_avg_duration_title_text">Match Duration</string>
-    <string name="player_statistics_favorite_game_mode_title_text">Favorite Game Mode</string>
+    <string name="player_statistics_avg_duration_title_text">Duration</string>
+    <string name="player_statistics_favorite_game_mode_title_text">Favorite Mode</string>
     <string name="player_statistics_win_percent_title_text">Win %</string>
-    <string name="player_statistics_game_count_title_text">Game Count</string>
+    <string name="player_statistics_game_count_title_text">Match Count</string>
     <string name="player_statistics_avg_denies_title_text">Denies</string>
     <string name="player_statistics_avg_last_hits_title_text">Last Hits</string>
     <string name="player_statistics_avg_xpm_title_text">XPM</string>
@@ -77,8 +77,8 @@
 
     <string name="player_statistics_recent_matches_title_text">Recent Ranked Matches</string>
     <string name="player_statistics_all_matches_title_text">All Matches</string>
-    <string name="player_statistics_all_public_matches_title_text">All Public Matches</string>
-    <string name="player_statistics_all_ranked_matches_title_text">All Ranked Matches</string>
+    <string name="player_statistics_all_public_matches_title_text">Public Matches</string>
+    <string name="player_statistics_all_ranked_matches_title_text">Ranked Matches</string>
 
     <string name="add_new_player_search_text">Search</string>
     <string name="add_new_player_search_hint">Player Name or Steam ID</string>

@@ -91,7 +91,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 case SECTION_GRAPHS:
                     return 1;
                 case SECTION_CSSCORE:
-                    return 5;
+                    return 2;
                 default:
                     return 0;
             }
@@ -431,22 +431,22 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             titleTextView.setText(R.string.player_statistics_cs_score_text);
             subtitleTextView.setText(section.stats.getCsScoreString());
         }
+//        else if (position == 1) {
+//            //gpm score
+//            titleTextView.setText(R.string.player_statistics_gpm_score_text);
+//            subtitleTextView.setText(section.stats.getGpmScoreString());
+//        }
+//        else if (position == 2) {
+//            //xpm score
+//            titleTextView.setText(R.string.player_statistics_xpm_score_text);
+//            subtitleTextView.setText(section.stats.getXpmScoreString());
+//        }
+//        else if (position == 3) {
+//            //composite score
+//            titleTextView.setText(R.string.player_statistics_xpm_gpm_composite_score_text);
+//            subtitleTextView.setText(section.stats.getCompositeScoreString());
+//        }
         else if (position == 1) {
-            //gpm score
-            titleTextView.setText(R.string.player_statistics_gpm_score_text);
-            subtitleTextView.setText(section.stats.getGpmScoreString());
-        }
-        else if (position == 2) {
-            //xpm score
-            titleTextView.setText(R.string.player_statistics_xpm_score_text);
-            subtitleTextView.setText(section.stats.getXpmScoreString());
-        }
-        else if (position == 3) {
-            //composite score
-            titleTextView.setText(R.string.player_statistics_xpm_gpm_composite_score_text);
-            subtitleTextView.setText(section.stats.getCompositeScoreString());
-        }
-        else if (position == 4) {
             //teamwork score
             titleTextView.setText(R.string.player_statistics_teamwork_score_text);
             subtitleTextView.setText(section.stats.getTeamworkScoreString(resources));
@@ -545,30 +545,30 @@ public class DotaStatisticsAdapter extends BaseAdapter {
     private void setupRealSections() {
         sections = new LinkedList();
 
-        if (recentRankedMatchStats.getGameCount() > 0) {
-            sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY,
-                    recentRankedMatchStats,
-                    resources.getString(R.string.player_statistics_recent_matches_title_text)));
+        if (rankedMatchStats.getGameCount() > 0) {
             sections.add(
-                    new StatsSection(StatsSectionType.SECTION_CSSCORE, recentRankedMatchStats));
+                    new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, rankedMatchStats,
+                            resources.getString(
+                                    R.string.player_statistics_all_ranked_matches_title_text)));
+            sections.add(
+                    new StatsSection(StatsSectionType.SECTION_CSSCORE, rankedMatchStats));
         }
+
+//        if (recentRankedMatchStats.getGameCount() > 0) {
+//            sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY,
+//                    recentRankedMatchStats,
+//                    resources.getString(R.string.player_statistics_recent_matches_title_text)));
+//        }
 
         sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_HEROES, allMatchStats));
         sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_ITEMS, allMatchStats));
 
 //        sections.add(new StatsSection(StatsSectionType.SECTION_GRAPHS, rankedMatchStats));
 
-        if (allMatchStats.getGameCount() > 0) {
-            sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, allMatchStats,
-                    resources.getString(R.string.player_statistics_all_matches_title_text)));
-        }
-
-        if (rankedMatchStats.getGameCount() > 0) {
-            sections.add(
-                    new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, rankedMatchStats,
-                            resources.getString(
-                                    R.string.player_statistics_all_ranked_matches_title_text)));
-        }
+//        if (allMatchStats.getGameCount() > 0) {
+//            sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, allMatchStats,
+//                    resources.getString(R.string.player_statistics_all_matches_title_text)));
+//        }
 
         if (publicMatchStats.getGameCount() > 0) {
             sections.add(

@@ -6,10 +6,10 @@
 
     <dimen name="loading_bar_width">200dp</dimen>
 
-    <dimen name="font_size_tiny">8dp</dimen>
-    <dimen name="font_size_small">12dp</dimen>
-    <dimen name="font_size_medium">16dp</dimen>
-    <dimen name="font_size_large">24dp</dimen>
+    <dimen name="font_size_tiny">8sp</dimen>
+    <dimen name="font_size_small">12sp</dimen>
+    <dimen name="font_size_medium">16sp</dimen>
+    <dimen name="font_size_large">24sp</dimen>
 
     <dimen name="text_view_height_tiny">12dp</dimen>
     <dimen name="text_view_height_small">16dp</dimen>

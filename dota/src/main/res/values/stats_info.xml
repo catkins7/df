@@ -31,17 +31,17 @@
         The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) for all players in each game.
         ]]></item>
 
-        <item><![CDATA[
-        The <b><u>GPM Score</u></b> represents the average combined GPM for all players in each game.
-        ]]></item>
+        <!--<item><![CDATA[-->
+        <!--The <b><u>GPM Score</u></b> represents the average combined GPM for all players in each game.-->
+        <!--]]></item>-->
 
-        <item><![CDATA[
-        The <b><u>XPM Score</u></b> represents the average combined XPM for all players in each game.
-        ]]></item>
+        <!--<item><![CDATA[-->
+        <!--The <b><u>XPM Score</u></b> represents the average combined XPM for all players in each game.-->
+        <!--]]></item>-->
 
-        <item><![CDATA[
-        The <b><u>Composite Score</u></b> is the combined total of the GPM and XPM Scores.
-        ]]></item>
+        <!--<item><![CDATA[-->
+        <!--The <b><u>Composite Score</u></b> is the combined total of the GPM and XPM Scores.-->
+        <!--]]></item>-->
 
         <item><![CDATA[
         The <b><u>Teamwork Score</u></b> is the average number of people involved in each kill on the player\'s team.

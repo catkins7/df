@@ -43,9 +43,12 @@ public class DotaPlayerStatisticsFavoriteHeroRowView extends RelativeLayout {
         for (DotaStatistics.ItemStats itemStats : heroStats.favoriteHeroItems) {
             int index = heroStats.favoriteHeroItems.indexOf(itemStats);
 
-            Picasso.with(DotaFriendApplication.CONTEXT)
-                    .load(itemStats.item.getLargeHorizontalPortraitUrl())
-                    .placeholder(R.drawable.empty_item_bg).into(itemImageView[index]);
+            if (index < 3) {
+                //only top three items shown at the moment!
+                Picasso.with(DotaFriendApplication.CONTEXT)
+                        .load(itemStats.item.getLargeHorizontalPortraitUrl())
+                        .placeholder(R.drawable.empty_item_bg).into(itemImageView[index]);
+            }
         }
     }
 }

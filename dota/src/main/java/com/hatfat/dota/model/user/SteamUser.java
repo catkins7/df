@@ -225,7 +225,7 @@ public class SteamUser {
         if (publicGameCount > 0) {
             strings[0] = String
                     .format(resources.getString(R.string.player_summary_public_matchmaking_summary),
-                            publicPercent, publicGameCount);
+                            publicPercent);
         }
         else {
             strings[0] = resources.getString(R.string.player_summary_no_public_matches_string);
@@ -234,7 +234,7 @@ public class SteamUser {
         if (rankedGameCount > 0) {
             strings[1] = String
                     .format(resources.getString(R.string.player_summary_ranked_matchmaking_summary),
-                            rankedPercent, rankedGameCount);
+                            rankedPercent);
         }
         else {
             strings[1] = resources.getString(R.string.player_summary_no_ranked_matches_string);
@@ -243,70 +243,6 @@ public class SteamUser {
         strings[2] = String.format(resources.getString(R.string.player_summary_matches_summary_string), matchesWithDetailsCount, matches.size());
 
         return strings;
-    }
-    public String getRankedWinString(Resources resources) {
-        int winCount = 0;
-        int gameCount = 0;
-
-        for (String matchId : matches) {
-            Match match = Matches.get().getMatch(matchId);
-
-            if (match.isRankedMatchmaking()) {
-                Match.PlayerMatchResult result = match.getPlayerMatchResultForPlayer(match.getPlayerForSteamUser(this));
-
-                if (result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
-                    winCount++;
-                }
-
-                if (!result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN)) {
-                    gameCount++;
-                }
-            }
-        }
-
-        float percent = 100.0f * (float)winCount / (float)gameCount;
-        return String.format(
-                resources.getString(R.string.player_summary_ranked_matchmaking_summary), percent,
-                gameCount);
-    }
-    public String getPublicWinString(Resources resources) {
-        int winCount = 0;
-        int gameCount = 0;
-
-        for (String matchId : matches) {
-            Match match = Matches.get().getMatch(matchId);
-
-            if (match.isPublicMatchmaking()) {
-                Match.PlayerMatchResult result = match.getPlayerMatchResultForPlayer(match.getPlayerForSteamUser(this));
-
-                if (result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
-                    winCount++;
-                }
-
-                if (!result.equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_UNKNOWN)) {
-                    gameCount++;
-                }
-            }
-        }
-
-        float percent = 100.0f * (float)winCount / (float)gameCount;
-        return String.format(
-                resources.getString(R.string.player_summary_public_matchmaking_summary), percent,
-                gameCount);
-    }
-    public String getWinPercentageString(Resources resources) {
-        int winCount = 0;
-
-        for (String matchId : matches) {
-            Match match = Matches.get().getMatch(matchId);
-
-            if (match.getPlayerMatchResultForPlayer(match.getPlayerForSteamUser(this)).equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
-                winCount++;
-            }
-        }
-
-        float percent = 100.0f * (float)winCount / (float)matches.size();
-        return String.format("%.2f", percent) + "%";
     }
 
     public void addMatches(List<Match> matches) {

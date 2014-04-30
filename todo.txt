@@ -1,4 +1,14 @@
-0.4.1 release ?
+0.4.1 Bugfix release
+---------------------------
+add CSScore section to public matches as well
+make win% match in player summary and statistics???
+
+some more testing
+
+
+
+
+0.4.+ More Stats release
 ---------------------------
 -More Stats!
  - records (most kills, deaths, etc) with link to the match

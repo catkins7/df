@@ -58,7 +58,14 @@ class ItemsParse {
 						}
 						else if (obj.key.equals("ItemCost")) {
 							ParseString costObj = (ParseString)obj;
-							json += ",\"itemCost\":\"" + costObj.value + "\"";
+
+							if (item.key.equals("item_diffusal_blade_2")) {
+								//HACK to fix incorrect value in items.txt
+								json += ",\"itemCost\":\"" + "4150" + "\"";
+							}
+							else {
+								json += ",\"itemCost\":\"" + costObj.value + "\"";
+							}
 						}
 					}
 				}

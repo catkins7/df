@@ -26,6 +26,10 @@ public class Item implements Comparable<Item> {
         return getBaseUrlString() + largeHorizontalSuffix;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getItemId() {
         return itemId;
     }

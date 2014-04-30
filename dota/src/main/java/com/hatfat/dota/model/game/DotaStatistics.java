@@ -607,6 +607,12 @@ public class DotaStatistics {
 
             int maxFavoriteItems = Math.min(sortedItemStats.size(), MAX_HERO_FAVORITE_ITEMS);
             favoriteHeroItems = new LinkedList(sortedItemStats.subList(0, maxFavoriteItems));
+
+//            Log.i("Dota2Friend", "-------------------------------------------");
+//            Log.i("Dota2Friend", hero.getLocalizedName());
+//            for (ItemStats stat : favoriteHeroItems) {
+//                Log.i("Dota2Friend", "---> " + stat.item.getName() + "   purchaseCount: " + stat.purchaseCount + "   cost: " + stat.item.getItemCost() + "   totalCost: " + stat.getTotalCost());
+//            }
         }
     }
 }
