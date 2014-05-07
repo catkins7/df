@@ -15,36 +15,19 @@
         <RelativeLayout
             android:id="@+id/fragment_dota_player_summary_right_button_layout"
             android:layout_alignParentRight="true"
-            android:layout_width="@dimen/dota_player_summary_fragment_right_layout_size"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dota_player_summary_fragment_right_layout_size">
 
             <Button
                 android:id="@+id/fragment_dota_player_summary_friend_button"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
-                android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
-
-            <FrameLayout
-                android:id="@+id/fragment_dota_player_summary_top_left_placeholder_layout"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
-                android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
-
-            <Button
-                android:id="@+id/fragment_dota_player_summary_right_tray_button"
-                android:background="@drawable/player_stats_button_background"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
                 android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
                 android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
 
             <Button
                 android:id="@+id/fragment_dota_player_summary_fetch_all_button"
-                android:background="@drawable/download_matches_button_background"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
+                android:background="@drawable/download_matches_button_background"
                 android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
                 android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
 

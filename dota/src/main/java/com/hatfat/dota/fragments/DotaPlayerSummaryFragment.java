@@ -65,7 +65,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private ListView matchesListView;
     private Button friendToggleButton;
     private Button fetchAllMatchesButton;
-    private Button statsButton;
 
     private BaseAdapter matchesAdapter;
     private ArrayList<String> sortedMatches;
@@ -91,8 +90,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         setHasOptionsMenu(true);
 
         String steamUserId = getArguments().getString(DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY);
-
-        Log.e("catfat", "on CREATE!!!");
 
         if (steamUserId == null) {
             throw new RuntimeException("must be created with a steam user id");
@@ -125,7 +122,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         matchesListView = (ListView) view.findViewById(R.id.fragment_dota_player_summary_matches_list_view);
         friendToggleButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_friend_button);
         fetchAllMatchesButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_fetch_all_button);
-        statsButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_right_tray_button);
 
         friendToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,19 +129,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 toggleStar();
             }
         });
-        Log.e("catfat", "to fix");
-//        statsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getCharltonActivity().openRightDrawer();
-//            }
-//        });
-//        fetchAllMatchesButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                confirmFetchAll();
-//            }
-//        });
+        fetchAllMatchesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmFetchAll();
+            }
+        });
 
         updateMatchList();
         setupMatchesList();
@@ -435,14 +424,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         if (user.isRealUser()) {
             fetchAllMatchesButton.setVisibility(View.VISIBLE);
-            statsButton.setVisibility(View.VISIBLE);
             publicMatchesTextView.setVisibility(View.VISIBLE);
             rankedMatchesTextView.setVisibility(View.VISIBLE);
             thirdRowTextView.setVisibility(View.VISIBLE);
         }
         else {
             fetchAllMatchesButton.setVisibility(View.GONE);
-            statsButton.setVisibility(View.GONE);
             publicMatchesTextView.setVisibility(View.GONE);
             rankedMatchesTextView.setVisibility(View.GONE);
             thirdRowTextView.setVisibility(View.GONE);
