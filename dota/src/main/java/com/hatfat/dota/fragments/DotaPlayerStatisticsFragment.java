@@ -1,14 +1,13 @@
 package com.hatfat.dota.fragments;
 
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayout.DrawerListener {
+public class DotaPlayerStatisticsFragment extends CharltonFragment {
 
     public final static int RECENT_STATS_MATCH_COUNT = 50;
 
@@ -40,16 +39,16 @@ public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayo
 
     private DotaStatisticsAdapter adapter;
 
-    public DotaPlayerStatisticsFragment() {
-
+    public static Bundle newBundleForUser(String steamUserId) {
+        Bundle args = new Bundle();
+        args.putString(DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY, steamUserId);
+        return args;
     }
 
-    public static DotaPlayerStatisticsFragment newInstance(SteamUser user) {
+    public static DotaPlayerStatisticsFragment newInstance(String steamUserId) {
         DotaPlayerStatisticsFragment newFragment = new DotaPlayerStatisticsFragment();
 
-        Bundle args = new Bundle();
-        args.putString(DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY, user.getSteamId());
-        newFragment.setArguments(args);
+        newFragment.setArguments(newBundleForUser(steamUserId));
 
         return newFragment;
     }
@@ -64,20 +63,34 @@ public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayo
         if (steamUserId != null) {
             user = SteamUsers.get().getBySteamId(steamUserId);
         }
+
+        startListening();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        stopListening();
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        startListening();
+        if (needsRecalculation) {
+            adapter.setNewStatistics(null);
+            fetchStatistics();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        stopListening();
+        if (needsRecalculation) {
+            adapter.setNewStatistics(null);
+        }
     }
 
     @Override
@@ -91,7 +104,9 @@ public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayo
     }
 
     private void setupListView(View view) {
-        adapter = new DotaStatisticsAdapter(getResources());
+        if (adapter == null) {
+            adapter = new DotaStatisticsAdapter(getResources());
+        }
 
         ListView listView = (ListView) view
                 .findViewById(R.id.fragment_dota_player_statistics_list_view);
@@ -181,27 +196,7 @@ public class DotaPlayerStatisticsFragment extends Fragment implements DrawerLayo
     }
 
     @Override
-    public void onDrawerSlide(View drawerView, float slideOffset) {
-
-    }
-
-    @Override
-    public void onDrawerOpened(View drawerView) {
-        if (needsRecalculation) {
-            adapter.setNewStatistics(null);
-            fetchStatistics();
-        }
-    }
-
-    @Override
-    public void onDrawerClosed(View drawerView) {
-        if (needsRecalculation) {
-            adapter.setNewStatistics(null);
-        }
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
+    public String getCharltonMessageText(Resources resources) {
+        return "Here are some statistics!";
     }
 }

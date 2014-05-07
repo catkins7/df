@@ -220,6 +220,6 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
     @Override
     public String getCharltonMessageText(Resources resources) {
-        return "Let me help you find a player.  Just enter their name or account ID.";
+        return "Let me help you find a player.";
     }
 }

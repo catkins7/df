@@ -2,6 +2,7 @@ package com.hatfat.dota.activities;
 
 import android.os.Bundle;
 
+import com.hatfat.dota.fragments.DotaPlayerStatisticsFragment;
 import com.hatfat.dota.fragments.DotaPlayerSummaryFragment;
 import com.hatfat.dota.tabs.CharltonTab;
 
@@ -30,9 +31,13 @@ public class PlayerActivity extends CharltonActivity {
         LinkedList<CharltonTab> tabs = new LinkedList();
 
         Bundle playerSummaryBundle = DotaPlayerSummaryFragment.newBundleForUser(steamUserId);
+        Bundle playerStatsBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId);
 
         CharltonTab<DotaPlayerSummaryFragment> playerSummaryTab = new CharltonTab(this, "Summary", DotaPlayerSummaryFragment.class, playerSummaryBundle);
+        CharltonTab<DotaPlayerStatisticsFragment> statsTab = new CharltonTab(this, "Stats", DotaPlayerStatisticsFragment.class, playerStatsBundle);
+
         tabs.add(playerSummaryTab);
+        tabs.add(statsTab);
 
         return tabs;
     }
