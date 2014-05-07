@@ -17,6 +17,8 @@ public abstract class CharltonActivity extends Activity {
 
     private TextView charltonTitleTextView;
 
+    private List<CharltonTab> tabs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public abstract class CharltonActivity extends Activity {
         charltonTitleTextView.setText(R.string.default_charlton_text);
         actionBar.getCustomView().setBackgroundDrawable(new CharltonBubbleDrawable());
 
-        List<CharltonTab> tabs = createTabs();
+        tabs = createTabs();
 
         if (tabs.size() > 1) {
             //more than one tab, so setup the tabbed interface
@@ -58,6 +60,16 @@ public abstract class CharltonActivity extends Activity {
 
     public void updateWithCharltonTab(CharltonTab tab) {
         charltonTitleTextView.setText(tab.getFragment().getCharltonMessageText(getResources()));
+    }
+
+    public void signalUpdateActiveCharltonTab() {
+        int selectedTabIndex = 0;
+
+        if (tabs.size() > 1) {
+            selectedTabIndex = getActionBar().getSelectedNavigationIndex();
+        }
+
+        updateWithCharltonTab(tabs.get(selectedTabIndex));
     }
 
     protected abstract List<CharltonTab> createTabs();

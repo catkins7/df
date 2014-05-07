@@ -1,7 +1,5 @@
 0.4.2 Tabs / Holo release
 ---------------------------
-swiping of tabs!
-
 fix everything with new charlton activity
 
 remove old support library?
@@ -17,6 +15,8 @@ code walkthrough / cleanup all files quick
 make sure we aren't hardcoding strings all over, unless just for test/debug
 
 bundle all dagons/difussal blades into the same item for stats calculation?
+
+swiping of tabs?
 
 
 

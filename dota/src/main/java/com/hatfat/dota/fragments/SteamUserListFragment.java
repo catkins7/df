@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.PlayerActivity;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.view.SteamUserView;
@@ -196,8 +196,10 @@ public class SteamUserListFragment extends CharltonFragment {
                 if (steamUsers.size() > i) {
                     SteamUser steamUser = (SteamUser) usersAdapter.getItem(i);
 
-                    Log.e("catfat", "to fix");
-//                    getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(steamUser));
+                    Intent playerIntent = new Intent(getActivity().getApplicationContext(), PlayerActivity.class);
+                    playerIntent.putExtra(PlayerActivity.PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY,
+                            steamUser.getSteamId());
+                    startActivity(playerIntent);
                 }
             }
         });
