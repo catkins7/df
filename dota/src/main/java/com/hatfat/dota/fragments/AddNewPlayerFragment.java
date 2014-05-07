@@ -1,7 +1,9 @@
 package com.hatfat.dota.fragments;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,11 +152,12 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
         if (numberOfSearchesComplete >= totalNumberOfSearches) {
             //all searches are finished
-            if (getCharltonActivity() != null) {
-                LinkedList<SteamUser> usersList = new LinkedList<>(playerSearchResults);
-                SteamUserListFragment listFragment = SteamUserListFragment.newInstance(usersList, getSearchString());
-                getCharltonActivity().pushCharltonFragment(listFragment);
-            }
+            Log.e("catfat", "to fix!");
+//            if (getCharltonActivity() != null) {
+//                LinkedList<SteamUser> usersList = new LinkedList<>(playerSearchResults);
+//                SteamUserListFragment listFragment = SteamUserListFragment.newInstance(usersList, getSearchString());
+//                getCharltonActivity().pushCharltonFragment(listFragment);
+//            }
         }
     }
 
@@ -216,7 +219,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
 //    }
 
     @Override
-    public String getCharltonText() {
+    public String getCharltonMessageText(Resources resources) {
         return "Let me help you find a player.  Just enter their name or account ID.";
     }
 }

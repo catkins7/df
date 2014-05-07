@@ -1,20 +1,37 @@
+0.4.2 Tabs / Holo release
+---------------------------
+swiping of tabs!
+
+fix everything with new charlton activity
+
+remove old support library?
+
+get tabbed interface working
+
+backing out all the way of the app, and then going back in, shows loading screen for an instant with a flicker; see if we can fix the flicker?
+
+remove old charlton activity
+
+code walkthrough / cleanup all files quick
+
+make sure we aren't hardcoding strings all over, unless just for test/debug
+
+bundle all dagons/difussal blades into the same item for stats calculation?
+
+
+
 0.4.+ More Stats release
 ---------------------------
 -More Stats!
+ - most/least successful heroes!  highest win percentage, but only consider heroes that have been played more than 1% of games?
  - records (most kills, deaths, etc) with link to the match
  - graphs (kda, win/lost graph, etc)
- - most/least successful heroes
 
 Issue leaving memory and drawer is still on the right, but empty?   CharltonACtivity not getting destroyed when the app leaves memory??
  - first, comment out the hack fix in onResume of the LoadingFragment
  - to reproduce, start the app, stay on the starred user list, clear memory, and return to the app.  You should be able to use the right/left menus now!
  - check memory, maybe we are creating duplicates of the app somehow, and the wrong one is being setup the second time?
 
-Fix more Lint issues
-
-Favorite items for Lone Druid?   Is it using the items on the bear???
-
-consider using a tabbed interface instead of the drawer?
 
 
 0.5 release
@@ -29,7 +46,7 @@ match summary improvements?
 
 0.6 release
 ---------------------------
-Charlton talking feature
+Charlton feature
 
 
 
@@ -55,6 +72,7 @@ left menu feature
  - pro players list?  pro teams?  for easy access to pro player profiles
  - about page?
  - click charles to open the menu, or just drag from the left?
+ - friends list, and people you have played many matches with?
 
 
 

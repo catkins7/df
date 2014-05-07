@@ -26,6 +26,7 @@
     <string name="match_result_player_defeat">Loss</string>
     <string name="match_result_summary_kills_divider_text">-</string>
 
+    <string name="player_summary_no_user_yet_text">Here is the player info you asked for.</string>
     <string name="player_summary_added_friend_text">Starred player!</string>
     <string name="player_summary_remove_friend_message_text">Only starred players save their match history and appear in the starred players list.</string>
     <string name="player_summary_remove_friend_remove_text">Unstar</string>

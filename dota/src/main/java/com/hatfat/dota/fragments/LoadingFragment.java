@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -14,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.StarredUsersActivity;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.match.Matches;
@@ -47,14 +49,6 @@ public class LoadingFragment extends CharltonFragment {
         super.onCreate(savedInstanceState);
 
         startListening();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        //UNCOMMENT to reveal drawer bug on OOMemory
-        getCharltonActivity().removeDrawerFragment();
     }
 
     @Override
@@ -153,7 +147,8 @@ public class LoadingFragment extends CharltonFragment {
     }
 
     private void finishedLoading() {
-        getCharltonActivity().startMainFragment();
+        Intent starredPlayersIntent = new Intent(getActivity().getApplicationContext(), StarredUsersActivity.class);
+        startActivity(starredPlayersIntent);
     }
 
     private void startListening() {
@@ -181,7 +176,8 @@ public class LoadingFragment extends CharltonFragment {
         loadingFilter.addAction(Heroes.HERO_DATA_LOADED_NOTIFICATION);
         loadingFilter.addAction(SteamUsers.STEAM_USERS_LOADED_FROM_DISK);
         loadingFilter.addAction(Matches.MATCHES_LOADING_PROGRESS_NOTIFICATION);
-        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, loadingFilter);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver,
+                loadingFilter);
     }
 
     private void stopListening() {
@@ -189,7 +185,7 @@ public class LoadingFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonText() {
-        return "Please wait one moment while I get everything up and running.";
+    public String getCharltonMessageText(Resources resources) {
+        return resources.getString(R.string.default_charlton_text);
     }
 }

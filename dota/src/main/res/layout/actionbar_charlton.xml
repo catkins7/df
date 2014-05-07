@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/bubble_vertical_margin"
+    android:layout_marginBottom="@dimen/bubble_vertical_margin"
+    android:layout_marginLeft="@dimen/bubble_left_margin"
+    android:layout_marginRight="@dimen/bubble_right_margin"
+
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="2dp"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/actionbar_charlton_text_view"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/off_black"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

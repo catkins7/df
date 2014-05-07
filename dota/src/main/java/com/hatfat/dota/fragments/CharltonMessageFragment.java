@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.hatfat.dota.R;
-import com.hatfat.dota.charlton.CharltonMessageInterface;
 
 /**
  * Created by scottrick on 2/12/14.
@@ -15,7 +14,7 @@ import com.hatfat.dota.charlton.CharltonMessageInterface;
 public class CharltonMessageFragment extends Fragment {
 
     private TextView messageTextView;
-    private CharltonMessageInterface messageInterface;
+    private CharltonFragment charltonFragment;
 
     @Override
     public void onResume() {
@@ -33,17 +32,17 @@ public class CharltonMessageFragment extends Fragment {
         return view;
     }
 
-    public void setCharltonObject(CharltonMessageInterface newMessageInterface) {
-        if (messageInterface != newMessageInterface) {
-            messageInterface = newMessageInterface;
+    public void setCharltonObject(CharltonFragment newMessageInterface) {
+        if (charltonFragment != newMessageInterface) {
+            charltonFragment = newMessageInterface;
 
             updateMessageViews();
         }
     }
 
     private void updateMessageViews() {
-        if (messageTextView != null && messageInterface != null) {
-            messageTextView.setText(messageInterface.getCharltonText());
+        if (messageTextView != null && charltonFragment != null) {
+            messageTextView.setText(charltonFragment.getCharltonMessageText(getResources()));
         }
     }
 }

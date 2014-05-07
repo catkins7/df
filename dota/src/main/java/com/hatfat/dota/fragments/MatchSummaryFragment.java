@@ -4,12 +4,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Hero;
@@ -124,7 +131,9 @@ public class MatchSummaryFragment extends CharltonFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Player player = (Player) playersAdapter.getItem(i);
                 SteamUser user = player.getSteamUser();
-                getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(user));
+
+                Log.e("catfat", "to fix");
+//                getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(user));
             }
         });
     }
@@ -240,7 +249,7 @@ public class MatchSummaryFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonText() {
+    public String getCharltonMessageText(Resources resources) {
         return "Here's match " + match.getMatchId() + " that you asked for.";
     }
 }

@@ -4,6 +4,13 @@
 
     <dimen name="button_corner_radius">4dp</dimen>
 
+    <!--Charlton talking bubble values-->
+    <dimen name="bubble_corner_radius">4dp</dimen>
+
+    <dimen name="bubble_left_margin">0dp</dimen>
+    <dimen name="bubble_right_margin">12dp</dimen>
+    <dimen name="bubble_vertical_margin">4dp</dimen>
+
     <dimen name="loading_bar_width">200dp</dimen>
 
     <dimen name="font_size_tiny">8sp</dimen>

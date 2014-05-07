@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dota_player_list_fragment_list_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Button
-        android:drawableLeft="@drawable/ic_launcher"
-        android:padding="@dimen/default_padding"
-        android:drawablePadding="@dimen/default_padding"
-        android:text="@string/add_player"
-        android:textSize="@dimen/text_view_height_medium"
-        android:textColor="@color/off_black"
-        android:gravity="center_vertical"
-        android:id="@+id/dota_player_list_fragment_add_player"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/off_white_button_background"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"/>
-
-    <ListView
-        android:id="@+id/dota_player_list_fragment_list_view"
-        android:layout_above="@id/dota_player_list_fragment_add_player"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</RelativeLayout>
+    android:layout_height="match_parent"/>

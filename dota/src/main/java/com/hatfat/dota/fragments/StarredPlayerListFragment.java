@@ -4,14 +4,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.PlayerActivity;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.view.SteamUserView;
@@ -66,7 +72,8 @@ public class StarredPlayerListFragment extends CharltonFragment {
         IntentFilter filter = new IntentFilter();
         filter.addAction(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED);
         filter.addAction(SteamUser.STEAM_USER_UPDATED);
-        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, filter);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver,
+                filter);
     }
 
     private void stopListening() {
@@ -116,14 +123,6 @@ public class StarredPlayerListFragment extends CharltonFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_starred_player_list, container, false);
-
-        Button addNewPlayerButton = (Button) view.findViewById(R.id.dota_player_list_fragment_add_player);
-        addNewPlayerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getCharltonActivity().pushCharltonFragment(new AddNewPlayerFragment());
-            }
-        });
 
         listAdapter = new BaseAdapter() {
             @Override
@@ -199,7 +198,11 @@ public class StarredPlayerListFragment extends CharltonFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (sortedUsers.size() > i) {
                     SteamUser steamUser = (SteamUser) listView.getAdapter().getItem(i);
-                    getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(steamUser));
+
+                    Intent playerIntent = new Intent(getActivity().getApplicationContext(), PlayerActivity.class);
+                    playerIntent.putExtra(PlayerActivity.PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY,
+                            steamUser.getSteamId());
+                    startActivity(playerIntent);
                 }
             }
         });
@@ -208,7 +211,7 @@ public class StarredPlayerListFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonText() {
+    public String getCharltonMessageText(Resources resources) {
         return "Hello.  I'm Charlton Heston.\nThese are your starred players.";
     }
 }

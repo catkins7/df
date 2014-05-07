@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.match.Match;
+import com.hatfat.dota.model.player.AdditionalUnit;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 
@@ -170,32 +171,19 @@ public class DotaStatistics {
 
             heroStats.heroCount++;
 
+            //add all the items for this hero
             for (int i = 0; i < 6; i++) {
                 Item item = player.getItem(i);
-                if (item != null) {
-                    boolean itemAddedAlready = items.contains(item);
-                    items.add(item);
+                updateItemStatsWithItem(item, match, player, heroStats, items, itemStatsMap);
+            }
 
-                    ItemStats itemStats = itemStatsMap.get(item);
+            if (player.hasAdditionalUnitsWeWantToShow()) {
+                AdditionalUnit unit = player.getAdditionalUnits().get(0);
 
-                    if (itemStats == null) {
-                        itemStats = new ItemStats(item);
-                        itemStatsMap.put(item, itemStats);
-                    }
-
-                    itemStats.purchaseCount++;
-
-                    if (!itemAddedAlready) {
-                        Match.PlayerMatchResult result = match
-                                .getPlayerMatchResultForPlayer(player);
-                        if (result == Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY) {
-                            itemStats.winCount++;
-                        }
-
-                        itemStats.gameCount++;
-                    }
-
-                    heroStats.addItem(item);
+                //make sure we include idems on any additional units we care about (aka SPIRIT BEAR)
+                for (int i = 0; i < 6; i++) {
+                    Item item = unit.getItem(i);
+                    updateItemStatsWithItem(item, match, player, heroStats, items, itemStatsMap);
                 }
             }
         }
@@ -240,6 +228,34 @@ public class DotaStatistics {
 
         long endTime = System.currentTimeMillis();
         Log.v("DotaStatistics", "calculateStatistics runtime " + (endTime - startTime) + " milliseconds for " + matches.size() + " matches.");
+    }
+
+    private void updateItemStatsWithItem(Item item, Match match, Player player, HeroStats heroStats, Set<Item> items, HashMap<Item, ItemStats> itemStatsMap) {
+        if (item != null) {
+            boolean itemAddedAlready = items.contains(item);
+            items.add(item);
+
+            ItemStats itemStats = itemStatsMap.get(item);
+
+            if (itemStats == null) {
+                itemStats = new ItemStats(item);
+                itemStatsMap.put(item, itemStats);
+            }
+
+            itemStats.purchaseCount++;
+
+            if (!itemAddedAlready) {
+                Match.PlayerMatchResult result = match
+                        .getPlayerMatchResultForPlayer(player);
+                if (result == Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY) {
+                    itemStats.winCount++;
+                }
+
+                itemStats.gameCount++;
+            }
+
+            heroStats.addItem(item);
+        }
     }
 
     private void calculateAverages() {

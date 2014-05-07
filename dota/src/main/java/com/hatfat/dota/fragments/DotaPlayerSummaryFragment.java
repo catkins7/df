@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,13 +72,15 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
     private boolean fetchingMatches;
 
-    public static DotaPlayerSummaryFragment newInstance(SteamUser user) {
-        DotaPlayerSummaryFragment newFragment = new DotaPlayerSummaryFragment();
-
+    public static Bundle newBundleForUser(String steamUserId) {
         Bundle args = new Bundle();
-        args.putString(DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY, user.getSteamId());
-        newFragment.setArguments(args);
+        args.putString(DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY, steamUserId);
+        return args;
+    }
 
+    public static DotaPlayerSummaryFragment newInstance(String steamUserId) {
+        DotaPlayerSummaryFragment newFragment = new DotaPlayerSummaryFragment();
+        newFragment.setArguments(newBundleForUser(steamUserId));
         return newFragment;
     }
 
@@ -87,9 +91,14 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         setHasOptionsMenu(true);
 
         String steamUserId = getArguments().getString(DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY);
-        if (steamUserId != null) {
-            user = SteamUsers.get().getBySteamId(steamUserId);
+
+        Log.e("catfat", "on CREATE!!!");
+
+        if (steamUserId == null) {
+            throw new RuntimeException("must be created with a steam user id");
         }
+
+        user = SteamUsers.get().getBySteamId(steamUserId);
 
         startListening();
     }
@@ -121,18 +130,19 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 toggleStar();
             }
         });
-        statsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getCharltonActivity().openRightDrawer();
-            }
-        });
-        fetchAllMatchesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confirmFetchAll();
-            }
-        });
+        Log.e("catfat", "to fix");
+//        statsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getCharltonActivity().openRightDrawer();
+//            }
+//        });
+//        fetchAllMatchesButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                confirmFetchAll();
+//            }
+//        });
 
         updateMatchList();
         setupMatchesList();
@@ -174,8 +184,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     public void onStart() {
         super.onStart();
 
-        getCharltonActivity().putFragmentInRightDrawer(
-                DotaPlayerStatisticsFragment.newInstance(user));
+        Log.e("catfat", "to fix");
+//        getCharltonActivity().putFragmentInRightDrawer(DotaPlayerStatisticsFragment.newInstance(user));
     }
 
     @Override
@@ -184,7 +194,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         saveIfNecessary();
 
-        getCharltonActivity().removeDrawerFragment();
+        Log.e("catfat", "to fix");
+//        getCharltonActivity().removeDrawerFragment();
     }
 
     private void saveIfNecessary() {
@@ -338,8 +349,9 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (sortedMatches.size() > i) {
                     Match match = (Match) matchesAdapter.getItem(i);
-                    getCharltonActivity()
-                            .pushCharltonFragment(MatchSummaryFragment.newInstance(match));
+
+                    Log.e("catfat", "to fix");
+//                    getCharltonActivity().pushCharltonFragment(MatchSummaryFragment.newInstance(match));
                 }
             }
         });
@@ -484,7 +496,12 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonText() {
-        return "Here is " + user.getDisplayName() +"'s [" + user.getAccountId() + "] summary information.";
+    public String getCharltonMessageText(Resources resources) {
+        if (user != null) {
+            return "Here is " + user.getDisplayName() +"'s [" + user.getAccountId() + "] summary information.";
+        }
+        else {
+            return resources.getString(R.string.player_summary_no_user_yet_text);
+        }
     }
 }
