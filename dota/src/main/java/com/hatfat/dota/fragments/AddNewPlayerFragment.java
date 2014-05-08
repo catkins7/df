@@ -1,9 +1,9 @@
 package com.hatfat.dota.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.SearchResultsActivity;
 import com.hatfat.dota.model.dotabuff.DotaBuffHackSearchResult;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.services.dotabuff.DotaBuffRestAdapter;
 import com.hatfat.dota.services.dotabuff.DotaBuffService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,12 +154,13 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
         if (numberOfSearchesComplete >= totalNumberOfSearches) {
             //all searches are finished
-            Log.e("catfat", "to fix!");
-//            if (getCharltonActivity() != null) {
-//                LinkedList<SteamUser> usersList = new LinkedList<>(playerSearchResults);
-//                SteamUserListFragment listFragment = SteamUserListFragment.newInstance(usersList, getSearchString());
-//                getCharltonActivity().pushCharltonFragment(listFragment);
-//            }
+            ArrayList<String> userIds = new ArrayList();
+            for (SteamUser user : users) {
+                userIds.add(user.getSteamId());
+            }
+
+            Intent resultsIntent = SearchResultsActivity.intentForResultsWithMessage(getActivity().getApplicationContext(), userIds, getSearchString());
+            startActivity(resultsIntent);
         }
     }
 

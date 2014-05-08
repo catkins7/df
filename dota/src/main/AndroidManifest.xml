@@ -18,6 +18,12 @@
         </activity>
 
         <activity
+            android:name=".activities.SearchResultsActivity"
+            android:theme="@style/CharltonTheme"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".activities.PlayerActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">

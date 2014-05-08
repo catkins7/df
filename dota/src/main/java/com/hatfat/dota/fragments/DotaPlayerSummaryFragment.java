@@ -173,21 +173,10 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        Log.e("catfat", "to fix");
-//        getCharltonActivity().putFragmentInRightDrawer(DotaPlayerStatisticsFragment.newInstance(user));
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
 
         saveIfNecessary();
-
-        Log.e("catfat", "to fix");
-//        getCharltonActivity().removeDrawerFragment();
     }
 
     private void saveIfNecessary() {

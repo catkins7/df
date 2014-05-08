@@ -32,7 +32,7 @@ import java.util.List;
 public class SteamUserListFragment extends CharltonFragment {
 
     private static final String STEAM_USER_LIST_FRAGMENT_ID_LIST_KEY = "STEAM_USER_LIST_FRAGMENT_ID_LIST_KEY";
-    private static final String STEAM_USER_LIST_FRAGMENT_MESSAGE_LIST_KEY = "STEAM_USER_LIST_FRAGMENT_MESSAGE_LIST_KEY";
+    private static final String STEAM_USER_LIST_FRAGMENT_MESSAGE_KEY = "STEAM_USER_LIST_FRAGMENT_MESSAGE_LIST_KEY";
 
     private BroadcastReceiver receiver;
 
@@ -42,19 +42,17 @@ public class SteamUserListFragment extends CharltonFragment {
     private ListView usersListView;
     private BaseAdapter usersAdapter;
 
-    public static SteamUserListFragment newInstance(List<SteamUser> users, String message) {
+    public static Bundle newBundleForUserIdsWithMessage(ArrayList<String> userIds, String message) {
+        Bundle args = new Bundle();
+        args.putStringArrayList(STEAM_USER_LIST_FRAGMENT_ID_LIST_KEY, userIds);
+        args.putString(STEAM_USER_LIST_FRAGMENT_MESSAGE_KEY, message);
+        return args;
+    }
+
+    public static SteamUserListFragment newInstance(ArrayList<String> userIds, String message) {
         SteamUserListFragment newFragment = new SteamUserListFragment();
 
-        ArrayList<String> steamIds = new ArrayList<>();
-
-        for (SteamUser user : users) {
-            steamIds.add(user.getSteamId());
-        }
-
-        Bundle args = new Bundle();
-        args.putStringArrayList(STEAM_USER_LIST_FRAGMENT_ID_LIST_KEY, steamIds);
-        args.putString(STEAM_USER_LIST_FRAGMENT_MESSAGE_LIST_KEY, message);
-        newFragment.setArguments(args);
+        newFragment.setArguments(newBundleForUserIdsWithMessage(userIds, message));
 
         return newFragment;
     }
@@ -99,7 +97,8 @@ public class SteamUserListFragment extends CharltonFragment {
 
         steamUsers = new LinkedList<>();
 
-        message = getArguments().getString(STEAM_USER_LIST_FRAGMENT_MESSAGE_LIST_KEY);
+        message = getArguments().getString(STEAM_USER_LIST_FRAGMENT_MESSAGE_KEY);
+
         ArrayList<String> steamIds = getArguments().getStringArrayList(STEAM_USER_LIST_FRAGMENT_ID_LIST_KEY);
         if (steamIds != null) {
             for (String steamId : steamIds) {
@@ -109,6 +108,8 @@ public class SteamUserListFragment extends CharltonFragment {
         }
 
         startListening();
+
+        getCharltonActivity().signalUpdateActiveCharltonTab();
     }
 
     @Override
@@ -196,10 +197,8 @@ public class SteamUserListFragment extends CharltonFragment {
                 if (steamUsers.size() > i) {
                     SteamUser steamUser = (SteamUser) usersAdapter.getItem(i);
 
-                    Intent playerIntent = new Intent(getActivity().getApplicationContext(), PlayerActivity.class);
-                    playerIntent.putExtra(PlayerActivity.PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY,
-                            steamUser.getSteamId());
-                    startActivity(playerIntent);
+                    Intent intent = PlayerActivity.intentForPlayer(getActivity().getApplicationContext(), steamUser.getSteamId());
+                    startActivity(intent);
                 }
             }
         });

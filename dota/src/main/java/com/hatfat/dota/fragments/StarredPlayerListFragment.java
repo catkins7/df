@@ -199,10 +199,8 @@ public class StarredPlayerListFragment extends CharltonFragment {
                 if (sortedUsers.size() > i) {
                     SteamUser steamUser = (SteamUser) listView.getAdapter().getItem(i);
 
-                    Intent playerIntent = new Intent(getActivity().getApplicationContext(), PlayerActivity.class);
-                    playerIntent.putExtra(PlayerActivity.PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY,
-                            steamUser.getSteamId());
-                    startActivity(playerIntent);
+                    Intent intent = PlayerActivity.intentForPlayer(getActivity().getApplicationContext(), steamUser.getSteamId());
+                    startActivity(intent);
                 }
             }
         });

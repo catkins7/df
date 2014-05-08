@@ -16,7 +16,10 @@ make sure we aren't hardcoding strings all over, unless just for test/debug
 
 bundle all dagons/difussal blades into the same item for stats calculation?
 
+test layouts on a couple different emulators 
+
 swiping of tabs?
+
 
 
 
