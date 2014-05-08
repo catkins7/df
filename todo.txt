@@ -1,13 +1,3 @@
-0.4.2 Tabs / Holo release
----------------------------
-update with new items.txt from latest patch
- - double check total cost of diffusal 2 and see if its fixed!  if so, update the item parser
-
-general testing
-
-
-
-
 0.4.+ More Stats release
 ---------------------------
 swipe between tabs??  would be really nice...
