@@ -57,14 +57,6 @@ public class MatchSummaryFragment extends CharltonFragment {
         return args;
     }
 
-    public static MatchSummaryFragment newInstance(String matchId) {
-        MatchSummaryFragment newFragment = new MatchSummaryFragment();
-
-        newFragment.setArguments(newBundleForMatch(matchId));
-
-        return newFragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +64,7 @@ public class MatchSummaryFragment extends CharltonFragment {
         String matchId = getArguments().getString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY);
 
         if (matchId == null) {
-            throw new RuntimeException("must have a match id");
+            throw new RuntimeException("must be created with a match id");
         }
 
         match = Matches.get().getMatch(matchId);
@@ -262,10 +254,9 @@ public class MatchSummaryFragment extends CharltonFragment {
     @Override
     public String getCharltonMessageText(Resources resources) {
         if (match != null) {
-            return "Here is match " + match.getMatchId() + ".";
+            return String.format(resources.getString(R.string.match_summary_charlton_text), match.getMatchId());
         }
-        else {
-            return resources.getString(R.string.default_charlton_text);
-        }
+
+        return null;
     }
 }

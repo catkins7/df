@@ -74,7 +74,7 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
             victoryTextView.setTextColor(getResources().getColor(match.getMatchResultColorResourceIdForPlayer(player)));
         }
         else {
-            victoryTextView.setText("");
+            victoryTextView.setText(null);
         }
 
         if (hero != null) {

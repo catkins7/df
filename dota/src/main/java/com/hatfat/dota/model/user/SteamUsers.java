@@ -1,9 +1,11 @@
 package com.hatfat.dota.model.user;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.hatfat.dota.DotaFriendApplication;
+import com.hatfat.dota.R;
 import com.hatfat.dota.services.SteamUserFetcher;
 import com.hatfat.dota.util.FileUtil;
 
@@ -21,10 +23,10 @@ import retrofit.client.Response;
  */
 public class SteamUsers {
 
-    private final static String STARRED_USERS_FILE_NAME = "starredUsers.json";
-
     public final static String STEAM_STARRED_USERS_USER_LIST_CHANGED = "SteamUsers_StarredUsersListChanged_Notification";
     public final static String STEAM_USERS_LOADED_FROM_DISK = "STEAM_USERS_LOADED_FROM_DISK";
+
+    private final static String STARRED_USERS_FILE_NAME = "starredUsers.json";
 
     private boolean isLoaded;
 
@@ -46,12 +48,12 @@ public class SteamUsers {
         starredUsers = new LinkedList();
     }
 
-    public void load() {
+    public void load(Resources resources) {
         if (isLoaded) {
             broadcastUsersLoadedFromDisk();
         }
         else {
-            loadFromDisk();
+            loadFromDisk(resources);
         }
     }
 
@@ -107,7 +109,7 @@ public class SteamUsers {
         FileUtil.saveObjectToDisk(STARRED_USERS_FILE_NAME, obj);
     }
 
-    private void loadFromDisk() {
+    private void loadFromDisk(Resources resources) {
         SteamUsersGsonObject obj = FileUtil.loadObjectFromDisk(STARRED_USERS_FILE_NAME, SteamUsersGsonObject.class);
 
         if (obj != null) {
@@ -121,7 +123,7 @@ public class SteamUsers {
         { //add the Anonymous steam user
             String anonId = "76561202255233023";
             SteamUser anonUser = new SteamUser(anonId);
-            anonUser.personaName = "Anonymous";
+            anonUser.personaName = resources.getString(R.string.anonymous_name);
             anonUser.isFakeUser = true;
             this.users.put(anonUser.steamId, anonUser);
         }
@@ -129,36 +131,13 @@ public class SteamUsers {
         { //add the Bot steam user
             String botId = "76561197960265728";
             SteamUser botUser = new SteamUser(botId);
-            botUser.personaName = "[Bot]";
+            botUser.personaName = resources.getString(R.string.bot_name);
             botUser.isFakeUser = true;
             this.users.put(botUser.steamId, botUser);
         }
 
         isLoaded = true;
         broadcastUsersLoadedFromDisk();
-    }
-
-    private void loadHackUsers() {
-        LinkedList<String> ids = new LinkedList<>();
-        ids.add("76561198020436232"); //scottrick
-        ids.add("76561198040015660"); //joe
-        ids.add("76561198019735326"); //mike
-        ids.add("76561198053768056"); //kyle
-        ids.add("76561197980883683"); //fatty
-        ids.add("76561198000718505"); //bluth
-        ids.add("76561198000376719"); //paul
-        ids.add("76561197976570648"); //sarge
-
-        LinkedList<SteamUser> defaultUsers = new LinkedList<>();
-        for (String id : ids) {
-            SteamUser newUser = new SteamUser(id);
-            defaultUsers.add(newUser);
-
-            starredUsers.add(id);
-        }
-
-        addSteamUsers(defaultUsers);
-        fetchUsers(ids);
     }
 
     private void fetchUser(String steamId) {

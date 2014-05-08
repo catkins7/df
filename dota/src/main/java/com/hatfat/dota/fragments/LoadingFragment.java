@@ -103,7 +103,7 @@ public class LoadingFragment extends CharltonFragment {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                SteamUsers.get().load(); //initialize the SteamUsers singleton
+                SteamUsers.get().load(getResources()); //initialize the SteamUsers singleton
                 return null;
             }
         }.execute();
@@ -127,8 +127,8 @@ public class LoadingFragment extends CharltonFragment {
         float barPercent = 0.0f;
         barPercent += heroProgress * 0.1f;
         barPercent += itemsProgress * 0.1f;
-        barPercent += usersProgress * 0.2f;
-        barPercent += matchesProgress * 0.6f;
+        barPercent += usersProgress * 0.1f;
+        barPercent += matchesProgress * 0.7f;
 
         float loadingBarMaxWidth = getResources().getDimensionPixelSize(R.dimen.loading_bar_width);
         final int barWidth = (int)(loadingBarMaxWidth * barPercent);
@@ -186,6 +186,6 @@ public class LoadingFragment extends CharltonFragment {
 
     @Override
     public String getCharltonMessageText(Resources resources) {
-        return resources.getString(R.string.default_charlton_text);
+        return null;
     }
 }

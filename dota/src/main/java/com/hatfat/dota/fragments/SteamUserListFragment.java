@@ -49,14 +49,6 @@ public class SteamUserListFragment extends CharltonFragment {
         return args;
     }
 
-    public static SteamUserListFragment newInstance(ArrayList<String> userIds, String message) {
-        SteamUserListFragment newFragment = new SteamUserListFragment();
-
-        newFragment.setArguments(newBundleForUserIdsWithMessage(userIds, message));
-
-        return newFragment;
-    }
-
     private void startListening() {
         receiver = new BroadcastReceiver() {
             @Override
@@ -212,7 +204,7 @@ public class SteamUserListFragment extends CharltonFragment {
             return message;
         }
         else {
-            return "Here's a list of Steam users.";
+            return resources.getString(R.string.steam_user_list_default_charlton_text);
         }
     }
 }

@@ -116,6 +116,6 @@ public class MatchListFragment extends CharltonFragment {
 
     @Override
     public String getCharltonMessageText(Resources resources) {
-        return "Here's a list of matches.";
+        return null;
     }
 }

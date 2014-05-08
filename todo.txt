@@ -1,34 +1,26 @@
 0.4.2 Tabs / Holo release
 ---------------------------
-split stats into a couple different tabs (favorites, ranked, public)
-
-code walkthrough / cleanup all files quick
-
-make sure we aren't hardcoding strings all over, unless just for test/debug
-
-bundle all dagons/difussal blades into the same item for stats calculation?
-
-test layouts on a couple different emulators 
-
-memory crash tests
-
-updates screen shots in play store
+update with new items.txt from latest patch
+ - double check total cost of diffusal 2 and see if its fixed!  if so, update the item parser
 
 general testing
 
 
 
+
 0.4.+ More Stats release
 ---------------------------
+swipe between tabs??  would be really nice...
+
 -More Stats!
+ - show win % on favorite heroes?
  - most/least successful heroes!  highest win percentage, but only consider heroes that have been played more than 1% of games?
  - records (most kills, deaths, etc) with link to the match
  - graphs (kda, win/lost graph, etc)
 
-Issue leaving memory and drawer is still on the right, but empty?   CharltonACtivity not getting destroyed when the app leaves memory??
- - first, comment out the hack fix in onResume of the LoadingFragment
- - to reproduce, start the app, stay on the starred user list, clear memory, and return to the app.  You should be able to use the right/left menus now!
- - check memory, maybe we are creating duplicates of the app somehow, and the wrong one is being setup the second time?
+friends tab; lists a user's steam friends.  Also shows people you have played many matches with?
+
+clean-up unused matches.json
 
 
 
@@ -36,9 +28,10 @@ Issue leaving memory and drawer is still on the right, but empty?   CharltonACti
 0.5 release
 ---------------------------
 match summary improvements?
-	- delay clicking into match details?  probably because its a pretty heavy layout.  Maybe switch more to list view somehow?
-	- "Item of the match", similar to the hero/item favorite calculations
-	- general UI improvements and polish for that page
+ - delay clicking into match details?  probably because its a pretty heavy layout.  Maybe switch more to list view somehow?
+ - "Item of the match", similar to the hero/item favorite calculations
+ - general UI improvements and polish for that page
+ - add lobby type (co-op vs bots, etc) to the details
 
 
 
@@ -54,28 +47,19 @@ TODO OTHER
 ---------------------------
 refresh steam user from server if cell is made and it doesn't have the info?  (similar to the match view stuff?)
 
-don't load player match lists until you go into the player summary page?
-
 
 
 
 Features Backlog
 ---------------------------
-match summary improvements (so it doesn't look so meh, right tray with more statistics?  Item of the game? (the item with the most money spent on it))
-	- add lobby type (co-op vs bots, etc) to the details
+pro players list?  pro teams?  for easy access to pro player profiles.  maybe another tab on starred users activity
 
-
-left menu feature
- - starred players
- - pro players list?  pro teams?  for easy access to pro player profiles
- - about page?
- - click charles to open the menu, or just drag from the left?
- - friends list, and people you have played many matches with?
-
+about page?  access from menu?
+ 
 
 
 
 Someday
 ---------------------------
+bundle all dagons/difussal/necronomicon into the same item for stats calculation?
 
-clean-up unused matches.json

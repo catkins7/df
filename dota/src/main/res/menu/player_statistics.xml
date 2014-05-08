@@ -3,5 +3,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_player_summary_stats_info"
-        android:title="@string/player_summary_menu_info_text" />
+        android:title="@string/player_statistics_menu_info_text" />
 </menu>

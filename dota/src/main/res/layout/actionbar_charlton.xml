@@ -19,7 +19,7 @@
         android:maxLines="2"
         android:ellipsize="end"
         android:textColor="@color/off_black"
-        android:textSize="13dp"
+        android:textSize="@dimen/charlton_actionbar_text_size"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

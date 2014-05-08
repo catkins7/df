@@ -1,5 +1,6 @@
 package com.hatfat.dota.activities;
 
+import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.LoadingFragment;
 import com.hatfat.dota.tabs.CharltonTab;
 
@@ -12,7 +13,7 @@ public class LoadingActivity extends CharltonActivity {
     protected List<CharltonTab> createTabs() {
         LinkedList<CharltonTab> tabs = new LinkedList();
 
-        CharltonTab<LoadingFragment> loadingTab = new CharltonTab(this, "Loading", LoadingFragment.class, null);
+        CharltonTab<LoadingFragment> loadingTab = new CharltonTab(this, getResources().getString(R.string.tab_loading_title), LoadingFragment.class, null);
         tabs.add(loadingTab);
 
         return tabs;

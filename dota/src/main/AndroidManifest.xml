@@ -19,23 +19,29 @@
 
         <activity
             android:name=".activities.SearchResultsActivity"
-            android:parentActivityName=".activities.StarredUsersActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hatfat.dota.activities.StarredUsersActivity" />
         </activity>
 
         <activity
             android:name=".activities.PlayerActivity"
-            android:parentActivityName=".activities.StarredUsersActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hatfat.dota.activities.StarredUsersActivity" />
         </activity>
 
         <activity
             android:name=".activities.MatchActivity"
-            android:parentActivityName=".activities.StarredUsersActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hatfat.dota.activities.StarredUsersActivity" />
         </activity>
 
         <activity

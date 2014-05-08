@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.MatchSummaryFragment;
 import com.hatfat.dota.tabs.CharltonTab;
 
@@ -39,7 +40,8 @@ public class MatchActivity extends CharltonActivity {
 
         Bundle matchSummaryBundle = MatchSummaryFragment.newBundleForMatch(matchId);
 
-        CharltonTab<MatchSummaryFragment> matchSummaryTab = new CharltonTab(this, "Summary", MatchSummaryFragment.class, matchSummaryBundle);
+        CharltonTab<MatchSummaryFragment> matchSummaryTab = new CharltonTab(this, getResources().getString(
+                R.string.tab_match_summary_title), MatchSummaryFragment.class, matchSummaryBundle);
 
         tabs.add(matchSummaryTab);
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.SteamUserListFragment;
 import com.hatfat.dota.tabs.CharltonTab;
 
@@ -42,11 +43,11 @@ public class SearchResultsActivity extends CharltonActivity {
 
         Bundle userIdsBundle = SteamUserListFragment.newBundleForUserIdsWithMessage(steamUserIds, message);
 
-        CharltonTab<SteamUserListFragment> usersTab = new CharltonTab(this, "Search Results", SteamUserListFragment.class, userIdsBundle);
+        CharltonTab<SteamUserListFragment> usersTab = new CharltonTab(this, getResources().getString(
+                R.string.tab_search_results_title), SteamUserListFragment.class, userIdsBundle);
 
         tabs.add(usersTab);
 
         return tabs;
     }
-
 }

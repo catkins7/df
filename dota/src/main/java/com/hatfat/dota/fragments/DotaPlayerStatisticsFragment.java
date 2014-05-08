@@ -9,6 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -16,53 +19,51 @@ import android.widget.ListView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.adapters.DotaStatisticsAdapter;
+import com.hatfat.dota.dialogs.InfoDialogHelper;
 import com.hatfat.dota.model.game.DotaStatistics;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 public class DotaPlayerStatisticsFragment extends CharltonFragment {
 
-    private final static int RECENT_STATS_MATCH_COUNT = 50;
-
     private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY";
+    private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_MODE_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_MODE_KEY";
 
     private BroadcastReceiver receiver;
     private boolean needsRecalculation;
 
     private SteamUser user;
+    private DotaStatistics.DotaStatisticsMode statsMode;
 
     private DotaStatisticsAdapter adapter;
 
-    public static Bundle newBundleForUser(String steamUserId) {
+    public static Bundle newBundleForUser(String steamUserId, DotaStatistics.DotaStatisticsMode mode) {
         Bundle args = new Bundle();
         args.putString(DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY, steamUserId);
+        args.putInt(DOTA_PLAYER_STATISTICS_FRAGMENT_MODE_KEY, mode.getMode());
         return args;
-    }
-
-    public static DotaPlayerStatisticsFragment newInstance(String steamUserId) {
-        DotaPlayerStatisticsFragment newFragment = new DotaPlayerStatisticsFragment();
-
-        newFragment.setArguments(newBundleForUser(steamUserId));
-
-        return newFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         needsRecalculation = true;
 
+        statsMode = DotaStatistics.DotaStatisticsMode
+                .modeFromInt(getArguments().getInt(DOTA_PLAYER_STATISTICS_FRAGMENT_MODE_KEY));
         String steamUserId = getArguments().getString(DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY);
         if (steamUserId != null) {
             user = SteamUsers.get().getBySteamId(steamUserId);
         }
+
+        signalCharltonActivityToUpdateTab();
 
         startListening();
     }
@@ -79,7 +80,7 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
         super.onStart();
 
         if (needsRecalculation) {
-            adapter.setNewStatistics(null);
+            adapter.setNewStatistics(null, DotaStatistics.DotaStatisticsMode.ALL_FAVORITES);
             fetchStatistics();
         }
     }
@@ -89,7 +90,7 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
         super.onStop();
 
         if (needsRecalculation) {
-            adapter.setNewStatistics(null);
+            adapter.setNewStatistics(null, DotaStatistics.DotaStatisticsMode.ALL_FAVORITES);
         }
     }
 
@@ -116,13 +117,11 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
     private void fetchStatistics() {
         needsRecalculation = false;
 
-        new AsyncTask<SteamUser, Void, List<DotaStatistics>>() {
+        new AsyncTask<SteamUser, Void, DotaStatistics>() {
             @Override
-            protected List<DotaStatistics> doInBackground(SteamUser... params) {
+            protected DotaStatistics doInBackground(SteamUser... params) {
                 SteamUser user = params[0];
-                LinkedList<Match> allMatches = new LinkedList();
-                LinkedList<Match> rankedMatches = new LinkedList();
-                LinkedList<Match> publicMatches = new LinkedList();
+                LinkedList<Match> statsMatches = new LinkedList();
 
                 for (String matchId : user.getMatches()) {
                     Match match = Matches.get().getMatch(matchId);
@@ -131,35 +130,29 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                         continue;
                     }
 
-                    //add to the all matches list
-                    allMatches.add(match);
-
-                    if (match.isRankedMatchmaking()) {
-                        rankedMatches.add(match);
-                    }
-
-                    if (match.isPublicMatchmaking()) {
-                        publicMatches.add(match);
+                    switch (statsMode) {
+                        case ALL_FAVORITES:
+                            statsMatches.add(match);
+                            break;
+                        case RANKED_STATS:
+                            if (match.isRankedMatchmaking()) {
+                                statsMatches.add(match);
+                            }
+                            break;
+                        case PUBLIC_STATS:
+                            if (match.isPublicMatchmaking()) {
+                                statsMatches.add(match);
+                            }
+                            break;
                     }
                 }
 
-                //sort the ranked list, so we can get the recent ranked matches
-                Collections.sort(rankedMatches, Match.getComparator());
-                int numberOfRecentRankedMatches = Math.min(RECENT_STATS_MATCH_COUNT,
-                        rankedMatches.size());
-
-                LinkedList<DotaStatistics> stats = new LinkedList();
-                stats.add(new DotaStatistics(user, new LinkedList(allMatches)));
-                stats.add(new DotaStatistics(user, new LinkedList(rankedMatches)));
-                stats.add(new DotaStatistics(user, new LinkedList(publicMatches)));
-                stats.add(new DotaStatistics(user, rankedMatches.subList(0, numberOfRecentRankedMatches)));
-
-                return stats;
+                return new DotaStatistics(user, new LinkedList(statsMatches));
             }
 
             @Override
-            protected void onPostExecute(List<DotaStatistics> statsList) {
-                adapter.setNewStatistics(statsList);
+            protected void onPostExecute(DotaStatistics stats) {
+                adapter.setNewStatistics(stats, statsMode);
             }
         }.execute(user);
     }
@@ -196,7 +189,40 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.player_statistics, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_player_summary_stats_info:
+                showStatsInfoDialog();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showStatsInfoDialog() {
+        InfoDialogHelper.showFromActivity(getActivity());
+    }
+
+    @Override
     public String getCharltonMessageText(Resources resources) {
-        return "Here are some statistics!";
+        if (statsMode != null) {
+            switch (statsMode) {
+                case ALL_FAVORITES:
+                    return String.format(resources.getString(R.string.player_statistics_charlton_text_all_favorites), user.getDisplayName());
+                case RANKED_STATS:
+                    return resources
+                            .getString(R.string.player_statistics_charlton_text_ranked_stats);
+                case PUBLIC_STATS:
+                    return resources
+                            .getString(R.string.player_statistics_charlton_text_public_stats);
+            }
+        }
+
+        return resources.getString(R.string.player_statistics_charlton_text_default);
     }
 }

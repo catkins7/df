@@ -33,7 +33,9 @@ public abstract class CharltonActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (!isLoadingActivity() && !isDataLoaded()) {
+            //no data is loaded, and we aren't the loading activity.  So start the loading activity
             Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
@@ -102,10 +104,16 @@ public abstract class CharltonActivity extends Activity {
     }
 
     public void updateWithCharltonTab(CharltonTab tab) {
-        charltonTitleTextView.setText(tab.getFragment().getCharltonMessageText(getResources()));
+        String newCharltonText = tab.getFragment().getCharltonMessageText(getResources());
+
+        if (newCharltonText != null) {
+            charltonTitleTextView.setText(newCharltonText);
+        }
+        else {
+            charltonTitleTextView.setText(R.string.default_charlton_text);
+        }
 
         updateCharltonImage();
-
     }
 
     private void updateCharltonImage() {

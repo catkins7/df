@@ -10,9 +10,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,7 +25,6 @@ import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.MatchActivity;
 import com.hatfat.dota.dialogs.FetchMatchesDialogHelper;
-import com.hatfat.dota.dialogs.InfoDialogHelper;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
@@ -77,17 +73,9 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         return args;
     }
 
-    public static DotaPlayerSummaryFragment newInstance(String steamUserId) {
-        DotaPlayerSummaryFragment newFragment = new DotaPlayerSummaryFragment();
-        newFragment.setArguments(newBundleForUser(steamUserId));
-        return newFragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setHasOptionsMenu(true);
 
         String steamUserId = getArguments().getString(DOTA_PLAYER_SUMMARY_FRAGMENT_STEAM_USER_ID_KEY);
 
@@ -157,7 +145,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                     fetchingMatches = false;
 
                     if (matches == null || matches.size() <= 0) {
-                        //no matches, but we want to remove the progress bar and show the "no matches row" so reload
+                        //no matches, but we want to remove the progress bar and show the no matches row so reload
                         matchesAdapter.notifyDataSetChanged();
                     }
                 }
@@ -454,32 +442,11 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.player_summary, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_player_summary_stats_info:
-                showStatsInfoDialog();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void showStatsInfoDialog() {
-        InfoDialogHelper.showFromActivity(getActivity());
-    }
-
-    @Override
     public String getCharltonMessageText(Resources resources) {
         if (user != null) {
-            return "Here is " + user.getDisplayName() +"'s [" + user.getAccountId() + "] summary information.";
+            return String.format(resources.getString(R.string.player_summary_charlton_text), user.getDisplayName(), user.getAccountId());
         }
-        else {
-            return resources.getString(R.string.default_charlton_text);
-        }
+
+        return null;
     }
 }

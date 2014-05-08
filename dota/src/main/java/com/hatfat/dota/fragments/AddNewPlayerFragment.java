@@ -20,7 +20,6 @@ import com.hatfat.dota.services.dotabuff.DotaBuffRestAdapter;
 import com.hatfat.dota.services.dotabuff.DotaBuffService;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,8 +31,6 @@ import retrofit.client.Response;
  * Created by scottrick on 2/12/14.
  */
 public class AddNewPlayerFragment extends CharltonFragment {
-
-    private HashSet<SteamUser> playerSearchResults;
 
     private int totalNumberOfSearches;
     private int numberOfSearchesComplete;
@@ -98,7 +95,6 @@ public class AddNewPlayerFragment extends CharltonFragment {
             return;
         }
 
-        playerSearchResults = new HashSet<>();
         totalNumberOfSearches = 2;
         numberOfSearchesComplete = 0;
         this.searchString = searchString;
@@ -146,10 +142,6 @@ public class AddNewPlayerFragment extends CharltonFragment {
     }
 
     private void searchFinishedWithResults(List<SteamUser> users) {
-        if (users != null) {
-            playerSearchResults.addAll(users);
-        }
-
         numberOfSearchesComplete++;
 
         if (numberOfSearchesComplete >= totalNumberOfSearches) {
@@ -165,7 +157,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
     }
 
     private String getSearchString() {
-        return "Here are the results for the search '" + searchString + "'";
+        return String.format(getResources().getString(R.string.add_new_player_search_results_text), searchString);
     }
 
 //    private void doPlayerSearch(final String playerName) {
@@ -223,6 +215,6 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
     @Override
     public String getCharltonMessageText(Resources resources) {
-        return "Let me help you find a player.";
+        return resources.getString(R.string.add_new_player_charlton_text);
     }
 }

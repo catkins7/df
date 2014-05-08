@@ -20,11 +20,11 @@ import java.util.TreeSet;
  */
 public class SteamUser {
 
-    private static final long ACCOUNT_ID_MAGIC_NUMBER = 76561197960265728L;
-
     public static final String STEAM_USER_UPDATED = "SteamUserUpdated_Notification";
     public static final String STEAM_USER_MATCHES_CHANGED = "STEAM_USER_MATCHES_CHANGED";
     public static final String STEAM_USER_UPDATED_ID_KEY = "SteamUserUpdated_UserId_Key";
+
+    private static final long ACCOUNT_ID_MAGIC_NUMBER = 76561197960265728L;
 
     private static Comparator<SteamUser> comparator;
 
@@ -135,9 +135,6 @@ public class SteamUser {
     }
 
     public String getSteamId() { return steamId; }
-    public String getPersonaName() {
-        return personaName;
-    }
     public String getDisplayName() {
         return personaName == null ? steamId : personaName;
     }

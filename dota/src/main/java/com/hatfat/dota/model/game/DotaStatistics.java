@@ -20,8 +20,37 @@ import java.util.TreeSet;
 //calculates statistics for a given user for a given set of matches
 public class DotaStatistics {
 
+    public enum DotaStatisticsMode {
+        ALL_FAVORITES(1),
+        RANKED_STATS(2),
+        PUBLIC_STATS(3);
+
+        private int statsMode;
+
+        DotaStatisticsMode(int statsMode) {
+            this.statsMode = statsMode;
+        }
+
+        public int getMode() {
+            return statsMode;
+        }
+
+        public static DotaStatisticsMode modeFromInt(int statsMode) {
+            switch (statsMode) {
+                case 1:
+                    return ALL_FAVORITES;
+                case 2:
+                    return RANKED_STATS;
+                case 3:
+                    return PUBLIC_STATS;
+                default:
+                    return PUBLIC_STATS;
+            }
+        }
+    }
+
     private static final int MAX_FAVORITE_ITEMS = 3;
-    private static final int MAX_FAVORITE_HEROES = 6;
+    private static final int MAX_FAVORITE_HEROES = 10;
     private static final int MAX_HERO_FAVORITE_ITEMS = 3;
 
     private List<Match> matches;
@@ -180,7 +209,7 @@ public class DotaStatistics {
             if (player.hasAdditionalUnitsWeWantToShow()) {
                 AdditionalUnit unit = player.getAdditionalUnits().get(0);
 
-                //make sure we include idems on any additional units we care about (aka SPIRIT BEAR)
+                //make sure we include items on any additional units we care about (aka SPIRIT BEAR)
                 for (int i = 0; i < 6; i++) {
                     Item item = unit.getItem(i);
                     updateItemStatsWithItem(item, match, player, heroStats, items, itemStatsMap);

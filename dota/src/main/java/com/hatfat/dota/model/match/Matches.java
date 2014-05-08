@@ -19,10 +19,11 @@ import java.util.List;
  */
 public class Matches {
 
-    private static final String USER_MATCHES_FILE_EXTENSION = "_matches.json";
-
     public final static String MATCHES_LOADING_PROGRESS_NOTIFICATION = "MATCHES_LOADING_PROGRESS_NOTIFICATION";
     public final static String MATCHES_LOADING_PERCENT_COMPLETE = "MATCHES_LOADING_PERCENT_COMPLETE";
+
+    private static final String USER_MATCHES_FILE_EXTENSION = "_matches.json";
+
     private int loadingProgress;
     private boolean isLoaded;
 
@@ -60,6 +61,8 @@ public class Matches {
     private void loadFromDisk() {
         if (SteamUsers.get().getStarredUsers().size() <= 0) {
             //no users!  so we are done
+            isLoaded = true;
+
             Intent intent = new Intent(MATCHES_LOADING_PROGRESS_NOTIFICATION);
             intent.putExtra(MATCHES_LOADING_PERCENT_COMPLETE, 1.0f);
             LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);

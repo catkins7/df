@@ -210,6 +210,6 @@ public class StarredPlayerListFragment extends CharltonFragment {
 
     @Override
     public String getCharltonMessageText(Resources resources) {
-        return "Hello.  I'm Charlton Heston.\nThese are your starred players.";
+        return resources.getString(R.string.starred_players_charlton_text);
     }
 }

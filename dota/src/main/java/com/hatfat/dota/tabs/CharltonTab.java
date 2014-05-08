@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.hatfat.dota.activities.CharltonActivity;
 import com.hatfat.dota.fragments.CharltonFragment;
 
+//Based on google ActionBar tab example
 public class CharltonTab<T extends CharltonFragment> implements ActionBar.TabListener{
 
     private CharltonFragment mFragment;

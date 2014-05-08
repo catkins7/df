@@ -2,7 +2,6 @@ package com.hatfat.dota.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,43 +143,24 @@ public class DotaStatisticsAdapter extends BaseAdapter {
     private Resources resources;
     private List<StatsSection> sections;
 
-    private DotaStatistics allMatchStats;
-    private DotaStatistics rankedMatchStats;
-    private DotaStatistics publicMatchStats;
-    private DotaStatistics recentRankedMatchStats;
+    private DotaStatistics dotaStatistics;
+    private DotaStatistics.DotaStatisticsMode statsMode;
 
-    public void setNewStatistics(List<DotaStatistics> statsList) {
-        if (statsList == null) {
-            //nulling out our stats, so return to the loading state
-            allMatchStats = null;
-            rankedMatchStats = null;
-            publicMatchStats = null;
-            recentRankedMatchStats = null;
+    public void setNewStatistics(DotaStatistics newStats, DotaStatistics.DotaStatisticsMode newMode) {
+        statsMode = newMode;
+
+        if (newStats == null) {
+            //removing our stats, so return to the loading state
+            dotaStatistics = null;
 
             setupLoadingSections();
 
             return;
         }
 
-        if (statsList.size() < 4) {
-            Log.e(this.getClass().getSimpleName(), "Error calculating stats");
+        dotaStatistics = newStats;
 
-            allMatchStats = null;
-            rankedMatchStats = null;
-            publicMatchStats = null;
-            recentRankedMatchStats = null;
-
-            setupNoDataSections();
-
-            return;
-        }
-
-        allMatchStats = statsList.get(0);
-        rankedMatchStats = statsList.get(1);
-        publicMatchStats = statsList.get(2);
-        recentRankedMatchStats = statsList.get(3);
-
-        if (allMatchStats.getGameCount() > 0 || rankedMatchStats.getGameCount() > 0 || publicMatchStats.getGameCount() > 0 || recentRankedMatchStats.getGameCount() > 0) {
+        if (dotaStatistics.getGameCount() > 0) {
             setupRealSections();
         }
         else {
@@ -545,38 +525,27 @@ public class DotaStatisticsAdapter extends BaseAdapter {
     private void setupRealSections() {
         sections = new LinkedList();
 
-        if (rankedMatchStats.getGameCount() > 0) {
-            sections.add(
-                    new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, rankedMatchStats,
-                            resources.getString(
-                                    R.string.player_statistics_all_ranked_matches_title_text)));
-            sections.add(
-                    new StatsSection(StatsSectionType.SECTION_CSSCORE, rankedMatchStats));
-        }
-
-//        if (recentRankedMatchStats.getGameCount() > 0) {
-//            sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY,
-//                    recentRankedMatchStats,
-//                    resources.getString(R.string.player_statistics_recent_matches_title_text)));
-//        }
-
-        sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_HEROES, allMatchStats));
-        sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_ITEMS, allMatchStats));
-
-//        sections.add(new StatsSection(StatsSectionType.SECTION_GRAPHS, rankedMatchStats));
-
-//        if (allMatchStats.getGameCount() > 0) {
-//            sections.add(new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, allMatchStats,
-//                    resources.getString(R.string.player_statistics_all_matches_title_text)));
-//        }
-
-        if (publicMatchStats.getGameCount() > 0) {
-            sections.add(
-                    new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, publicMatchStats,
-                            resources.getString(
-                                    R.string.player_statistics_all_public_matches_title_text)));
-            sections.add(
-                    new StatsSection(StatsSectionType.SECTION_CSSCORE, publicMatchStats));
+        switch (statsMode) {
+            case ALL_FAVORITES:
+                sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_HEROES, dotaStatistics));
+                sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_ITEMS, dotaStatistics));
+                break;
+            case RANKED_STATS:
+                sections.add(
+                        new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics,
+                                resources.getString(
+                                        R.string.player_statistics_all_ranked_matches_title_text)));
+                sections.add(
+                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
+                break;
+            case PUBLIC_STATS:
+                sections.add(
+                        new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics,
+                                resources.getString(
+                                        R.string.player_statistics_all_public_matches_title_text)));
+                sections.add(
+                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
+                break;
         }
 
         notifyDataSetChanged();

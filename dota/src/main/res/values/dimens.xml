@@ -28,8 +28,7 @@
 
     <dimen name="steam_user_view_image_size">48dp</dimen>
 
-    <dimen name="charlton_fragment_height_full">96dp</dimen>
-    <dimen name="charlton_fragment_height_short">48dp</dimen>
+    <dimen name="charlton_actionbar_text_size">13sp</dimen>
 
     <dimen name="dota_player_summary_fragment_image_view_size">61dp</dimen>
     <dimen name="dota_player_summary_fragment_right_layout_size">101dp</dimen>
