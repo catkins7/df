@@ -32,10 +32,10 @@
     <string name="player_summary_remove_friend_remove_text">Unstar</string>
     <string name="player_summary_remove_friend_title_text">Unstar Player?</string>
     <string name="player_summary_matches_summary_string">%1$d / %2$d matches</string>
-    <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% Ranked</string>
-    <string name="player_summary_public_matchmaking_summary">%1$.1f%% Public</string>
-    <string name="player_summary_no_public_matches_string"></string>
-    <string name="player_summary_no_ranked_matches_string"></string>
+    <string name="player_summary_ranked_matchmaking_summary">%1$.1f%% Ranked Matches</string>
+    <string name="player_summary_public_matchmaking_summary">%1$.1f%% Public Matches</string>
+    <string name="player_summary_no_public_matches_string">No Public Matches</string>
+    <string name="player_summary_no_ranked_matches_string">No Ranked Matches</string>
 
     <string name="player_summary_fetch_all_dialog_title">Fetch All Matches?</string>
     <string name="player_summary_fetch_all_dialog_stop_text">Stop</string>

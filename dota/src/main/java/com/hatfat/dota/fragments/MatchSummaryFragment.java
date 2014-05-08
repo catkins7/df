@@ -260,7 +260,7 @@ public class MatchSummaryFragment extends CharltonFragment {
     @Override
     public String getCharltonMessageText(Resources resources) {
         if (match != null) {
-            return "Here's match " + match.getMatchId() + ".";
+            return "Here is match " + match.getMatchId() + ".";
         }
         else {
             return resources.getString(R.string.default_charlton_text);

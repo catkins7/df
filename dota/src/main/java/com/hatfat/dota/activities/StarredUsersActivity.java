@@ -14,7 +14,7 @@ public class StarredUsersActivity extends CharltonActivity {
         LinkedList<CharltonTab> tabs = new LinkedList();
 
         CharltonTab<StarredPlayerListFragment> starredTab = new CharltonTab(this, "Starred", StarredPlayerListFragment.class, null);
-        CharltonTab<AddNewPlayerFragment> newPlayerTab = new CharltonTab(this, "Add New Player", AddNewPlayerFragment.class, null);
+        CharltonTab<AddNewPlayerFragment> newPlayerTab = new CharltonTab(this, "Add Player", AddNewPlayerFragment.class, null);
 
         tabs.add(starredTab);
         tabs.add(newPlayerTab);

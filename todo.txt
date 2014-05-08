@@ -1,15 +1,8 @@
 0.4.2 Tabs / Holo release
 ---------------------------
-fix everything with new charlton activity
-
-remove old support library?
-
-get tabbed interface working
+split stats into a couple different tabs
 
 backing out all the way of the app, and then going back in, shows loading screen for an instant with a flicker; see if we can fix the flicker?
-
-remove old charlton activity
-remove old charlton message fragment
 
 code walkthrough / cleanup all files quick
 
@@ -19,7 +12,9 @@ bundle all dagons/difussal blades into the same item for stats calculation?
 
 test layouts on a couple different emulators 
 
-swiping of tabs?
+memory crash tests
+
+some real charlton photos, randomly selected between them!
 
 
 
@@ -38,6 +33,7 @@ Issue leaving memory and drawer is still on the right, but empty?   CharltonACti
 
 
 
+
 0.5 release
 ---------------------------
 match summary improvements?
@@ -50,8 +46,7 @@ match summary improvements?
 
 0.6 release
 ---------------------------
-Charlton feature
-
+Flesh out the charlton feature
 
 
 
