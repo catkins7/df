@@ -19,18 +19,21 @@
 
         <activity
             android:name=".activities.SearchResultsActivity"
+            android:parentActivityName=".activities.StarredUsersActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".activities.PlayerActivity"
+            android:parentActivityName=".activities.StarredUsersActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".activities.MatchActivity"
+            android:parentActivityName=".activities.StarredUsersActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">
         </activity>

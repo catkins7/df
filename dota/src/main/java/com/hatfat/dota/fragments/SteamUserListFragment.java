@@ -109,7 +109,7 @@ public class SteamUserListFragment extends CharltonFragment {
 
         startListening();
 
-        getCharltonActivity().signalUpdateActiveCharltonTab();
+        signalCharltonActivityToUpdateTab();
     }
 
     @Override

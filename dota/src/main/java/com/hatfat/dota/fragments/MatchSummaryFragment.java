@@ -77,7 +77,7 @@ public class MatchSummaryFragment extends CharltonFragment {
 
         match = Matches.get().getMatch(matchId);
 
-        getCharltonActivity().signalUpdateActiveCharltonTab();
+        signalCharltonActivityToUpdateTab();
     }
 
     @Override
@@ -93,9 +93,11 @@ public class MatchSummaryFragment extends CharltonFragment {
         rankedImageView = (ImageView) view.findViewById(R.id.fragment_match_summary_ranked_image_view);
         playersListView = (ListView) view.findViewById(R.id.fragment_match_summary_players_list_view);
 
-        setupPlayerList();
-        setupTopHeroIcons(view);
-        updateViews();
+        if (match.hasMatchDetails()) {
+            setupPlayerList();
+            setupTopHeroIcons(view);
+            updateViews();
+        }
 
         return view;
     }

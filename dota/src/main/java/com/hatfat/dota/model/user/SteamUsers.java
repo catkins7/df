@@ -55,6 +55,10 @@ public class SteamUsers {
         }
     }
 
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
     public Collection<SteamUser> getAllUsers() {
         return users.values();
     }

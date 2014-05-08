@@ -97,8 +97,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         user = SteamUsers.get().getBySteamId(steamUserId);
 
-        //we have the necessary info to correctly make our charlton message, so tell the activity to update it!
-        getCharltonActivity().signalUpdateActiveCharltonTab();
+        signalCharltonActivityToUpdateTab();
 
         startListening();
     }

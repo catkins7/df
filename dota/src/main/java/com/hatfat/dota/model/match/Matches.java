@@ -53,6 +53,10 @@ public class Matches {
         }
     }
 
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
     private void loadFromDisk() {
         if (SteamUsers.get().getStarredUsers().size() <= 0) {
             //no users!  so we are done

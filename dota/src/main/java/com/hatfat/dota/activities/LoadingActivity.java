@@ -17,4 +17,14 @@ public class LoadingActivity extends CharltonActivity {
 
         return tabs;
     }
+
+    @Override
+    protected boolean isLoadingActivity() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasParentActivity() {
+        return false;
+    }
 }

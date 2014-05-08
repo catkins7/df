@@ -21,4 +21,9 @@ public class StarredUsersActivity extends CharltonActivity {
 
         return tabs;
     }
+
+    @Override
+    protected boolean hasParentActivity() {
+        return false;
+    }
 }

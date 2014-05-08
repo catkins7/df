@@ -11,6 +11,12 @@ import com.hatfat.dota.activities.CharltonActivity;
 public abstract class CharltonFragment extends Fragment {
     public abstract String getCharltonMessageText(Resources resources);
 
+    protected void signalCharltonActivityToUpdateTab() {
+        if (getCharltonActivity() != null) {
+            getCharltonActivity().signalUpdateActiveCharltonTab();
+        }
+    }
+
     protected CharltonActivity getCharltonActivity() {
         return (CharltonActivity) getActivity();
     }

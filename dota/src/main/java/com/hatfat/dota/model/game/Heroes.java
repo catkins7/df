@@ -3,16 +3,18 @@ package com.hatfat.dota.model.game;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.HeroFetcher;
 import com.hatfat.dota.util.FileUtil;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by scottrick on 2/15/14.
@@ -49,6 +51,10 @@ public class Heroes {
             //heroes not loaded from network, so lets try to
             fetch();
         }
+    }
+
+    public boolean isLoaded() {
+        return heroes.size() > 0;
     }
 
     private void setNewHeroList(List<Hero> heroList) {
