@@ -30,6 +30,12 @@
         </activity>
 
         <activity
+            android:name=".activities.MatchActivity"
+            android:theme="@style/CharltonTheme"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".activities.LoadingActivity"
             android:noHistory="true"
             android:theme="@style/CharltonTheme"

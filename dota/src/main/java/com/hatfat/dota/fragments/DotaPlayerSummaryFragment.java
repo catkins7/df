@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +26,7 @@ import android.widget.Toast;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.MatchActivity;
 import com.hatfat.dota.dialogs.FetchMatchesDialogHelper;
 import com.hatfat.dota.dialogs.InfoDialogHelper;
 import com.hatfat.dota.model.match.Match;
@@ -331,8 +331,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 if (sortedMatches.size() > i) {
                     Match match = (Match) matchesAdapter.getItem(i);
 
-                    Log.e("catfat", "to fix");
-//                    getCharltonActivity().pushCharltonFragment(MatchSummaryFragment.newInstance(match));
+                    Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
+                    startActivity(intent);
                 }
             }
         });
@@ -480,7 +480,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             return "Here is " + user.getDisplayName() +"'s [" + user.getAccountId() + "] summary information.";
         }
         else {
-            return resources.getString(R.string.player_summary_no_user_yet_text);
+            return resources.getString(R.string.default_charlton_text);
         }
     }
 }

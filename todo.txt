@@ -9,6 +9,7 @@ get tabbed interface working
 backing out all the way of the app, and then going back in, shows loading screen for an instant with a flicker; see if we can fix the flicker?
 
 remove old charlton activity
+remove old charlton message fragment
 
 code walkthrough / cleanup all files quick
 

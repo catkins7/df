@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PlayerActivity extends CharltonActivity {
 
-    public static final String PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY = "PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY";
+    private static final String PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY = "PLAYER_ACTIVITY_STEAM_USER_ID_EXTRA_KEY";
 
     private String steamUserId;
 

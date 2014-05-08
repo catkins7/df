@@ -31,12 +31,12 @@ import java.util.List;
  */
 public class StarredPlayerListFragment extends CharltonFragment {
 
-    ListView listView;
-    BaseAdapter listAdapter;
+    private ListView listView;
+    private BaseAdapter listAdapter;
 
-    List<SteamUser> sortedUsers;
+    private List<SteamUser> sortedUsers;
 
-    BroadcastReceiver receiver;
+    private BroadcastReceiver receiver;
 
     public StarredPlayerListFragment() {
         sortedUsers = new LinkedList<>();

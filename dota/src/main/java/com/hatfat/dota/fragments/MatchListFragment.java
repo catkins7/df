@@ -1,8 +1,8 @@
 package com.hatfat.dota.fragments;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.MatchActivity;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.view.MatchSimpleSummaryView;
@@ -105,8 +106,8 @@ public class MatchListFragment extends CharltonFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Match match = (Match) matchesAdapter.getItem(i);
 
-                Log.e("catfat", "to fix");
-//                getCharltonActivity().pushCharltonFragment(MatchSummaryFragment.newInstance(match));
+                Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
+                startActivity(intent);
             }
         });
 

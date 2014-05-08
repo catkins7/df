@@ -28,7 +28,7 @@ import java.util.List;
 
 public class DotaPlayerStatisticsFragment extends CharltonFragment {
 
-    public final static int RECENT_STATS_MATCH_COUNT = 50;
+    private final static int RECENT_STATS_MATCH_COUNT = 50;
 
     private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY";
 

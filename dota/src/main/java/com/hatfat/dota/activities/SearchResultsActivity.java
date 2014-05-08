@@ -13,8 +13,8 @@ import java.util.List;
 
 public class SearchResultsActivity extends CharltonActivity {
 
-    public static final String SEARCH_RESULTS_ACTIVITY_USER_LIST_EXTRA_KEY = "SEARCH_RESULTS_ACTIVITY_USER_LIST_EXTRA_KEY";
-    public static final String SEARCH_RESULTS_ACTIVITY_MESSAGE_EXTRA_KEY = "SEARCH_RESULTS_ACTIVITY_MESSAGE_EXTRA_KEY";
+    private static final String SEARCH_RESULTS_ACTIVITY_USER_LIST_EXTRA_KEY = "SEARCH_RESULTS_ACTIVITY_USER_LIST_EXTRA_KEY";
+    private static final String SEARCH_RESULTS_ACTIVITY_MESSAGE_EXTRA_KEY = "SEARCH_RESULTS_ACTIVITY_MESSAGE_EXTRA_KEY";
 
     private ArrayList<String> steamUserIds;
     private String message;

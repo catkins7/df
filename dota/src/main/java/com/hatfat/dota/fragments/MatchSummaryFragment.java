@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.PlayerActivity;
 import com.hatfat.dota.model.game.Hero;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Match;
@@ -51,12 +51,16 @@ public class MatchSummaryFragment extends CharltonFragment {
     private ListView playersListView;
     private BaseAdapter playersAdapter;
 
-    public static MatchSummaryFragment newInstance(Match match) {
+    public static Bundle newBundleForMatch(String matchId) {
+        Bundle args = new Bundle();
+        args.putString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY, matchId);
+        return args;
+    }
+
+    public static MatchSummaryFragment newInstance(String matchId) {
         MatchSummaryFragment newFragment = new MatchSummaryFragment();
 
-        Bundle args = new Bundle();
-        args.putString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY, match.getMatchId());
-        newFragment.setArguments(args);
+        newFragment.setArguments(newBundleForMatch(matchId));
 
         return newFragment;
     }
@@ -66,9 +70,14 @@ public class MatchSummaryFragment extends CharltonFragment {
         super.onCreate(savedInstanceState);
 
         String matchId = getArguments().getString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY);
-        if (matchId != null) {
-            match = Matches.get().getMatch(matchId);
+
+        if (matchId == null) {
+            throw new RuntimeException("must have a match id");
         }
+
+        match = Matches.get().getMatch(matchId);
+
+        getCharltonActivity().signalUpdateActiveCharltonTab();
     }
 
     @Override
@@ -132,8 +141,8 @@ public class MatchSummaryFragment extends CharltonFragment {
                 Player player = (Player) playersAdapter.getItem(i);
                 SteamUser user = player.getSteamUser();
 
-                Log.e("catfat", "to fix");
-//                getCharltonActivity().pushCharltonFragment(DotaPlayerSummaryFragment.newInstance(user));
+                Intent intent = PlayerActivity.intentForPlayer(getActivity().getApplicationContext(), user.getSteamId());
+                startActivity(intent);
             }
         });
     }
@@ -250,6 +259,11 @@ public class MatchSummaryFragment extends CharltonFragment {
 
     @Override
     public String getCharltonMessageText(Resources resources) {
-        return "Here's match " + match.getMatchId() + " that you asked for.";
+        if (match != null) {
+            return "Here's match " + match.getMatchId() + ".";
+        }
+        else {
+            return resources.getString(R.string.default_charlton_text);
+        }
     }
 }
