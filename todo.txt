@@ -1,6 +1,6 @@
 0.4.2 Tabs / Holo release
 ---------------------------
-split stats into a couple different tabs
+split stats into a couple different tabs (favorites, ranked, public)
 
 code walkthrough / cleanup all files quick
 
