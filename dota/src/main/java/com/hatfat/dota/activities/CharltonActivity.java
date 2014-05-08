@@ -18,8 +18,13 @@ import com.hatfat.dota.tabs.CharltonTab;
 import com.hatfat.dota.util.CharltonBubbleDrawable;
 
 import java.util.List;
+import java.util.Random;
 
 public abstract class CharltonActivity extends Activity {
+
+    private static Random rand = new Random();
+    private static int currentHestonDrawableId = 0;
+    private static int currentHestonCountsLeft = 0;
 
     private TextView charltonTitleTextView;
 
@@ -98,6 +103,23 @@ public abstract class CharltonActivity extends Activity {
 
     public void updateWithCharltonTab(CharltonTab tab) {
         charltonTitleTextView.setText(tab.getFragment().getCharltonMessageText(getResources()));
+
+        updateCharltonImage();
+
+    }
+
+    private void updateCharltonImage() {
+        if (currentHestonCountsLeft <= 0) {
+            //we need to set a new charlton image!
+            int randomHeston = Math.abs(rand.nextInt()) % 10; //ten total heston images currently
+            String drawableName = "heston" + randomHeston;
+
+            currentHestonDrawableId = getResources().getIdentifier(drawableName, "drawable", getPackageName());
+            currentHestonCountsLeft = Math.abs(rand.nextInt()) % 10 + 20; //20 to 29 times before it changes
+        }
+
+        getActionBar().setIcon(currentHestonDrawableId);
+        currentHestonCountsLeft--;
     }
 
     public void signalUpdateActiveCharltonTab() {

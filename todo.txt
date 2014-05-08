@@ -2,8 +2,6 @@
 ---------------------------
 split stats into a couple different tabs
 
-backing out all the way of the app, and then going back in, shows loading screen for an instant with a flicker; see if we can fix the flicker?
-
 code walkthrough / cleanup all files quick
 
 make sure we aren't hardcoding strings all over, unless just for test/debug
@@ -14,11 +12,9 @@ test layouts on a couple different emulators
 
 memory crash tests
 
-test fresh install
-
-some real charlton photos, randomly selected between them!
-
 updates screen shots in play store
+
+general testing
 
 
 
