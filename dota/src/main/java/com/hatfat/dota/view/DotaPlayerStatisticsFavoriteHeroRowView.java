@@ -17,7 +17,8 @@ public class DotaPlayerStatisticsFavoriteHeroRowView extends RelativeLayout {
 
     private ImageView iconImageView;
     private ImageView[] itemImageView = new ImageView[3];
-    private TextView descriptionTextView;
+    private TextView gameCountTextView;
+    private TextView winPercentTextView;
 
     public DotaPlayerStatisticsFavoriteHeroRowView(Context context) {
         super(context);
@@ -27,7 +28,8 @@ public class DotaPlayerStatisticsFavoriteHeroRowView extends RelativeLayout {
         itemImageView[0] = (ImageView) findViewById(R.id.view_stats_favorite_hero_item_0);
         itemImageView[1] = (ImageView) findViewById(R.id.view_stats_favorite_hero_item_1);
         itemImageView[2] = (ImageView) findViewById(R.id.view_stats_favorite_hero_item_2);
-        descriptionTextView = (TextView) findViewById(R.id.view_stats_favorite_hero_row_text_view);
+        gameCountTextView = (TextView) findViewById(R.id.view_stats_favorite_hero_row_game_count_text_view);
+        winPercentTextView = (TextView) findViewById(R.id.view_stats_favorite_hero_row_win_percent_text_view);
     }
 
     public void setHeroStats(DotaStatistics.HeroStats newStats) {
@@ -38,7 +40,9 @@ public class DotaPlayerStatisticsFavoriteHeroRowView extends RelativeLayout {
 
     private void updateViews() {
         Picasso.with(DotaFriendApplication.CONTEXT).load(heroStats.hero.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(iconImageView);
-        descriptionTextView.setText("x" + heroStats.heroCount);
+
+        gameCountTextView.setText(heroStats.getMatchCountString(getResources()));
+        winPercentTextView.setText(heroStats.getWinPercentString(getResources()));
 
         for (DotaStatistics.ItemStats itemStats : heroStats.favoriteHeroItems) {
             int index = heroStats.favoriteHeroItems.indexOf(itemStats);

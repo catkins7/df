@@ -94,6 +94,8 @@
     <string name="player_statistics_single_float_one_decimal">%1$.1f</string>
     <string name="player_statistics_single_float_two_decimal">%1$.2f</string>
     <string name="player_statistics_single_float_one_decimal_with_percent">%1$.1f%%</string>
+    <string name="player_statistics_favorite_hero_matches_text">%1$d matches</string>
+    <string name="player_statistics_favorite_hero_wind_percent">%1$.1f%% win rate</string>
 
     <string name="player_statistics_recent_matches_title_text">Recent Ranked Matches</string>
     <string name="player_statistics_all_matches_title_text">All Matches</string>

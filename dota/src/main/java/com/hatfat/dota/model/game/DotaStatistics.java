@@ -186,10 +186,6 @@ public class DotaStatistics {
 
             modeStats.gameCount++;
 
-            if (match.getPlayerMatchResultForPlayer(player).equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
-                modeStats.winCount++;
-            }
-
             //calculate hero stats
             HeroStats heroStats = heroStatsMap.get(hero);
 
@@ -199,6 +195,11 @@ public class DotaStatistics {
             }
 
             heroStats.heroCount++;
+
+            if (match.getPlayerMatchResultForPlayer(player).equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
+                modeStats.winCount++;
+                heroStats.winCount++;
+            }
 
             //add all the items for this hero
             for (int i = 0; i < 6; i++) {
@@ -621,6 +622,7 @@ public class DotaStatistics {
     public static class HeroStats {
         public Hero hero;
         public int heroCount;
+        public int winCount;
 
         public HashMap<Item, ItemStats> itemStatsMap = new HashMap();
         public List<ItemStats> favoriteHeroItems = new LinkedList();
@@ -639,6 +641,15 @@ public class DotaStatistics {
             }
 
             itemStats.purchaseCount++;
+        }
+
+        public String getMatchCountString(Resources resources) {
+            return String.format(resources.getString(R.string.player_statistics_favorite_hero_matches_text), heroCount);
+        }
+
+        public String getWinPercentString(Resources resources) {
+            float percent = (float)winCount / (float)heroCount * 100.0f;
+            return String.format(resources.getString(R.string.player_statistics_favorite_hero_wind_percent), percent);
         }
 
         public void sort() {

@@ -1,5 +1,11 @@
 0.4.+ More Stats release
 ---------------------------
+add FAVORITE MODE STATS!
+
+about page?  access from menu?
+
+remove "statistics drawer" reference in stats help text.  Update CS Score and TeamworkScore text to be more explanative?
+
 swipe between tabs??  would be really nice...
 
 -More Stats!
@@ -44,8 +50,7 @@ Features Backlog
 ---------------------------
 pro players list?  pro teams?  for easy access to pro player profiles.  maybe another tab on starred users activity
 
-about page?  access from menu?
- 
+Premium version of the app, after play store general release?  would be a paid version ($4?) that has additional features 
 
 
 
