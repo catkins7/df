@@ -112,6 +112,7 @@ public class Match implements Comparable {
         }
     }
 
+//    https://github.com/SteamRE/SteamKit/blob/master/Resources/Protobufs/dota/dota_gcmessages_common.proto
     public enum GameMode {
         None("None"),
         AllPick("All Pick"),
@@ -119,7 +120,7 @@ public class Match implements Comparable {
         RandomDraft("Random Draft"),
         SingleDraft("Single Draft"),
         AllRandom("All Random"),
-        IntroDeath("-"),
+        IntroDeath("Intro Death"),
         Diretide("Diretide"),
         ReverseCaptainsMode("Reverse CM"),
         Greeviling("Greeviling"),
@@ -127,12 +128,13 @@ public class Match implements Comparable {
         MidOnly("Mid Only"),
         LeastPlayed("Least Played"),
         LimitedHeroes("Limited Heroes"),
-        FH("FH"),
+        ForcedHeroes("Compendium"),
         CustomGame("Custom Game"),
         CaptainsDraft("Captains Draft"),
         BalancedDraft("Balanced Draft"),
         AbilityDraft("Ability Draft"),
-        Unknown("");
+        Event("Event"),
+        Unknown("Unknown");
 
         private String gameModeName;
 
@@ -171,7 +173,7 @@ public class Match implements Comparable {
                 case 13:
                     return LimitedHeroes;
                 case 14:
-                    return FH;
+                    return ForcedHeroes;
                 case 15:
                     return CustomGame;
                 case 16:
@@ -180,6 +182,8 @@ public class Match implements Comparable {
                     return BalancedDraft;
                 case 18:
                     return AbilityDraft;
+                case 19:
+                    return Event;
                 default:
                     return Unknown;
             }
@@ -305,20 +309,28 @@ public class Match implements Comparable {
             return getGameModeString() + " (" + getLobbyTypeString() + ")";
         }
     }
-    public boolean shouldBeUsedInStatistics() {
+    public boolean shouldBeUsedInRealStatistics() {
+        if (!isPublicMatchmaking() && !isRankedMatchmaking()) {
+            //only ranked and public matches are used in statistics
+            return false;
+        }
+
         switch (getGameMode()) {
-            case IntroDeath:
-            case Diretide:
-            case Greeviling:
-            case Tutorial:
-            case MidOnly:
-            case AbilityDraft:
-            case Unknown:
-            case CustomGame:
-                return false;
-            default:
+            case AllPick:
+            case CaptainsMode:
+            case RandomDraft:
+            case SingleDraft:
+            case AllRandom:
+            case ReverseCaptainsMode:
+            case LeastPlayed:
+            case LimitedHeroes:
+            case CaptainsDraft:
+            case BalancedDraft:
                 //only use games that are at least 5 minutes long
                 return duration >= 5 * 60;
+
+            default:
+                return false;
         }
     }
     public void setHasMatchDetails(boolean hasMatchDetails) {

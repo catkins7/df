@@ -3,12 +3,15 @@ package com.hatfat.dota.model.user;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.services.SteamUserFetcher;
 import com.hatfat.dota.util.FileUtil;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -136,8 +139,36 @@ public class SteamUsers {
             this.users.put(botUser.steamId, botUser);
         }
 
+        //delete any old match files that are still floating around
+        File fileDir = DotaFriendApplication.CONTEXT.getFilesDir();
+        fileDir.mkdirs();
+
+        for (File file : fileDir.listFiles()) {
+            if (shouldFileBeDeleted(file)) {
+                if (!file.delete()) {
+                    Log.v(getClass().getSimpleName(), "Unable to delete matches file " + file.getName());
+                }
+            }
+        }
+
         isLoaded = true;
         broadcastUsersLoadedFromDisk();
+    }
+
+    private boolean shouldFileBeDeleted(File file) {
+        String fileName = file.getName();
+        boolean isMatchesFile = fileName.contains(Matches.USER_MATCHES_FILE_EXTENSION);
+
+        if (!isMatchesFile) {
+            return false;
+        }
+
+        int index = fileName.indexOf(Matches.USER_MATCHES_FILE_EXTENSION);
+        String matchesUserId = fileName.substring(0, index);
+
+        SteamUser user = SteamUsers.get().getByAccountId(matchesUserId);
+
+        return !SteamUsers.get().isUserStarred(user);
     }
 
     private void fetchUser(String steamId) {

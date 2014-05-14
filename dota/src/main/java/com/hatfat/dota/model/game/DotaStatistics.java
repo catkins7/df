@@ -23,7 +23,10 @@ public class DotaStatistics {
     public enum DotaStatisticsMode {
         ALL_FAVORITES(1),
         RANKED_STATS(2),
-        PUBLIC_STATS(3);
+        PUBLIC_STATS(3),
+        ALL_SUCCESS_STATS(4),
+        OTHER_STATS(5),
+        ALL_HEROES(6);
 
         private int statsMode;
 
@@ -43,14 +46,21 @@ public class DotaStatistics {
                     return RANKED_STATS;
                 case 3:
                     return PUBLIC_STATS;
+                case 4:
+                    return ALL_SUCCESS_STATS;
+                case 5:
+                    return OTHER_STATS;
+                case 6:
+                    return ALL_HEROES;
                 default:
                     return PUBLIC_STATS;
             }
         }
     }
 
-    private static final int MAX_FAVORITE_ITEMS = 3;
+    private static final int MAX_FAVORITE_ITEMS = 5;
     private static final int MAX_FAVORITE_HEROES = 10;
+    private static final int MAX_SUCCESS_HEROES = 8;
     private static final int MAX_HERO_FAVORITE_ITEMS = 3;
 
     private List<Match> matches;
@@ -59,6 +69,11 @@ public class DotaStatistics {
     private List<ItemStats> favoriteItems;
     private List<HeroStats> favoriteHeroes;
     private List<ModeStats> favoriteModes;
+
+    private List<HeroStats> allHeroes;
+
+    private List<HeroStats> mostSuccessfulHeroes;
+    private List<HeroStats> leastSuccessfulHeroes;
 
     private List<Integer> xpmPerGame;
     private List<Integer> gpmPerGame;
@@ -97,6 +112,11 @@ public class DotaStatistics {
         this.favoriteItems = new LinkedList();
         this.favoriteHeroes = new LinkedList();
         this.favoriteModes = new LinkedList();
+
+        this.allHeroes = new LinkedList();
+
+        this.mostSuccessfulHeroes = new LinkedList();
+        this.leastSuccessfulHeroes = new LinkedList();
 
         this.xpmPerGame = new LinkedList();
         this.gpmPerGame = new LinkedList();
@@ -184,7 +204,7 @@ public class DotaStatistics {
                 modeStatsMap.put(match.getGameMode(), modeStats);
             }
 
-            modeStats.gameCount++;
+            modeStats.addMatch(match.getMatchId());
 
             //calculate hero stats
             HeroStats heroStats = heroStatsMap.get(hero);
@@ -218,21 +238,128 @@ public class DotaStatistics {
             }
         }
 
-        List<HeroStats> sortedHeroStats = new LinkedList(heroStatsMap.values());
-        Collections.sort(sortedHeroStats, new Comparator<HeroStats>() {
+        //ALL HEROES SORTING
+        allHeroes = new LinkedList(heroStatsMap.values());
+        Collections.sort(allHeroes, new Comparator<HeroStats>() {
+            @Override
+            public int compare(HeroStats lhs, HeroStats rhs) {
+                //just sort alphabetically
+                return lhs.hero.getLocalizedName().compareTo(rhs.hero.getLocalizedName());
+            }
+        });
+
+        //FAVORITE HERO SORTING
+        List<HeroStats> popularHeroStats = new LinkedList(heroStatsMap.values());
+        Collections.sort(popularHeroStats, new Comparator<HeroStats>() {
             @Override
             public int compare(HeroStats lhs, HeroStats rhs) {
                 return rhs.heroCount - lhs.heroCount;
             }
         });
 
-        int maxFavoriteHeroes = Math.min(sortedHeroStats.size(), MAX_FAVORITE_HEROES);
-        favoriteHeroes = new LinkedList(sortedHeroStats.subList(0, maxFavoriteHeroes));
+        int maxFavoriteHeroes = Math.min(popularHeroStats.size(), MAX_FAVORITE_HEROES);
+        favoriteHeroes = new LinkedList(popularHeroStats.subList(0, maxFavoriteHeroes));
 
-        for (HeroStats heroStats : favoriteHeroes) {
+        //HERO SUCCESS SORTING
+        //only consider heroes that have been played in at least 1% of your games
+        int gameCountThreshold = (int)((float)matches.size() * 0.01f);
+        gameCountThreshold = Math.max(gameCountThreshold, 2); //require at least 2 games, minimum
+
+        List<HeroStats> successHeroStats = new LinkedList(heroStatsMap.values());
+        List<HeroStats> filteredSuccessHeroStats = new LinkedList();
+
+        for (HeroStats heroStats : successHeroStats) {
+            if (heroStats.heroCount >= gameCountThreshold) {
+                filteredSuccessHeroStats.add(heroStats);
+            }
+        }
+
+        if (filteredSuccessHeroStats.size() <= 0) {
+            //no heroes were played enough!! just use all of them...
+            filteredSuccessHeroStats = successHeroStats;
+        }
+
+        Collections.sort(filteredSuccessHeroStats, new Comparator<HeroStats>() {
+            @Override
+            public int compare(HeroStats lhs, HeroStats rhs) {
+                float diff = rhs.getWinPercent() - lhs.getWinPercent();
+                if (diff < 0.0f) {
+                    return -1;
+                } else if (diff > 0.0f) {
+                    return 1;
+                } else {
+                    //tie-breaker is the hero count
+                    int tieBreaker = rhs.heroCount - lhs.heroCount;
+
+                    if (tieBreaker == 0) {
+                        return lhs.hero.getLocalizedName().compareTo(rhs.hero.getLocalizedName());
+                    } else {
+                        return tieBreaker;
+                    }
+                }
+            }
+        });
+
+        int maxMostHeroes = Math.min(filteredSuccessHeroStats.size() / 2, MAX_SUCCESS_HEROES);
+        int maxLeastHeroes = Math.min(filteredSuccessHeroStats.size() / 2, MAX_SUCCESS_HEROES);
+
+        this.mostSuccessfulHeroes = new LinkedList(filteredSuccessHeroStats.subList(0, maxMostHeroes));
+
+        //filter out any heroes that lost 100% of the games (since they aren't very successful)
+        LinkedList<HeroStats> finalMost = new LinkedList();
+        for (HeroStats heroStats : mostSuccessfulHeroes) {
+            if (heroStats.getWinPercent() > 0.0f) {
+                finalMost.add(heroStats);
+            }
+        }
+
+        //make the most successful list
+        this.mostSuccessfulHeroes = finalMost;
+
+        //resort for the least successful list (can't just use the end, since the order isn't exactly the same
+        Collections.sort(filteredSuccessHeroStats, new Comparator<HeroStats>() {
+            @Override
+            public int compare(HeroStats lhs, HeroStats rhs) {
+                float diff = rhs.getWinPercent() - lhs.getWinPercent();
+                if (diff < 0.0f) {
+                    return 1;
+                }
+                else if (diff > 0.0f) {
+                    return -1;
+                }
+                else {
+                    //tie-breaker is the hero count
+                    int tieBreaker = rhs.heroCount - lhs.heroCount;
+
+                    if (tieBreaker == 0) {
+                        return rhs.hero.getLocalizedName().compareTo(lhs.hero.getLocalizedName());
+                    }
+                    else {
+                        return tieBreaker;
+                    }
+                }
+            }
+        });
+
+        this.leastSuccessfulHeroes = new LinkedList(filteredSuccessHeroStats.subList(0, maxLeastHeroes));
+
+        //filter out any heroes that won 100% of the games (since they are pretty successful)
+        LinkedList<HeroStats> finalLeast = new LinkedList();
+        for (HeroStats heroStats : leastSuccessfulHeroes) {
+            if (heroStats.getWinPercent() < 1.0f) {
+                finalLeast.add(heroStats);
+            }
+        }
+
+        //make the least successful list
+        this.leastSuccessfulHeroes = finalLeast;
+
+        //CALCULATE ALL HERO's FAVORED ITEMS HERE
+        for (HeroStats heroStats : heroStatsMap.values()) {
             heroStats.sort();
         }
 
+        //FAVORITE ITEM SORTING
         List<ItemStats> sortedItemStats = new LinkedList(itemStatsMap.values());
         Collections.sort(sortedItemStats, new Comparator<ItemStats>() {
             @Override
@@ -244,11 +371,12 @@ public class DotaStatistics {
         int maxFavoriteItems = Math.min(sortedItemStats.size(), MAX_FAVORITE_ITEMS);
         favoriteItems = new LinkedList(sortedItemStats.subList(0, maxFavoriteItems));
 
+        //FAVORITE MODE SORTING
         List<ModeStats> sortedModeStats = new LinkedList(modeStatsMap.values());
         Collections.sort(sortedModeStats, new Comparator<ModeStats>() {
             @Override
             public int compare(ModeStats lhs, ModeStats rhs) {
-                return rhs.gameCount - lhs.gameCount;
+                return rhs.getGameCount() - lhs.getGameCount();
             }
         });
 
@@ -444,12 +572,24 @@ public class DotaStatistics {
         return list;
     }
 
+    public List<HeroStats> getAllHeroes() {
+        return allHeroes;
+    }
+
     public List<ItemStats> getFavoriteItems() {
         return favoriteItems;
     }
 
     public List<HeroStats> getFavoriteHeroes() {
         return favoriteHeroes;
+    }
+
+    public List<HeroStats> getMostSuccessfulHeroes() {
+        return mostSuccessfulHeroes;
+    }
+
+    public List<HeroStats> getLeastSuccessfulHeroes() {
+        return leastSuccessfulHeroes;
     }
 
     public List<ModeStats> getFavoriteGameModes() {
@@ -589,33 +729,54 @@ public class DotaStatistics {
             purchaseCount = 0;
         }
 
+        public boolean isPurchaseCountGreaterThanOne() {
+            return purchaseCount > 1;
+        }
+
         public int getTotalCost() {
             return item.getItemCost() * purchaseCount;
         }
 
-        public String getWinString() {
+        public String getWinString(Resources resources) {
             float percent = (float)winCount / (float)gameCount * 100.0f;
-            return String.format("%.1f", percent) + "%";
+            return resources.getString(R.string.player_statistics_single_float_one_decimal_with_percent, percent);
         }
     }
 
     public static class ModeStats {
         public Match.GameMode mode;
-        public int gameCount;
+        public List<String> matchIds;
         public int winCount;
 
         public ModeStats(Match.GameMode mode) {
             this.mode = mode;
-            gameCount = 0;
+            matchIds = new LinkedList();
             winCount = 0;
         }
 
+        public void addMatch(String matchId) {
+            matchIds.add(matchId);
+        }
+
+        public int getGameCount() {
+            return matchIds.size();
+        }
+
         public String getGameCountString() {
-            return String.valueOf(gameCount);
+            return String.valueOf(getGameCount());
         }
 
         public String getWinPercentString(Resources resources) {
-            return String.format(resources.getString(R.string.player_statistics_single_float_one_decimal_with_percent), (float)winCount / (float)gameCount * 100.0f);
+            return String.format(resources.getString(R.string.player_statistics_single_float_one_decimal_with_percent), (float)winCount / (float)getGameCount() * 100.0f);
+        }
+
+        public String getSummaryString(Resources resources) {
+            if (getGameCount() <= 1) {
+                return String.format(resources.getString(R.string.player_statistics_mode_info_summary_text_single), getGameCount(), (float)winCount / (float)getGameCount() * 100.0f);
+            }
+            else {
+                return String.format(resources.getString(R.string.player_statistics_mode_info_summary_text_plural), getGameCount(), (float)winCount / (float)getGameCount() * 100.0f);
+            }
         }
     }
 
@@ -643,13 +804,21 @@ public class DotaStatistics {
             itemStats.purchaseCount++;
         }
 
+        public boolean isMatchCountGreaterThanOne() {
+            return heroCount > 1;
+        }
+
+        public float getWinPercent() {
+            return (float)winCount / (float)heroCount;
+        }
+
         public String getMatchCountString(Resources resources) {
-            return String.format(resources.getString(R.string.player_statistics_favorite_hero_matches_text), heroCount);
+            return String.valueOf(heroCount);
         }
 
         public String getWinPercentString(Resources resources) {
             float percent = (float)winCount / (float)heroCount * 100.0f;
-            return String.format(resources.getString(R.string.player_statistics_favorite_hero_wind_percent), percent);
+            return String.format(resources.getString(R.string.player_statistics_single_float_one_decimal_with_percent), percent);
         }
 
         public void sort() {

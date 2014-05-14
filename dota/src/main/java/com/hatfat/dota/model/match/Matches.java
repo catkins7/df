@@ -22,7 +22,7 @@ public class Matches {
     public final static String MATCHES_LOADING_PROGRESS_NOTIFICATION = "MATCHES_LOADING_PROGRESS_NOTIFICATION";
     public final static String MATCHES_LOADING_PERCENT_COMPLETE = "MATCHES_LOADING_PERCENT_COMPLETE";
 
-    private static final String USER_MATCHES_FILE_EXTENSION = "_matches.json";
+    public static final String USER_MATCHES_FILE_EXTENSION = "_matches.json";
 
     private int loadingProgress;
     private boolean isLoaded;

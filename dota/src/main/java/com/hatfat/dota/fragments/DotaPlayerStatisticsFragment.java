@@ -126,24 +126,31 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                 for (String matchId : user.getMatches()) {
                     Match match = Matches.get().getMatch(matchId);
 
-                    if (!match.shouldBeUsedInStatistics()) {
-                        continue;
+                    if (match.shouldBeUsedInRealStatistics()) {
+                        switch (statsMode) {
+                            case ALL_HEROES:
+                            case ALL_FAVORITES:
+                            case ALL_SUCCESS_STATS:
+                                statsMatches.add(match);
+                                break;
+                            case RANKED_STATS:
+                                if (match.isRankedMatchmaking()) {
+                                    statsMatches.add(match);
+                                }
+                                break;
+                            case PUBLIC_STATS:
+                                if (match.isPublicMatchmaking()) {
+                                    statsMatches.add(match);
+                                }
+                                break;
+                        }
                     }
-
-                    switch (statsMode) {
-                        case ALL_FAVORITES:
-                            statsMatches.add(match);
-                            break;
-                        case RANKED_STATS:
-                            if (match.isRankedMatchmaking()) {
+                    else {
+                        switch (statsMode) {
+                            case OTHER_STATS:
                                 statsMatches.add(match);
-                            }
-                            break;
-                        case PUBLIC_STATS:
-                            if (match.isPublicMatchmaking()) {
-                                statsMatches.add(match);
-                            }
-                            break;
+                                break;
+                        }
                     }
                 }
 
@@ -214,12 +221,20 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
             switch (statsMode) {
                 case ALL_FAVORITES:
                     return String.format(resources.getString(R.string.player_statistics_charlton_text_all_favorites), user.getDisplayName());
+                case ALL_SUCCESS_STATS:
+                    return String.format(resources.getString(R.string.player_statistics_charlton_text_success), user.getDisplayName());
                 case RANKED_STATS:
-                    return resources
-                            .getString(R.string.player_statistics_charlton_text_ranked_stats);
+                    return String.format(resources
+                            .getString(R.string.player_statistics_charlton_text_ranked_stats), user.getDisplayName());
+                case OTHER_STATS:
+                    return String.format(resources
+                            .getString(R.string.player_statistics_charlton_text_other_stats), user.getDisplayName());
                 case PUBLIC_STATS:
-                    return resources
-                            .getString(R.string.player_statistics_charlton_text_public_stats);
+                    return String.format(resources
+                            .getString(R.string.player_statistics_charlton_text_public_stats), user.getDisplayName());
+                case ALL_HEROES:
+                    return String.format(resources
+                            .getString(R.string.player_statistics_charlton_text_all_heroes_stats), user.getDisplayName());
             }
         }
 

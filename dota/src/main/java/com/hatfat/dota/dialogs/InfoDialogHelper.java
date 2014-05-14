@@ -25,7 +25,7 @@ public class InfoDialogHelper {
 
         View contentView = inflater.inflate(R.layout.dialog_info, null);
 
-        builder.setTitle(R.string.player_statistics_menu_info_text);
+        builder.setTitle(R.string.player_summary_menu_info_text);
         builder.setView(contentView);
 
         final String[] messages = activity.getResources().getStringArray(R.array.stats_info_string_array);

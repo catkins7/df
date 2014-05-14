@@ -4,11 +4,27 @@
         name="stats_info_string_array">
 
         <item><![CDATA[
-        The <b><u>Player Summary</u></b> page displays a quick glance of a player\'s win percentage for public and ranked games.  It also contains a list of all known matches for this player.
+        The <b><u>Summary</u></b> tab displays a quick glance of a player\'s win percentage for public and ranked games.  It also contains a list of all known matches for this player.
         ]]></item>
 
         <item><![CDATA[
-        The <b><u>Statistics Drawer</u></b> has many more statistics available than the player summary page.  Only games that lasted more than five minutes are used in statistics calculations!
+        The <b><u>Favorites</u></b> tab uses both Public and Ranked matches in its calculations.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Success</u></b> tab uses both Public and Ranked matches in its calculations and only considers heroes that have been played in at least 1% of matches.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Ranked</u></b> and <b><u>Public</u></b> tabs have many more statistics than the Summary tab.  Only games that lasted more than five minutes are used in any statistics calculations!
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Other</u></b> tab contains statistics for all matches not used in the <b>Public</b> and <b>Ranked</b> tabs.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>All Heroes</u></b> tab displays a list of all heroes you have played in any Public or Ranked match.
         ]]></item>
 
         <item><![CDATA[
@@ -28,7 +44,7 @@
         ]]></item>
 
         <item><![CDATA[
-        The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) of all players in each game.
+        The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) of all ten players in each game.
         ]]></item>
 
         <!--<item><![CDATA[-->

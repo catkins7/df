@@ -5,6 +5,9 @@
     <color name="off_black">#ff222222</color>
     <color name="off_gray">#ffbbbbbb</color>
     <color name="off_gold">#ffcccc00</color>
+    <color name="off_blue">#ff000055</color>
+
+    <color name="medium_gray">#ff999999</color>
 
     <color name="steam_light_blue">#ff86b5d9</color>
 

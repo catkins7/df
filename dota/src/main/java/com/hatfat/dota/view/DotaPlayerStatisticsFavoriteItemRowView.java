@@ -17,6 +17,7 @@ public class DotaPlayerStatisticsFavoriteItemRowView extends RelativeLayout {
 
     private ImageView iconImageView;
     private TextView countTextView;
+    private TextView countLabelTextView;
     private TextView winTextView;
 
     public DotaPlayerStatisticsFavoriteItemRowView(Context context) {
@@ -25,6 +26,7 @@ public class DotaPlayerStatisticsFavoriteItemRowView extends RelativeLayout {
 
         iconImageView = (ImageView) findViewById(R.id.view_stats_favorite_item_row_icon_image_view);
         countTextView = (TextView) findViewById(R.id.view_stats_favorite_item_row_count_text_view);
+        countLabelTextView = (TextView) findViewById(R.id.view_stats_favorite_item_row_count_label_text_view);
         winTextView = (TextView) findViewById(R.id.view_stats_favorite_item_row_win_text_view);
     }
 
@@ -36,7 +38,14 @@ public class DotaPlayerStatisticsFavoriteItemRowView extends RelativeLayout {
 
     private void updateViews() {
         Picasso.with(DotaFriendApplication.CONTEXT).load(itemStats.item.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(iconImageView);
-        countTextView.setText("x" + itemStats.purchaseCount);
-        winTextView.setText(itemStats.getWinString());
+        countTextView.setText(String.valueOf(itemStats.purchaseCount));
+        winTextView.setText(itemStats.getWinString(getResources()));
+
+        if (itemStats.isPurchaseCountGreaterThanOne()) {
+            countLabelTextView.setText(R.string.player_statistics_favorite_hero_purchase_count_label_text_plural);
+        }
+        else {
+            countLabelTextView.setText(R.string.player_statistics_favorite_hero_purchase_count_label_text_single);
+        }
     }
 }

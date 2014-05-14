@@ -25,8 +25,11 @@
     <string name="tab_match_summary_title">Summary</string>
     <string name="tab_player_summary_title">Summary</string>
     <string name="tab_player_favorites_title">Favorites</string>
+    <string name="tab_player_success_title">Success</string>
     <string name="tab_player_ranked_stats_title">Ranked Stats</string>
     <string name="tab_player_public_stats_title">Public Stats</string>
+    <string name="tab_player_other_stats_title">Other Stats</string>
+    <string name="tab_player_all_heroes_stats_title">All Heroes</string>
     <string name="tab_search_results_title">Search Results</string>
     <string name="tab_starred_players_title">Starred</string>
     <string name="tab_add_player_title">Add Player</string>
@@ -54,6 +57,7 @@
     <string name="player_summary_public_matchmaking_summary">%1$.1f%% Public Matches</string>
     <string name="player_summary_no_public_matches_string">No Public Matches</string>
     <string name="player_summary_no_ranked_matches_string">No Ranked Matches</string>
+    <string name="player_summary_menu_info_text">Player Information</string>
 
     <string name="player_summary_fetch_all_dialog_title">Fetch All Matches?</string>
     <string name="player_summary_fetch_all_dialog_stop_text">Stop</string>
@@ -67,12 +71,12 @@
 
     <string name="player_summary_charlton_text">Here is %1$s\'s [%2$s] player summary.</string>
 
-    <string name="player_statistics_menu_info_text">Statistics Information</string>
     <string name="player_statistics_loading_text">Calculating…</string>
     <string name="player_statistics_favorite_heroes_title_text">Favorite Heroes</string>
     <string name="player_statistics_favorite_heroes_subtitle_text">Favored Items</string>
     <string name="player_statistics_favorite_items_title_text">Favorite Items</string>
-    <string name="player_statistics_favorite_items_subtitle_text">Win %</string>
+    <string name="player_statistics_most_success_heroes_title_text">Most Successful</string>
+    <string name="player_statistics_least_success_heroes_title_text">Least Successful</string>
     <string name="player_statistics_cs_score_text">CS Score</string>
     <string name="player_statistics_gpm_score_text">GPM Score</string>
     <string name="player_statistics_xpm_score_text">XPM Score</string>
@@ -91,21 +95,34 @@
     <string name="player_statistics_avg_xpm_title_text">XPM</string>
     <string name="player_statistics_avg_gpm_title_text">GPM</string>
     <string name="player_statistics_averages_text">Averages</string>
+    <string name="player_statistics_mode_info_summary_text_single">%1$d match (%2$.1f%%)</string>
+    <string name="player_statistics_mode_info_summary_text_plural">%1$d matches (%2$.1f%%)</string>
     <string name="player_statistics_single_float_one_decimal">%1$.1f</string>
     <string name="player_statistics_single_float_two_decimal">%1$.2f</string>
     <string name="player_statistics_single_float_one_decimal_with_percent">%1$.1f%%</string>
-    <string name="player_statistics_favorite_hero_matches_text">%1$d matches</string>
-    <string name="player_statistics_favorite_hero_wind_percent">%1$.1f%% win rate</string>
+
+    <string name="player_statistics_favorite_hero_win_percent_label_text">win rate</string>
+
+    <string name="player_statistics_favorite_hero_matches_label_text_single">match</string>
+    <string name="player_statistics_favorite_hero_matches_label_text_plural">matches</string>
+
+    <string name="player_statistics_favorite_hero_purchase_count_label_text_single">purchase</string>
+    <string name="player_statistics_favorite_hero_purchase_count_label_text_plural">purchases</string>
 
     <string name="player_statistics_recent_matches_title_text">Recent Ranked Matches</string>
     <string name="player_statistics_all_matches_title_text">All Matches</string>
     <string name="player_statistics_all_public_matches_title_text">Public Matches</string>
     <string name="player_statistics_all_ranked_matches_title_text">Ranked Matches</string>
+    <string name="player_statistics_other_matches_title_text">Other Matches</string>
+    <string name="player_statistics_modes_info_title_text">Game Modes</string>
 
     <string name="player_statistics_charlton_text_default">Please enjoy some statistics.</string>
+    <string name="player_statistics_charlton_text_success">These are %1$s\'s most and least successful heroes.</string>
     <string name="player_statistics_charlton_text_all_favorites">These are %1$s\'s most used heroes and items.</string>
-    <string name="player_statistics_charlton_text_ranked_stats">Ranked match statistics.  The real deal.</string>
-    <string name="player_statistics_charlton_text_public_stats">Public matches… bleh.</string>
+    <string name="player_statistics_charlton_text_ranked_stats">Here are %1$s\'s ranked match statistics.  The real deal.</string>
+    <string name="player_statistics_charlton_text_public_stats">These are %1$s\'s public matches… bleh.</string>
+    <string name="player_statistics_charlton_text_other_stats">Other match statistics for %1$s.</string>
+    <string name="player_statistics_charlton_text_all_heroes_stats">All heroes for %1$s.</string>
 
     <string name="add_new_player_search_text">Search</string>
     <string name="add_new_player_search_hint">Player Name or Steam ID</string>

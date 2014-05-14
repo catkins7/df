@@ -192,7 +192,7 @@ public class SteamUser {
                 matchesWithDetailsCount++;
             }
 
-            if (!match.shouldBeUsedInStatistics()) {
+            if (!match.shouldBeUsedInRealStatistics()) {
                 //don't use matches we shouldn't be!
                 continue;
             }
