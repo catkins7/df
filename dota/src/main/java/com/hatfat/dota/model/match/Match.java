@@ -114,7 +114,7 @@ public class Match implements Comparable {
 
 //    https://github.com/SteamRE/SteamKit/blob/master/Resources/Protobufs/dota/dota_gcmessages_common.proto
     public enum GameMode {
-        None("None"),
+        None("No Mode"),  //games played before the game mode was added to the data
         AllPick("All Pick"),
         CaptainsMode("Captains Mode"),
         RandomDraft("Random Draft"),
@@ -134,7 +134,7 @@ public class Match implements Comparable {
         BalancedDraft("Balanced Draft"),
         AbilityDraft("Ability Draft"),
         Event("Event"),
-        Unknown("Unknown");
+        Unknown("");
 
         private String gameModeName;
 
@@ -316,6 +316,7 @@ public class Match implements Comparable {
         }
 
         switch (getGameMode()) {
+            case None:
             case AllPick:
             case CaptainsMode:
             case RandomDraft:

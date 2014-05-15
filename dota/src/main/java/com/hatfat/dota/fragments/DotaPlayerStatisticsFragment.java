@@ -146,10 +146,12 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                         }
                     }
                     else {
-                        switch (statsMode) {
-                            case OTHER_STATS:
-                                statsMatches.add(match);
-                                break;
+                        if (match.hasMatchDetails()) {
+                            switch (statsMode) {
+                                case OTHER_STATS:
+                                    statsMatches.add(match);
+                                    break;
+                            }
                         }
                     }
                 }

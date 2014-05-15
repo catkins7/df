@@ -16,17 +16,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.MatchActivity;
+import com.hatfat.dota.adapters.MatchListAdapter;
 import com.hatfat.dota.dialogs.FetchMatchesDialogHelper;
 import com.hatfat.dota.dialogs.InfoDialogHelper;
 import com.hatfat.dota.model.match.Match;
@@ -37,8 +36,7 @@ import com.hatfat.dota.services.MatchFetcher;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -66,10 +64,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private Button friendToggleButton;
     private Button fetchAllMatchesButton;
 
-    private BaseAdapter matchesAdapter;
-    private ArrayList<String> sortedMatches;
-
-    private boolean fetchingMatches;
+    private MatchListAdapter matchAdapter;
 
     public static Bundle newBundleForUser(String steamUserId) {
         Bundle args = new Bundle();
@@ -129,8 +124,8 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             }
         });
 
-        updateMatchList();
         setupMatchesList();
+        updateMatchList();
         updateViews();
         updateMatchInfoViews();
 
@@ -144,22 +139,16 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         SteamUsers.get().refreshUser(user);
 
         if (user.isRealUser()) {
-            fetchingMatches = true;
+            matchAdapter.setFetchingMatches(true);
             MatchFetcher.fetchMatches(user, new Callback<List<Match>>() {
                 @Override
                 public void success(List<Match> matches, Response response) {
-                    fetchingMatches = false;
-
-                    if (matches == null || matches.size() <= 0) {
-                        //no matches, but we want to remove the progress bar and show the no matches row so reload
-                        matchesAdapter.notifyDataSetChanged();
-                    }
+                    matchAdapter.setFetchingMatches(false);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    fetchingMatches = false;
-                    matchesAdapter.notifyDataSetChanged();
+                    matchAdapter.setFetchingMatches(false);
                 }
             });
         }
@@ -208,7 +197,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                         updateMatchInfoViews();
                     }
 
-                    if (matchesListView != null && matchesAdapter != null) {
+                    if (matchesListView != null && matchAdapter != null) {
                         for (int i = 0; i < matchesListView.getChildCount(); i++) {
                             View view = matchesListView.getChildAt(i);
 
@@ -239,105 +228,22 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void setupMatchesList() {
-        matchesAdapter = new BaseAdapter() {
-            @Override
-            public int getCount() {
-                if (sortedMatches.size() <= 0) {
-                    return 1;
-                }
-                else {
-                    return sortedMatches.size();
-                }
-            }
+        matchAdapter = new MatchListAdapter(user);
 
-            @Override
-            public Match getItem(int i) {
-                return Matches.get().getMatch(sortedMatches.get(i));
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return 0;
-            }
-
-            @Override
-            public int getItemViewType(int position) {
-                if (sortedMatches.size() <= 0) {
-                    return 0;
-                }
-                else {
-                    return 1;
-                }
-            }
-
-            @Override
-            public int getViewTypeCount() {
-                return 2;
-            }
-
-            @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-                if (sortedMatches.size() <= 0) {
-                    //no users
-
-                    if (fetchingMatches) {
-                        ProgressBar progressBar = new ProgressBar(viewGroup.getContext());
-                        progressBar.setBackgroundResource(R.drawable.off_black_background);
-                        progressBar.setIndeterminate(true);
-
-                        return progressBar;
-                    }
-                    else {
-                        TextView textView = new TextView(viewGroup.getContext());
-
-                        textView.setBackgroundResource(R.drawable.off_black_background);
-                        textView.setText(R.string.no_matches);
-                        textView.setTextColor(getResources().getColor(R.color.off_white));
-                        textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.font_size_tiny));
-
-                        int padding = (int) getResources().getDimension(R.dimen.default_padding);
-                        textView.setPadding(padding, padding, padding, padding);
-
-                        return textView;
-                    }
-                }
-
-                Match match = getItem(i);
-                match.getMatchDetailsIfNeeded();
-                MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
-
-                if (matchView == null) {
-                    matchView = new MatchViewForPlayerBasic(viewGroup.getContext());
-                }
-
-                matchView.setMatchAndUser(match, user);
-
-                return matchView;
-            }
-        };
-
-        matchesListView.setAdapter(matchesAdapter);
-
+        matchesListView.setAdapter(matchAdapter);
         matchesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (sortedMatches.size() > i) {
-                    Match match = (Match) matchesAdapter.getItem(i);
-
-                    Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
-                    startActivity(intent);
-                }
+                Match match = matchAdapter.getItem(i);
+                Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
+                startActivity(intent);
             }
         });
     }
 
     private void updateMatchList() {
-        sortedMatches = new ArrayList<>();
-        sortedMatches.addAll(user.getMatches());
-        Collections.sort(sortedMatches, Match.getMatchIdComparator());
-
-        if (matchesListView != null && matchesAdapter != null) {
-            matchesAdapter.notifyDataSetChanged();
+        if (matchesListView != null && matchAdapter != null) {
+            matchAdapter.setMatches(new LinkedList(user.getMatches()));
         }
     }
 

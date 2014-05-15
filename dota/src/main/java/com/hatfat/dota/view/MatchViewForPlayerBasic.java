@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Hero;
@@ -56,7 +57,6 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         TextView timeAgoTextView = (TextView) findViewById(R.id.view_match_player_basic_date_text_view);
         TextView victoryTextView = (TextView) findViewById(R.id.view_match_player_basic_victory_text_view);
 
-        matchIdTextView.setText(match.getGameModeString());
         timeAgoTextView.setText(match.getTimeAgoString());
 
         if (match.isRankedMatchmaking()) {
@@ -67,6 +67,10 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         }
 
         Player player = match.getPlayerForSteamUser(user);
+
+        matchIdTextView.setText(match.getGameModeString());
+//        matchIdTextView.setText(player.getKdaString());
+
         Hero hero = player == null ? null : Heroes.get().getHero(player.getHeroIdString());
 
         if (player != null) {

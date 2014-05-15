@@ -26,7 +26,8 @@ public class DotaStatistics {
         PUBLIC_STATS(3),
         ALL_SUCCESS_STATS(4),
         OTHER_STATS(5),
-        ALL_HEROES(6);
+        ALL_HEROES(6),
+        CUSTOM_STATS(7);
 
         private int statsMode;
 
@@ -52,8 +53,23 @@ public class DotaStatistics {
                     return OTHER_STATS;
                 case 6:
                     return ALL_HEROES;
+                case 7:
+                    return CUSTOM_STATS;
                 default:
                     return PUBLIC_STATS;
+            }
+        }
+
+        public String getModePrefixString(Resources resources) {
+            switch (this) {
+                case PUBLIC_STATS:
+                    return resources.getString(R.string.player_statistics_public_prefix_text);
+                case RANKED_STATS:
+                    return resources.getString(R.string.player_statistics_ranked_prefix_text);
+                case OTHER_STATS:
+                    return resources.getString(R.string.player_statistics_other_prefix_text);
+                default:
+                    return null;
             }
         }
     }
@@ -214,7 +230,7 @@ public class DotaStatistics {
                 heroStatsMap.put(hero, heroStats);
             }
 
-            heroStats.heroCount++;
+            heroStats.addMatch(match.getMatchId());
 
             if (match.getPlayerMatchResultForPlayer(player).equals(Match.PlayerMatchResult.PLAYER_MATCH_RESULT_VICTORY)) {
                 modeStats.winCount++;
@@ -253,7 +269,7 @@ public class DotaStatistics {
         Collections.sort(popularHeroStats, new Comparator<HeroStats>() {
             @Override
             public int compare(HeroStats lhs, HeroStats rhs) {
-                return rhs.heroCount - lhs.heroCount;
+                return rhs.getMatchCount() - lhs.getMatchCount();
             }
         });
 
@@ -269,12 +285,12 @@ public class DotaStatistics {
         List<HeroStats> filteredSuccessHeroStats = new LinkedList();
 
         for (HeroStats heroStats : successHeroStats) {
-            if (heroStats.heroCount >= gameCountThreshold) {
+            if (heroStats.getMatchCount() >= gameCountThreshold) {
                 filteredSuccessHeroStats.add(heroStats);
             }
         }
 
-        if (filteredSuccessHeroStats.size() <= 0) {
+        if (filteredSuccessHeroStats.size() < 2) {
             //no heroes were played enough!! just use all of them...
             filteredSuccessHeroStats = successHeroStats;
         }
@@ -289,7 +305,7 @@ public class DotaStatistics {
                     return 1;
                 } else {
                     //tie-breaker is the hero count
-                    int tieBreaker = rhs.heroCount - lhs.heroCount;
+                    int tieBreaker = rhs.getMatchCount() - lhs.getMatchCount();
 
                     if (tieBreaker == 0) {
                         return lhs.hero.getLocalizedName().compareTo(rhs.hero.getLocalizedName());
@@ -329,7 +345,7 @@ public class DotaStatistics {
                 }
                 else {
                     //tie-breaker is the hero count
-                    int tieBreaker = rhs.heroCount - lhs.heroCount;
+                    int tieBreaker = rhs.getMatchCount() - lhs.getMatchCount();
 
                     if (tieBreaker == 0) {
                         return rhs.hero.getLocalizedName().compareTo(lhs.hero.getLocalizedName());
@@ -790,7 +806,7 @@ public class DotaStatistics {
 
     public static class HeroStats {
         public Hero hero;
-        public int heroCount;
+        public List<String> matchIds;
         public int winCount;
 
         public HashMap<Item, ItemStats> itemStatsMap = new HashMap();
@@ -798,7 +814,11 @@ public class DotaStatistics {
 
         public HeroStats(Hero hero) {
             this.hero = hero;
-            heroCount = 0;
+            matchIds = new LinkedList();
+        }
+
+        public void addMatch(String matchId) {
+            matchIds.add(matchId);
         }
 
         public void addItem(Item item) {
@@ -812,20 +832,28 @@ public class DotaStatistics {
             itemStats.purchaseCount++;
         }
 
+        public int getMatchCount() {
+            return matchIds.size();
+        }
+
+        public List<String> getMatchIds() {
+            return matchIds;
+        }
+
         public boolean isMatchCountGreaterThanOne() {
-            return heroCount > 1;
+            return getMatchCount() > 1;
         }
 
         public float getWinPercent() {
-            return (float)winCount / (float)heroCount;
+            return (float)winCount / (float)getMatchCount();
         }
 
         public String getMatchCountString(Resources resources) {
-            return String.valueOf(heroCount);
+            return String.valueOf(getMatchCount());
         }
 
         public String getWinPercentString(Resources resources) {
-            float percent = (float)winCount / (float)heroCount * 100.0f;
+            float percent = (float)winCount / (float)getMatchCount() * 100.0f;
             return String.format(resources.getString(R.string.player_statistics_single_float_one_decimal_with_percent), percent);
         }
 

@@ -1,10 +1,13 @@
 0.4.3 More Stats Release
 ---------------------------
-be able to click through a HERO stats row or a MODE stats row to get the list of backing matches
+put sexy border around charlton icon (like hero images on match rows?)
+
+check calculations for CSScore and TeamworkScore and others cause they're getting NaN or Infinity sometimes with OTHER stats, or low match counts?
 
 swipe between tabs??  would be really nice...
 
 Just Before Beta Release
+ -quick look over new classes
  -LINT checks
  -memory checks
  -fresh install checks
@@ -51,6 +54,8 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
+pro match upcoming ticker:  http://www.reddit.com/r/DotA2/comments/1u86ht/free_matchticker_api_the_one_rdota2_also_uses_now/
+
 pro players list?  pro teams?  for easy access to pro player profiles.  maybe another tab on starred users activity
 
 Premium version of the app, after play store general release?  would be a paid version ($4?) that has additional features 

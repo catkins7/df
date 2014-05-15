@@ -181,6 +181,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         setupLoadingSections();
     }
 
+    private String customLabel; //pretty hacky...
+
     private Resources resources;
     private List<StatsSection> sections;
 
@@ -208,6 +210,10 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             //we don't have any data!
             setupNoDataSections();
         }
+    }
+
+    public void setCustomLabel(String customLabel) {
+        this.customLabel = customLabel;
     }
 
     @Override
@@ -311,13 +317,23 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         else {
             //favorite hero row
             int heroPosition = position - 1;
-            DotaStatistics.HeroStats stats = heroStats.get(heroPosition);
+            final DotaStatistics.HeroStats stats = heroStats.get(heroPosition);
 
             DotaPlayerStatisticsFavoriteHeroRowView statsView = (DotaPlayerStatisticsFavoriteHeroRowView) convertView;
 
             if (statsView == null) {
                 statsView = new DotaPlayerStatisticsFavoriteHeroRowView(parent.getContext());
             }
+
+            statsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<String> matchIds = new ArrayList(stats.getMatchIds());
+                    Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), stats.hero.getLocalizedName(), matchIds);
+                    v.getContext().startActivity(intent);
+                }
+            });
 
             statsView.setHeroStats(stats);
 
@@ -389,12 +405,15 @@ public class DotaStatisticsAdapter extends BaseAdapter {
 
             final DotaStatistics.ModeStats modeStats = dotaStatistics.getFavoriteGameModes().get(position - 1);
 
+            String modePrefix = this.statsMode.getModePrefixString(resources);
+            final String label = modePrefix == null ? modeStats.mode.getGameModeName() : modePrefix + " " + modeStats.mode.getGameModeName();
+
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ArrayList<String> matchIds = new ArrayList(modeStats.getMatchIds());
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
-                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), modeStats.mode.getGameModeName(), matchIds);
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, matchIds);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -682,6 +701,12 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                         new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
                 sections.add(new StatsSection(StatsSectionType.SECTION_MODE_INFO, dotaStatistics,
                         resources.getString(R.string.player_statistics_modes_info_title_text)));
+                break;
+            case CUSTOM_STATS:
+                sections.add(
+                        new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics, customLabel));
+                sections.add(
+                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
                 break;
         }
 

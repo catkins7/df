@@ -1,6 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="default_padding">8dp</dimen>
+    <dimen name="default_padding_half">4dp</dimen>
 
     <dimen name="button_corner_radius">4dp</dimen>
 

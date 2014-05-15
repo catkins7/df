@@ -20,7 +20,7 @@
         ]]></item>
 
         <item><![CDATA[
-        The <b><u>Other</u></b> tab contains statistics for all matches not used in the <b>Public</b> and <b>Ranked</b> tabs.
+        The <b><u>Other</u></b> tab contains statistics for all matches not used in the <b>Public</b> and <b>Ranked</b> tabs.  This includes matches that were excluded because they are less than five minutes long.
         ]]></item>
 
         <item><![CDATA[

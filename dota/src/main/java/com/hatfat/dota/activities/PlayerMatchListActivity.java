@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.PlayerMatchListFragment;
+import com.hatfat.dota.fragments.PlayerMatchListStatisticsFragment;
 import com.hatfat.dota.tabs.CharltonTab;
 
 import java.util.ArrayList;
@@ -44,15 +46,17 @@ public class PlayerMatchListActivity extends CharltonActivity {
 
     @Override
     protected List<CharltonTab> createTabs() {
-//        return new LinkedList<CharltonTab>();
         LinkedList<CharltonTab> tabs = new LinkedList();
 
         Bundle matchListBundle = PlayerMatchListFragment
                 .newBundleForUserAndMatches(steamUserId, label, matchIds);
+        Bundle statsBundle = PlayerMatchListStatisticsFragment.newBundleForUserAndMatches(steamUserId, label, matchIds);
 
         CharltonTab<PlayerMatchListFragment> matchesTab = new CharltonTab(this, label, PlayerMatchListFragment.class, matchListBundle);
+        CharltonTab<PlayerMatchListStatisticsFragment> statsTab = new CharltonTab(this, getString(R.string.player_match_list_stats_tab_text), PlayerMatchListStatisticsFragment.class, statsBundle);
 
         tabs.add(matchesTab);
+        tabs.add(statsTab);
 
         return tabs;
     }

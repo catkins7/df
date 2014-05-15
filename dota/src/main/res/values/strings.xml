@@ -57,7 +57,7 @@
     <string name="player_summary_public_matchmaking_summary">%1$.1f%% Public Matches</string>
     <string name="player_summary_no_public_matches_string">No Public Matches</string>
     <string name="player_summary_no_ranked_matches_string">No Ranked Matches</string>
-    <string name="player_summary_menu_info_text">Player Information</string>
+    <string name="player_summary_menu_info_text">Info</string>
 
     <string name="player_summary_fetch_all_dialog_title">Fetch All Matches?</string>
     <string name="player_summary_fetch_all_dialog_stop_text">Stop</string>
@@ -70,8 +70,17 @@
     <string name="player_summary_fetch_all_dialog_error_message_text">Unable to fetch match history.\n\nThis probably means that the Dota 2 API is temporarily unavailable.</string>
 
     <string name="player_summary_charlton_text">Here is %1$s\'s [%2$s] player summary.</string>
-    <string name="player_match_list_charlton_text">Here are all of %1$s\'s %2$s matches.</string>
 
+    <string name="player_match_list_charlton_text">Here are %1$s\'s %2$s matches.</string>
+    <string name="player_match_list_match_count_text">%1$d matches</string>
+    <string name="player_match_list_win_rate_text">%1$.1f%% win rate</string>
+    <string name="player_match_list_stats_tab_text">stats</string>
+    <string name="player_match_list_stats_tab_charlton_text">These are %1$s\'s %2$s statistics.</string>
+    <string name="player_match_list_stats_tab_title_text">%1$s Matches</string>
+
+    <string name="player_statistics_public_prefix_text">Public</string>
+    <string name="player_statistics_ranked_prefix_text">Ranked</string>
+    <string name="player_statistics_other_prefix_text">Other</string>
     <string name="player_statistics_loading_text">Calculating…</string>
     <string name="player_statistics_favorite_heroes_title_text">Favorite Heroes</string>
     <string name="player_statistics_favorite_heroes_subtitle_text">Favored Items</string>

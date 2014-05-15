@@ -22,7 +22,7 @@
         <FrameLayout
             android:id="@+id/fragment_loading_percent_frame_layout"
             android:background="@drawable/black_green_background"
-            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding_half"
             android:layout_below="@id/fragment_loading_info_text_view"
             android:layout_width="0dp"
             android:layout_height="@dimen/text_view_height_medium"/>
