@@ -697,6 +697,10 @@ public class DotaStatistics {
         return avgDuration;
     }
 
+    public SteamUser getSteamUser() {
+        return user;
+    }
+
     public String getAvgKDAString(Resources resources) {
         String string = resources.getString(R.string.player_statistics_avg_kda_text);
         return String.format(string, avgKills, avgDeaths, avgAssists);
@@ -760,6 +764,10 @@ public class DotaStatistics {
 
         public int getGameCount() {
             return matchIds.size();
+        }
+
+        public List<String> getMatchIds() {
+            return matchIds;
         }
 
         public String getGameCountString() {

@@ -251,7 +251,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             }
 
             @Override
-            public Object getItem(int i) {
+            public Match getItem(int i) {
                 return Matches.get().getMatch(sortedMatches.get(i));
             }
 
@@ -302,7 +302,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                     }
                 }
 
-                Match match = (Match) getItem(i);
+                Match match = getItem(i);
                 match.getMatchDetailsIfNeeded();
                 MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
 

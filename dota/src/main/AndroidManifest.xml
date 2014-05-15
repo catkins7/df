@@ -36,6 +36,15 @@
         </activity>
 
         <activity
+            android:name=".activities.PlayerMatchListActivity"
+            android:theme="@style/CharltonTheme"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hatfat.dota.activities.StarredUsersActivity" />
+        </activity>
+
+        <activity
             android:name=".activities.MatchActivity"
             android:theme="@style/CharltonTheme"
             android:screenOrientation="portrait">

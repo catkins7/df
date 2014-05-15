@@ -70,6 +70,7 @@
     <string name="player_summary_fetch_all_dialog_error_message_text">Unable to fetch match history.\n\nThis probably means that the Dota 2 API is temporarily unavailable.</string>
 
     <string name="player_summary_charlton_text">Here is %1$s\'s [%2$s] player summary.</string>
+    <string name="player_match_list_charlton_text">Here are all of %1$s\'s %2$s matches.</string>
 
     <string name="player_statistics_loading_text">Calculating…</string>
     <string name="player_statistics_favorite_heroes_title_text">Favorite Heroes</string>

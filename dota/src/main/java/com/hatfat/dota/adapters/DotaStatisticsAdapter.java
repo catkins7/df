@@ -1,6 +1,7 @@
 package com.hatfat.dota.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.PlayerMatchListActivity;
 import com.hatfat.dota.model.game.DotaStatistics;
 import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteHeroRowView;
 import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteItemRowView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -220,6 +223,19 @@ public class DotaStatisticsAdapter extends BaseAdapter {
 
     @Override
     public boolean isEnabled(int position) {
+        StatsSection section = sectionForPosition(position);
+        int sectionRow = rowForPosition(position);
+
+        //only rows that can be selected are the hero rows, and the mode rows
+        switch (section.type) {
+            case SECTION_MODE_INFO:
+            case SECTION_ALL_HEROES:
+            case SECTION_FAVORITE_HEROES:
+            case SECTION_LEAST_SUCCESS:
+            case SECTION_MOST_SUCCESS:
+                return sectionRow > 0;
+        }
+
         return false; //no row highlighting
     }
 
@@ -371,7 +387,17 @@ public class DotaStatisticsAdapter extends BaseAdapter {
 
             subtitleTextView.setTextColor(resources.getColor(R.color.off_white));
 
-            DotaStatistics.ModeStats modeStats = dotaStatistics.getFavoriteGameModes().get(position - 1);
+            final DotaStatistics.ModeStats modeStats = dotaStatistics.getFavoriteGameModes().get(position - 1);
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<String> matchIds = new ArrayList(modeStats.getMatchIds());
+                    Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), modeStats.mode.getGameModeName(), matchIds);
+                    v.getContext().startActivity(intent);
+                }
+            });
 
             titleTextView.setText(modeStats.mode.getGameModeName());
             subtitleTextView.setText(modeStats.getSummaryString(resources));
@@ -520,6 +546,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         subtitleTextView.setTextColor(resources.getColor(R.color.off_black));
         subtitleTextView.setText(null);
 
+        convertView.setOnClickListener(null);
         convertView.setBackgroundResource(R.drawable.black_gold_background);
     }
 
