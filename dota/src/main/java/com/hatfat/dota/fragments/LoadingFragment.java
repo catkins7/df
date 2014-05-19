@@ -62,6 +62,7 @@ public class LoadingFragment extends CharltonFragment {
     public void onStart() {
         super.onStart();
 
+        updateProgressBar();
         load();
     }
 

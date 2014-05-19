@@ -144,13 +144,24 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 @Override
                 public void success(List<Match> matches, Response response) {
                     matchAdapter.setFetchingMatches(false);
+
+                    if (matches.size() <= 0) {
+                        reloadMatchListIfNeeded();
+                    }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     matchAdapter.setFetchingMatches(false);
+                    reloadMatchListIfNeeded();
                 }
             });
+        }
+    }
+
+    private void reloadMatchListIfNeeded() {
+        if (user.getMatches().size() <= 0) {
+            matchAdapter.notifyDataSetChanged();
         }
     }
 

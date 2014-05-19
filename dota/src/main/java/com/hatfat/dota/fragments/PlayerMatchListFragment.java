@@ -193,7 +193,8 @@ public class PlayerMatchListFragment extends CharltonFragment {
         }
 
         if (matchCount != matchIds.size()) {
-            throw new RuntimeException("match counts not equal!");
+            //shouldn't happen, not all data is available (probably because we went out of memory)
+            return -1.0f;
         }
 
         return (float)winCount / (float)matchCount * 100.0f;

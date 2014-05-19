@@ -1,26 +1,10 @@
-0.4.3 More Stats Release
----------------------------
-put sexy border around charlton icon (like hero images on match rows?)
-
-check calculations for CSScore and TeamworkScore and others cause they're getting NaN or Infinity sometimes with OTHER stats, or low match counts?
-
-swipe between tabs??  would be really nice...
-
-Just Before Beta Release
- -quick look over new classes
- -LINT checks
- -memory checks
- -fresh install checks
- -proofread player info help text
-
-
-
-
  0.4.+ Even More Stats Release
 ---------------------------
 -More Stats!
  -records (most kills, deaths, etc) with link to the match
  -friends tab; lists a user's steam friends.  Also shows people you have played many matches with?   show win percentages for each??
+
+swipe between tabs??  would be really nice...
 
 about page?  access from menu?
 
@@ -32,6 +16,7 @@ about page?  access from menu?
 match summary improvements?
  - delay clicking into match details?  probably because its a pretty heavy layout.  Maybe switch more to list view somehow?
  - "Item of the match", similar to the hero/item favorite calculations
+ - player of the game??
  - general UI improvements and polish for that page
  - add lobby type (co-op vs bots, etc) to the details
 
