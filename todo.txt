@@ -4,6 +4,8 @@
  -records (most kills, deaths, etc) with link to the match
  -friends tab; lists a user's steam friends.  Also shows people you have played many matches with?   show win percentages for each??
 
+ability draft abilities for heroes?  Is it possible to display them?
+
 swipe between tabs??  would be really nice...
 
 about page?  access from menu?
