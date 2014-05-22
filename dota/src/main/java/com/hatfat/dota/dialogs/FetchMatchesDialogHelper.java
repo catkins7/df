@@ -211,11 +211,9 @@ public class FetchMatchesDialogHelper {
     private void startFetchingMatchDetails() {
         state = FetchMatchesState.FETCH_MATCHES_STATE_FETCHING_DETAILS;
 
-        matchIds = new LinkedList();
-        for (Match match : fetchResults) {
-            matchIds.add(match.getMatchId());
-        }
-
+        //create the match ID list we will go through to make sure we have all match details
+        //basically, we just want the list of match ids from the user object (which has the newly fetched match ids)
+        matchIds = new LinkedList(user.getMatches());
         matchIdsInProgress = new LinkedList();
 
         if (matchIds.size() <= 0) {

@@ -49,6 +49,15 @@ public class PlayerDiskAdapter extends TypeAdapter<Player> {
                 gson.toJson(unit, AdditionalUnit.class, jsonWriter);
             }
         }
+
+//        int numAbilityUpgrades = player.abilityUpgrades != null ? player.abilityUpgrades.size() : 0;
+//        jsonWriter.value(numAbilityUpgrades);
+//
+//        if (numAbilityUpgrades > 0) {
+//            for (AbilityUpgrade abilityUpgrade : player.abilityUpgrades) {
+//                gson.toJson(abilityUpgrade, AbilityUpgrade.class, jsonWriter);
+//            }
+//        }
     }
 
     @Override
@@ -90,6 +99,16 @@ public class PlayerDiskAdapter extends TypeAdapter<Player> {
                 player.additionalUnits.add(unit);
             }
         }
+
+//        player.abilityUpgrades = new LinkedList();
+//        int numberOfAbilityUpgrades = jsonReader.nextInt();
+//
+//        if (numberOfAbilityUpgrades > 0) {
+//            for (int i = 0; i < numberOfAbilityUpgrades; i++) {
+//                AbilityUpgrade abilityUpgrade = gson.fromJson(jsonReader, AbilityUpgrade.class);
+//                player.abilityUpgrades.add(abilityUpgrade);
+//            }
+//        }
 
         return player;
     }

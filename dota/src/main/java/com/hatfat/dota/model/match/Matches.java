@@ -149,7 +149,7 @@ public class Matches {
             matchesList.add(getMatch(matchId));
         }
 
-        MatchesGsonObject obj = new MatchesGsonObject(1); //use version 1 save format
+        MatchesGsonObject obj = new MatchesGsonObject(1);
         obj.matches = matchesList;
 
         Log.v("Matches", "saved " + obj.matches.size() + " matches to disk for user " + user.getDisplayName());

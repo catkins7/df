@@ -1,7 +1,9 @@
 package com.hatfat.dota.model.player;
 
 import android.content.res.Resources;
+
 import com.google.gson.annotations.SerializedName;
+
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Item;
 import com.hatfat.dota.model.game.Items;

@@ -21,7 +21,9 @@ public class MatchesGsonObjectAdapter extends TypeAdapter<MatchesGsonObject> {
             case 0:
                 return DotaGson.getDotaGson();
             case 1:
-                return DotaDiskGson.getDotaDiskGson();
+                return DotaDiskGson.getDotaDiskGsonVersion1();
+            case 2:
+                return DotaDiskGson.getDotaDiskGsonVersion2();
             default:
                 Log.e("Matches", "Unsupported matches version " + version);
                 return null;
