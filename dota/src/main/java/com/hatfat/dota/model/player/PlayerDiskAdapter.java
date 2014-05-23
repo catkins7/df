@@ -12,6 +12,12 @@ import java.util.LinkedList;
 
 public class PlayerDiskAdapter extends TypeAdapter<Player> {
 
+    private int version;
+
+    public PlayerDiskAdapter(int version) {
+        this.version = version;
+    }
+
     @Override
     public void write(JsonWriter jsonWriter, Player player) throws IOException {
 
@@ -43,7 +49,7 @@ public class PlayerDiskAdapter extends TypeAdapter<Player> {
         jsonWriter.value(numAdditionalUnits);
 
         if (numAdditionalUnits > 0) {
-            Gson gson = DotaDiskGson.getDotaDiskGson();
+            Gson gson = DotaDiskGson.getDotaDiskGson(version);
 
             for (AdditionalUnit unit : player.additionalUnits) {
                 gson.toJson(unit, AdditionalUnit.class, jsonWriter);
@@ -92,7 +98,7 @@ public class PlayerDiskAdapter extends TypeAdapter<Player> {
         int numberOfAdditionalUnits = jsonReader.nextInt();
 
         if (numberOfAdditionalUnits > 0) {
-            Gson gson = DotaDiskGson.getDotaDiskGson();
+            Gson gson = DotaDiskGson.getDotaDiskGson(version);
 
             for (int i = 0; i < numberOfAdditionalUnits; i++){
                 AdditionalUnit unit = gson.fromJson(jsonReader, AdditionalUnit.class);

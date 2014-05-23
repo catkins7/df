@@ -10,7 +10,10 @@ import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by scottrick on 2/13/14.
@@ -89,6 +92,11 @@ public class Player {
     @SerializedName("additional_units")
     List<AdditionalUnit> additionalUnits;
 
+    @SerializedName("ability_upgrades")
+    List<AbilityUpgrade> abilityUpgrades;
+
+    Set<Integer> abilityIds;
+
     public SteamUser getSteamUser() {
         return SteamUsers.get().getByAccountId(String.valueOf(accountId));
     }
@@ -150,6 +158,17 @@ public class Player {
     }
     public boolean hasAdditionalUnits() {
         return (additionalUnits != null && additionalUnits.size() > 0);
+    }
+    public List<Integer> getAbilityIds() {
+        if (abilityIds == null) {
+            abilityIds = new TreeSet();
+
+            for (AbilityUpgrade abilityUpgrade : abilityUpgrades) {
+                abilityIds.add(abilityUpgrade.abilityId);
+            }
+        }
+
+        return new LinkedList(abilityIds);
     }
     public boolean hasAdditionalUnitsWeWantToShow() {
         if (additionalUnits == null || additionalUnits.size() <= 0) {

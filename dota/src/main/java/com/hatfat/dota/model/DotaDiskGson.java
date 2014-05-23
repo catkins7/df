@@ -10,31 +10,28 @@ import com.hatfat.dota.model.match.MatchesGsonObjectAdapter;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.player.PlayerDiskAdapter;
 
-public class DotaDiskGson {
-    private static Gson gsonVersion1;
-    private static Gson gsonVersion2;
+import java.util.HashMap;
 
-    public static Gson getDotaDiskGsonVersion1() {
-        if (gsonVersion1 == null) {
-            gsonVersion1 = new GsonBuilder()
+public class DotaDiskGson {
+    private static HashMap<Integer, Gson> gsonMap = new HashMap();
+
+    public static Gson getDotaDiskGson(int version) {
+        Gson gson = gsonMap.get(Integer.valueOf(version));
+
+        if (gson == null) {
+            gson = new GsonBuilder()
                     .registerTypeAdapter(MatchesGsonObject.class, new MatchesGsonObjectAdapter())
                     .registerTypeAdapter(Match.class, new MatchDiskAdapter())
-                    .registerTypeAdapter(Player.class, new PlayerDiskAdapter())
+                    .registerTypeAdapter(Player.class, new PlayerDiskAdapter(version))
                     .create();
+
+            gsonMap.put(Integer.valueOf(version), gson);
         }
 
-        return gsonVersion1;
+        return gson;
     }
 
-    public static Gson getDotaDiskGsonVersion2() {
-        if (gsonVersion2 == null) {
-            gsonVersion2 = new GsonBuilder()
-                    .registerTypeAdapter(MatchesGsonObject.class, new MatchesGsonObjectAdapter())
-                    .registerTypeAdapter(Match.class, new MatchDiskAdapter())
-                    .registerTypeAdapter(Player.class, new PlayerDiskAdapter())
-                    .create();
-        }
-
-        return gsonVersion2;
+    public static Gson getDefaultDotaDiskGson() {
+        return getDotaDiskGson(1);
     }
 }

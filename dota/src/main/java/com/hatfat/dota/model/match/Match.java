@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.model.player.AbilityUpgrade;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.services.MatchFetcher;

@@ -64,7 +64,7 @@ public class FileUtil {
             BufferedReader br = new BufferedReader(new FileReader(file));
             JsonReader jsonReader = new JsonReader(br);
 
-            Gson gson = DotaDiskGson.getDotaDiskGson();
+            Gson gson = DotaDiskGson.getDefaultDotaDiskGson();
             return gson.fromJson(jsonReader, typeClass);
         }
         catch (FileNotFoundException e) {
@@ -95,7 +95,7 @@ public class FileUtil {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
                     JsonWriter jsonWriter = new JsonWriter(bw);
 
-                    Gson gson = DotaDiskGson.getDotaDiskGson();
+                    Gson gson = DotaDiskGson.getDefaultDotaDiskGson();
                     gson.toJson(obj, obj.getClass(), jsonWriter); // Write to file using BufferedWriter
                     jsonWriter.close();
 

@@ -43,7 +43,7 @@ public class MatchDiskAdapter extends TypeAdapter<Match> {
         jsonWriter.value(numPlayers);
 
         if (numPlayers > 0) {
-            Gson gson = DotaDiskGson.getDotaDiskGson();
+            Gson gson = DotaDiskGson.getDefaultDotaDiskGson();
 
             for (Player player : match.players) {
                 gson.toJson(player, Player.class, jsonWriter);
@@ -78,7 +78,7 @@ public class MatchDiskAdapter extends TypeAdapter<Match> {
         int numPlayers = jsonReader.nextInt();
 
         if (numPlayers > 0) {
-            Gson gson = DotaDiskGson.getDotaDiskGson();
+            Gson gson = DotaDiskGson.getDefaultDotaDiskGson();
 
             for (int i = 0; i < numPlayers; i++){
                 Player player = gson.fromJson(jsonReader, Player.class);
