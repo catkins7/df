@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonWriter;
 
 import com.hatfat.dota.model.DotaDiskGson;
 import com.hatfat.dota.model.player.Player;
+import com.hatfat.dota.model.player.PlayerDiskAdapter;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -44,9 +45,15 @@ public class MatchDiskAdapter extends TypeAdapter<Match> {
 
         if (numPlayers > 0) {
             Gson gson = DotaDiskGson.getDefaultDotaDiskGson();
+            TypeAdapter<Player> adapter = gson.getAdapter(Player.class);
+
+            if (adapter instanceof PlayerDiskAdapter) {
+                PlayerDiskAdapter playerDiskAdapter = (PlayerDiskAdapter) adapter;
+                playerDiskAdapter.setHasAbilityUpgrades(match.shouldSavePlayerAbilities());
+            }
 
             for (Player player : match.players) {
-                gson.toJson(player, Player.class, jsonWriter);
+                adapter.write(jsonWriter, player);
             }
         }
     }
@@ -79,9 +86,15 @@ public class MatchDiskAdapter extends TypeAdapter<Match> {
 
         if (numPlayers > 0) {
             Gson gson = DotaDiskGson.getDefaultDotaDiskGson();
+            TypeAdapter<Player> adapter = gson.getAdapter(Player.class);
 
-            for (int i = 0; i < numPlayers; i++){
-                Player player = gson.fromJson(jsonReader, Player.class);
+            if (adapter instanceof PlayerDiskAdapter) {
+                PlayerDiskAdapter playerDiskAdapter = (PlayerDiskAdapter) adapter;
+                playerDiskAdapter.setHasAbilityUpgrades(match.shouldSavePlayerAbilities());
+            }
+
+            for (int i = 0; i < numPlayers; i++) {
+                Player player = adapter.read(jsonReader);
                 match.players.add(player);
             }
         }

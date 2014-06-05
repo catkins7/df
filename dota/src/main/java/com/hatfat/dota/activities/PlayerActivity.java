@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.DotaPlayerStatisticsFragment;
 import com.hatfat.dota.fragments.DotaPlayerSummaryFragment;
+import com.hatfat.dota.fragments.PlayerFriendsFragment;
 import com.hatfat.dota.model.game.DotaStatistics;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
@@ -49,6 +50,7 @@ public class PlayerActivity extends CharltonActivity {
                 DotaStatistics.DotaStatisticsMode.ALL_FAVORITES);
         Bundle successBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
                 DotaStatistics.DotaStatisticsMode.ALL_SUCCESS_STATS);
+        Bundle friendsBundle = PlayerFriendsFragment.newBundleForUser(steamUserId);
         Bundle rankedBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
                 DotaStatistics.DotaStatisticsMode.RANKED_STATS);
         Bundle publicBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
@@ -61,6 +63,7 @@ public class PlayerActivity extends CharltonActivity {
         String summaryTitle = getResources().getString(R.string.tab_player_summary_title);
         String favoritesTitle = getResources().getString(R.string.tab_player_favorites_title);
         String successTitle = getResources().getString(R.string.tab_player_success_title);
+        String friendsTitle = getResources().getString(R.string.tab_player_friends_title);
         String rankedTitle = getResources().getString(R.string.tab_player_ranked_stats_title);
         String publicTitle = getResources().getString(R.string.tab_player_public_stats_title);
         String otherTitle = getResources().getString(R.string.tab_player_other_stats_title);
@@ -69,6 +72,7 @@ public class PlayerActivity extends CharltonActivity {
         CharltonTab<DotaPlayerSummaryFragment> playerSummaryTab = new CharltonTab(this, summaryTitle, DotaPlayerSummaryFragment.class, playerSummaryBundle);
         CharltonTab<DotaPlayerStatisticsFragment> favoritesTab = new CharltonTab(this, favoritesTitle, DotaPlayerStatisticsFragment.class, favoritesBundle);
         CharltonTab<DotaPlayerStatisticsFragment> successTab = new CharltonTab(this, successTitle, DotaPlayerStatisticsFragment.class, successBundle);
+        CharltonTab<PlayerFriendsFragment> friendsTab = new CharltonTab(this, friendsTitle, PlayerFriendsFragment.class, friendsBundle);
         CharltonTab<DotaPlayerStatisticsFragment> rankedTab = new CharltonTab(this, rankedTitle, DotaPlayerStatisticsFragment.class, rankedBundle);
         CharltonTab<DotaPlayerStatisticsFragment> publicTab = new CharltonTab(this, publicTitle, DotaPlayerStatisticsFragment.class, publicBundle);
         CharltonTab<DotaPlayerStatisticsFragment> otherTab = new CharltonTab(this, otherTitle, DotaPlayerStatisticsFragment.class, otherBundle);
@@ -80,6 +84,7 @@ public class PlayerActivity extends CharltonActivity {
             //don't add these tabs if they're not a real user
             tabs.add(favoritesTab);
             tabs.add(successTab);
+            tabs.add(friendsTab);
             tabs.add(rankedTab);
             tabs.add(publicTab);
             tabs.add(otherTab);

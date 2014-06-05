@@ -28,19 +28,22 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
     private static final String PLAYER_MATCH_LIST_STATS_USER_ID_KEY = "PLAYER_MATCH_LIST_STATS_USER_ID_KEY";
     private static final String PLAYER_MATCH_LIST_STATS_LABEL_KEY = "PLAYER_MATCH_LIST_STATS_LABEL_KEY";
     private static final String PLAYER_MATCH_LIST_STATS_MATCHES_KEY = "PLAYER_MATCH_LIST_STATS_MATCHES_KEY";
+    private static final String PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY = "PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY";
 
     private String label;
     private SteamUser user;
     private ArrayList<String> matchIds;
+    private boolean alternateText;
 
     private boolean needsCalculation;
     private DotaStatisticsAdapter adapter;
 
-    public static Bundle newBundleForUserAndMatches(String userId, String label, ArrayList<String> matchIds) {
+    public static Bundle newBundleForUserAndMatches(String userId, String label, ArrayList<String> matchIds, boolean alternateText) {
         Bundle args = new Bundle();
         args.putString(PLAYER_MATCH_LIST_STATS_USER_ID_KEY, userId);
         args.putString(PLAYER_MATCH_LIST_STATS_LABEL_KEY, label);
         args.putStringArrayList(PLAYER_MATCH_LIST_STATS_MATCHES_KEY, matchIds);
+        args.putBoolean(PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY, alternateText);
         return args;
     }
 
@@ -59,6 +62,7 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
 
         label = getArguments().getString(PLAYER_MATCH_LIST_STATS_LABEL_KEY);
         matchIds = getArguments().getStringArrayList(PLAYER_MATCH_LIST_STATS_MATCHES_KEY);
+        alternateText = getArguments().getBoolean(PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY);
 
         signalCharltonActivityToUpdateTab();
     }
@@ -153,7 +157,16 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
     @Override
     public String getCharltonMessageText(Resources resources) {
         if (user != null) {
-            return String.format(resources.getString(R.string.player_match_list_stats_tab_charlton_text), user.getDisplayName(), label);
+            if (alternateText) {
+                return String.format(resources
+                                .getString(R.string.player_match_list_stats_tab_charlton_text_alternate),
+                        user.getDisplayName(), label);
+            }
+            else {
+                return String.format(resources
+                                .getString(R.string.player_match_list_stats_tab_charlton_text),
+                        user.getDisplayName(), label);
+            }
         }
         else {
             return null;

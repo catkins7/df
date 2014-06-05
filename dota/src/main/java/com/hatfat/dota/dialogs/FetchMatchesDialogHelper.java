@@ -195,6 +195,16 @@ public class FetchMatchesDialogHelper {
             //no more matches to fetch!  we are done here...
             LinkedList<Match> matches = new LinkedList(fetchResults);
 
+            //go through all known matches, and add any of them that should be in the user's history as well
+            for (Match match : Matches.get().getAllMatches()) {
+                if (match.getPlayerForSteamUser(user) != null) {
+                    //the user was in this match, so add them!
+                    if (!matches.contains(match)) {
+                        matches.add(match);
+                    }
+                }
+            }
+
             if (!isCanceled) {
                 user.addMatches(matches);
             }
@@ -239,7 +249,7 @@ public class FetchMatchesDialogHelper {
             nextState();
         }
         else {
-            int totalNumberOfMatches = fetchResults.size();
+            int totalNumberOfMatches = user.getMatches().size();
             int numberOfMatchesLeft = matchIdsInProgress.size() + matchIds.size();
             int numberOfMatchesCompleted = totalNumberOfMatches - numberOfMatchesLeft;
 

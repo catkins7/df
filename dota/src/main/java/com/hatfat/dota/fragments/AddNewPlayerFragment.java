@@ -133,7 +133,8 @@ public class AddNewPlayerFragment extends CharltonFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                searchFinishedWithResults(null);            }
+                searchFinishedWithResults(null);
+            }
         });
     }
 
@@ -147,8 +148,11 @@ public class AddNewPlayerFragment extends CharltonFragment {
         if (numberOfSearchesComplete >= totalNumberOfSearches) {
             //all searches are finished
             ArrayList<String> userIds = new ArrayList();
-            for (SteamUser user : users) {
-                userIds.add(user.getSteamId());
+
+            if (users != null) {
+                for (SteamUser user : users) {
+                    userIds.add(user.getSteamId());
+                }
             }
 
             Intent resultsIntent = SearchResultsActivity.intentForResultsWithMessage(getActivity().getApplicationContext(), userIds, getSearchString());

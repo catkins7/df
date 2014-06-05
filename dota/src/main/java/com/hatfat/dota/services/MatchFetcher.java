@@ -33,7 +33,7 @@ public class MatchFetcher
                 if (onlyAddRecentTwentyMatches) {
                     //we only want to add their last 20 games
                     int numberToGet = Math.min(matchHistory.getMatches().size(), 20);
-                    matches = new LinkedList<Match>(matchHistory.getMatches().subList(0, numberToGet));
+                    matches = new LinkedList(matchHistory.getMatches().subList(0, numberToGet));
                 }
                 else {
                     matches = matchHistory.getMatches();

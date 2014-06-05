@@ -78,8 +78,6 @@ public class MatchListAdapter extends BaseAdapter {
         Resources resources = viewGroup.getResources();
 
         if (matchIds.size() <= 0) {
-            //no matches
-
             if (fetchingMatches) {
                 ProgressBar progressBar = new ProgressBar(viewGroup.getContext());
                 progressBar.setBackgroundResource(R.drawable.off_black_background);

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import com.hatfat.dota.DotaFriendApplication;
+import com.hatfat.dota.model.DotaDiskGson;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.util.FileUtil;
@@ -105,10 +106,7 @@ public class Matches {
 
         if (matches.containsKey(match.matchId)) {
             Match existingMatch = matches.get(match.matchId);
-            if (!existingMatch.hasMatchDetails && match.hasMatchDetails) {
-                //only update the match if it doesn't have the match details already, and the new match does!
-                matches.get(match.matchId).updateWithMatch(match);
-            }
+            existingMatch.updateWithMatch(match);
         }
         else {
             matches.put(match.matchId, match);
@@ -143,18 +141,20 @@ public class Matches {
     }
 
     public void saveMatchesToDiskForUser(final SteamUser user) {
+        long startTime = System.currentTimeMillis();
         LinkedList matchesList = new LinkedList();
 
         for (String matchId : user.getMatches()) {
             matchesList.add(getMatch(matchId));
         }
 
-        MatchesGsonObject obj = new MatchesGsonObject(1);
+        MatchesGsonObject obj = DotaDiskGson.getDefaultMatchesGsonObject();
         obj.matches = matchesList;
 
-        Log.v("Matches", "saved " + obj.matches.size() + " matches to disk for user " + user.getDisplayName());
-
         FileUtil.saveObjectToDisk(user.getAccountId() + USER_MATCHES_FILE_EXTENSION, obj);
+        long endTime = System.currentTimeMillis();
+
+        Log.v("Matches", "saved " + obj.matches.size() + " matches to disk for user " + user.getDisplayName() + " in " + (endTime - startTime) + " millis");
     }
 
     public void loadMatchesFromDiskForUser(final SteamUser user) {

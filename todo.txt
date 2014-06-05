@@ -1,24 +1,6 @@
  0.4.+ Even More Stats Release
 ---------------------------
-Match fetcher progress bar gets off
-
-add ability info to the Match details --> only write down the four ability IDs, don't save all the AbilityUpgrade data with the disk adapter (way too slow...)
- - only store for ability draft games?
- - and to the disk parser
- - update other player disk stuff so it all is disk adapters
- - check other adapters and make disk versions to help with speed while were at it maybe? (for match and player and additionalUnit)
-
-ALL MATCHES data wipe, so we have all the ability match data going forward (should be able to keep the match id list on the user though?)
-
-switch to non-beta package name?
-
--More Stats!
- -records (most kills, deaths, etc) with link to the match
- -friends tab; lists a user's steam friends.  Also shows people you have played many matches with?   show win percentages for each??
-
-swipe between tabs??  would be really nice...
-
-about page?  access from menu?
+release & tag
 
 
 
@@ -32,22 +14,18 @@ match summary improvements?
  - general UI improvements and polish for that page
  - add lobby type (co-op vs bots, etc) to the details
 
-show player abilities for each match, in the order they trained them, on the bottom of each player row?
- - would need to figure out abilityIds and where to get the ability images... might not be worth it for now
-
 
 
 
 0.6 release
 ---------------------------
+update to okhttp 2.0.0 once out of RC
+- and update picasso as well
+
+about page?  access from menu?
+
 Flesh out the charlton feature
  - more pictures?
-
-
-
-
-1.0 release
----------------------------
 
 
 
@@ -61,6 +39,11 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
+player RECORDS? (most kills, deaths, etc) with link to the match
+
+steam friend's list?
+ -https://developer.valvesoftware.com/wiki/Steam_Web_API
+
 pro match upcoming ticker:  http://www.reddit.com/r/DotA2/comments/1u86ht/free_matchticker_api_the_one_rdota2_also_uses_now/
 
 pro players list?  pro teams?  for easy access to pro player profiles.  maybe another tab on starred users activity
@@ -68,6 +51,8 @@ pro players list?  pro teams?  for easy access to pro player profiles.  maybe an
 Premium version of the app, after play store general release?  would be a paid version ($4?) that has additional features 
  - graphs (kda, win/lost graph, etc)   (Trends Tab?)
  - it looks like K+A/D might be indicator or skill.  or  K+A/D / TeamScore.  It might be worth plotting some of these values in a spreadsheet and seeing
+
+google analytics, so I can see what people really like to use
 
 ability draft abilities for heroes?  need to get abilityID values from somewhere
 

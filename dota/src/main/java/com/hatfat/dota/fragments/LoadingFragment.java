@@ -67,6 +67,8 @@ public class LoadingFragment extends CharltonFragment {
     }
 
     private void load() {
+//        FileUtil.dumpFileDirectoryContents();
+
         loadItems();
         loadHeroes();
         loadUsers();

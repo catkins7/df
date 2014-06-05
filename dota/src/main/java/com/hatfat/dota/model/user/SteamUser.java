@@ -167,10 +167,10 @@ public class SteamUser {
         return SteamUser.getAccountIdFromSteamId(steamId);
     }
     public long getAccountIdLong() {
-        return Long.valueOf(getAccountId()).longValue();
+        return Long.valueOf(getAccountId());
     }
     public long getSteamIdLong() {
-        return Long.valueOf(steamId).longValue();
+        return Long.valueOf(steamId);
     }
     public TreeSet<String> getMatches() {
         //return a copy of the matches set, to prevent concurrent threading issues
@@ -378,14 +378,14 @@ public class SteamUser {
     }
 
     public static String getAccountIdFromSteamId(String steamId) {
-        long steamIdLong = Long.valueOf(steamId).longValue();
+        long steamIdLong = Long.valueOf(steamId);
         long accountIdLong = steamIdLong - ACCOUNT_ID_MAGIC_NUMBER;
 
         return String.valueOf(accountIdLong);
     }
 
     public static String getSteamIdFromAccountId(String accountId) {
-        long accountIdLong = Long.valueOf(accountId).longValue();
+        long accountIdLong = Long.valueOf(accountId);
         long steamId = accountIdLong + ACCOUNT_ID_MAGIC_NUMBER;
 
         return String.valueOf(steamId);

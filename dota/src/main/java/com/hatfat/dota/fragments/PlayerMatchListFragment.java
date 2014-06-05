@@ -33,6 +33,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
 
     private static String PLAYER_MATCH_LIST_USER_ID_KEY = "PLAYER_MATCH_LIST_USER_ID_KEY";
     private static String PLAYER_MATCH_LIST_LABEL_KEY = "PLAYER_MATCH_LIST_LABEL_KEY";
+    private static String PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY = "PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY";
     private static String PLAYER_MATCH_LIST_MATCHES_KEY = "PLAYER_MATCH_LIST_MATCHES_KEY";
 
     private BroadcastReceiver receiver;
@@ -40,6 +41,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
     private SteamUser user;
     private List<String> matchIds;
     private String matchesLabel;
+    private String secondaryImageUrl;
 
     private ListView matchListView;
     private MatchListAdapter matchAdapter;
@@ -48,12 +50,14 @@ public class PlayerMatchListFragment extends CharltonFragment {
     private TextView labelTextView;
     private TextView winPercentTextView;
     private TextView gameCountTextView;
-    private ImageView userIconImageView;
+    private ImageView leftImageView;
+    private ImageView rightImageView;
 
-    public static Bundle newBundleForUserAndMatches(String userId, String label, ArrayList<String> matchIds) {
+    public static Bundle newBundleForUserAndMatches(String userId, String label, String secondaryImageUrl, ArrayList<String> matchIds) {
         Bundle args = new Bundle();
         args.putString(PLAYER_MATCH_LIST_USER_ID_KEY, userId);
         args.putString(PLAYER_MATCH_LIST_LABEL_KEY, label);
+        args.putString(PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY, secondaryImageUrl);
         args.putStringArrayList(PLAYER_MATCH_LIST_MATCHES_KEY, matchIds);
         return args;
     }
@@ -67,6 +71,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
         user = SteamUsers.get().getBySteamId(userId);
         matchIds = getArguments().getStringArrayList(PLAYER_MATCH_LIST_MATCHES_KEY);
         matchesLabel = getArguments().getString(PLAYER_MATCH_LIST_LABEL_KEY);
+        secondaryImageUrl = getArguments().getString(PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY);
 
         signalCharltonActivityToUpdateTab();
 
@@ -135,7 +140,8 @@ public class PlayerMatchListFragment extends CharltonFragment {
         labelTextView = (TextView) view.findViewById(R.id.fragment_player_match_list_label_text_view);
         winPercentTextView = (TextView) view.findViewById(R.id.fragment_player_match_list_matches_text_view);
         gameCountTextView = (TextView) view.findViewById(R.id.fragment_player_match_list_third_row_text_view);
-        userIconImageView = (ImageView) view.findViewById(R.id.fragment_player_match_list_image_view);
+        leftImageView = (ImageView) view.findViewById(R.id.fragment_player_match_list_left_image_view);
+        rightImageView = (ImageView) view.findViewById(R.id.fragment_player_match_list_right_image_view);
 
         matchAdapter = new MatchListAdapter(user);
         matchAdapter.setMatches(matchIds);
@@ -159,16 +165,27 @@ public class PlayerMatchListFragment extends CharltonFragment {
     }
 
     private void updateViews() {
-        if (userIconImageView == null) {
+        if (leftImageView == null) {
             return;
         }
 
-        Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(userIconImageView);
+        Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(leftImageView);
+        Picasso.with(DotaFriendApplication.CONTEXT).load(secondaryImageUrl).placeholder(R.drawable.ic_launcher).into(rightImageView);
 
         userNameTextView.setText(user.getDisplayName());
         labelTextView.setText(matchesLabel);
         winPercentTextView.setText(String.format(getResources().getString(R.string.player_match_list_win_rate_text), getWinPercentage()));
-        gameCountTextView.setText(String.format(getResources().getString(R.string.player_match_list_match_count_text), matchIds.size()));
+
+        if (matchIds.size() > 1) {
+            gameCountTextView.setText(String.format(
+                    getResources().getString(R.string.player_match_list_match_count_text),
+                    matchIds.size()));
+        }
+        else {
+            gameCountTextView.setText(String.format(
+                    getResources().getString(R.string.player_match_list_match_count_text_singular),
+                    matchIds.size()));
+        }
     }
 
     private float getWinPercentage() {
@@ -203,8 +220,14 @@ public class PlayerMatchListFragment extends CharltonFragment {
     @Override
     public String getCharltonMessageText(Resources resources) {
         if (user != null) {
-            return String.format(resources.getString(R.string.player_match_list_charlton_text),
-                    user.getDisplayName(), matchesLabel);
+            if (secondaryImageUrl != null) {
+                return String.format(resources.getString(R.string.player_match_list_charlton_text),
+                        user.getDisplayName(), matchesLabel);
+            }
+            else {
+                return String.format(resources.getString(R.string.player_match_list_charlton_text_alternate),
+                        user.getDisplayName(), matchesLabel);
+            }
         }
         else {
             return null;

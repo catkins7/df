@@ -26,6 +26,9 @@ import retrofit.client.Response;
  */
 public class SteamUsers {
 
+    public final static String ANONYMOUS_ID = "76561202255233023";
+    public final static String BOT_ID = "76561197960265728";
+
     public final static String STEAM_STARRED_USERS_USER_LIST_CHANGED = "SteamUsers_StarredUsersListChanged_Notification";
     public final static String STEAM_USERS_LOADED_FROM_DISK = "STEAM_USERS_LOADED_FROM_DISK";
 
@@ -91,6 +94,15 @@ public class SteamUsers {
         }
     }
 
+    //same as above, but it doesn't fetch the user if it doesn't exist
+    public SteamUser getExistingUserBySteamId(String steamId) {
+        return users.get(steamId);
+    }
+
+    public SteamUser getExistingUserByAccountId(String accountId) {
+        return getExistingUserBySteamId(SteamUser.getSteamIdFromAccountId(accountId));
+    }
+
     public SteamUser getByAccountId(String accountId) {
         return getBySteamId(SteamUser.getSteamIdFromAccountId(accountId));
     }
@@ -124,16 +136,14 @@ public class SteamUsers {
         }
 
         { //add the Anonymous steam user
-            String anonId = "76561202255233023";
-            SteamUser anonUser = new SteamUser(anonId);
+            SteamUser anonUser = new SteamUser(ANONYMOUS_ID);
             anonUser.personaName = resources.getString(R.string.anonymous_name);
             anonUser.isFakeUser = true;
             this.users.put(anonUser.steamId, anonUser);
         }
 
         { //add the Bot steam user
-            String botId = "76561197960265728";
-            SteamUser botUser = new SteamUser(botId);
+            SteamUser botUser = new SteamUser(BOT_ID);
             botUser.personaName = resources.getString(R.string.bot_name);
             botUser.isFakeUser = true;
             this.users.put(botUser.steamId, botUser);

@@ -79,10 +79,12 @@ public class MatchesGsonObjectAdapter extends TypeAdapter<MatchesGsonObject> {
 
                     jsonReader.beginArray();
 
-                    if (gson != null) {
-                        while (jsonReader.peek() != JsonToken.END_ARRAY) {
-                            Match match = gson.fromJson(jsonReader, Match.class);
-                            matches.matches.add(match);
+                    if (matches.version >= DotaDiskGson.SAVE_VERSION) {
+                        if (gson != null) {
+                            while (jsonReader.peek() != JsonToken.END_ARRAY) {
+                                Match match = gson.fromJson(jsonReader, Match.class);
+                                matches.matches.add(match);
+                            }
                         }
                     }
 

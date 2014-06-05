@@ -12,7 +12,7 @@ public class DotaBuffRestAdapter {
                 .setClient(new OkClient())
                 .setEndpoint("http://dotabuff.com")
                 .setConverter(new DotaBuffConverter())
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.NONE)
                 .build();
     }
 }

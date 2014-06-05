@@ -9,13 +9,19 @@ import com.hatfat.dota.model.DotaDiskGson;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.TreeSet;
 
 public class PlayerDiskAdapter extends TypeAdapter<Player> {
 
     private int version;
+    private boolean hasAbilityUpgrades;
 
     public PlayerDiskAdapter(int version) {
         this.version = version;
+    }
+
+    public void setHasAbilityUpgrades(boolean hasAbilityUpgrades) {
+        this.hasAbilityUpgrades = hasAbilityUpgrades;
     }
 
     @Override
@@ -56,14 +62,16 @@ public class PlayerDiskAdapter extends TypeAdapter<Player> {
             }
         }
 
-//        int numAbilityUpgrades = player.abilityUpgrades != null ? player.abilityUpgrades.size() : 0;
-//        jsonWriter.value(numAbilityUpgrades);
-//
-//        if (numAbilityUpgrades > 0) {
-//            for (AbilityUpgrade abilityUpgrade : player.abilityUpgrades) {
-//                gson.toJson(abilityUpgrade, AbilityUpgrade.class, jsonWriter);
-//            }
-//        }
+        if (hasAbilityUpgrades && version >= 2) {
+            int numAbilityUpgrades = player.getAbilityIds() != null ? player.getAbilityIds().size() : 0;
+            jsonWriter.value(numAbilityUpgrades);
+
+            if (numAbilityUpgrades > 0) {
+                for (Integer ability : player.getAbilityIds()) {
+                    jsonWriter.value(ability);
+                }
+            }
+        }
     }
 
     @Override
@@ -106,15 +114,16 @@ public class PlayerDiskAdapter extends TypeAdapter<Player> {
             }
         }
 
-//        player.abilityUpgrades = new LinkedList();
-//        int numberOfAbilityUpgrades = jsonReader.nextInt();
-//
-//        if (numberOfAbilityUpgrades > 0) {
-//            for (int i = 0; i < numberOfAbilityUpgrades; i++) {
-//                AbilityUpgrade abilityUpgrade = gson.fromJson(jsonReader, AbilityUpgrade.class);
-//                player.abilityUpgrades.add(abilityUpgrade);
-//            }
-//        }
+        if (hasAbilityUpgrades && version >= 2) {
+            player.abilityIds = new TreeSet();
+            int numberOfAbilityUpgrades = jsonReader.nextInt();
+
+            if (numberOfAbilityUpgrades > 0) {
+                for (int i = 0; i < numberOfAbilityUpgrades; i++) {
+                    player.abilityIds.add(jsonReader.nextInt());
+                }
+            }
+        }
 
         return player;
     }

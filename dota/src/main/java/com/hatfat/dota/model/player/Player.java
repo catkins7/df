@@ -92,9 +92,13 @@ public class Player {
     @SerializedName("additional_units")
     List<AdditionalUnit> additionalUnits;
 
+    //this list is what we get from the server when we fetch a match
+    //we don't store it locally in this format though since it takes up a large amount of space
+    //https://github.com/kronusme/dota2-api/blob/master/data/abilities.json
     @SerializedName("ability_upgrades")
     List<AbilityUpgrade> abilityUpgrades;
 
+    //we only store each abilityId once in a set like this
     Set<Integer> abilityIds;
 
     public SteamUser getSteamUser() {
@@ -107,6 +111,9 @@ public class Player {
     public int getPlayerSlot() { return playerSlot; }
     public long getAccountId() {
         return accountId;
+    }
+    public boolean isAnonymous() {
+        return accountId == Long.valueOf(SteamUsers.ANONYMOUS_ID);
     }
 
     public String getHeroIdString() {
@@ -163,8 +170,11 @@ public class Player {
         if (abilityIds == null) {
             abilityIds = new TreeSet();
 
-            for (AbilityUpgrade abilityUpgrade : abilityUpgrades) {
-                abilityIds.add(abilityUpgrade.abilityId);
+            //will only be null if the player abandoned before picking a hero, I think
+            if (abilityUpgrades != null) {
+                for (AbilityUpgrade abilityUpgrade : abilityUpgrades) {
+                    abilityIds.add(abilityUpgrade.abilityId);
+                }
             }
         }
 

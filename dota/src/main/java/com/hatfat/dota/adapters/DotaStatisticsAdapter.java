@@ -330,7 +330,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     ArrayList<String> matchIds = new ArrayList(stats.getMatchIds());
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
-                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), stats.hero.getLocalizedName(), matchIds);
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), stats.hero.getLocalizedName(), stats.hero.getFullVerticalPortraitUrl(),matchIds);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -413,7 +413,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     ArrayList<String> matchIds = new ArrayList(modeStats.getMatchIds());
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
-                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, matchIds);
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, null, matchIds);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -677,8 +677,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                         new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics,
                                 resources.getString(
                                         R.string.player_statistics_all_ranked_matches_title_text)));
-                sections.add(
-                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
+//                sections.add(
+//                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
                 sections.add(new StatsSection(StatsSectionType.SECTION_MODE_INFO, dotaStatistics,
                         resources.getString(R.string.player_statistics_modes_info_title_text)));
                 break;
@@ -687,8 +687,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                         new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics,
                                 resources.getString(
                                         R.string.player_statistics_all_public_matches_title_text)));
-                sections.add(
-                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
+//                sections.add(
+//                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
                 sections.add(new StatsSection(StatsSectionType.SECTION_MODE_INFO, dotaStatistics,
                         resources.getString(R.string.player_statistics_modes_info_title_text)));
                 break;
@@ -697,16 +697,16 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                         new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics,
                                 resources.getString(
                                         R.string.player_statistics_other_matches_title_text)));
-                sections.add(
-                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
+//                sections.add(
+//                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
                 sections.add(new StatsSection(StatsSectionType.SECTION_MODE_INFO, dotaStatistics,
                         resources.getString(R.string.player_statistics_modes_info_title_text)));
                 break;
             case CUSTOM_STATS:
                 sections.add(
                         new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics, customLabel));
-                sections.add(
-                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
+//                sections.add(
+//                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
                 break;
         }
 

@@ -13,6 +13,8 @@ import com.hatfat.dota.model.player.PlayerDiskAdapter;
 import java.util.HashMap;
 
 public class DotaDiskGson {
+
+    public static final int SAVE_VERSION = 2;
     private static HashMap<Integer, Gson> gsonMap = new HashMap();
 
     public static Gson getDotaDiskGson(int version) {
@@ -25,13 +27,17 @@ public class DotaDiskGson {
                     .registerTypeAdapter(Player.class, new PlayerDiskAdapter(version))
                     .create();
 
-            gsonMap.put(Integer.valueOf(version), gson);
+            gsonMap.put(version, gson);
         }
 
         return gson;
     }
 
     public static Gson getDefaultDotaDiskGson() {
-        return getDotaDiskGson(1);
+        return getDotaDiskGson(SAVE_VERSION);
+    }
+
+    public static MatchesGsonObject getDefaultMatchesGsonObject() {
+        return new MatchesGsonObject(SAVE_VERSION);
     }
 }

@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
-import com.hatfat.dota.model.player.AbilityUpgrade;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.services.MatchFetcher;
@@ -335,6 +334,9 @@ public class Match implements Comparable {
                 return false;
         }
     }
+    public boolean shouldSavePlayerAbilities() {
+        return getGameMode() == GameMode.AbilityDraft;
+    }
     public void setHasMatchDetails(boolean hasMatchDetails) {
         this.hasMatchDetails = hasMatchDetails;
     }
@@ -523,7 +525,12 @@ public class Match implements Comparable {
     }
 
     void updateWithMatch(Match match) {
-        if (match.hasMatchDetails) {
+        boolean shouldBroadcast = false;
+        boolean originallyHadMatchDetails = hasMatchDetails;
+
+        if (!hasMatchDetails && match.hasMatchDetails) {
+            shouldBroadcast = true;
+
             radiantWin = match.radiantWin;
             duration = match.duration;
             towerStatusRadiant = match.towerStatusRadiant;
@@ -541,16 +548,43 @@ public class Match implements Comparable {
             players = match.players;
         }
 
+        if (originallyHadMatchDetails && match.hasMatchDetails) {
+            //compare each player and prefer either which has the real player as opposed to an anonymous one
+
+            if (players == null) {
+                shouldBroadcast = true;
+
+                players = match.players;
+            }
+            else {
+                if (players.size() != match.players.size()) {
+                    throw new RuntimeException("sizes not equal!!");
+                }
+
+                for (int i = 0; i < players.size(); i++) {
+                    Player oldPlayer = players.get(i);
+                    Player newPlayer = match.players.get(i);
+
+                    if (oldPlayer.isAnonymous() && !newPlayer.isAnonymous()) {
+                        //old player is anonymous, but the new one isn't!
+                        //we have the real data, so lets replace it
+                        players.remove(i);
+                        players.add(i, newPlayer);
+
+                        shouldBroadcast = true;
+                    }
+                }
+            }
+        }
+
         matchId = match.matchId;
         matchSeqNumber = match.matchSeqNumber;
         startTime = match.startTime;
         lobbyType = match.lobbyType;
 
-        if (players == null) {
-            players = match.players;
+        if (shouldBroadcast) {
+            broadcastMatchChanged();
         }
-
-        broadcastMatchChanged();
     }
 
     public void getMatchDetailsIfNeeded() {

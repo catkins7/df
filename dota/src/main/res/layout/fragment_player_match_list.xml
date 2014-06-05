@@ -25,8 +25,17 @@
             android:layout_height="@dimen/text_view_height_large"/>
 
         <ImageView
-            android:id="@+id/fragment_player_match_list_image_view"
+            android:id="@+id/fragment_player_match_list_left_image_view"
             android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_below="@id/fragment_player_match_list_name_text_view"
+            android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
+            android:layout_height="@dimen/dota_player_summary_fragment_image_view_size"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/fragment_player_match_list_right_image_view"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_below="@id/fragment_player_match_list_name_text_view"
             android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
@@ -38,8 +47,8 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_below="@id/fragment_player_match_list_name_text_view"
-            android:layout_toRightOf="@id/fragment_player_match_list_image_view"
-            android:layout_toLeftOf="@id/fragment_dota_player_summary_right_button_layout"
+            android:layout_toRightOf="@id/fragment_player_match_list_left_image_view"
+            android:layout_toLeftOf="@id/fragment_player_match_list_right_image_view"
             android:textSize="@dimen/font_size_medium"
             android:textColor="@color/off_white"
             android:gravity="left|center_vertical"
@@ -53,7 +62,8 @@
             android:id="@+id/fragment_player_match_list_matches_text_view"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_below="@id/fragment_player_match_list_label_text_view"
-            android:layout_toRightOf="@id/fragment_player_match_list_image_view"
+            android:layout_toRightOf="@id/fragment_player_match_list_left_image_view"
+            android:layout_toLeftOf="@id/fragment_player_match_list_right_image_view"
             android:textSize="@dimen/font_size_medium"
             android:textColor="@color/off_white"
             android:gravity="left|center_vertical"
@@ -67,7 +77,8 @@
             android:id="@+id/fragment_player_match_list_third_row_text_view"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_below="@id/fragment_player_match_list_matches_text_view"
-            android:layout_toRightOf="@id/fragment_player_match_list_image_view"
+            android:layout_toRightOf="@id/fragment_player_match_list_left_image_view"
+            android:layout_toLeftOf="@id/fragment_player_match_list_right_image_view"
             android:textSize="@dimen/font_size_small"
             android:textColor="@color/off_gray"
             android:gravity="left|center_vertical"

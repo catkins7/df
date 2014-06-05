@@ -17,16 +17,19 @@ public class PlayerMatchListActivity extends CharltonActivity {
 
     private static final String PLAYER_MATCH_LIST_ACTIVITY_STEAM_USER_ID_KEY = "PLAYER_MATCH_LIST_ACTIVITY_STEAM_USER_ID_KEY";
     private static final String PLAYER_MATCH_LIST_ACTIVITY_LABEL_KEY = "PLAYER_MATCH_LIST_ACTIVITY_LABEL_KEY";
+    private static final String PLAYER_MATCH_LIST_ACTIVITY_SECONDARY_IMAGE_URL_KEY = "PLAYER_MATCH_LIST_ACTIVITY_SECONDARY_IMAGE_URL_KEY";
     private static final String PLAYER_MATCH_LIST_ACTIVITY_MATCHES_KEY = "PLAYER_MATCH_LIST_ACTIVITY_MATCHES_KEY";
 
     private String steamUserId;
     private String label;
+    private String secondaryImageUrl;
     private ArrayList<String> matchIds;
 
-    public static Intent intentForUserLabelAndMatches(Context context, String steamUserId, String label, ArrayList<String> matchIds) {
+    public static Intent intentForUserLabelAndMatches(Context context, String steamUserId, String label, String secondaryImageUrl, ArrayList<String> matchIds) {
         Intent intent = new Intent(context, PlayerMatchListActivity.class);
         intent.putExtra(PLAYER_MATCH_LIST_ACTIVITY_STEAM_USER_ID_KEY, steamUserId);
         intent.putExtra(PLAYER_MATCH_LIST_ACTIVITY_LABEL_KEY, label);
+        intent.putExtra(PLAYER_MATCH_LIST_ACTIVITY_SECONDARY_IMAGE_URL_KEY, secondaryImageUrl);
         intent.putExtra(PLAYER_MATCH_LIST_ACTIVITY_MATCHES_KEY, matchIds);
         return intent;
     }
@@ -35,6 +38,7 @@ public class PlayerMatchListActivity extends CharltonActivity {
     protected void onCreate(Bundle savedInstanceState) {
         steamUserId = getIntent().getStringExtra(PLAYER_MATCH_LIST_ACTIVITY_STEAM_USER_ID_KEY);
         label = getIntent().getStringExtra(PLAYER_MATCH_LIST_ACTIVITY_LABEL_KEY);
+        secondaryImageUrl = getIntent().getStringExtra(PLAYER_MATCH_LIST_ACTIVITY_SECONDARY_IMAGE_URL_KEY);
         matchIds = getIntent().getStringArrayListExtra(PLAYER_MATCH_LIST_ACTIVITY_MATCHES_KEY);
 
         if (steamUserId == null || label == null || matchIds == null) {
@@ -49,8 +53,8 @@ public class PlayerMatchListActivity extends CharltonActivity {
         LinkedList<CharltonTab> tabs = new LinkedList();
 
         Bundle matchListBundle = PlayerMatchListFragment
-                .newBundleForUserAndMatches(steamUserId, label, matchIds);
-        Bundle statsBundle = PlayerMatchListStatisticsFragment.newBundleForUserAndMatches(steamUserId, label, matchIds);
+                .newBundleForUserAndMatches(steamUserId, label, secondaryImageUrl, matchIds);
+        Bundle statsBundle = PlayerMatchListStatisticsFragment.newBundleForUserAndMatches(steamUserId, label, matchIds, secondaryImageUrl == null);
 
         CharltonTab<PlayerMatchListFragment> matchesTab = new CharltonTab(this, label, PlayerMatchListFragment.class, matchListBundle);
         CharltonTab<PlayerMatchListStatisticsFragment> statsTab = new CharltonTab(this, getString(R.string.player_match_list_stats_tab_text), PlayerMatchListStatisticsFragment.class, statsBundle);

@@ -26,6 +26,7 @@
     <string name="tab_player_summary_title">Summary</string>
     <string name="tab_player_favorites_title">Favorites</string>
     <string name="tab_player_success_title">Success</string>
+    <string name="tab_player_friends_title">People</string>
     <string name="tab_player_ranked_stats_title">Ranked Stats</string>
     <string name="tab_player_public_stats_title">Public Stats</string>
     <string name="tab_player_other_stats_title">Other Stats</string>
@@ -71,11 +72,14 @@
 
     <string name="player_summary_charlton_text">Here is %1$s\'s [%2$s] player summary.</string>
 
-    <string name="player_match_list_charlton_text">Here are %1$s\'s %2$s matches.</string>
+    <string name="player_match_list_charlton_text">Here are %1$s\'s matches with %2$s.</string>
+    <string name="player_match_list_stats_tab_charlton_text">Some statistics for %1$s\'s matches with %2$s:</string>
+    <string name="player_match_list_charlton_text_alternate">Here are %1$s\'s %2$s matches.</string>
+    <string name="player_match_list_stats_tab_charlton_text_alternate">These are %1$s\'s statistics for %2$s matches.</string>
     <string name="player_match_list_match_count_text">%1$d matches</string>
+    <string name="player_match_list_match_count_text_singular">%1$d match</string>
     <string name="player_match_list_win_rate_text">%1$.1f%% win rate</string>
     <string name="player_match_list_stats_tab_text">stats</string>
-    <string name="player_match_list_stats_tab_charlton_text">These are %1$s\'s %2$s statistics.</string>
     <string name="player_match_list_stats_tab_title_text">%1$s Matches</string>
 
     <string name="player_statistics_public_prefix_text">Public</string>
@@ -133,6 +137,15 @@
     <string name="player_statistics_charlton_text_public_stats">These are %1$s\'s public matches… bleh.</string>
     <string name="player_statistics_charlton_text_other_stats">Other match statistics for %1$s.</string>
     <string name="player_statistics_charlton_text_all_heroes_stats">All heroes for %1$s.</string>
+
+    <string name="player_friends_charlton_text">Here are some people %1$s has played with a lot.</string>
+    <string name="player_friends_matches_count_text">%1$d matches</string>
+    <string name="player_friends_together_text">when ally</string>
+    <string name="player_friends_versus_text">when enemy</string>
+    <string name="player_friends_win_rate_text">%1$.1f%%</string>
+    <string name="player_friends_win_rate_text_no_data">---</string>
+    <string name="player_friends_info_text_no_data">no real matches</string>
+    <string name="player_friends_matches_info_text">win rate</string>
 
     <string name="add_new_player_search_text">Search</string>
     <string name="add_new_player_search_hint">Player Name or Steam ID</string>

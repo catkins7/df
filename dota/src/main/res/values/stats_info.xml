@@ -39,13 +39,13 @@
         <b><u>K+A/D</u></b> represents the player\'s average number of <b>K</b>ills and <b>A</b>ssists divided by the average number of <b>D</b>eaths per game.
         ]]></item>
 
-        <item><![CDATA[
-        <i>The score values below are experimental.  They are intended to give insight into different aspects of a player\'s match history.</i>
-        ]]></item>
+        <!--<item><![CDATA[-->
+        <!--<i>The score values below are experimental.  They are intended to give insight into different aspects of a player\'s match history.</i>-->
+        <!--]]></item>-->
 
-        <item><![CDATA[
-        The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) of all ten players in each game.
-        ]]></item>
+        <!--<item><![CDATA[-->
+        <!--The <b><u>CS Score</u></b> represents the average combined CS (last hits + denies) of all ten players in each game.-->
+        <!--]]></item>-->
 
         <!--<item><![CDATA[-->
         <!--The <b><u>GPM Score</u></b> represents the average combined GPM for all players in each game.-->
@@ -59,9 +59,9 @@
         <!--The <b><u>Composite Score</u></b> is the combined total of the GPM and XPM Scores.-->
         <!--]]></item>-->
 
-        <item><![CDATA[
-        The <b><u>Teamwork Score</u></b> is the average number of people involved in each kill on the player\'s team.
-        ]]></item>
+        <!--<item><![CDATA[-->
+        <!--The <b><u>Teamwork Score</u></b> is the average number of people involved in each kill on the player\'s team.-->
+        <!--]]></item>-->
 
     </string-array>
 </resources>

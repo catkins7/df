@@ -576,7 +576,7 @@ public class DotaStatistics {
         Collections.sort(list, new Comparator<Float>() {
             @Override
             public int compare(Float lhs, Float rhs) {
-                return Float.compare(lhs.floatValue(), rhs.floatValue());
+                return Float.compare(lhs, rhs);
             }
         });
 
