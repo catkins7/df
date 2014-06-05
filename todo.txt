@@ -7,6 +7,11 @@ match summary improvements?
  - general UI improvements and polish for that page
  - add lobby type (co-op vs bots, etc) to the details
 
+Flesh out the charlton feature?
+ -or just more pictures?
+
+about page?  access from menu?
+
 
 
 
@@ -15,10 +20,6 @@ match summary improvements?
 update to okhttp 2.0.0 once out of RC
 - and update picasso as well
 
-about page?  access from menu?
-
-Flesh out the charlton feature
- - more pictures?
 
 
 
