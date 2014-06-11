@@ -43,16 +43,18 @@ public class DotaBuffConverter implements Converter {
                 while ((start = line.indexOf("/players/")) != -1) {
 
                     end = start + idStart + 16;
-                    String substring = line.substring(start + idStart, start + 50);
+                    String substring = line.substring(start + idStart, start + 32);
 
                     int endOfNumber = substring.indexOf("\"");
 
-                    substring = substring.substring(0, endOfNumber);
+                    if (endOfNumber > 0) {
+                        substring = substring.substring(0, endOfNumber);
+                    }
 
                     String steamId = null;
 
                     try {
-                        steamId = "" + Long.valueOf(substring);
+                        steamId = String.valueOf(Long.valueOf(substring));
                     }
                     catch (NumberFormatException e) {
 
