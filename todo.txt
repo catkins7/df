@@ -7,6 +7,8 @@ match summary improvements?
  - general UI improvements and polish for that page
  - add lobby type (co-op vs bots, etc) to the details
 
+3 different player row views, normal, normal+bear, normal+abilities (lone druid not in ability draft)
+
 Flesh out the charlton feature?
  -add "about charlton" dialog when you tap on his text bubble.  write some text about why I like charlton heston and some of his major accomplishments.  Add wikipedia link, and movie recommendations.
  -or just more pictures?

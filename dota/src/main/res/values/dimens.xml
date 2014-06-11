@@ -59,7 +59,7 @@
     <dimen name="charlton_border_width">2dp</dimen>
     <dimen name="charlton_dialog_image_size">48dp</dimen>
 
-    <dimen name="victory_text_left_right_padding">12dp</dimen>
+    <dimen name="victory_text_width">60dp</dimen>
     <dimen name="match_top_text_left_right_padding">4dp</dimen>
     <dimen name="match_top_text_corner_radius">4dp</dimen>
 
