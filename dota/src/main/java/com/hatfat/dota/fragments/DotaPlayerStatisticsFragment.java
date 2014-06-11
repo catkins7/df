@@ -19,7 +19,7 @@ import android.widget.ListView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.adapters.DotaStatisticsAdapter;
-import com.hatfat.dota.dialogs.InfoDialogHelper;
+import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.game.DotaStatistics;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
@@ -112,6 +112,10 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
         ListView listView = (ListView) view
                 .findViewById(R.id.fragment_dota_player_statistics_list_view);
         listView.setAdapter(adapter);
+
+        if (!needsBackground()) {
+            listView.setBackgroundColor(0);
+        }
     }
 
     private void fetchStatistics() {
@@ -214,7 +218,24 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
     }
 
     private void showStatsInfoDialog() {
-        InfoDialogHelper.showFromActivity(getActivity());
+        TextDialogHelper.showStatsDialog(getActivity());
+    }
+
+    private boolean needsBackground() {
+        if (statsMode != null) {
+            switch (statsMode) {
+                case OTHER_STATS:
+                case PUBLIC_STATS:
+                case RANKED_STATS:
+                case ALL_FAVORITES:
+                    return true;
+                case ALL_SUCCESS_STATS:
+                case ALL_HEROES:
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     @Override

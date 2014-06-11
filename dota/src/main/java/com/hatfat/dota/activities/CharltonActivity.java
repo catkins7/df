@@ -4,13 +4,20 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.hatfat.dota.R;
+import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUsers;
@@ -25,6 +32,8 @@ public abstract class CharltonActivity extends Activity {
     private static Random rand = new Random();
     private static int currentHestonDrawableId = 0;
     private static int currentHestonCountsLeft = 0;
+
+    private boolean charltonDialogVisible = false;
 
     private TextView charltonTitleTextView;
 
@@ -45,9 +54,37 @@ public abstract class CharltonActivity extends Activity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(R.layout.actionbar_charlton);
 
-        charltonTitleTextView = (TextView) actionBar.getCustomView().findViewById(R.id.actionbar_charlton_text_view);
+        charltonTitleTextView = (TextView) actionBar.getCustomView()
+                .findViewById(R.id.actionbar_charlton_text_view);
         charltonTitleTextView.setText(R.string.default_charlton_text);
-        actionBar.getCustomView().setBackgroundDrawable(new CharltonBubbleDrawable());
+
+        Drawable notPressedDrawable = new CharltonBubbleDrawable(R.color.off_white);
+        Drawable pressedDrawable = new CharltonBubbleDrawable(R.color.steam_light_blue);
+
+        StateListDrawable states = new StateListDrawable();
+        states.addState(new int[] { android.R.attr.state_pressed }, pressedDrawable);
+        states.addState(new int[] { android.R.attr.state_focused }, pressedDrawable);
+        states.addState(new int[] { }, notPressedDrawable);
+        actionBar.getCustomView().setBackgroundDrawable(states);
+
+        if (!isLoadingActivity()) {
+            actionBar.getCustomView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!charltonDialogVisible) {
+                        charltonDialogVisible = true;
+
+                        TextDialogHelper.showHestonDialog(CharltonActivity.this,
+                                new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        charltonDialogVisible = false;
+                                    }
+                                });
+                    }
+                }
+            });
+        }
 
         tabs = createTabs();
 
@@ -116,17 +153,31 @@ public abstract class CharltonActivity extends Activity {
         updateCharltonImage();
     }
 
+    public static int getRandomHestonDrawableResource(Context context) {
+        int randomHeston = Math.abs(rand.nextInt()) % 10; //ten total heston images currently
+        String drawableName = "heston" + randomHeston;
+        return context.getResources().getIdentifier(drawableName, "drawable",
+                context.getPackageName());
+    }
+
+    private static LayerDrawable getCharltonDrawableForId(Context context, int id) {
+        Drawable newHestonDrawable = context.getResources().getDrawable(id);
+        LayerDrawable layeredDrawable = (LayerDrawable) context.getResources().getDrawable(R.drawable.heston_layered);
+        layeredDrawable.setDrawableByLayerId(R.id.heston_layered_drawable_id, newHestonDrawable);
+
+        return layeredDrawable;
+    }
+
     private void updateCharltonImage() {
         if (currentHestonCountsLeft <= 0) {
             //we need to set a new charlton image!
-            int randomHeston = Math.abs(rand.nextInt()) % 10; //ten total heston images currently
-            String drawableName = "heston" + randomHeston;
-
-            currentHestonDrawableId = getResources().getIdentifier(drawableName, "drawable", getPackageName());
+            currentHestonDrawableId = getRandomHestonDrawableResource(getApplicationContext());
             currentHestonCountsLeft = Math.abs(rand.nextInt()) % 10 + 20; //20 to 29 times before it changes
         }
 
-        getActionBar().setIcon(currentHestonDrawableId);
+        Drawable charltonDrawable = getCharltonDrawableForId(getApplicationContext(), currentHestonDrawableId);
+        getActionBar().setIcon(charltonDrawable);
+
         currentHestonCountsLeft--;
     }
 

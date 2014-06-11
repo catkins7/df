@@ -27,7 +27,7 @@ import com.hatfat.dota.R;
 import com.hatfat.dota.activities.MatchActivity;
 import com.hatfat.dota.adapters.MatchListAdapter;
 import com.hatfat.dota.dialogs.FetchMatchesDialogHelper;
-import com.hatfat.dota.dialogs.InfoDialogHelper;
+import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
@@ -381,7 +381,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void showStatsInfoDialog() {
-        InfoDialogHelper.showFromActivity(getActivity());
+        TextDialogHelper.showStatsDialog(getActivity());
     }
 
     @Override

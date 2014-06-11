@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="about_string_array">
+
+        <item><![CDATA[
+        This basic app will be available free with no ads, always.  I made this app for myself, my friends, and for the Dota 2 community as a whole - not because I wanted to make money.
+        ]]></item>
+
+        <item><![CDATA[
+        You may be wondering why Charlton Heston is sprinkled throughout the app.  No, it is not a joke.  Many people these days only remember him for his gun rights advocacy in his later years, which is a shame because he was in some really great movies.  If putting Heston in this app gets just one person to watch <i>Ben-Hur</i> or <i>Planet of the Apes</i>, then I think it is worth it.
+        ]]></item>
+
+        <item><![CDATA[
+        I want Charlton Heston to be your Dota 2 <b>Best Friend</b>.  Constructive feedback is welcome!
+        ]]></item>
+
+        <item><![CDATA[
+        \@scottrick49
+        ]]></item>
+
+        <item><![CDATA[
+        dota2friend@gmail.com
+        ]]></item>
+
+    </string-array>
+</resources>

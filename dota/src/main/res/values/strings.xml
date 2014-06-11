@@ -11,10 +11,11 @@
     <string name="anonymous_name">Anonymous</string>
     <string name="bot_name">Bot</string>
 
-    <string name="drawer_open">drawerOpened</string>
-    <string name="drawer_closed">drawerClosed</string>
-
     <string name="add_player">Add a new player…</string>
+    <string name="about_dialog_title">About Dota 2 Friend</string>
+    <string name="about_dialog_email_intent_chooser_title">Send Email</string>
+    <string name="about_dialog_email_address">dota2friend@gmail.com</string>
+    <string name="about_dialog_email_suggested_subject">Dota 2 Friend Feedback</string>
 
     <string name="no_hero">No Hero</string>
     <string name="level">Level</string>
@@ -40,6 +41,7 @@
     <string name="steam_user_list_default_charlton_text">Here is a list of Steam users.</string>
 
     <string name="match_summary_charlton_text">This is match %1$s.</string>
+    <string name="match_summary_item_of_the_game_label">Item of the Game</string>
 
     <string name="match_result_unknown"></string>
     <string name="match_result_radiant_victory">Radiant Victory</string>
@@ -156,5 +158,7 @@
     <string name="no_starred_users">No starred players.</string>
     <string name="no_matches">No matches.</string>
     <string name="no_statistics_data">No data.</string>
+
+    <string name="charlton_dialog_title">Charlton Heston</string>
 
 </resources>

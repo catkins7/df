@@ -3,15 +3,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_player_row_container_relative_layout"
-                android:background="@drawable/off_black_button_background"
-                android:padding="@dimen/default_padding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    android:background="@drawable/off_black_button_background"
+    android:padding="@dimen/default_padding"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/view_player_row_hero_image_view"
         android:padding="1dp"
-        android:background="@drawable/off_black_background"
+        android:background="@drawable/default_background_border"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_width="@dimen/hero_image_width"
@@ -55,7 +55,7 @@
 
         <RelativeLayout
             android:id="@+id/view_player_row_items_container"
-            android:background="@drawable/off_black_background"
+            android:background="@drawable/default_background_border"
             android:padding="1dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -139,8 +139,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/text_view_height_small"/>
         </RelativeLayout>
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -156,7 +154,7 @@
         <ImageView
             android:id="@+id/view_player_row_additional_unit_image_view"
             android:padding="1dp"
-            android:background="@drawable/off_black_background"
+            android:background="@drawable/default_background_border"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_width="@dimen/hero_image_width"
@@ -165,8 +163,8 @@
 
         <RelativeLayout
             android:id="@+id/view_player_row_additional_unit_items_container"
-            android:background="@drawable/off_black_background"
             android:padding="1dp"
+            android:background="@drawable/default_background_border"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_alignParentRight="true"

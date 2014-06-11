@@ -10,11 +10,22 @@
     <ImageView
         android:id="@+id/view_match_player_basic_hero_image_view"
         android:padding="1dp"
-        android:background="@drawable/off_black_background"
+        android:background="@drawable/default_background_border"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_width="@dimen/hero_image_width"
         android:layout_height="@dimen/hero_image_height"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/view_match_player_basic_item_image_view"
+        android:padding="1dp"
+        android:background="@drawable/default_background_border"
+        android:layout_marginLeft="@dimen/default_padding_half"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/view_match_player_basic_hero_image_view"
+        android:layout_width="@dimen/player_row_view_item_width"
+        android:layout_height="@dimen/player_row_view_item_height"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -32,10 +43,12 @@
         android:layout_toLeftOf="@id/view_match_player_basic_ranked_image_view"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/default_padding"
+        android:paddingLeft="@dimen/victory_text_left_right_padding"
+        android:paddingRight="@dimen/victory_text_left_right_padding"
         android:gravity="center_vertical|right"
         android:textSize="@dimen/font_size_medium"
         android:textColor="@color/off_white"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/text_view_height_medium"/>
 
     <TextView
@@ -43,16 +56,17 @@
         android:layout_toLeftOf="@id/view_match_player_basic_ranked_image_view"
         android:layout_below="@id/view_match_player_basic_victory_text_view"
         android:layout_marginRight="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
         android:gravity="center_vertical|right"
         android:textSize="@dimen/font_size_small"
         android:textColor="@color/off_gray"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/text_view_height_small"/>
 
     <TextView
         android:id="@+id/view_match_player_basic_hero_name_text_view"
-        android:layout_toRightOf="@id/view_match_player_basic_hero_image_view"
-        android:layout_toLeftOf="@+id/view_match_player_basic_victory_text_view"
+        android:layout_toRightOf="@id/view_match_player_basic_item_image_view"
+        android:layout_toLeftOf="@id/view_match_player_basic_victory_text_view"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/default_padding"
         android:gravity="center_vertical|left"
@@ -63,7 +77,7 @@
 
     <TextView
         android:id="@+id/view_match_player_basic_date_text_view"
-        android:layout_toRightOf="@id/view_match_player_basic_hero_image_view"
+        android:layout_toRightOf="@id/view_match_player_basic_item_image_view"
         android:layout_toLeftOf="@id/view_match_player_basic_match_id_text_view"
         android:layout_below="@id/view_match_player_basic_hero_name_text_view"
         android:layout_marginLeft="@dimen/default_padding"

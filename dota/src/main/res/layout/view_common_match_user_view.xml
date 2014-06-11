@@ -9,6 +9,8 @@
 
     <ImageView
         android:id="@+id/view_common_match_view_image_view"
+        android:padding="1dp"
+        android:background="@drawable/default_background_border"
         android:layout_alignParentLeft="true"
         android:layout_width="@dimen/steam_user_view_image_size"
         android:layout_height="@dimen/steam_user_view_image_size"

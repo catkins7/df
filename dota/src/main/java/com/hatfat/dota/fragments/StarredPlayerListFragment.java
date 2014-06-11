@@ -8,6 +8,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.PlayerActivity;
+import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.view.SteamUserView;
@@ -93,6 +97,8 @@ public class StarredPlayerListFragment extends CharltonFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         updateUserListAndSort();
 
@@ -206,6 +212,26 @@ public class StarredPlayerListFragment extends CharltonFragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.about_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about_menu_about_id:
+                showAboutDialog();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showAboutDialog() {
+        TextDialogHelper.showAboutDialog(getActivity());
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -100,6 +101,8 @@ public class Player {
 
     //we only store each abilityId once in a set like this
     Set<Integer> abilityIds;
+
+    private transient Item itemOfTheMatch;
 
     public SteamUser getSteamUser() {
         return SteamUsers.get().getByAccountId(String.valueOf(accountId));
@@ -232,5 +235,65 @@ public class Player {
 
     public boolean isRadiantPlayer() {
         return playerSlot >> 7 == 0;
+    }
+
+    public Item getItemOfTheMatch() {
+        if (itemOfTheMatch != null) {
+            return itemOfTheMatch;
+        }
+
+        //need to calculate
+        HashMap<Item, Integer> itemPurchaseMap = new HashMap();
+
+        for (int i = 0; i < 6; i++) {
+            Item item = getItem(i);
+
+            if (item == null) {
+                continue;
+            }
+
+            if (!itemPurchaseMap.containsKey(item)) {
+                itemPurchaseMap.put(item, 1);
+            }
+            else {
+                int currentValue = itemPurchaseMap.get(item);
+                itemPurchaseMap.put(item, currentValue + 1);
+            }
+        }
+
+        if (hasAdditionalUnitsWeWantToShow()) {
+            AdditionalUnit unit = getAdditionalUnits().get(0);
+
+            //make sure we include items on any additional units we care about (aka SPIRIT BEAR)
+            for (int i = 0; i < 6; i++) {
+                Item item = unit.getItem(i);
+
+                if (item == null) {
+                    continue;
+                }
+
+                if (!itemPurchaseMap.containsKey(item)) {
+                    itemPurchaseMap.put(item, 1);
+                }
+                else {
+                    int currentValue = itemPurchaseMap.get(item);
+                    itemPurchaseMap.put(item, currentValue + 1);
+                }
+            }
+        }
+
+        int highestCost = 0;
+
+        for (Item item : itemPurchaseMap.keySet()) {
+            int count = itemPurchaseMap.get(item);
+            int newCost = count * item.getItemCost();
+
+            if (newCost > highestCost) {
+                highestCost = newCost;
+                itemOfTheMatch = item;
+            }
+        }
+
+        return itemOfTheMatch;
     }
 }

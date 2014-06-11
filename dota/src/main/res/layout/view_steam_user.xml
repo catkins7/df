@@ -3,38 +3,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/off_black_button_background"
-                android:padding="@dimen/default_padding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    android:padding="@dimen/default_padding"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/steam_user_view_image_view"
+        android:padding="1dp"
+        android:background="@drawable/default_background_border"
         android:layout_alignParentLeft="true"
         android:layout_width="@dimen/steam_user_view_image_size"
         android:layout_height="@dimen/steam_user_view_image_size"
         tools:ignore="ContentDescription" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/steam_user_view_name_text_view"
+        android:ellipsize="end"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/steam_user_view_image_view"
         android:layout_marginLeft="@dimen/default_padding"
+        android:textSize="@dimen/font_size_large"
+        android:textColor="@color/off_white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/text_view_height_large"/>
 
-        <TextView
-            android:id="@+id/steam_user_view_name_text_view"
-            android:ellipsize="end"
-            android:layout_alignParentTop="true"
-            android:textSize="@dimen/font_size_large"
-            android:textColor="@color/off_white"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_view_height_large"/>
+    <TextView
+        android:id="@+id/steam_user_view_status_text_view"
+        android:layout_below="@id/steam_user_view_name_text_view"
+        android:layout_toRightOf="@id/steam_user_view_image_view"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:textSize="@dimen/font_size_small"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_view_height_small"/>
 
-        <TextView
-            android:id="@+id/steam_user_view_status_text_view"
-            android:layout_below="@id/steam_user_view_name_text_view"
-            android:textSize="@dimen/font_size_small"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_view_height_small"/>
-
-    </RelativeLayout>
 </RelativeLayout>

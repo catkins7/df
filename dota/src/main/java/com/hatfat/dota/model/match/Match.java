@@ -7,12 +7,15 @@ import com.google.gson.annotations.SerializedName;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.model.game.Item;
+import com.hatfat.dota.model.player.AdditionalUnit;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.services.MatchFetcher;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -49,6 +52,18 @@ public class Match implements Comparable {
                 case MATCH_RESULT_UNKNOWN:
                 default:
                     return R.color.off_white;
+            }
+        }
+
+        public int getBackgroundResourceId() {
+            switch (this) {
+                case MATCH_RESULT_RADIANT_VICTORY:
+                    return R.drawable.radiant_background;
+                case MATCH_RESULT_DIRE_VICTORY:
+                    return R.drawable.dire_background;
+                case MATCH_RESULT_UNKNOWN:
+                default:
+                    return R.drawable.off_black_background;
             }
         }
     }
@@ -250,6 +265,8 @@ public class Match implements Comparable {
     @SerializedName("players")
     List<Player> players;
 
+    private transient Item itemOfTheMatch;
+
     public Match(String matchId) {
         this.matchId = matchId;
     }
@@ -388,6 +405,19 @@ public class Match implements Comparable {
                 return R.color.dire_red;
             default:
                 return R.color.off_white;
+        }
+    }
+
+    public int getMatchResultBackgroundResourceIdForPlayer(Player player) {
+        PlayerMatchResult result = getPlayerMatchResultForPlayer(player);
+
+        switch (result) {
+            case PLAYER_MATCH_RESULT_VICTORY:
+                return R.drawable.match_result_win_background;
+            case PLAYER_MATCH_RESULT_DEFEAT:
+                return R.drawable.match_result_loss_background;
+            default:
+                return R.drawable.off_black_background;
         }
     }
 
@@ -591,6 +621,68 @@ public class Match implements Comparable {
         if (!hasMatchDetails) {
             MatchFetcher.fetchMatchDetails(getMatchId());
         }
+    }
+
+    public Item getItemOfTheMatch() {
+        if (itemOfTheMatch != null) {
+            return itemOfTheMatch;
+        }
+
+        //need to calculate
+        HashMap<Item, Integer> itemPurchaseMap = new HashMap();
+
+        for (Player player : players) {
+            for (int i = 0; i < 6; i++) {
+                Item item = player.getItem(i);
+
+                if (item == null) {
+                    continue;
+                }
+
+                if (!itemPurchaseMap.containsKey(item)) {
+                    itemPurchaseMap.put(item, 1);
+                }
+                else {
+                    int currentValue = itemPurchaseMap.get(item);
+                    itemPurchaseMap.put(item, currentValue + 1);
+                }
+            }
+
+            if (player.hasAdditionalUnitsWeWantToShow()) {
+                AdditionalUnit unit = player.getAdditionalUnits().get(0);
+
+                //make sure we include items on any additional units we care about (aka SPIRIT BEAR)
+                for (int i = 0; i < 6; i++) {
+                    Item item = unit.getItem(i);
+
+                    if (item == null) {
+                        continue;
+                    }
+
+                    if (!itemPurchaseMap.containsKey(item)) {
+                        itemPurchaseMap.put(item, 1);
+                    }
+                    else {
+                        int currentValue = itemPurchaseMap.get(item);
+                        itemPurchaseMap.put(item, currentValue + 1);
+                    }
+                }
+            }
+        }
+
+        int highestCost = 0;
+
+        for (Item item : itemPurchaseMap.keySet()) {
+            int count = itemPurchaseMap.get(item);
+            int newCost = count * item.getItemCost();
+
+            if (newCost > highestCost) {
+                highestCost = newCost;
+                itemOfTheMatch = item;
+            }
+        }
+
+        return itemOfTheMatch;
     }
 
     private void broadcastMatchChanged() {

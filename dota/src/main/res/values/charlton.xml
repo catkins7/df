@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="charlton_string_array">
+
+        <item><![CDATA[
+        Charlton Heston is awesome.
+        ]]></item>
+
+        <item><![CDATA[
+        Probably my favorite Heston movie is <i>Planet of the Apes</i>.  Basically any time Heston is talking during the movie, its pure gold.  The movie begins with an awesome monologue and ends with a great revelation at the end.  The sequels are good as well, but its a different kind of good, and Heston is only in the 2nd one for a little (but amazing) bit.
+        ]]></item>
+
+        <item><![CDATA[
+        <b>Charlton Heston</b> on Wikipedia.
+        ]]></item>
+
+    </string-array>
+</resources>

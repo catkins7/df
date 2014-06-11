@@ -1,7 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="default_padding">8dp</dimen>
-    <dimen name="default_padding_half">4dp</dimen>
+    <dimen name="default_padding">4dp</dimen>
+    <dimen name="default_padding_half">2dp</dimen>
 
     <dimen name="button_corner_radius">4dp</dimen>
 
@@ -18,11 +18,13 @@
     <dimen name="font_size_small">12sp</dimen>
     <dimen name="font_size_medium">16sp</dimen>
     <dimen name="font_size_large">24sp</dimen>
+    <dimen name="font_size_huge">30sp</dimen>
 
     <dimen name="text_view_height_tiny">12dp</dimen>
     <dimen name="text_view_height_small">16dp</dimen>
     <dimen name="text_view_height_medium">22dp</dimen>
     <dimen name="text_view_height_large">32dp</dimen>
+    <dimen name="text_view_height_huge">42dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -32,7 +34,6 @@
     <dimen name="charlton_actionbar_text_size">13sp</dimen>
 
     <dimen name="dota_player_summary_fragment_image_view_size">61dp</dimen>
-    <dimen name="dota_player_summary_fragment_right_layout_size">101dp</dimen>
     <dimen name="dota_player_summary_fragment_right_button_size">46dp</dimen>
 
     <dimen name="dialog_fetch_matches_loading_bar_width">220dp</dimen>
@@ -55,5 +56,11 @@
     <dimen name="player_stats_item_row_height">32dp</dimen>
 
     <dimen name="background_border_width">1dp</dimen>
+    <dimen name="charlton_border_width">2dp</dimen>
+    <dimen name="charlton_dialog_image_size">48dp</dimen>
+
+    <dimen name="victory_text_left_right_padding">12dp</dimen>
+    <dimen name="match_top_text_left_right_padding">4dp</dimen>
+    <dimen name="match_top_text_corner_radius">4dp</dimen>
 
 </resources>

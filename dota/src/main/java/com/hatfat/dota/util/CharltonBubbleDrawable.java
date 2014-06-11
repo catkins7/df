@@ -12,6 +12,12 @@ import com.hatfat.dota.R;
 
 public class CharltonBubbleDrawable extends Drawable {
 
+    private int bubbleColorResourceId;
+
+    public CharltonBubbleDrawable(int bubbleColorResourceId) {
+        this.bubbleColorResourceId = bubbleColorResourceId;
+    }
+
     @Override
     public void draw(Canvas canvas) {
 
@@ -19,7 +25,7 @@ public class CharltonBubbleDrawable extends Drawable {
         int bubbleWidth = bubbleCornerRadius * 2;
 
         Paint paint = new Paint();
-        paint.setColor(DotaFriendApplication.CONTEXT.getResources().getColor(R.color.off_white));
+        paint.setColor(DotaFriendApplication.CONTEXT.getResources().getColor(bubbleColorResourceId));
 
         RectF rect = new RectF(bubbleWidth, 0, canvas.getWidth(), canvas.getHeight());
         canvas.drawRoundRect(rect, bubbleCornerRadius, bubbleCornerRadius, paint);

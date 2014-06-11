@@ -9,12 +9,16 @@
 
     <ImageView
         android:id="@+id/view_stats_favorite_hero_row_icon_image_view"
+        android:padding="1dp"
+        android:background="@drawable/default_background_border"
         android:layout_width="@dimen/hero_image_width"
         android:layout_height="@dimen/hero_image_height"
         tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/view_stats_favorite_hero_item_2"
+        android:padding="1dp"
+        android:background="@drawable/default_background_border"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_width="@dimen/player_stats_item_row_width"
@@ -23,6 +27,8 @@
 
     <ImageView
         android:id="@+id/view_stats_favorite_hero_item_1"
+        android:padding="1dp"
+        android:background="@drawable/default_background_border"
         android:layout_marginRight="@dimen/default_padding"
         android:layout_toLeftOf="@id/view_stats_favorite_hero_item_2"
         android:layout_centerVertical="true"
@@ -32,6 +38,8 @@
 
     <ImageView
         android:id="@+id/view_stats_favorite_hero_item_0"
+        android:padding="1dp"
+        android:background="@drawable/default_background_border"
         android:layout_marginRight="@dimen/default_padding"
         android:layout_toLeftOf="@id/view_stats_favorite_hero_item_1"
         android:layout_centerVertical="true"

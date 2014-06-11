@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.adapters.DotaStatisticsAdapter;
-import com.hatfat.dota.dialogs.InfoDialogHelper;
+import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.game.DotaStatistics;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
@@ -151,7 +151,7 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
     }
 
     private void showStatsInfoDialog() {
-        InfoDialogHelper.showFromActivity(getActivity());
+        TextDialogHelper.showStatsDialog(getActivity());
     }
 
     @Override

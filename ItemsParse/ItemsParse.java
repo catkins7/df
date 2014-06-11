@@ -59,9 +59,30 @@ class ItemsParse {
 						else if (obj.key.equals("ItemCost")) {
 							ParseString costObj = (ParseString)obj;
 
+							//HACK to fix incorrect value in items.txt
 							if (item.key.equals("item_diffusal_blade_2")) {
-								//HACK to fix incorrect value in items.txt
 								json += ",\"itemCost\":\"" + "4150" + "\"";
+							}
+							else if (item.key.equals("item_dagon")) {
+								json += ",\"itemCost\":\"" + "2720" + "\"";
+							}
+							else if (item.key.equals("item_dagon_2")) {
+								json += ",\"itemCost\":\"" + "3970" + "\"";
+							}
+							else if (item.key.equals("item_dagon_3")) {
+								json += ",\"itemCost\":\"" + "5220" + "\"";
+							}
+							else if (item.key.equals("item_dagon_4")) {
+								json += ",\"itemCost\":\"" + "6470" + "\"";
+							}
+							else if (item.key.equals("item_dagon_5")) {
+								json += ",\"itemCost\":\"" + "7720" + "\"";
+							}
+							else if (item.key.equals("item_necronomicon_2")) {
+								json += ",\"itemCost\":\"" + "3950" + "\"";
+							}
+							else if (item.key.equals("item_necronomicon_3")) {
+								json += ",\"itemCost\":\"" + "5200" + "\"";
 							}
 							else {
 								json += ",\"itemCost\":\"" + costObj.value + "\"";
