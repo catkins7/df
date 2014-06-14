@@ -1,9 +1,5 @@
 0.5 release
 ---------------------------
-match summary improvements?
- - switch to a simple list with the 5 stats on the top, like on the statistics page?  doesn't look that great right now
- - part of the player rows list view, so they scroll with the players.  Only non-scrollable part is the 40-23 DIRE VICTORY row
-
 3 different player row views, normal, normal+bear, normal+abilities (lone druid not in ability draft)
 
 Flesh out the charlton feature?
@@ -19,8 +15,6 @@ memory checks on all fragments
 
 ability draft abilities for heroes?  need to get abilityID values from somewhere
  -get abilities.json and start showing abilities??
-
-go thorugh all drawable resources and delete unused stuff
 
 double loading screen issue??
 
