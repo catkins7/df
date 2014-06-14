@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,7 +24,6 @@ import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.view.PlayerRowView;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by scottrick on 2/16/14.
@@ -39,17 +37,32 @@ public class MatchSummaryFragment extends CharltonFragment {
     private Match match;
 
     private View topContainerView;
-    private TextView matchTypeTextView;
     private TextView victoryTextView;
-    private TextView timeAgoTextView;
-    private TextView durationTextView;
-    private TextView playerOfTheGameTextView;
     private TextView radiantKillsTextView;
     private TextView direKillsTextView;
-    private ImageView itemOfTheGameImageView;
 
-    private ListView playersListView;
-    private BaseAdapter playersAdapter;
+    private ListView listView;
+    private BaseAdapter matchAdapter;
+
+    private enum MatchSummaryRowTypes {
+        ROW_TYPE_GAME_MODE(0),
+        ROW_TYPE_DURATION(1),
+        ROW_TYPE_TIME_AGO(2),
+        ROW_TYPE_ITEM_OF_THE_GAME(3),
+        ROW_TYPE_PLAYER_OF_THE_GAME(4),
+
+        ROW_TYPE_COUNT(5);
+
+        private int value;
+
+        MatchSummaryRowTypes(int value) {
+            this.value = value;
+        }
+
+        public int getIntValue() {
+            return value;
+        }
+    }
 
     public static Bundle newBundleForMatch(String matchId) {
         Bundle args = new Bundle();
@@ -77,34 +90,47 @@ public class MatchSummaryFragment extends CharltonFragment {
         View view = inflater.inflate(R.layout.fragment_match_summary, container, false);
 
         topContainerView = view.findViewById(R.id.fragment_match_summary_top_layout);
-        matchTypeTextView = (TextView) view.findViewById(R.id.fragment_match_summary_match_type_text_view);
         victoryTextView = (TextView) view.findViewById(R.id.fragment_match_summary_victory_text_view);
-        timeAgoTextView = (TextView) view.findViewById(R.id.fragment_match_summary_time_ago_text_view);
-        durationTextView = (TextView) view.findViewById(R.id.fragment_match_summary_duration_text_view);
         radiantKillsTextView = (TextView) view.findViewById(R.id.fragment_match_summary_radiant_kills_text_view);
         direKillsTextView = (TextView) view.findViewById(R.id.fragment_match_summary_dire_kills_text_view);
-        playerOfTheGameTextView = (TextView) view.findViewById(R.id.fragment_match_summary_player_of_the_game_text_view);
-        itemOfTheGameImageView = (ImageView) view.findViewById(R.id.fragment_match_summary_item_of_the_game_image_view);
-        playersListView = (ListView) view.findViewById(R.id.fragment_match_summary_players_list_view);
+        listView = (ListView) view.findViewById(R.id.fragment_match_summary_players_list_view);
 
         if (match.hasMatchDetails()) {
-            setupPlayerList();
+            setupListView();
             updateViews();
         }
 
         return view;
     }
 
-    private void setupPlayerList() {
-        playersAdapter = new BaseAdapter() {
+    private void setupListView() {
+        matchAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                return match.getPlayers().size();
+                return match.getPlayers().size() + MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue();
             }
 
             @Override
-            public Object getItem(int i) {
-                return match.getPlayers().get(i);
+            public Player getItem(int i) {
+                if (i < MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue()) {
+                    return null;
+                }
+
+                return match.getPlayers().get(i - MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue());
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return 2;
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                if (position < MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue()) {
+                    return 0; //extra info row
+                }
+
+                return 1; //player row
             }
 
             @Override
@@ -113,10 +139,86 @@ public class MatchSummaryFragment extends CharltonFragment {
             }
 
             @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-                Player player = (Player) getItem(i);
+            public boolean isEnabled(int position) {
+                return position >= MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue();
+            }
 
-                PlayerRowView playerView = (PlayerRowView) view;
+            @Override
+            public View getView(int i, View convertView, ViewGroup viewGroup) {
+                if (i < MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue()) {
+                    //extra row
+                    LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                    View view = inflater.inflate(R.layout.view_stats_text_row, viewGroup, false);
+                    view.setBackgroundResource(R.drawable.off_black_background);
+
+                    TextView titleText = (TextView) view.findViewById(R.id.view_stats_text_row_title_text_view);
+                    TextView subtitleText = (TextView) view.findViewById(R.id.view_stats_text_row_subtitle_text_view);
+
+                    subtitleText.setTextColor(getResources().getColor(R.color.off_white));
+                    subtitleText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                    subtitleText.setCompoundDrawablePadding(0);
+
+                    if (i == MatchSummaryRowTypes.ROW_TYPE_GAME_MODE.getIntValue()) {
+                        //game mode row
+                        titleText.setText(R.string.match_summary_mode_label);
+                        subtitleText.setText(match.getMatchTypeString(getResources()));
+
+                        if (match.isRankedMatchmaking()) {
+                            subtitleText.setCompoundDrawablesWithIntrinsicBounds(
+                                    getResources().getDrawable(R.drawable.ranked_icon), null, null, null);
+                            subtitleText.setCompoundDrawablePadding(
+                                    (int) getResources().getDimension(R.dimen.default_padding));
+                        }
+                    }
+                    else if (i == MatchSummaryRowTypes.ROW_TYPE_DURATION.getIntValue()) {
+                        //duration row
+                        titleText.setText(R.string.match_summary_duration_label);
+                        subtitleText.setText(match.getDurationString());
+                    }
+                    else if (i == MatchSummaryRowTypes.ROW_TYPE_TIME_AGO.getIntValue()) {
+                        //time ago row
+                        titleText.setText(R.string.match_summary_time_ago_label);
+                        subtitleText.setText(match.getTimeAgoString(getResources()));
+                    }
+                    else if (i == MatchSummaryRowTypes.ROW_TYPE_PLAYER_OF_THE_GAME.getIntValue()) {
+                        titleText.setText(R.string.match_summary_player_of_the_game_label);
+
+                        Player potm = match.getPlayerOfTheMatch();
+                        if (potm != null) {
+                            subtitleText.setText(potm.getSteamUser().getDisplayName());
+                        }
+                        else {
+                            subtitleText.setText(R.string.match_summary_no_player_of_the_game);
+                        }
+                    }
+                    else if (i == MatchSummaryRowTypes.ROW_TYPE_ITEM_OF_THE_GAME.getIntValue()) {
+                        titleText.setText(R.string.match_summary_item_of_the_game_label);
+
+                        Item iotm = match.getItemOfTheMatch();
+
+                        if (iotm != null) {
+//                            Picasso.with(DotaFriendApplication.CONTEXT).load(iotm.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(
+//                                    itemOfTheGameImageView);
+//                            itemOfTheGameImageView.setVisibility(View.VISIBLE);
+                        }
+                        else {
+//                            itemOfTheGameImageView.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    else {
+                        TextView textView = new TextView(viewGroup.getContext());
+                        textView.setText("Not Implemented");
+                        textView.setPadding(8, 8, 8, 8);
+                        return textView;
+                    }
+
+                    return view;
+                }
+
+                Player player = getItem(i);
+
+                PlayerRowView playerView = (PlayerRowView) convertView;
 
                 if (playerView == null) {
                     playerView = new PlayerRowView(viewGroup.getContext());
@@ -129,12 +231,12 @@ public class MatchSummaryFragment extends CharltonFragment {
             }
         };
 
-        playersListView.setAdapter(playersAdapter);
+        listView.setAdapter(matchAdapter);
 
-        playersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Player player = (Player) playersAdapter.getItem(i);
+                Player player = (Player) matchAdapter.getItem(i);
                 SteamUser user = player.getSteamUser();
 
                 Intent intent = PlayerActivity.intentForPlayer(getActivity().getApplicationContext(), user.getSteamId());
@@ -179,9 +281,9 @@ public class MatchSummaryFragment extends CharltonFragment {
                 else if (intent.getAction().equals(SteamUser.STEAM_USER_UPDATED)) {
                     String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
 
-                    if (playersListView != null && playersAdapter != null) {
-                        for (int i = 0; i < playersListView.getChildCount(); i++) {
-                            View view = playersListView.getChildAt(i);
+                    if (listView != null && matchAdapter != null) {
+                        for (int i = 0; i < listView.getChildCount(); i++) {
+                            View view = listView.getChildAt(i);
 
                             if (view instanceof PlayerRowView) {
                                 PlayerRowView playerRowView = (PlayerRowView) view;
@@ -210,42 +312,10 @@ public class MatchSummaryFragment extends CharltonFragment {
     private void updateViews() {
         victoryTextView.setText(match.getMatchResult().getDescriptionStringResourceId());
         topContainerView.setBackgroundResource(match.getMatchResult().getBackgroundResourceId());
-        timeAgoTextView.setText(match.getTimeAgoString(getResources()));
-        durationTextView.setText(match.getDurationString());
-        matchTypeTextView.setText(match.getMatchTypeString(getResources()));
         radiantKillsTextView.setText(String.valueOf(match.getDireTotalDeathCount()));
         direKillsTextView.setText(String.valueOf(match.getRadiantTotalDeathCount()));
 
-        if (match.isRankedMatchmaking()) {
-            matchTypeTextView.setCompoundDrawablesWithIntrinsicBounds(
-                    getResources().getDrawable(R.drawable.ranked_icon), null, null, null);
-            matchTypeTextView.setCompoundDrawablePadding(
-                    (int) getResources().getDimension(R.dimen.default_padding));
-        }
-        else {
-            matchTypeTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            matchTypeTextView.setCompoundDrawablePadding(0);
-        }
-
-        Player potm = match.getPlayerOfTheMatch();
-        if (potm != null) {
-            playerOfTheGameTextView.setText(potm.getSteamUser().getDisplayName());
-        }
-        else {
-            playerOfTheGameTextView.setText(R.string.match_summary_no_player_of_the_game);
-        }
-
-        Item iotm = match.getItemOfTheMatch();
-        if (iotm != null) {
-            Picasso.with(DotaFriendApplication.CONTEXT).load(iotm.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(
-                    itemOfTheGameImageView);
-            itemOfTheGameImageView.setVisibility(View.VISIBLE);
-        }
-        else {
-            itemOfTheGameImageView.setVisibility(View.INVISIBLE);
-        }
-
-        playersAdapter.notifyDataSetChanged();
+        matchAdapter.notifyDataSetChanged();
     }
 
     @Override

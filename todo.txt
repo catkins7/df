@@ -20,7 +20,7 @@ memory checks on all fragments
 ability draft abilities for heroes?  need to get abilityID values from somewhere
  -get abilities.json and start showing abilities??
 
- go thorugh all drawable resources and delete unused stuff
+go thorugh all drawable resources and delete unused stuff
 
 double loading screen issue??
 

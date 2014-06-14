@@ -80,11 +80,11 @@
     <string name="match_summary_time_ago_days">%1$d days ago</string>
 
     <string name="match_summary_charlton_text">This is match %1$s.</string>
-    <string name="match_summary_item_of_the_game_label">IotG:</string>
-    <string name="match_summary_player_of_the_game_label">PotG:</string>
-    <string name="match_summary_duration_ph">duration</string>
-    <string name="match_summary_mode_ph">mode</string>
-    <string name="match_summary_time_ago_ph">time ago</string>
+    <string name="match_summary_item_of_the_game_label">Item of the Game</string>
+    <string name="match_summary_player_of_the_game_label">Player of the Game</string>
+    <string name="match_summary_duration_label">Duration</string>
+    <string name="match_summary_mode_label">Game Mode</string>
+    <string name="match_summary_time_ago_label">Time Ago</string>
     <string name="match_summary_no_player_of_the_game"></string>
 
     <string name="match_result_unknown"></string>
