@@ -189,6 +189,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                     String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
                     if (updatedId.equals(user.getSteamId())) {
                         updateViews();
+                        signalCharltonActivityToUpdateTab();
                     }
                 }
                 else if (intent.getAction().equals(SteamUser.STEAM_USER_MATCHES_CHANGED)) {
