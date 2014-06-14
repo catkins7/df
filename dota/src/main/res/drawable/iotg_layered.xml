@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:drawable="@drawable/default_background_border"/>
+
+    <item
+        android:top="@dimen/charlton_border_width"
+        android:bottom="@dimen/charlton_border_width"
+        android:left="@dimen/charlton_border_width"
+        android:right="@dimen/charlton_border_width"
+        android:id="@+id/iotg_layered_drawable_id"
+        android:drawable="@drawable/empty_item_bg"/>
+
+</layer-list>

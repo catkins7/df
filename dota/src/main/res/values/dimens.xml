@@ -18,13 +18,11 @@
     <dimen name="font_size_small">12sp</dimen>
     <dimen name="font_size_medium">16sp</dimen>
     <dimen name="font_size_large">24sp</dimen>
-    <dimen name="font_size_huge">30sp</dimen>
 
     <dimen name="text_view_height_tiny">12dp</dimen>
     <dimen name="text_view_height_small">16dp</dimen>
     <dimen name="text_view_height_medium">22dp</dimen>
     <dimen name="text_view_height_large">32dp</dimen>
-    <dimen name="text_view_height_huge">42dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

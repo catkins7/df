@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.view.PlayerRowView;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by scottrick on 2/16/14.
@@ -121,16 +123,20 @@ public class MatchSummaryFragment extends CharltonFragment {
 
             @Override
             public int getViewTypeCount() {
-                return 2;
+                return 3;
             }
 
             @Override
             public int getItemViewType(int position) {
                 if (position < MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue()) {
-                    return 0; //extra info row
+                    if (position == MatchSummaryRowTypes.ROW_TYPE_ITEM_OF_THE_GAME.getIntValue()) {
+                        return 0; //image row
+                    }
+
+                    return 1; //extra info row
                 }
 
-                return 1; //player row
+                return 2; //player row
             }
 
             @Override
@@ -145,15 +151,17 @@ public class MatchSummaryFragment extends CharltonFragment {
 
             @Override
             public View getView(int i, View convertView, ViewGroup viewGroup) {
-                if (i < MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue()) {
-                    //extra row
-                    LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                if (i < MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue() && i != MatchSummaryRowTypes.ROW_TYPE_ITEM_OF_THE_GAME.getIntValue()) {
+                    //extra text row
+                    if (convertView == null) {
+                        LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                    View view = inflater.inflate(R.layout.view_stats_text_row, viewGroup, false);
-                    view.setBackgroundResource(R.drawable.off_black_background);
+                        convertView = inflater.inflate(R.layout.view_stats_text_row, viewGroup, false);
+                        convertView.setBackgroundResource(R.drawable.off_black_background);
+                    }
 
-                    TextView titleText = (TextView) view.findViewById(R.id.view_stats_text_row_title_text_view);
-                    TextView subtitleText = (TextView) view.findViewById(R.id.view_stats_text_row_subtitle_text_view);
+                    TextView titleText = (TextView) convertView.findViewById(R.id.view_stats_text_row_title_text_view);
+                    TextView subtitleText = (TextView) convertView.findViewById(R.id.view_stats_text_row_subtitle_text_view);
 
                     subtitleText.setTextColor(getResources().getColor(R.color.off_white));
                     subtitleText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
@@ -165,8 +173,8 @@ public class MatchSummaryFragment extends CharltonFragment {
                         subtitleText.setText(match.getMatchTypeString(getResources()));
 
                         if (match.isRankedMatchmaking()) {
-                            subtitleText.setCompoundDrawablesWithIntrinsicBounds(
-                                    getResources().getDrawable(R.drawable.ranked_icon), null, null, null);
+                            subtitleText.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                    getResources().getDrawable(R.drawable.ranked_icon), null);
                             subtitleText.setCompoundDrawablePadding(
                                     (int) getResources().getDimension(R.dimen.default_padding));
                         }
@@ -192,20 +200,6 @@ public class MatchSummaryFragment extends CharltonFragment {
                             subtitleText.setText(R.string.match_summary_no_player_of_the_game);
                         }
                     }
-                    else if (i == MatchSummaryRowTypes.ROW_TYPE_ITEM_OF_THE_GAME.getIntValue()) {
-                        titleText.setText(R.string.match_summary_item_of_the_game_label);
-
-                        Item iotm = match.getItemOfTheMatch();
-
-                        if (iotm != null) {
-//                            Picasso.with(DotaFriendApplication.CONTEXT).load(iotm.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(
-//                                    itemOfTheGameImageView);
-//                            itemOfTheGameImageView.setVisibility(View.VISIBLE);
-                        }
-                        else {
-//                            itemOfTheGameImageView.setVisibility(View.INVISIBLE);
-                        }
-                    }
                     else {
                         TextView textView = new TextView(viewGroup.getContext());
                         textView.setText("Not Implemented");
@@ -213,11 +207,35 @@ public class MatchSummaryFragment extends CharltonFragment {
                         return textView;
                     }
 
-                    return view;
+                    return convertView;
+                }
+                else if (i < MatchSummaryRowTypes.ROW_TYPE_COUNT.getIntValue() && i == MatchSummaryRowTypes.ROW_TYPE_ITEM_OF_THE_GAME.getIntValue()) {
+                    //extra image row
+                    if (convertView == null) {
+                        LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        convertView = inflater.inflate(R.layout.view_stats_image_row, viewGroup, false);
+                        convertView.setBackgroundResource(R.drawable.off_black_background);
+                    }
+
+                    TextView titleText = (TextView) convertView.findViewById(R.id.view_stats_image_row_title_text_view);
+                    ImageView imageView = (ImageView) convertView.findViewById(R.id.view_stats_image_row_image_view);
+
+                    titleText.setText(R.string.match_summary_item_of_the_game_label);
+
+                    Item iotm = match.getItemOfTheMatch();
+
+                    if (iotm != null) {
+                            Picasso.with(DotaFriendApplication.CONTEXT).load(iotm.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.ic_launcher).into(
+                                    imageView);
+                    }
+                    else {
+                            imageView.setImageResource(R.drawable.empty_item_bg);
+                    }
+
+                    return convertView;
                 }
 
                 Player player = getItem(i);
-
                 PlayerRowView playerView = (PlayerRowView) convertView;
 
                 if (playerView == null) {
@@ -275,6 +293,11 @@ public class MatchSummaryFragment extends CharltonFragment {
                     String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
 
                     if (match.getMatchId().equals(updatedMatchId)) {
+                        if (matchAdapter == null) {
+                            //was created without match details, need to setup the listview now
+                            setupListView();
+                        }
+
                         updateViews();
                     }
                 }
