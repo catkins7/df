@@ -612,10 +612,10 @@ public class DotaStatistics {
         return favoriteModes;
     }
 
-    public String getFavoriteGameModeString() {
+    public String getFavoriteGameModeString(Resources resources) {
         ModeStats favorite = favoriteModes.size() > 0 ? favoriteModes.get(0) : null;
         if (favorite != null) {
-            return favorite.mode.getGameModeName();
+            return favorite.mode.getGameModeString(resources);
         }
         else {
             return null;

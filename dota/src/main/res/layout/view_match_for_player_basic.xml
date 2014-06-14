@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_match_player_basic_main_container"
     android:padding="@dimen/default_padding"
     android:background="@drawable/off_black_button_background"
     android:layout_width="match_parent"

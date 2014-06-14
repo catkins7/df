@@ -278,7 +278,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         prepareTextRow(convertView);
 
         TextView titleTextView = (TextView) convertView.findViewById(R.id.view_stats_text_row_title_text_view);
-        titleTextView.setText(R.string.no_matches);
+        titleTextView.setText(R.string.player_statistics_not_enough_data_text);
 
         convertView.setBackgroundColor(0x0);
 
@@ -406,7 +406,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             final DotaStatistics.ModeStats modeStats = dotaStatistics.getFavoriteGameModes().get(position - 1);
 
             String modePrefix = this.statsMode.getModePrefixString(resources);
-            final String label = modePrefix == null ? modeStats.mode.getGameModeName() : modePrefix + " " + modeStats.mode.getGameModeName();
+            final String label = modePrefix == null ? modeStats.mode.getGameModeString(resources) : modePrefix + " " + modeStats.mode.getGameModeString(resources);
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -418,7 +418,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 }
             });
 
-            titleTextView.setText(modeStats.mode.getGameModeName());
+            titleTextView.setText(modeStats.mode.getGameModeString(resources));
             subtitleTextView.setText(modeStats.getSummaryString(resources));
 
             convertView.setBackgroundResource(R.drawable.off_black_button_background);
@@ -465,7 +465,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             }
             else if (position == 2) {
                 titleTextView.setText(R.string.player_statistics_favorite_game_mode_title_text);
-                subtitleTextView.setText(section.stats.getFavoriteGameModeString());
+                subtitleTextView.setText(section.stats.getFavoriteGameModeString(resources));
             }
             else if (position == 3) {
                 titleTextView.setText(R.string.player_statistics_win_percent_title_text);
@@ -666,8 +666,15 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 sections.add(new StatsSection(StatsSectionType.SECTION_FAVORITE_ITEMS, dotaStatistics));
                 break;
             case ALL_SUCCESS_STATS:
-                sections.add(new StatsSection(StatsSectionType.SECTION_MOST_SUCCESS, dotaStatistics));
-                sections.add(new StatsSection(StatsSectionType.SECTION_LEAST_SUCCESS, dotaStatistics));
+                if (dotaStatistics.getMostSuccessfulHeroes().size() <= 0 && dotaStatistics.getLeastSuccessfulHeroes().size() <= 0) {
+                    sections.add(new StatsSection(StatsSectionType.SECTION_NO_DATA, dotaStatistics));
+                }
+                else {
+                    sections.add(new StatsSection(StatsSectionType.SECTION_MOST_SUCCESS,
+                            dotaStatistics));
+                    sections.add(new StatsSection(StatsSectionType.SECTION_LEAST_SUCCESS,
+                            dotaStatistics));
+                }
                 break;
             case ALL_HEROES:
                 sections.add(new StatsSection(StatsSectionType.SECTION_ALL_HEROES, dotaStatistics));

@@ -47,6 +47,7 @@
 
     <dimen name="match_summary_top_panel_right_column_width">160dp</dimen>
     <dimen name="match_summary_team_divider_width">12dp</dimen>
+    <dimen name="match_summary_of_the_game_width">48dp</dimen>
 
     <!--85x64-->
     <dimen name="player_row_view_item_width">25dp</dimen>

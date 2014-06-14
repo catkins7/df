@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.user.CommonMatches;
@@ -25,6 +26,9 @@ public class CommonMatchesAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (commonMatches == null) {
+            return 1;
+        }
+        else if (commonMatches.size() <= 0) {
             return 1;
         }
         else {
@@ -63,6 +67,16 @@ public class CommonMatchesAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
             return inflater.inflate(R.layout.view_stats_loading_row, parent, false);
+        }
+        else if (commonMatches.size() <= 0) {
+            LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View view = inflater.inflate(R.layout.view_stats_text_row, parent, false);
+            view.setBackgroundResource(R.drawable.off_black_background);
+            TextView textView = (TextView) view.findViewById(R.id.view_stats_text_row_title_text_view);
+            textView.setText(R.string.player_statistics_not_enough_data_text);
+
+            return view;
         }
 
         CommonMatches matches = getItem(position);

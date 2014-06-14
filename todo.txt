@@ -1,11 +1,8 @@
 0.5 release
 ---------------------------
 match summary improvements?
-
- - "Item of the match", similar to the hero/item favorite calculations
- - player of the game??
- - general UI improvements and polish for that page
- - add lobby type (co-op vs bots, etc) to the details
+ - switch to a simple list with the 5 stats on the top, like on the statistics page?  doesn't look that great right now
+ - part of the player rows list view, so they scroll with the players.  Only non-scrollable part is the 40-23 DIRE VICTORY row
 
 3 different player row views, normal, normal+bear, normal+abilities (lone druid not in ability draft)
 
@@ -22,6 +19,8 @@ memory checks on all fragments
 
 ability draft abilities for heroes?  need to get abilityID values from somewhere
  -get abilities.json and start showing abilities??
+
+ go thorugh all drawable resources and delete unused stuff
 
 email gaben/zoid about possibility of meet-up at ti4?
  -accurate items.txt  (item costs often wrong (diffusal 2, dagon, necronomicon, many recipe costs incorrect, etc)

@@ -40,8 +40,52 @@
 
     <string name="steam_user_list_default_charlton_text">Here is a list of Steam users.</string>
 
+    <string name="lobby_type_public_matchmaking">Unranked</string>
+    <string name="lobby_type_practice">Practice</string>
+    <string name="lobby_type_tournament">Tournament</string>
+    <string name="lobby_type_tutorial">Tutorial</string>
+    <string name="lobby_type_coop_bots">Co-op Bots</string>
+    <string name="lobby_type_team_match">Team Matchmaking</string>
+    <string name="lobby_type_solo_queue">Solo Queue</string>
+    <string name="lobby_type_ranked">Ranked</string>
+    <string name="lobby_type_unknown">Unknown</string>
+
+    <string name="game_mode_none">No Mode</string>
+    <string name="game_mode_all_pick">All Pick</string>
+    <string name="game_mode_captains_mode">Captains Mode</string>
+    <string name="game_mode_random_draft">Random Draft</string>
+    <string name="game_mode_single_draft">Single Draft</string>
+    <string name="game_mode_all_random">All Random</string>
+    <string name="game_mode_intro_death">Intro Death</string>
+    <string name="game_mode_diretide">Diretide</string>
+    <string name="game_mode_reverse_cm">Reverse CM</string>
+    <string name="game_mode_greeviling">Greeviling</string>
+    <string name="game_mode_tutorial">Tutorial</string>
+    <string name="game_mode_mid_only">Mid Only</string>
+    <string name="game_mode_least_played">Least Played</string>
+    <string name="game_mode_limited_heroes">Limited Heroes</string>
+    <string name="game_mode_compendium">Compendium</string>
+    <string name="game_mode_custom_game">Custom Game</string>
+    <string name="game_mode_captains_draft">Captains Draft</string>
+    <string name="game_mode_balanced_draft">Balanced Draft</string>
+    <string name="game_mode_ability_draft">Ability Draft</string>
+    <string name="game_mode_event">Event</string>
+    <string name="game_mode_unknown"></string>
+
+    <string name="match_summary_time_ago_minute">%1$d minute ago</string>
+    <string name="match_summary_time_ago_minutes">%1$d minutes ago</string>
+    <string name="match_summary_time_ago_hour">%1$d hour ago</string>
+    <string name="match_summary_time_ago_hours">%1$d hours ago</string>
+    <string name="match_summary_time_ago_day">%1$d day ago</string>
+    <string name="match_summary_time_ago_days">%1$d days ago</string>
+
     <string name="match_summary_charlton_text">This is match %1$s.</string>
-    <string name="match_summary_item_of_the_game_label">Item of the Game</string>
+    <string name="match_summary_item_of_the_game_label">IotG:</string>
+    <string name="match_summary_player_of_the_game_label">PotG:</string>
+    <string name="match_summary_duration_ph">duration</string>
+    <string name="match_summary_mode_ph">mode</string>
+    <string name="match_summary_time_ago_ph">time ago</string>
+    <string name="match_summary_no_player_of_the_game"></string>
 
     <string name="match_result_unknown"></string>
     <string name="match_result_radiant_victory">Radiant Victory</string>
@@ -84,6 +128,7 @@
     <string name="player_match_list_stats_tab_text">stats</string>
     <string name="player_match_list_stats_tab_title_text">%1$s Matches</string>
 
+    <string name="player_statistics_not_enough_data_text">Not enough match data.</string>
     <string name="player_statistics_public_prefix_text">Public</string>
     <string name="player_statistics_ranked_prefix_text">Ranked</string>
     <string name="player_statistics_other_prefix_text">Other</string>

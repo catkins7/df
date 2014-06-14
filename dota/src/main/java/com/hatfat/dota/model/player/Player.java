@@ -237,6 +237,10 @@ public class Player {
         return playerSlot >> 7 == 0;
     }
 
+    public float getPlayerOfTheMatchScore() {
+        return kills + assists - deaths + level + goldPerMinute / 25.0f;
+    }
+
     public Item getItemOfTheMatch() {
         if (itemOfTheMatch != null) {
             return itemOfTheMatch;

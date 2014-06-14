@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 public class PlayerRowView extends RelativeLayout {
 
     private Player player;
+    private boolean isPlayerOfTheMatch;
 
     public PlayerRowView(Context context) {
         super(context);
@@ -30,8 +31,9 @@ public class PlayerRowView extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_player_row, this, true);
     }
 
-    public void setPlayer(Player newPlayer) {
-        player = newPlayer;
+    public void setPlayer(Player newPlayer, boolean isPlayerOfTheMatch) {
+        this.player = newPlayer;
+        this.isPlayerOfTheMatch = isPlayerOfTheMatch;
 
         updateViews();
     }
@@ -60,11 +62,22 @@ public class PlayerRowView extends RelativeLayout {
             ImageView itemImageView5 = (ImageView) findViewById(R.id.view_player_row_item_image_view_5);
             View additionalUnitsContainer = findViewById(R.id.view_player_row_additional_unit_container_view);
 
+            //update player of the match background if necessary
             if (player.isRadiantPlayer()) {
-                container.setBackgroundResource(R.drawable.black_green_button_background);
+                if (isPlayerOfTheMatch) {
+                    container.setBackgroundResource(R.drawable.gold_green_button_background);
+                }
+                else {
+                    container.setBackgroundResource(R.drawable.black_green_button_background);
+                }
             }
             else if (player.isDirePlayer()) {
-                container.setBackgroundResource(R.drawable.black_red_button_background);
+                if (isPlayerOfTheMatch) {
+                    container.setBackgroundResource(R.drawable.gold_red_button_background);
+                }
+                else {
+                    container.setBackgroundResource(R.drawable.black_red_button_background);
+                }
             }
             else {
                 container.setBackgroundResource(R.drawable.off_black_button_background);

@@ -51,6 +51,7 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
     }
 
     private void updateViews() {
+        View containerView = findViewById(R.id.view_match_player_basic_main_container);
         ImageView heroImageView = (ImageView) findViewById(R.id.view_match_player_basic_hero_image_view);
         ImageView rankedImageView = (ImageView) findViewById(R.id.view_match_player_basic_ranked_image_view);
         ImageView itemImageView = (ImageView) findViewById(R.id.view_match_player_basic_item_image_view);
@@ -59,7 +60,7 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         TextView timeAgoTextView = (TextView) findViewById(R.id.view_match_player_basic_date_text_view);
         TextView victoryTextView = (TextView) findViewById(R.id.view_match_player_basic_victory_text_view);
 
-        timeAgoTextView.setText(match.getTimeAgoString());
+        timeAgoTextView.setText(match.getTimeAgoString(getResources()));
 
         if (match.isRankedMatchmaking()) {
             rankedImageView.setVisibility(View.VISIBLE);
@@ -69,13 +70,28 @@ public class MatchViewForPlayerBasic extends RelativeLayout {
         }
 
         Player player = match.getPlayerForSteamUser(user);
+        boolean isPlayerOfTheMatch = match.getPlayerOfTheMatch() == null ? false : match.getPlayerOfTheMatch() == player;
 
-        matchIdTextView.setText(match.getGameModeString());
+        if (isPlayerOfTheMatch) {
+            containerView.setBackgroundResource(R.drawable.gold_black_button_background);
+        }
+        else {
+            containerView.setBackgroundResource(R.drawable.off_black_button_background);
+        }
+
+        matchIdTextView.setText(match.getGameMode().getGameModeString(getResources()));
 //        matchIdTextView.setText(player.getKdaString());
 
-        Item iotm = player.getItemOfTheMatch();
-        if (iotm != null) {
-            Picasso.with(DotaFriendApplication.CONTEXT).load(iotm.getLargeHorizontalPortraitUrl()).placeholder(R.drawable.empty_item_bg).into(itemImageView);
+        if (player != null) {
+            Item iotm = player.getItemOfTheMatch();
+
+            if (iotm != null) {
+                Picasso.with(DotaFriendApplication.CONTEXT)
+                        .load(iotm.getLargeHorizontalPortraitUrl())
+                        .placeholder(R.drawable.empty_item_bg).into(itemImageView);
+            } else {
+                itemImageView.setImageResource(R.drawable.empty_item_bg);
+            }
         }
         else {
             itemImageView.setImageResource(R.drawable.empty_item_bg);

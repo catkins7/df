@@ -1,6 +1,7 @@
 package com.hatfat.dota.model.match;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.gson.annotations.SerializedName;
@@ -43,18 +44,6 @@ public class Match implements Comparable {
             }
         }
 
-        public int getColorResourceId() {
-            switch (this) {
-                case MATCH_RESULT_RADIANT_VICTORY:
-                    return R.color.radiant_green;
-                case MATCH_RESULT_DIRE_VICTORY:
-                    return R.color.dire_red;
-                case MATCH_RESULT_UNKNOWN:
-                default:
-                    return R.color.off_white;
-            }
-        }
-
         public int getBackgroundResourceId() {
             switch (this) {
                 case MATCH_RESULT_RADIANT_VICTORY:
@@ -84,20 +73,20 @@ public class Match implements Comparable {
         }
     }
     public enum LobbyType {
-        PUBLIC_MATCHMAKING("Unranked"),
-        PRACTICE("Practice"),
-        TOURNAMENT("Tournament"),
-        TUTORIAL("Tutorial"),
-        CO_OP_BOTS("Co-op Bots"),
-        TEAM_MATCH("Team Matchmaking"),
-        SOLO_QUEUE("Solo Queue"),
-        RANKED("Ranked"),
-        UNKNOWN("Unknown");
+        PUBLIC_MATCHMAKING(R.string.lobby_type_public_matchmaking),
+        PRACTICE(R.string.lobby_type_practice),
+        TOURNAMENT(R.string.lobby_type_tournament),
+        TUTORIAL(R.string.lobby_type_tutorial),
+        CO_OP_BOTS(R.string.lobby_type_coop_bots),
+        TEAM_MATCH(R.string.lobby_type_team_match),
+        SOLO_QUEUE(R.string.lobby_type_solo_queue),
+        RANKED(R.string.lobby_type_ranked),
+        UNKNOWN(R.string.lobby_type_unknown);
 
-        private String lobbyTypeName;
+        private int stringResourceId;
 
-        LobbyType(String typeName) {
-            this.lobbyTypeName = typeName;
+        LobbyType(int resourceId) {
+            this.stringResourceId = resourceId;
         }
 
         public static LobbyType fromInt(int type) {
@@ -122,39 +111,39 @@ public class Match implements Comparable {
                     return UNKNOWN;
             }
         }
-        public String getLobbyTypeName() {
-            return lobbyTypeName;
+        public String getLobbyTypeString(Resources resources) {
+            return resources.getString(stringResourceId);
         }
     }
 
 //    https://github.com/SteamRE/SteamKit/blob/master/Resources/Protobufs/dota/dota_gcmessages_common.proto
     public enum GameMode {
-        None("No Mode"),  //games played before the game mode was added to the data
-        AllPick("All Pick"),
-        CaptainsMode("Captains Mode"),
-        RandomDraft("Random Draft"),
-        SingleDraft("Single Draft"),
-        AllRandom("All Random"),
-        IntroDeath("Intro Death"),
-        Diretide("Diretide"),
-        ReverseCaptainsMode("Reverse CM"),
-        Greeviling("Greeviling"),
-        Tutorial("Tutorial"),
-        MidOnly("Mid Only"),
-        LeastPlayed("Least Played"),
-        LimitedHeroes("Limited Heroes"),
-        ForcedHeroes("Compendium"),
-        CustomGame("Custom Game"),
-        CaptainsDraft("Captains Draft"),
-        BalancedDraft("Balanced Draft"),
-        AbilityDraft("Ability Draft"),
-        Event("Event"),
-        Unknown("");
+        None(R.string.game_mode_none),  //games played before the game mode was added to the data
+        AllPick(R.string.game_mode_all_pick),
+        CaptainsMode(R.string.game_mode_captains_mode),
+        RandomDraft(R.string.game_mode_random_draft),
+        SingleDraft(R.string.game_mode_single_draft),
+        AllRandom(R.string.game_mode_all_random),
+        IntroDeath(R.string.game_mode_intro_death),
+        Diretide(R.string.game_mode_diretide),
+        ReverseCaptainsMode(R.string.game_mode_reverse_cm),
+        Greeviling(R.string.game_mode_greeviling),
+        Tutorial(R.string.game_mode_tutorial),
+        MidOnly(R.string.game_mode_mid_only),
+        LeastPlayed(R.string.game_mode_least_played),
+        LimitedHeroes(R.string.game_mode_limited_heroes),
+        ForcedHeroes(R.string.game_mode_compendium),
+        CustomGame(R.string.game_mode_custom_game),
+        CaptainsDraft(R.string.game_mode_captains_draft),
+        BalancedDraft(R.string.game_mode_balanced_draft),
+        AbilityDraft(R.string.game_mode_ability_draft),
+        Event(R.string.game_mode_event),
+        Unknown(R.string.game_mode_unknown);
 
-        private String gameModeName;
+        private int stringResourceId;
 
-        GameMode(String modeName) {
-            this.gameModeName = modeName;
+        GameMode(int resourceId) {
+            this.stringResourceId = resourceId;
         }
 
         public static GameMode fromInt(int type) {
@@ -203,8 +192,8 @@ public class Match implements Comparable {
                     return Unknown;
             }
         }
-        public String getGameModeName() {
-            return gameModeName;
+        public String getGameModeString(Resources resources) {
+            return resources.getString(stringResourceId);
         }
     }
 
@@ -266,6 +255,7 @@ public class Match implements Comparable {
     List<Player> players;
 
     private transient Item itemOfTheMatch;
+    private transient Player playerOfTheMatch;
 
     public Match(String matchId) {
         this.matchId = matchId;
@@ -301,9 +291,6 @@ public class Match implements Comparable {
     public LobbyType getLobbyType() {
         return LobbyType.fromInt(lobbyType);
     }
-    public String getLobbyTypeString() {
-        return getLobbyType().getLobbyTypeName();
-    }
     public GameMode getGameMode() {
         if (!hasMatchDetails) {
             return GameMode.Unknown;
@@ -311,19 +298,13 @@ public class Match implements Comparable {
 
         return GameMode.fromInt(gameMode);
     }
-    public String getGameModeString() {
-        if (!hasMatchDetails) {
-            return GameMode.Unknown.getGameModeName();
-        }
-
-        return GameMode.fromInt(gameMode).getGameModeName();
-    }
-    public String getLobbyModeString() {
-        if (getLobbyType() == LobbyType.PUBLIC_MATCHMAKING) {
-            return getGameModeString();
+    public String getMatchTypeString(Resources resources) {
+        if (getLobbyType() == LobbyType.PUBLIC_MATCHMAKING || getLobbyType() == LobbyType.RANKED) {
+            return getGameMode().getGameModeString(resources);
         }
         else {
-            return getGameModeString() + " (" + getLobbyTypeString() + ")";
+            return getLobbyType().getLobbyTypeString(resources) + " " + getGameMode()
+                    .getGameModeString(resources);
         }
     }
     public boolean shouldBeUsedInRealStatistics() {
@@ -395,19 +376,6 @@ public class Match implements Comparable {
         return getPlayerMatchResultForPlayer(player).getDescriptionStringResourceId();
     }
 
-    public int getMatchResultColorResourceIdForPlayer(Player player) {
-        PlayerMatchResult result = getPlayerMatchResultForPlayer(player);
-
-        switch (result) {
-            case PLAYER_MATCH_RESULT_VICTORY:
-                return R.color.radiant_green;
-            case PLAYER_MATCH_RESULT_DEFEAT:
-                return R.color.dire_red;
-            default:
-                return R.color.off_white;
-        }
-    }
-
     public int getMatchResultBackgroundResourceIdForPlayer(Player player) {
         PlayerMatchResult result = getPlayerMatchResultForPlayer(player);
 
@@ -421,37 +389,42 @@ public class Match implements Comparable {
         }
     }
 
-    public String getTimeAgoString() {
+    public String getTimeAgoString(Resources resources) {
         long currentTime = new Date().getTime() / 1000; //current time in seconds
         long timeAgo = currentTime - startTime;
 
+        int timeStringResourceId = 0;
+
         timeAgo /= 60; //minutes ago
 
-        if (timeAgo == 1){
-            return String.valueOf(timeAgo) + " minute ago";
+        if (timeAgo <= 1) {
+            timeStringResourceId = R.string.match_summary_time_ago_minute;
         }
         else if (timeAgo < 60) {
-            return String.valueOf(timeAgo) + " minutes ago";
-        }
-
-        timeAgo /= 60; // hours ago
-
-        if (timeAgo >= 24) {
-            timeAgo /= 24; //days ago
-
-            if (timeAgo == 1) {
-                return String.valueOf(timeAgo) + " day ago";
-            }
-            else {
-                return String.valueOf(timeAgo) + " days ago";
-            }
-        }
-        if (timeAgo == 1) {
-            return String.valueOf(timeAgo) + " hour ago";
+            timeStringResourceId = R.string.match_summary_time_ago_minutes;
         }
         else {
-            return String.valueOf(timeAgo) + " hours ago";
+            timeAgo /= 60; // hours ago
+
+            if (timeAgo <= 1) {
+                timeStringResourceId = R.string.match_summary_time_ago_hour;
+            }
+            else if (timeAgo < 24) {
+                timeStringResourceId = R.string.match_summary_time_ago_hours;
+            }
+            else {
+                timeAgo /= 24; //days ago
+
+                if (timeAgo <= 1) {
+                    timeStringResourceId = R.string.match_summary_time_ago_day;
+                }
+                else {
+                    timeStringResourceId = R.string.match_summary_time_ago_days;
+                }
+            }
         }
+
+        return String.format(resources.getString(timeStringResourceId), timeAgo);
     }
     public String getDurationString() {
         if (!hasMatchDetails) {
@@ -683,6 +656,30 @@ public class Match implements Comparable {
         }
 
         return itemOfTheMatch;
+    }
+
+    public Player getPlayerOfTheMatch() {
+        if (playerOfTheMatch != null) {
+            return playerOfTheMatch;
+        }
+
+        if (duration < 5 * 60) {
+            //game was less than 5 minutes long, so there will be no player of the match
+            return null;
+        }
+
+        for (Player player : players) {
+            if (playerOfTheMatch == null) {
+                playerOfTheMatch = player;
+            }
+            else {
+                if (player.getPlayerOfTheMatchScore() > playerOfTheMatch.getPlayerOfTheMatchScore()) {
+                    playerOfTheMatch = player;
+                }
+            }
+        }
+
+        return playerOfTheMatch;
     }
 
     private void broadcastMatchChanged() {
