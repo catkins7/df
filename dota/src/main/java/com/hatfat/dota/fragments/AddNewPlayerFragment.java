@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.SearchResultsActivity;
@@ -58,6 +61,20 @@ public class AddNewPlayerFragment extends CharltonFragment {
             }
         });
 
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchForString(searchEditText.getText().toString());
+
+                    //return false so the default keyboard "done pressed" handling will happen (ie, hide the keyboard)
+                    return false;
+                }
+
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -70,6 +87,10 @@ public class AddNewPlayerFragment extends CharltonFragment {
         }
         else {
             hideSearching();
+            searchEditText.requestFocus();
+
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 
