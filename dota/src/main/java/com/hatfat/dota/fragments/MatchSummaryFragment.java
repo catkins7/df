@@ -123,7 +123,7 @@ public class MatchSummaryFragment extends CharltonFragment {
 
             @Override
             public int getViewTypeCount() {
-                return 3;
+                return 5;
             }
 
             @Override
@@ -136,7 +136,18 @@ public class MatchSummaryFragment extends CharltonFragment {
                     return 1; //extra info row
                 }
 
-                return 2; //player row
+                Player player = getItem(position);
+
+                //a Player row, but need to know which layout it will be
+                if (player.hasAbilityIds()) {
+                    return 2;
+                }
+                else if (player.hasAdditionalUnitsWeWantToShow()) {
+                    return 3;
+                }
+                else {
+                    return 4;
+                }
             }
 
             @Override
@@ -237,13 +248,14 @@ public class MatchSummaryFragment extends CharltonFragment {
 
                 Player player = getItem(i);
                 PlayerRowView playerView = (PlayerRowView) convertView;
+                boolean isPlayerOfTheMatch = match.getPlayerOfTheMatch() == player;
 
                 if (playerView == null) {
-                    playerView = new PlayerRowView(viewGroup.getContext());
+                    playerView = new PlayerRowView(viewGroup.getContext(), player, isPlayerOfTheMatch);
                 }
-
-                boolean isPlayerOfTheMatch = match.getPlayerOfTheMatch() == player;
-                playerView.setPlayer(player, isPlayerOfTheMatch);
+                else {
+                    playerView.setPlayer(player, isPlayerOfTheMatch);
+                }
 
                 return playerView;
             }

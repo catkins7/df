@@ -25,10 +25,20 @@ public class PlayerRowView extends RelativeLayout {
     private Player player;
     private boolean isPlayerOfTheMatch;
 
-    public PlayerRowView(Context context) {
+    public PlayerRowView(Context context, Player player, boolean isPlayerOfTheMatch) {
         super(context);
 
-        LayoutInflater.from(context).inflate(R.layout.view_player_row, this, true);
+        if (player.hasAbilityIds()) {
+            LayoutInflater.from(context).inflate(R.layout.view_player_row_with_abilities, this, true);
+        }
+        else if (player.hasAdditionalUnitsWeWantToShow()) {
+            LayoutInflater.from(context).inflate(R.layout.view_player_row_with_additional_unit, this, true);
+        }
+        else {
+            LayoutInflater.from(context).inflate(R.layout.view_player_row, this, true);
+        }
+
+        setPlayer(player, isPlayerOfTheMatch);
     }
 
     public void setPlayer(Player newPlayer, boolean isPlayerOfTheMatch) {
@@ -105,8 +115,6 @@ public class PlayerRowView extends RelativeLayout {
             setItemImageView(itemImageView5, player.getItemImageUrl(5));
 
             if (player.hasAdditionalUnitsWeWantToShow()) {
-                additionalUnitsContainer.setVisibility(VISIBLE);
-
                 //we only support showing one additional unit at the time
                 AdditionalUnit additionalUnit = player.getAdditionalUnits().get(0);
 
@@ -125,9 +133,6 @@ public class PlayerRowView extends RelativeLayout {
                 setItemImageView(additionalItemImageView3, additionalUnit.getItemImageUrl(3));
                 setItemImageView(additionalItemImageView4, additionalUnit.getItemImageUrl(4));
                 setItemImageView(additionalItemImageView5, additionalUnit.getItemImageUrl(5));
-            }
-            else {
-                additionalUnitsContainer.setVisibility(GONE);
             }
 
             if (hero != null) {

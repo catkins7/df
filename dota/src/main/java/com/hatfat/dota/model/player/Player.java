@@ -183,6 +183,9 @@ public class Player {
 
         return new LinkedList(abilityIds);
     }
+    public boolean hasAbilityIds() {
+        return getAbilityIds().size() > 0;
+    }
     public boolean hasAdditionalUnitsWeWantToShow() {
         if (additionalUnits == null || additionalUnits.size() <= 0) {
             return false;
