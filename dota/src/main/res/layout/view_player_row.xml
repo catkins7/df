@@ -61,6 +61,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:id="@+id/view_player_row_item_image_view_0"
+            android:scaleType="fitXY"
             android:layout_width="@dimen/player_row_view_item_width"
             android:layout_height="@dimen/player_row_view_item_height"
             tools:ignore="ContentDescription" />
@@ -68,6 +69,7 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/view_player_row_item_image_view_0"
             android:id="@+id/view_player_row_item_image_view_1"
+            android:scaleType="fitXY"
             android:layout_width="@dimen/player_row_view_item_width"
             android:layout_height="@dimen/player_row_view_item_height"
             tools:ignore="ContentDescription" />
@@ -75,6 +77,7 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/view_player_row_item_image_view_1"
             android:id="@+id/view_player_row_item_image_view_2"
+            android:scaleType="fitXY"
             android:layout_width="@dimen/player_row_view_item_width"
             android:layout_height="@dimen/player_row_view_item_height"
             tools:ignore="ContentDescription" />
@@ -84,6 +87,7 @@
             android:layout_below="@id/view_player_row_item_image_view_0"
             android:layout_alignParentLeft="true"
             android:id="@+id/view_player_row_item_image_view_3"
+            android:scaleType="fitXY"
             android:layout_width="@dimen/player_row_view_item_width"
             android:layout_height="@dimen/player_row_view_item_height"
             tools:ignore="ContentDescription" />
@@ -91,6 +95,7 @@
             android:layout_below="@id/view_player_row_item_image_view_0"
             android:layout_toRightOf="@id/view_player_row_item_image_view_3"
             android:id="@+id/view_player_row_item_image_view_4"
+            android:scaleType="fitXY"
             android:layout_width="@dimen/player_row_view_item_width"
             android:layout_height="@dimen/player_row_view_item_height"
             tools:ignore="ContentDescription" />
@@ -98,6 +103,7 @@
             android:layout_below="@id/view_player_row_item_image_view_0"
             android:layout_toRightOf="@id/view_player_row_item_image_view_4"
             android:id="@+id/view_player_row_item_image_view_5"
+            android:scaleType="fitXY"
             android:layout_width="@dimen/player_row_view_item_width"
             android:layout_height="@dimen/player_row_view_item_height"
             tools:ignore="ContentDescription" />
