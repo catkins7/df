@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.model.game.Ability;
 import com.hatfat.dota.model.game.Hero;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.player.AdditionalUnit;
@@ -133,6 +134,13 @@ public class PlayerRowView extends RelativeLayout {
                 setItemImageView(additionalItemImageView3, additionalUnit.getItemImageUrl(3));
                 setItemImageView(additionalItemImageView4, additionalUnit.getItemImageUrl(4));
                 setItemImageView(additionalItemImageView5, additionalUnit.getItemImageUrl(5));
+            }
+
+            if (player.hasAbilityIds()) {
+                //we can show up to 4 ability icons
+                for (Ability ability : player.getAbilitiesWeCareAbout()) {
+
+                }
             }
 
             if (hero != null) {

@@ -65,6 +65,10 @@ public class Abilities {
         broadcastAbilitiesLoaded();
     }
 
+    public Ability getAbility(int abilityId) {
+        return abilities.get(String.valueOf(abilityId));
+    }
+
     public Ability getAbility(String abilityId) {
         return abilities.get(abilityId);
     }

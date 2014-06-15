@@ -8,4 +8,12 @@ public class Ability {
 
     @SerializedName("name")
     public String name;
+
+    public boolean isStats() {
+        return Integer.valueOf(id) == 5002;
+    }
+
+    public String getImageUrlString() {
+        return "http://media.steampowered.com/apps/dota2/images/abilities/" + name + ".png";
+    }
 }

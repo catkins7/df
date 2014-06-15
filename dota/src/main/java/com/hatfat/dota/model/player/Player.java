@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import com.google.gson.annotations.SerializedName;
 
 import com.hatfat.dota.R;
+import com.hatfat.dota.model.game.Abilities;
+import com.hatfat.dota.model.game.Ability;
 import com.hatfat.dota.model.game.Item;
 import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.user.SteamUser;
@@ -183,6 +185,20 @@ public class Player {
 
         return new LinkedList(abilityIds);
     }
+    public List<Ability> getAbilitiesWeCareAbout() {
+        List<Ability> abilities = new LinkedList();
+
+        for (int abilityId : getAbilityIds()) {
+            Ability ability = Abilities.get().getAbility(abilityId);
+
+            if (!ability.isStats()) {
+                abilities.add(ability);
+            }
+        }
+
+        return abilities;
+    }
+
     public boolean hasAbilityIds() {
         return getAbilityIds().size() > 0;
     }
