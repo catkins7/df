@@ -10,6 +10,7 @@
         android:id="@+id/view_stats_image_row_image_view"
         android:background="@drawable/default_background_border"
         android:padding="1dp"
+        android:scaleType="fitXY"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_width="29dp"

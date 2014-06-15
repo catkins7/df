@@ -191,7 +191,7 @@ public class Player {
         for (int abilityId : getAbilityIds()) {
             Ability ability = Abilities.get().getAbility(abilityId);
 
-            if (!ability.isStats()) {
+            if (ability != null && !ability.isStats()) {
                 abilities.add(ability);
             }
         }

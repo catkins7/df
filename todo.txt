@@ -1,7 +1,5 @@
 0.5 release
 ---------------------------
-3 different player row views, normal, normal+bear, normal+abilities (lone druid not in ability draft)
-
 Flesh out the charlton feature?
  -add "about charlton" dialog when you tap on his text bubble.  write some text about why I like charlton heston and some of his major accomplishments.  Add wikipedia link, and movie recommendations.
  -or just more pictures?
@@ -12,9 +10,6 @@ test on different screen size emulators
 
 check lint errors
 memory checks on all fragments
-
-ability draft abilities for heroes?  need to get abilityID values from somewhere
- -get abilities.json and start showing abilities??
 
 double loading screen issue??
 
