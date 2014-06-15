@@ -18,6 +18,8 @@ import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 /**
  * Created by scottrick on 2/23/14.
  */
@@ -137,9 +139,33 @@ public class PlayerRowView extends RelativeLayout {
             }
 
             if (player.hasAbilityIds()) {
-                //we can show up to 4 ability icons
-                for (Ability ability : player.getAbilitiesWeCareAbout()) {
+                ImageView [] abilityImageViews = new ImageView[4];
 
+                abilityImageViews[0] = (ImageView) findViewById(R.id.view_player_row_ability_image_view_0);
+                abilityImageViews[1] = (ImageView) findViewById(R.id.view_player_row_ability_image_view_1);
+                abilityImageViews[2] = (ImageView) findViewById(R.id.view_player_row_ability_image_view_2);
+                abilityImageViews[3] = (ImageView) findViewById(R.id.view_player_row_ability_image_view_3);
+
+                //we can show up to 4 ability icons
+                List<Ability> abilities = player.getAbilitiesWeCareAbout();
+
+                Ability[] ability = new Ability[4];
+
+                for (int i = 0; i < 4; i++) {
+                    if (abilities.size() > i) {
+                        ability[i] = abilities.get(i);
+                    }
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    Ability a = ability[i];
+
+                    if (a != null) {
+                        Picasso.with(DotaFriendApplication.CONTEXT).load(a.getImageUrlString()).placeholder(R.drawable.ic_launcher).into(abilityImageViews[i]);
+                    }
+                    else {
+                        abilityImageViews[i].setImageResource(R.drawable.off_black_background);
+                    }
                 }
             }
 

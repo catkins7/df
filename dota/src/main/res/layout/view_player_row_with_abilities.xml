@@ -105,11 +105,55 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/view_player_row_ability_container"
+        android:background="@drawable/default_background_border"
+        android:padding="1dp"
+        android:layout_toLeftOf="@id/view_player_row_items_container"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!--TOP ROW-->
+        <ImageView
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/view_player_row_ability_image_view_0"
+            android:layout_width="@dimen/player_row_view_item_height"
+            android:layout_height="@dimen/player_row_view_item_height"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/view_player_row_ability_image_view_0"
+            android:id="@+id/view_player_row_ability_image_view_1"
+            android:layout_width="@dimen/player_row_view_item_height"
+            android:layout_height="@dimen/player_row_view_item_height"
+            tools:ignore="ContentDescription" />
+
+        <!--BOTTOM ROW-->
+        <ImageView
+            android:layout_below="@id/view_player_row_ability_image_view_0"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/view_player_row_ability_image_view_2"
+            android:layout_width="@dimen/player_row_view_item_height"
+            android:layout_height="@dimen/player_row_view_item_height"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:layout_below="@id/view_player_row_ability_image_view_0"
+            android:layout_toRightOf="@id/view_player_row_ability_image_view_2"
+            android:id="@+id/view_player_row_ability_image_view_3"
+            android:layout_width="@dimen/player_row_view_item_height"
+            android:layout_height="@dimen/player_row_view_item_height"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/view_player_row_summary_text_container"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_toRightOf="@id/view_player_row_hero_image_view"
-        android:layout_toLeftOf="@id/view_player_row_items_container"
+        android:layout_toLeftOf="@id/view_player_row_ability_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

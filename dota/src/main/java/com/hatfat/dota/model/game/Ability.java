@@ -14,6 +14,6 @@ public class Ability {
     }
 
     public String getImageUrlString() {
-        return "http://media.steampowered.com/apps/dota2/images/abilities/" + name + ".png";
+        return "http://media.steampowered.com/apps/dota2/images/abilities/" + name + "_lg.png";
     }
 }
