@@ -63,5 +63,10 @@ public class DotaPlayerStatisticsFavoriteHeroRowView extends RelativeLayout {
                         .placeholder(R.drawable.empty_item_bg).into(itemImageView[index]);
             }
         }
+
+        for (int i = heroStats.favoriteHeroItems.size(); i < 3; i++) {
+            //fill in the empty boxes for the remaining slots
+            itemImageView[i].setImageResource(R.drawable.empty_item_bg);
+        }
     }
 }
