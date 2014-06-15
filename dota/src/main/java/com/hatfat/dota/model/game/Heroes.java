@@ -40,7 +40,7 @@ public class Heroes {
     private HashMap<String, Hero> heroes; //string heroId --> hero object
 
     private Heroes() {
-        heroes = new HashMap<>();
+        heroes = new HashMap();
     }
 
     public void load() {

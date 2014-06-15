@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.StarredUsersActivity;
+import com.hatfat.dota.model.game.Abilities;
 import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.match.Matches;
@@ -34,6 +35,7 @@ public class LoadingFragment extends CharltonFragment {
     private float itemsProgress;
     private float usersProgress;
     private float matchesProgress;
+    private float abilitiesProgress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class LoadingFragment extends CharltonFragment {
         loadItems();
         loadHeroes();
         loadUsers();
+        loadAbilities();
     }
 
     private void loadItems() {
@@ -122,6 +125,24 @@ public class LoadingFragment extends CharltonFragment {
         }.execute();
     }
 
+    private void loadAbilities() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                if (isAdded()) {
+                    Abilities.get().load(getResources());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                abilitiesProgress = 1.0f;
+                updateProgressBar();
+            }
+        }.execute();
+    }
+
     private void updateProgressBar() {
         if (!isAdded()) {
             return;
@@ -129,8 +150,9 @@ public class LoadingFragment extends CharltonFragment {
 
         float barPercent = 0.0f;
         barPercent += heroProgress * 0.1f;
-        barPercent += itemsProgress * 0.1f;
-        barPercent += usersProgress * 0.1f;
+        barPercent += itemsProgress * 0.05f;
+        barPercent += usersProgress * 0.05f;
+        barPercent += abilitiesProgress * 0.1f;
         barPercent += matchesProgress * 0.7f;
 
         float loadingBarMaxWidth = getResources().getDimensionPixelSize(R.dimen.loading_bar_width);
@@ -144,7 +166,12 @@ public class LoadingFragment extends CharltonFragment {
             }
         });
 
-        if (heroProgress == 1.0f && itemsProgress == 1.0f && usersProgress == 1.0f && matchesProgress == 1.0f) {
+        if (heroProgress == 1.0f
+                && itemsProgress == 1.0f
+                && usersProgress == 1.0f
+                && matchesProgress == 1.0f
+                && abilitiesProgress == 1.0f) {
+
             finishedLoading();
         }
     }
@@ -172,6 +199,10 @@ public class LoadingFragment extends CharltonFragment {
                     matchesProgress = intent.getFloatExtra(Matches.MATCHES_LOADING_PERCENT_COMPLETE, 0.0f);
                     updateProgressBar();
                 }
+                else if (intent.getAction().equals(Abilities.ABILITY_DATA_LOADED_NOTIFICATION)) {
+                    abilitiesProgress = 1.0f;
+                    updateProgressBar();
+                }
             }
         };
 
@@ -179,6 +210,7 @@ public class LoadingFragment extends CharltonFragment {
         loadingFilter.addAction(Heroes.HERO_DATA_LOADED_NOTIFICATION);
         loadingFilter.addAction(SteamUsers.STEAM_USERS_LOADED_FROM_DISK);
         loadingFilter.addAction(Matches.MATCHES_LOADING_PROGRESS_NOTIFICATION);
+        loadingFilter.addAction(Abilities.ABILITY_DATA_LOADED_NOTIFICATION);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver,
                 loadingFilter);
     }
