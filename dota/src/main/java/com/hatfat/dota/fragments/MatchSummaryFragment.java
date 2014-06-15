@@ -139,7 +139,7 @@ public class MatchSummaryFragment extends CharltonFragment {
                 Player player = getItem(position);
 
                 //a Player row, but need to know which layout it will be
-                if (player.hasAbilityIds()) {
+                if (match.isAbilityDraft()) {
                     return 2;
                 }
                 else if (player.hasAdditionalUnitsWeWantToShow()) {
@@ -251,7 +251,7 @@ public class MatchSummaryFragment extends CharltonFragment {
                 boolean isPlayerOfTheMatch = match.getPlayerOfTheMatch() == player;
 
                 if (playerView == null) {
-                    playerView = new PlayerRowView(viewGroup.getContext(), player, isPlayerOfTheMatch);
+                    playerView = new PlayerRowView(viewGroup.getContext(), player, isPlayerOfTheMatch, match.isAbilityDraft());
                 }
                 else {
                     playerView.setPlayer(player, isPlayerOfTheMatch);

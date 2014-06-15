@@ -333,6 +333,9 @@ public class Match implements Comparable {
         }
     }
     public boolean shouldSavePlayerAbilities() {
+        return isAbilityDraft();
+    }
+    public boolean isAbilityDraft() {
         return getGameMode() == GameMode.AbilityDraft;
     }
     public void setHasMatchDetails(boolean hasMatchDetails) {

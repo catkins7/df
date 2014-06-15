@@ -199,9 +199,6 @@ public class Player {
         return abilities;
     }
 
-    public boolean hasAbilityIds() {
-        return getAbilityIds().size() > 0;
-    }
     public boolean hasAdditionalUnitsWeWantToShow() {
         if (additionalUnits == null || additionalUnits.size() <= 0) {
             return false;

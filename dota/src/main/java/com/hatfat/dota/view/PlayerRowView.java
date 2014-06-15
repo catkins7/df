@@ -27,11 +27,14 @@ public class PlayerRowView extends RelativeLayout {
 
     private Player player;
     private boolean isPlayerOfTheMatch;
+    private boolean showAbilities;
 
-    public PlayerRowView(Context context, Player player, boolean isPlayerOfTheMatch) {
+    public PlayerRowView(Context context, Player player, boolean isPlayerOfTheMatch, boolean showAbilities) {
         super(context);
 
-        if (player.hasAbilityIds()) {
+        this.showAbilities = showAbilities;
+
+        if (showAbilities) {
             LayoutInflater.from(context).inflate(R.layout.view_player_row_with_abilities, this, true);
         }
         else if (player.hasAdditionalUnitsWeWantToShow()) {
@@ -138,7 +141,7 @@ public class PlayerRowView extends RelativeLayout {
                 setItemImageView(additionalItemImageView5, additionalUnit.getItemImageUrl(5));
             }
 
-            if (player.hasAbilityIds()) {
+            if (showAbilities) {
                 ImageView [] abilityImageViews = new ImageView[4];
 
                 abilityImageViews[0] = (ImageView) findViewById(R.id.view_player_row_ability_image_view_0);
