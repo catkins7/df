@@ -11,6 +11,9 @@ test on different screen size emulators
 check lint errors
 memory checks on all fragments
 
+fresh install
+upgrade install
+
 double loading screen issue??
 
 email gaben/zoid about possibility of meet-up at ti4?
