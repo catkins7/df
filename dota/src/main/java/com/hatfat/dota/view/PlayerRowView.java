@@ -29,6 +29,12 @@ public class PlayerRowView extends RelativeLayout {
     private boolean isPlayerOfTheMatch;
     private boolean showAbilities;
 
+    public PlayerRowView(Context context) {
+        super(context);
+
+        LayoutInflater.from(context).inflate(R.layout.view_player_row, this, true);
+    }
+
     public PlayerRowView(Context context, Player player, boolean isPlayerOfTheMatch, boolean showAbilities) {
         super(context);
 
@@ -76,7 +82,6 @@ public class PlayerRowView extends RelativeLayout {
             ImageView itemImageView3 = (ImageView) findViewById(R.id.view_player_row_item_image_view_3);
             ImageView itemImageView4 = (ImageView) findViewById(R.id.view_player_row_item_image_view_4);
             ImageView itemImageView5 = (ImageView) findViewById(R.id.view_player_row_item_image_view_5);
-            View additionalUnitsContainer = findViewById(R.id.view_player_row_additional_unit_container_view);
 
             //update player of the match background if necessary
             if (player.isRadiantPlayer()) {

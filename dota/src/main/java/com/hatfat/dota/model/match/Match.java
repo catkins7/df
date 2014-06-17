@@ -396,7 +396,7 @@ public class Match implements Comparable {
         long currentTime = new Date().getTime() / 1000; //current time in seconds
         long timeAgo = currentTime - startTime;
 
-        int timeStringResourceId = 0;
+        int timeStringResourceId;
 
         timeAgo /= 60; //minutes ago
 

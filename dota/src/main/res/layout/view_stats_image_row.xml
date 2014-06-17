@@ -14,7 +14,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_width="29dp"
-        android:layout_height="22dp" />
+        android:layout_height="22dp"
+        android:contentDescription="statsImageView" />
 
     <TextView
         android:id="@+id/view_stats_image_row_title_text_view"

@@ -24,17 +24,12 @@
     <dimen name="text_view_height_medium">22dp</dimen>
     <dimen name="text_view_height_large">32dp</dimen>
 
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
     <dimen name="steam_user_view_image_size">48dp</dimen>
 
     <dimen name="charlton_actionbar_text_size">13sp</dimen>
 
     <dimen name="dota_player_summary_fragment_image_view_size">61dp</dimen>
     <dimen name="dota_player_summary_fragment_right_button_size">46dp</dimen>
-
-    <dimen name="dialog_fetch_matches_loading_bar_width">220dp</dimen>
 
     <dimen name="match_simple_summary_hero_image_view_width">35dp</dimen>
     <dimen name="match_simple_summary_hero_image_view_height">20dp</dimen>
@@ -43,9 +38,7 @@
     <dimen name="hero_image_height">35dp</dimen>
     <dimen name="match_for_player_basic_ranked_image_view_size">22dp</dimen>
 
-    <dimen name="match_summary_top_panel_right_column_width">160dp</dimen>
     <dimen name="match_summary_team_divider_width">12dp</dimen>
-    <dimen name="match_summary_of_the_game_width">48dp</dimen>
 
     <!--85x64-->
     <dimen name="player_row_view_item_width">25dp</dimen>
@@ -60,6 +53,5 @@
 
     <dimen name="victory_text_width">60dp</dimen>
     <dimen name="match_top_text_left_right_padding">4dp</dimen>
-    <dimen name="match_top_text_corner_radius">4dp</dimen>
 
 </resources>

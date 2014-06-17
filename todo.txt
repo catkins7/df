@@ -1,5 +1,7 @@
 0.5 release
 --------------------------- 
+fix DISMISS LISTENER unsupported api issue
+
 test on different screen size emulators
 
 check lint errors
@@ -9,6 +11,11 @@ upgrade install
 
 double loading screen issue??
 
+
+
+
+0.6 Play store release
+---------------------------
 MORE TESTING
 
 email gaben/zoid about possibility of meet-up at ti4?
@@ -19,21 +26,9 @@ email gaben/zoid about possibility of meet-up at ti4?
  -ability icon image endpoints not really documented, ability.json?  neutral abilities not online?
  -items.txt endpoint
 
-
-
-
-0.6 Play store release
----------------------------
-email gaben/zoid about possibility of meet-up at ti4?
- -accurate items.txt  (item costs often wrong (diffusal 2, dagon, necronomicon, many recipe costs incorrect, etc)
- -500 match fetch limit
- -fetch more than one match details
- -player search (sucks right now, most apps are just scraping dotabuff's search page)
- -ability icon image endpoints not really documented, ability.json?  neutral abilities not online?
- -items.txt endpoint
-
 - update all app images so they are recent
 - update items.txt with latest dota2 build
+- update abilities.json if updated?
 
 
 
