@@ -4,7 +4,7 @@
         name="stats_info_string_array">
 
         <item><![CDATA[
-        The <b><u>Summary</u></b> tab displays a quick glance of a player\'s win percentage for public and ranked games.  It also contains a list of all known matches for this player.
+        The <b><u>Summary</u></b> tab displays a quick glance of a player\'s win percentage for public and ranked games.  It also contains a list of all known matches for this player.  A match with a gold highlight indicates that the player was \"Player of the Game\" for that match.
         ]]></item>
 
         <item><![CDATA[
@@ -16,7 +16,11 @@
         ]]></item>
 
         <item><![CDATA[
-        The <b><u>Ranked</u></b> and <b><u>Public</u></b> tabs have many more statistics than the Summary tab.  Only games that lasted more than five minutes are used in any statistics calculations!
+        The <b><u>People</u></b> tab uses all matches in its calculations.  It is a list of players who appear most often in the player\'s games.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Ranked</u></b> and <b><u>Public</u></b> tabs have many more statistics than the Summary tab.  Only games that lasted more than five minutes are used in any statistics calculation!
         ]]></item>
 
         <item><![CDATA[
@@ -24,7 +28,7 @@
         ]]></item>
 
         <item><![CDATA[
-        The <b><u>All Heroes</u></b> tab displays a list of all heroes you have played in any Public or Ranked match.
+        The <b><u>All Heroes</u></b> tab displays a list of all heroes played in any Public or Ranked match.  Tap any hero for a breakdown of those specific games.
         ]]></item>
 
         <item><![CDATA[
@@ -37,6 +41,10 @@
 
         <item><![CDATA[
         <b><u>K+A/D</u></b> represents the player\'s average number of <b>K</b>ills and <b>A</b>ssists divided by the average number of <b>D</b>eaths per game.
+        ]]></item>
+
+        <item><![CDATA[
+        <b><u>Game Modes</u></b> will tell you a player\'s win percentage by mode.  Click on any mode for a breakdown of those specific games.
         ]]></item>
 
         <!--<item><![CDATA[-->
