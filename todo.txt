@@ -1,7 +1,5 @@
 0.5 release
 --------------------------- 
-final look at overdraw!
-
 test on different screen size emulators
 
 check lint errors
@@ -20,7 +18,7 @@ email gaben/zoid about possibility of meet-up at ti4?
  -500 match fetch limit
  -fetch more than one match details
  -player search (sucks right now, most apps are just scraping dotabuff's search page)
- -ability icon image endpoints
+ -ability icon image endpoints not really documented, ability.json?  neutral abilities not online?
  -items.txt endpoint
 
 
