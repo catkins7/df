@@ -1,5 +1,7 @@
 0.5 release
 --------------------------- 
+random charlton greeting on startup.
+
 test on different screen size emulators
 
 check lint errors
@@ -10,8 +12,6 @@ upgrade install
 double loading screen issue??
 
 more proofreading of charlton text
-more proofreading of about text
-check stats help text
 
 MORE TESTING
 
