@@ -1,9 +1,5 @@
 0.5 release
----------------------------
-Flesh out the charlton feature?
- -add "about charlton" dialog when you tap on his text bubble.  write some text about why I like charlton heston and some of his major accomplishments.  Add wikipedia link, and movie recommendations.
- -or just more pictures?
-
+--------------------------- 
 final look at overdraw!
 
 test on different screen size emulators
@@ -15,6 +11,9 @@ fresh install
 upgrade install
 
 double loading screen issue??
+
+more proofreading of charlton text
+more proofreading of about text
 
 email gaben/zoid about possibility of meet-up at ti4?
  -accurate items.txt  (item costs often wrong (diffusal 2, dagon, necronomicon, many recipe costs incorrect, etc)

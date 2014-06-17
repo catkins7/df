@@ -22,6 +22,7 @@
         android:id="@+id/view_match_player_basic_item_image_view"
         android:padding="1dp"
         android:background="@drawable/default_background_border"
+        android:scaleType="fitXY"
         android:layout_marginLeft="@dimen/default_padding_half"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/view_match_player_basic_hero_image_view"

@@ -154,7 +154,7 @@ public abstract class CharltonActivity extends Activity {
     }
 
     public static int getRandomHestonDrawableResource(Context context) {
-        int randomHeston = Math.abs(rand.nextInt()) % 10; //ten total heston images currently
+        int randomHeston = Math.abs(rand.nextInt()) % 15; //15 total heston images currently
         String drawableName = "heston" + randomHeston;
         return context.getResources().getIdentifier(drawableName, "drawable",
                 context.getPackageName());

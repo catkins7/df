@@ -41,7 +41,41 @@ public class TextDialogHelper {
                 R.string.charlton_dialog_title,
                 R.array.charlton_string_array,
                 new BitmapDrawable(activity.getResources(), bitmap),
-                null,
+                new TextDialogInterface() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+                        switch (position) {
+                            case 3:
+                            {
+                                //planet of the apes row
+                                String url = "http://www.wikipedia.org/wiki/Planet_of_the_Apes_(1968_film)";
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                activity.startActivity(intent);
+                                break;
+                            }
+                            case 4: {
+                                //ben-hur row
+                                String url = "http://www.wikipedia.org/wiki/Ben-Hur_(1959_film)";
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                activity.startActivity(intent);
+                                break;
+
+                            }
+                            case 5:
+                                //charlton wikipedia row
+                                String url = "http://www.wikipedia.org/wiki/Charlton_Heston";
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                activity.startActivity(intent);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public boolean isEnabled(int position) {
+                        return position > 2;
+                    }
+                },
                 dismissListener);
     }
 
