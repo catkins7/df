@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -218,14 +217,14 @@ public class PlayerMatchListFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
+    public String getCharltonMessageText(Context context) {
         if (user != null) {
             if (secondaryImageUrl != null) {
-                return String.format(resources.getString(R.string.player_match_list_charlton_text),
+                return String.format(context.getResources().getString(R.string.player_match_list_charlton_text),
                         user.getDisplayName(), matchesLabel);
             }
             else {
-                return String.format(resources.getString(R.string.player_match_list_charlton_text_alternate),
+                return String.format(context.getResources().getString(R.string.player_match_list_charlton_text_alternate),
                         user.getDisplayName(), matchesLabel);
             }
         }

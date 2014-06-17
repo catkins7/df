@@ -239,13 +239,17 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
+    public String getCharltonMessageText(Context context) {
+        Resources resources = context.getResources();
+
         if (statsMode != null) {
             switch (statsMode) {
                 case ALL_FAVORITES:
-                    return String.format(resources.getString(R.string.player_statistics_charlton_text_all_favorites), user.getDisplayName());
+                    return String.format(resources.getString(
+                            R.string.player_statistics_charlton_text_all_favorites), user.getDisplayName());
                 case ALL_SUCCESS_STATS:
-                    return String.format(resources.getString(R.string.player_statistics_charlton_text_success), user.getDisplayName());
+                    return String.format(resources.getString(
+                            R.string.player_statistics_charlton_text_success), user.getDisplayName());
                 case RANKED_STATS:
                     return String.format(resources
                             .getString(R.string.player_statistics_charlton_text_ranked_stats), user.getDisplayName());

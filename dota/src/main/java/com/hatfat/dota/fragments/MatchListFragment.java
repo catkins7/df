@@ -1,7 +1,7 @@
 package com.hatfat.dota.fragments;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +68,7 @@ public class MatchListFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
+    public String getCharltonMessageText(Context context) {
         return null;
     }
 }

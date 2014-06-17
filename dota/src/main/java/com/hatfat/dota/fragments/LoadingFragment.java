@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -220,7 +219,7 @@ public class LoadingFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
+    public String getCharltonMessageText(Context context) {
         return null;
     }
 }

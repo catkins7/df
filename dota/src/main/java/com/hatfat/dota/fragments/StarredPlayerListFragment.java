@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.CharltonActivity;
 import com.hatfat.dota.activities.PlayerActivity;
 import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.user.SteamUser;
@@ -235,7 +236,11 @@ public class StarredPlayerListFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
-        return resources.getString(R.string.starred_players_charlton_text);
+    public String getCharltonMessageText(Context context) {
+        Resources resources = context.getResources();
+
+        String randomGreeting = resources.getString(CharltonActivity.getRandomHestonStringResource(context));
+        return String.format(resources.getString(R.string.starred_players_charlton_text),
+                randomGreeting);
     }
 }

@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -199,12 +198,12 @@ public class SteamUserListFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
+    public String getCharltonMessageText(Context context) {
         if (message != null) {
             return message;
         }
         else {
-            return resources.getString(R.string.steam_user_list_default_charlton_text);
+            return context.getResources().getString(R.string.steam_user_list_default_charlton_text);
         }
     }
 }

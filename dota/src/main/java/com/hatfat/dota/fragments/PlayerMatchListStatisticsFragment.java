@@ -1,6 +1,6 @@
 package com.hatfat.dota.fragments;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -155,15 +155,15 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
     }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
+    public String getCharltonMessageText(Context context) {
         if (user != null) {
             if (alternateText) {
-                return String.format(resources
+                return String.format(context.getResources()
                                 .getString(R.string.player_match_list_stats_tab_charlton_text_alternate),
                         user.getDisplayName(), label);
             }
             else {
-                return String.format(resources
+                return String.format(context.getResources()
                                 .getString(R.string.player_match_list_stats_tab_charlton_text),
                         user.getDisplayName(), label);
             }

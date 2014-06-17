@@ -56,7 +56,6 @@ public abstract class CharltonActivity extends Activity {
 
         charltonTitleTextView = (TextView) actionBar.getCustomView()
                 .findViewById(R.id.actionbar_charlton_text_view);
-        charltonTitleTextView.setText(R.string.default_charlton_text);
 
         Drawable notPressedDrawable = new CharltonBubbleDrawable(R.color.off_white);
         Drawable pressedDrawable = new CharltonBubbleDrawable(R.color.steam_light_blue);
@@ -141,16 +140,27 @@ public abstract class CharltonActivity extends Activity {
     }
 
     public void updateWithCharltonTab(CharltonTab tab) {
-        String newCharltonText = tab.getFragment().getCharltonMessageText(getResources());
+        String newCharltonText = tab.getFragment().getCharltonMessageText(getApplicationContext());
 
         if (newCharltonText != null) {
             charltonTitleTextView.setText(newCharltonText);
         }
         else {
-            charltonTitleTextView.setText(R.string.default_charlton_text);
+            String randomGreeting = getResources().getString(CharltonActivity.getRandomHestonStringResource(getApplicationContext()));
+            randomGreeting = String.format(getResources().getString(R.string.default_charlton_text),
+                    randomGreeting);
+
+            charltonTitleTextView.setText(randomGreeting);
         }
 
         updateCharltonImage();
+    }
+
+    public static int getRandomHestonStringResource(Context context) {
+        int randomHeston = Math.abs(rand.nextInt()) % 7; //7 total heston greetings
+        String stringName = "greeting" + randomHeston;
+        return context.getResources().getIdentifier(stringName, "string",
+                context.getPackageName());
     }
 
     public static int getRandomHestonDrawableResource(Context context) {

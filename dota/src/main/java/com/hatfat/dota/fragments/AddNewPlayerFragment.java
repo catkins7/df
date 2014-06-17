@@ -2,7 +2,6 @@ package com.hatfat.dota.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -239,7 +238,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
 //    }
 
     @Override
-    public String getCharltonMessageText(Resources resources) {
-        return resources.getString(R.string.add_new_player_charlton_text);
+    public String getCharltonMessageText(Context context) {
+        return context.getResources().getString(R.string.add_new_player_charlton_text);
     }
 }
