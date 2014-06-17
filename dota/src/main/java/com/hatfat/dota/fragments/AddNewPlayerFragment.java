@@ -29,9 +29,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by scottrick on 2/12/14.
- */
 public class AddNewPlayerFragment extends CharltonFragment {
 
     private int totalNumberOfSearches;

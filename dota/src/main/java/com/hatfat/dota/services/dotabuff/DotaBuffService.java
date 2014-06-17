@@ -9,9 +9,6 @@ import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
-/**
- * Created by scottrick on 3/15/14.
- */
 public interface DotaBuffService {
 
     @GET("/search/hints.json")

@@ -8,9 +8,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by scottrick on 2/15/14.
- */
 public class HeroFetcher {
     public static void fetchHeroes(final Callback<HeroData> callback) {
         CharltonService charltonService = DotaRestAdapter.createRestAdapter().create(CharltonService.class);

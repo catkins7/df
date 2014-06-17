@@ -15,9 +15,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by scottrick on 2/14/14.
- */
 public class Matches {
 
     public final static String MATCHES_LOADING_PROGRESS_NOTIFICATION = "MATCHES_LOADING_PROGRESS_NOTIFICATION";

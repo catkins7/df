@@ -9,9 +9,6 @@ import retrofit.client.Response;
 
 import java.util.List;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public class SteamUserFetcher
 {
     public static void getSteamUsers(List<String> steamIds, final Callback<List<SteamUser>> steamUserCallback) {

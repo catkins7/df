@@ -2,9 +2,6 @@ package com.hatfat.dota.model.dotabuff;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by scottrick on 3/15/14.
- */
 public class DotaBuffSearchResult {
     @SerializedName("type")
     String type;

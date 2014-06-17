@@ -15,9 +15,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public class SteamUser {
 
     public static final String STEAM_USER_UPDATED = "SteamUserUpdated_Notification";

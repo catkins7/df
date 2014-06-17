@@ -155,7 +155,6 @@ public class TextDialogHelper {
         builder.setIcon(iconDrawable);
         builder.setTitle(titleStringResourceId);
         builder.setView(contentView);
-        builder.setOnDismissListener(dismissListener);
 
         final String[] messages = activity.getResources().getStringArray(messageStringArrayResourceId);
 
@@ -208,6 +207,7 @@ public class TextDialogHelper {
 
         AlertDialog dialog = builder.create();
         dialog.setOwnerActivity(activity);
+        dialog.setOnDismissListener(dismissListener);
         dialog.show();
     }
 }

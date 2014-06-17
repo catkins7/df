@@ -20,9 +20,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by scottrick on 2/23/14.
- */
 public class PlayerRowView extends RelativeLayout {
 
     private Player player;

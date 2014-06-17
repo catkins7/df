@@ -12,9 +12,6 @@ import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public class SteamUserView extends RelativeLayout {
 
     private String steamUserId;

@@ -15,9 +15,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by scottrick on 2/12/14.
- */
 public class MatchFetcher
 {
     public static void fetchMatches(final SteamUser user, final Callback<List<Match>> callback) {

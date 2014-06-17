@@ -5,9 +5,6 @@ import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public class DotaRestAdapter {
 
     public static RestAdapter createRestAdapter() {

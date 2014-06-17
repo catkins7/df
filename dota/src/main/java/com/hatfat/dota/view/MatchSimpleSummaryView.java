@@ -12,9 +12,6 @@ import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.player.Player;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by scottrick on 2/15/14.
- */
 public class MatchSimpleSummaryView extends LinearLayout {
 
     private Match match;

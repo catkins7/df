@@ -21,9 +21,6 @@ import com.hatfat.dota.model.game.Items;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUsers;
 
-/**
- * Created by scottrick on 3/16/14.
- */
 public class LoadingFragment extends CharltonFragment {
 
     private BroadcastReceiver receiver;

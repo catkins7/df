@@ -3,9 +3,6 @@ package com.hatfat.dota.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public class DotaGson {
     private static Gson gson;
 

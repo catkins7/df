@@ -2,9 +2,6 @@ package com.hatfat.dota.model.game;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by scottrick on 3/5/14.
- */
 public class Item implements Comparable<Item> {
     private static final String baseItemIconUrl = "http://media.steampowered.com/apps/dota2/images/items/";
     private static final String largeHorizontalSuffix = "_lg.png";

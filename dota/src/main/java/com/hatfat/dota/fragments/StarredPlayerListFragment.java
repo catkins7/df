@@ -31,9 +31,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public class StarredPlayerListFragment extends CharltonFragment {
 
     private ListView listView;

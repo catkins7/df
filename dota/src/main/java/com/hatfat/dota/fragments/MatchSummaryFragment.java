@@ -26,9 +26,6 @@ import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.view.PlayerRowView;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by scottrick on 2/16/14.
- */
 public class MatchSummaryFragment extends CharltonFragment {
 
     private static final String MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY = "MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY";

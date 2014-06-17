@@ -17,9 +17,6 @@ import com.hatfat.dota.model.player.Player;
 import com.hatfat.dota.model.user.SteamUser;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by scottrick on 2/16/14.
- */
 public class MatchViewForPlayerBasic extends RelativeLayout {
 
     private Match match;

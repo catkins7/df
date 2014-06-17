@@ -10,9 +10,6 @@ import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public interface CharltonService {
 
     final static String STEAM_DEV_KEY = "B3A7049A360B80408EEC3A9D97153AAF";

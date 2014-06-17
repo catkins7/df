@@ -4,6 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
@@ -24,6 +29,7 @@ import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +57,8 @@ public class PlayerMatchListFragment extends CharltonFragment {
     private TextView gameCountTextView;
     private ImageView leftImageView;
     private ImageView rightImageView;
+
+    private Target rightTarget;
 
     public static Bundle newBundleForUserAndMatches(String userId, String label, String secondaryImageUrl, ArrayList<String> matchIds) {
         Bundle args = new Bundle();
@@ -92,6 +100,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
                     String updatedId = intent.getStringExtra(SteamUser.STEAM_USER_UPDATED_ID_KEY);
                     if (updatedId.equals(user.getSteamId())) {
                         updateViews();
+                        signalCharltonActivityToUpdateTab();
                     }
                 }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
@@ -158,6 +167,52 @@ public class PlayerMatchListFragment extends CharltonFragment {
             }
         });
 
+        rightTarget = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+
+                int boundBoxInDp = getResources().getDimensionPixelSize(R.dimen.dota_player_summary_fragment_image_view_size);
+
+                // Determine how much to scale: the dimension requiring less scaling is
+                // closer to the its side. This way the image always stays inside your
+                // bounding box AND either x/y axis touches it.
+                float xScale = ((float) boundBoxInDp) / width;
+                float yScale = ((float) boundBoxInDp) / height;
+                float scale = (xScale <= yScale) ? xScale : yScale;
+
+                // Create a matrix for the scaling and add the scaling data
+                Matrix matrix = new Matrix();
+                matrix.postScale(scale, scale);
+
+                // Create a new bitmap and convert it to a format understood by the ImageView
+                Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+                BitmapDrawable result = new BitmapDrawable(scaledBitmap);
+                width = scaledBitmap.getWidth();
+                height = scaledBitmap.getHeight();
+
+                // Apply the scaled bitmap
+                rightImageView.setImageDrawable(result);
+
+                // Now change ImageView's dimensions to match the scaled image
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) rightImageView.getLayoutParams();
+                params.width = width;
+                params.height = height;
+                rightImageView.setLayoutParams(params);
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
         updateViews();
 
         return view;
@@ -169,7 +224,15 @@ public class PlayerMatchListFragment extends CharltonFragment {
         }
 
         Picasso.with(DotaFriendApplication.CONTEXT).load(user.getAvatarFullUrl()).placeholder(R.drawable.ic_launcher).into(leftImageView);
-        Picasso.with(DotaFriendApplication.CONTEXT).load(secondaryImageUrl).placeholder(R.drawable.ic_launcher).into(rightImageView);
+
+        if (secondaryImageUrl != null) {
+            rightImageView.setVisibility(View.VISIBLE);
+            Picasso.with(DotaFriendApplication.CONTEXT).load(secondaryImageUrl)
+                    .placeholder(R.drawable.ic_launcher).into(rightTarget);
+        }
+        else {
+            rightImageView.setVisibility(View.INVISIBLE);
+        }
 
         userNameTextView.setText(user.getDisplayName());
         labelTextView.setText(matchesLabel);

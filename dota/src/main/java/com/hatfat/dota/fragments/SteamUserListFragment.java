@@ -25,9 +25,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by scottrick on 3/14/14.
- */
 public class SteamUserListFragment extends CharltonFragment {
 
     private static final String STEAM_USER_LIST_FRAGMENT_ID_LIST_KEY = "STEAM_USER_LIST_FRAGMENT_ID_LIST_KEY";

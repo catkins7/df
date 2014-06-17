@@ -18,9 +18,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * Created by scottrick on 2/13/14.
- */
 public class Player {
 
     @SerializedName("account_id")

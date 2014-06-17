@@ -19,9 +19,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by scottrick on 2/12/14.
- */
 public class Match implements Comparable {
 
     public static final String MATCH_UPDATED = "MatchUpdated";

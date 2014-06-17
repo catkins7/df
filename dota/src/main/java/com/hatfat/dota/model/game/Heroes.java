@@ -16,9 +16,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by scottrick on 2/15/14.
- */
 public class Heroes {
 
     private final static String HEROES_FILE_NAME = "heroes.json";

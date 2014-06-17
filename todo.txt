@@ -1,23 +1,27 @@
 0.5 release
 --------------------------- 
-fix DISMISS LISTENER unsupported api issue
+test on sarah's phone
 
-test on different screen size emulators
-
-check lint errors
-
-fresh install
-upgrade install
-
-double loading screen issue??
+add "statistics" and "stats" keyword in playstore info?
 
 
 
 
 0.6 Play store release
 ---------------------------
-MORE TESTING
+TESTING and BUG FIXES only
 
+- update all app images so they are recent
+- update items.txt with latest dota2 build
+- update abilities.json if updated?
+
+- update play store text
+
+
+
+
+After Play store release
+---------------------------
 email gaben/zoid about possibility of meet-up at ti4?
  -accurate items.txt  (item costs often wrong (diffusal 2, dagon, necronomicon, many recipe costs incorrect, etc)
  -500 match fetch limit
@@ -25,10 +29,6 @@ email gaben/zoid about possibility of meet-up at ti4?
  -player search (sucks right now, most apps are just scraping dotabuff's search page)
  -ability icon image endpoints not really documented, ability.json?  neutral abilities not online?
  -items.txt endpoint
-
-- update all app images so they are recent
-- update items.txt with latest dota2 build
-- update abilities.json if updated?
 
 
 
@@ -47,6 +47,8 @@ Features Backlog
 ---------------------------
 player RECORDS? (most kills, deaths, etc) with link to the match
 
+compare stats with a friend's side by side?
+
 steam friend's list?
  -https://developer.valvesoftware.com/wiki/Steam_Web_API
 
@@ -59,7 +61,6 @@ Premium version of the app, after play store general release?  would be a paid v
  - it looks like K+A/D might be indicator or skill.  or  K+A/D / TeamScore.  It might be worth plotting some of these values in a spreadsheet and seeing
 
 google analytics, so I can see what people really like to use
-
 
 
 

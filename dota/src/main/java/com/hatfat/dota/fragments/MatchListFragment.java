@@ -18,9 +18,6 @@ import com.hatfat.dota.model.user.SteamUsers;
 
 import java.util.ArrayList;
 
-/**
- * Created by scottrick on 3/14/14.
- */
 public class MatchListFragment extends CharltonFragment {
 
     private static final String MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY = "MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY";

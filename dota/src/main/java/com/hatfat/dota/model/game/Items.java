@@ -11,9 +11,6 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by scottrick on 3/5/14.
- */
 public class Items {
     private static Items singleton;
 

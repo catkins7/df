@@ -17,7 +17,6 @@
     <string name="anonymous_name">Anonymous</string>
     <string name="bot_name">Bot</string>
 
-    <string name="add_player">Add a new player…</string>
     <string name="about_dialog_title">About Dota 2 Friend</string>
     <string name="about_dialog_email_intent_chooser_title">Send Email</string>
     <string name="about_dialog_email_address">dota2friend@gmail.com</string>
@@ -39,7 +38,7 @@
     <string name="tab_player_all_heroes_stats_title">All Heroes</string>
     <string name="tab_search_results_title">Search Results</string>
     <string name="tab_starred_players_title">Starred</string>
-    <string name="tab_add_player_title">Add Player</string>
+    <string name="tab_add_player_title">Find Player</string>
 
     <string name="default_charlton_text">%1$s.</string>
     <string name="starred_players_charlton_text">%1$s, I\'m Charlton Heston.\nThese are your starred players.</string>
@@ -76,7 +75,7 @@
     <string name="game_mode_balanced_draft">Balanced Draft</string>
     <string name="game_mode_ability_draft">Ability Draft</string>
     <string name="game_mode_event">Event</string>
-    <string name="game_mode_unknown"></string>
+    <string name="game_mode_unknown"/>
 
     <string name="match_summary_time_ago_minute">%1$d minute ago</string>
     <string name="match_summary_time_ago_minutes">%1$d minutes ago</string>
@@ -91,9 +90,9 @@
     <string name="match_summary_duration_label">Duration</string>
     <string name="match_summary_mode_label">Game Mode</string>
     <string name="match_summary_time_ago_label">Time Ago</string>
-    <string name="match_summary_no_player_of_the_game"></string>
+    <string name="match_summary_no_player_of_the_game"/>
 
-    <string name="match_result_unknown"></string>
+    <string name="match_result_unknown"/>
     <string name="match_result_radiant_victory">Radiant Victory</string>
     <string name="match_result_dire_victory">Dire Victory</string>
     <string name="match_result_player_victory">Win</string>

@@ -21,9 +21,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by scottrick on 2/10/14.
- */
 public class SteamUsers {
 
     public final static String ANONYMOUS_ID = "76561202255233023";

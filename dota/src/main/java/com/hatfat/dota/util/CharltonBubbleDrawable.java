@@ -20,24 +20,22 @@ public class CharltonBubbleDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-
         int bubbleCornerRadius = (int) DotaFriendApplication.CONTEXT.getResources().getDimension(R.dimen.bubble_corner_radius);
-        int bubbleWidth = bubbleCornerRadius * 2;
+        int triangleSize = bubbleCornerRadius * 2;
 
         Paint paint = new Paint();
         paint.setColor(DotaFriendApplication.CONTEXT.getResources().getColor(bubbleColorResourceId));
 
-        RectF rect = new RectF(bubbleWidth, 0, canvas.getWidth(), canvas.getHeight());
+        RectF rect = new RectF(triangleSize, 0, canvas.getWidth(), canvas.getHeight());
         canvas.drawRoundRect(rect, bubbleCornerRadius, bubbleCornerRadius, paint);
 
-        int talkingHeight = bubbleWidth;
         int talkingVerticalOffset = bubbleCornerRadius * 3;
 
         Path talkingArrowPath = new Path();
 
         talkingArrowPath.moveTo(0.0f, talkingVerticalOffset);
-        talkingArrowPath.lineTo(bubbleWidth, talkingVerticalOffset + talkingHeight / 2);
-        talkingArrowPath.lineTo(bubbleWidth, talkingVerticalOffset - talkingHeight / 2);
+        talkingArrowPath.lineTo(triangleSize, talkingVerticalOffset + triangleSize / 2);
+        talkingArrowPath.lineTo(triangleSize, talkingVerticalOffset - triangleSize / 2);
         talkingArrowPath.close();
 
         canvas.drawPath(talkingArrowPath, paint);

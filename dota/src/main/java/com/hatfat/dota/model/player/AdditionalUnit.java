@@ -5,9 +5,6 @@ import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.Item;
 import com.hatfat.dota.model.game.Items;
 
-/**
- * Created by scottrick on 3/14/14.
- */
 public class AdditionalUnit {
 
     @SerializedName("unitname")
