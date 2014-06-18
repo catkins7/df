@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,7 +157,9 @@ public class SteamUserListFragment extends CharltonFragment {
                     textView.setBackgroundResource(R.drawable.off_black_background);
                     textView.setText(R.string.no_steam_users);
                     textView.setTextColor(getResources().getColor(R.color.off_white));
-                    textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.font_size_tiny));
+
+                    float fontSize = getResources().getDimensionPixelSize(R.dimen.font_size_medium);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
 
                     int padding = (int)getResources().getDimension(R.dimen.default_padding);
                     textView.setPadding(padding, padding, padding, padding);

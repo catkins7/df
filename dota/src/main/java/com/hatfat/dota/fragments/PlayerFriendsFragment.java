@@ -171,6 +171,12 @@ public class PlayerFriendsFragment extends CharltonFragment {
                 Collections.sort(resultsList);
 
                 int cutoffIndex = resultsList.size() / 60; //arbitrary position that seems to work well
+
+                if (cutoffIndex >= resultsList.size()) {
+                    //not enough results, so just return an empty list.
+                    return new LinkedList<>();
+                }
+
                 int cutoff = resultsList.get(cutoffIndex).getCommonMatches().size();
 
                 List<CommonMatches> filteredList = new LinkedList();

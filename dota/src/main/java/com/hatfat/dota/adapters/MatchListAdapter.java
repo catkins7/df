@@ -1,6 +1,7 @@
 package com.hatfat.dota.adapters;
 
 import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -91,7 +92,9 @@ public class MatchListAdapter extends BaseAdapter {
                 textView.setBackgroundResource(R.drawable.off_black_background);
                 textView.setText(R.string.no_matches);
                 textView.setTextColor(resources.getColor(R.color.off_white));
-                textView.setTextSize(resources.getDimensionPixelSize(R.dimen.font_size_tiny));
+
+                float fontSize = viewGroup.getResources().getDimensionPixelSize(R.dimen.font_size_medium);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
 
                 int padding = (int) resources.getDimension(R.dimen.default_padding);
                 textView.setPadding(padding, padding, padding, padding);
