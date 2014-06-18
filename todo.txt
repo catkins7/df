@@ -1,9 +1,6 @@
-0.5 release
+0.5.1 release (Small fixes only)
 --------------------------- 
-test on sarah's phone
-
-add "statistics" and "stats" keyword in playstore info?
-
+-Make all the backgrounds of the player's tab be the same (no transparent ones).  Selectable ones will still look different somehow
 
 
 
