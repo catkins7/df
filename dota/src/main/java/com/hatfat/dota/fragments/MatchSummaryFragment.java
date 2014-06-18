@@ -164,7 +164,7 @@ public class MatchSummaryFragment extends CharltonFragment {
                         LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                         convertView = inflater.inflate(R.layout.view_stats_text_row, viewGroup, false);
-                        convertView.setBackgroundResource(R.drawable.off_black_background);
+                        convertView.setBackgroundResource(R.drawable.unselectable_background);
                     }
 
                     TextView titleText = (TextView) convertView.findViewById(R.id.view_stats_text_row_title_text_view);
@@ -221,7 +221,7 @@ public class MatchSummaryFragment extends CharltonFragment {
                     if (convertView == null) {
                         LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         convertView = inflater.inflate(R.layout.view_stats_image_row, viewGroup, false);
-                        convertView.setBackgroundResource(R.drawable.off_black_background);
+                        convertView.setBackgroundResource(R.drawable.unselectable_background);
                     }
 
                     TextView titleText = (TextView) convertView.findViewById(R.id.view_stats_image_row_title_text_view);

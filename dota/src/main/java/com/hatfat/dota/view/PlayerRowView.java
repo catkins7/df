@@ -169,7 +169,7 @@ public class PlayerRowView extends RelativeLayout {
                         Picasso.with(DotaFriendApplication.CONTEXT).load(a.getImageUrlString()).placeholder(R.drawable.ic_launcher).into(abilityImageViews[i]);
                     }
                     else {
-                        abilityImageViews[i].setImageResource(R.drawable.off_black_background);
+                        abilityImageViews[i].setImageResource(R.drawable.unselectable_background);
                     }
                 }
             }

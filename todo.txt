@@ -1,19 +1,14 @@
 0.5.1 release (Small fixes only)
---------------------------- 
--Make all the backgrounds of the player's tab be the same (no transparent ones).  Selectable ones will still look different somehow
-
-
-
-
-0.6 Play store release
 ---------------------------
 TESTING and BUG FIXES only
 
-- update all app images so they are recent
-- update items.txt with latest dota2 build
-- update abilities.json if updated?
 
-- update play store text
+
+
+0.5.2 Play store release (small tiny fixes only, or 0.5.1 if no changes)
+---------------------------
+- double check all app images so they are recent
+- double check play store text
 
 
 

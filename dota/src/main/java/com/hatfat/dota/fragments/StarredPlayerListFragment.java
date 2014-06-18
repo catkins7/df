@@ -171,7 +171,7 @@ public class StarredPlayerListFragment extends CharltonFragment {
                     //no users, so send "no users" row
                     TextView textView = new TextView(viewGroup.getContext());
 
-                    textView.setBackgroundResource(R.drawable.off_black_background);
+                    textView.setBackgroundResource(R.drawable.unselectable_background);
                     textView.setText(R.string.no_starred_users);
                     textView.setTextColor(getResources().getColor(R.color.off_white));
 

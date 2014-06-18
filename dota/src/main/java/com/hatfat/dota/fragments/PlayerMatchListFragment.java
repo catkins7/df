@@ -175,16 +175,12 @@ public class PlayerMatchListFragment extends CharltonFragment {
 
                 int boundBoxInDp = getResources().getDimensionPixelSize(R.dimen.dota_player_summary_fragment_image_view_size);
 
-                // Determine how much to scale: the dimension requiring less scaling is
-                // closer to the its side. This way the image always stays inside your
-                // bounding box AND either x/y axis touches it.
+                //always scale on the X size
                 float xScale = ((float) boundBoxInDp) / width;
-                float yScale = ((float) boundBoxInDp) / height;
-                float scale = (xScale <= yScale) ? xScale : yScale;
 
                 // Create a matrix for the scaling and add the scaling data
                 Matrix matrix = new Matrix();
-                matrix.postScale(scale, scale);
+                matrix.postScale(xScale, xScale);
 
                 // Create a new bitmap and convert it to a format understood by the ImageView
                 Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);

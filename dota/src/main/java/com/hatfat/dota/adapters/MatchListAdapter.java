@@ -1,11 +1,12 @@
 package com.hatfat.dota.adapters;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hatfat.dota.R;
@@ -80,16 +81,14 @@ public class MatchListAdapter extends BaseAdapter {
 
         if (matchIds.size() <= 0) {
             if (fetchingMatches) {
-                ProgressBar progressBar = new ProgressBar(viewGroup.getContext());
-                progressBar.setBackgroundResource(R.drawable.off_black_background);
-                progressBar.setIndeterminate(true);
-
-                return progressBar;
+                LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+                return inflater.inflate(R.layout.view_stats_loading_row, viewGroup, false);
             }
             else {
                 TextView textView = new TextView(viewGroup.getContext());
 
-                textView.setBackgroundResource(R.drawable.off_black_background);
+                textView.setBackgroundResource(R.drawable.unselectable_background);
                 textView.setText(R.string.no_matches);
                 textView.setTextColor(resources.getColor(R.color.off_white));
 

@@ -72,7 +72,8 @@ public class CommonMatchesAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = inflater.inflate(R.layout.view_stats_text_row, parent, false);
-            view.setBackgroundResource(R.drawable.off_black_background);
+            view.setBackgroundResource(R.drawable.unselectable_background);
+
             TextView textView = (TextView) view.findViewById(R.id.view_stats_text_row_title_text_view);
             textView.setText(R.string.player_statistics_not_enough_data_text);
 

@@ -280,7 +280,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) convertView.findViewById(R.id.view_stats_text_row_title_text_view);
         titleTextView.setText(R.string.player_statistics_not_enough_data_text);
 
-        convertView.setBackgroundColor(0x0);
+        convertView.setBackgroundResource(R.drawable.unselectable_background);
 
         return convertView;
     }
@@ -505,7 +505,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 subtitleTextView.setText(section.stats.getAvgDurationString(resources));
             }
 
-            convertView.setBackgroundColor(0x0);
+            convertView.setBackgroundResource(R.drawable.unselectable_background);
 
             return convertView;
         }
@@ -523,7 +523,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) convertView.findViewById(R.id.view_stats_text_row_title_text_view);
         TextView subtitleTextView = (TextView) convertView.findViewById(R.id.view_stats_text_row_subtitle_text_view);
 
-        convertView.setBackgroundColor(0x0);
+        convertView.setBackgroundResource(R.drawable.unselectable_background);
         subtitleTextView.setTextColor(resources.getColor(R.color.off_white));
 
         if (position == 0) {

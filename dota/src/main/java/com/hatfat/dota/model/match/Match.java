@@ -49,7 +49,7 @@ public class Match implements Comparable {
                     return R.drawable.dire_background;
                 case MATCH_RESULT_UNKNOWN:
                 default:
-                    return R.drawable.off_black_background;
+                    return R.drawable.unselectable_background;
             }
         }
     }
@@ -385,7 +385,7 @@ public class Match implements Comparable {
             case PLAYER_MATCH_RESULT_DEFEAT:
                 return R.drawable.match_result_loss_background;
             default:
-                return R.drawable.off_black_background;
+                return R.drawable.unselectable_background;
         }
     }
 
