@@ -53,6 +53,7 @@
     <string name="lobby_type_team_match">Team Matchmaking</string>
     <string name="lobby_type_solo_queue">Solo Queue</string>
     <string name="lobby_type_ranked">Ranked</string>
+    <string name="lobby_type_1v1_mid">1v1 Mid</string>
     <string name="lobby_type_unknown">Unknown</string>
 
     <string name="game_mode_none">No Mode</string>

@@ -78,6 +78,7 @@ public class Match implements Comparable {
         TEAM_MATCH(R.string.lobby_type_team_match),
         SOLO_QUEUE(R.string.lobby_type_solo_queue),
         RANKED(R.string.lobby_type_ranked),
+        MID_1V1(R.string.lobby_type_1v1_mid),
         UNKNOWN(R.string.lobby_type_unknown);
 
         private int stringResourceId;
@@ -104,6 +105,8 @@ public class Match implements Comparable {
                     return SOLO_QUEUE;
                 case 7:
                     return RANKED;
+                case 8:
+                    return MID_1V1;
                 default:
                     return UNKNOWN;
             }
@@ -665,6 +668,11 @@ public class Match implements Comparable {
 
         if (duration < 5 * 60) {
             //game was less than 5 minutes long, so there will be no player of the match
+            return null;
+        }
+
+        if (players.size() < 10) {
+            //no player of the game for games with less than 10 people
             return null;
         }
 

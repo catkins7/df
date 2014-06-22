@@ -1,12 +1,9 @@
-0.5.1 release (Small fixes only)
+0.5.2 Play store release
 ---------------------------
-TESTING and BUG FIXES only
+-1v1 solo mid match, all random deathmatch	
 
+update abilities.json
 
-
-
-0.5.2 Play store release (small tiny fixes only, or 0.5.1 if no changes)
----------------------------
 - double check all app images so they are recent
 - double check play store text
 
