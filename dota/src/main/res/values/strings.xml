@@ -53,7 +53,7 @@
     <string name="lobby_type_team_match">Team Matchmaking</string>
     <string name="lobby_type_solo_queue">Solo Queue</string>
     <string name="lobby_type_ranked">Ranked</string>
-    <string name="lobby_type_1v1_mid">1v1 Mid</string>
+    <string name="lobby_type_casual_1v1">Casual</string>
     <string name="lobby_type_unknown">Unknown</string>
 
     <string name="game_mode_none">No Mode</string>
@@ -76,6 +76,8 @@
     <string name="game_mode_balanced_draft">Balanced Draft</string>
     <string name="game_mode_ability_draft">Ability Draft</string>
     <string name="game_mode_event">Event</string>
+    <string name="game_mode_ardm">All Random DM</string>
+    <string name="game_mode_1v1_mid">1v1 Mid</string>
     <string name="game_mode_unknown"/>
 
     <string name="match_summary_time_ago_minute">%1$d minute ago</string>
@@ -91,7 +93,7 @@
     <string name="match_summary_duration_label">Duration</string>
     <string name="match_summary_mode_label">Game Mode</string>
     <string name="match_summary_time_ago_label">Time Ago</string>
-    <string name="match_summary_no_player_of_the_game"/>
+    <string name="match_summary_no_player_of_the_game">None</string>
 
     <string name="match_result_unknown"/>
     <string name="match_result_radiant_victory">Radiant Victory</string>

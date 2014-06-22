@@ -1,10 +1,5 @@
-0.5.2 Play store release
+0.5.2 Play store release?
 ---------------------------
--1v1 solo mid match, all random deathmatch	
-
-update abilities.json
-
-- double check all app images so they are recent
 - double check play store text
 
 
@@ -27,6 +22,10 @@ TODO OTHER
 ---------------------------
 update to okhttp 2.0.0 once retrofit supports it
 - and update picasso as well
+
+update abilities.json
+
+add country flag to steam user row?
 
 refresh steam user from server if cell is made and it doesn't have the info?  (similar to the match view stuff?)
 

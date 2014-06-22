@@ -78,7 +78,7 @@ public class Match implements Comparable {
         TEAM_MATCH(R.string.lobby_type_team_match),
         SOLO_QUEUE(R.string.lobby_type_solo_queue),
         RANKED(R.string.lobby_type_ranked),
-        MID_1V1(R.string.lobby_type_1v1_mid),
+        CASUAL_1V1(R.string.lobby_type_casual_1v1),
         UNKNOWN(R.string.lobby_type_unknown);
 
         private int stringResourceId;
@@ -106,7 +106,7 @@ public class Match implements Comparable {
                 case 7:
                     return RANKED;
                 case 8:
-                    return MID_1V1;
+                    return CASUAL_1V1;
                 default:
                     return UNKNOWN;
             }
@@ -138,6 +138,8 @@ public class Match implements Comparable {
         BalancedDraft(R.string.game_mode_balanced_draft),
         AbilityDraft(R.string.game_mode_ability_draft),
         Event(R.string.game_mode_event),
+        AllRandomDeathMatch(R.string.game_mode_ardm),
+        Mid1v1(R.string.game_mode_1v1_mid),
         Unknown(R.string.game_mode_unknown);
 
         private int stringResourceId;
@@ -188,6 +190,10 @@ public class Match implements Comparable {
                     return AbilityDraft;
                 case 19:
                     return Event;
+                case 20:
+                    return AllRandomDeathMatch;
+                case 21:
+                    return Mid1v1;
                 default:
                     return Unknown;
             }
