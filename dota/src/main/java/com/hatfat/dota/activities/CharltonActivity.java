@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.dialogs.TextDialogHelper;
-import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.tabs.CharltonTab;
@@ -124,7 +123,7 @@ public abstract class CharltonActivity extends Activity {
     }
 
     private boolean isDataLoaded() {
-        return SteamUsers.get().isLoaded() && Matches.get().isLoaded() && Heroes.get().isLoaded();
+        return SteamUsers.get().isLoaded() && Matches.get().isLoaded();
     }
 
     @Override
