@@ -1,4 +1,4 @@
-0.5.3 Bugfixes and Improvements
+0.5.4 Bugfixes
 ---------------------------
 add game mode for when we don't know, as well as when its an unknown (new) game mode.  
   -that was its still blank when we are loading, but not blank if its a new mode after its loaded
