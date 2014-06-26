@@ -240,8 +240,20 @@ public class PlayerFriendsFragment extends CharltonFragment {
                                 CommonMatchSteamUserView userView = (CommonMatchSteamUserView) view;
 
                                 if (userView.getSteamUserAccountId().equals(updatedId)) {
-                                    userView.notifyMatchUpdated();
+                                    userView.notifyUserUpdated();
                                 }
+                            }
+                        }
+                    }
+                }
+                else if (intent.getAction().equals(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED)) {
+                    if (listView != null && adapter != null) {
+                        for (int i = 0; i < listView.getChildCount(); i++) {
+                            View view = listView.getChildAt(i);
+
+                            if (view instanceof CommonMatchSteamUserView) {
+                                CommonMatchSteamUserView userView = (CommonMatchSteamUserView) view;
+                                userView.updateFriendButtonBackground();
                             }
                         }
                     }
@@ -251,8 +263,9 @@ public class PlayerFriendsFragment extends CharltonFragment {
 
         IntentFilter friendFilter = new IntentFilter();
         friendFilter.addAction(SteamUser.STEAM_USER_MATCHES_CHANGED);
-        friendFilter.addAction(Match.MATCH_UPDATED);
         friendFilter.addAction(SteamUser.STEAM_USER_UPDATED);
+        friendFilter.addAction(Match.MATCH_UPDATED);
+        friendFilter.addAction(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver,
                 friendFilter);
     }

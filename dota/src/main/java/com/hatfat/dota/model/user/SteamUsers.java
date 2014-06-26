@@ -1,9 +1,13 @@
 package com.hatfat.dota.model.user;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
@@ -173,9 +177,9 @@ public class SteamUsers {
         int index = fileName.indexOf(Matches.USER_MATCHES_FILE_EXTENSION);
         String matchesUserId = fileName.substring(0, index);
 
-        SteamUser user = SteamUsers.get().getByAccountId(matchesUserId);
+        SteamUser user = getByAccountId(matchesUserId);
 
-        return !SteamUsers.get().isUserStarred(user);
+        return !isUserStarred(user);
     }
 
     private void fetchUser(String steamId) {
@@ -242,6 +246,32 @@ public class SteamUsers {
             else {
                 users.put(user.steamId, user);
             }
+        }
+    }
+
+    public void toggleStarForUser(final SteamUser user, final Context context) {
+        if (isUserStarred(user)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.player_summary_remove_friend_title_text);
+            builder.setMessage(R.string.player_summary_remove_friend_message_text);
+            builder.setPositiveButton(R.string.player_summary_remove_friend_remove_text, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    removeSteamUserFromStarredList(user);
+                }
+            });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        else {
+            addSteamUserToStarredList(user);
+
+            Toast.makeText(context, R.string.player_summary_added_friend_text, Toast.LENGTH_SHORT).show();
         }
     }
 

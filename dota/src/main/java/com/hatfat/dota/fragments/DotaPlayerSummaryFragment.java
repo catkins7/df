@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
@@ -110,7 +109,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         friendToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleStar();
+                SteamUsers.get().toggleStarForUser(user, getActivity());
             }
         });
         fetchAllMatchesButton.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +195,9 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                         userMatchesHaveChanged = true;
                     }
                 }
+                else if (intent.getAction().equals(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED)) {
+                    updateFriendButtonBackground();
+                }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
                     //reload the match row for this match
                     String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
@@ -226,6 +228,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         summaryFilter.addAction(SteamUser.STEAM_USER_UPDATED);
         summaryFilter.addAction(SteamUser.STEAM_USER_MATCHES_CHANGED);
         summaryFilter.addAction(Match.MATCH_UPDATED);
+        summaryFilter.addAction(SteamUsers.STEAM_STARRED_USERS_USER_LIST_CHANGED);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver,
                 summaryFilter);
     }
@@ -252,34 +255,6 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private void updateMatchList() {
         if (matchesListView != null && matchAdapter != null) {
             matchAdapter.setMatches(new LinkedList(user.getMatches()));
-        }
-    }
-
-    private void toggleStar() {
-        if (SteamUsers.get().isUserStarred(user)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.player_summary_remove_friend_title_text);
-            builder.setMessage(R.string.player_summary_remove_friend_message_text);
-            builder.setPositiveButton(R.string.player_summary_remove_friend_remove_text, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    SteamUsers.get().removeSteamUserFromStarredList(user);
-                    updateFriendButtonBackground();
-                }
-            });
-            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-        else {
-            SteamUsers.get().addSteamUserToStarredList(user);
-            updateFriendButtonBackground();
-
-            Toast.makeText(getActivity().getApplicationContext(), R.string.player_summary_added_friend_text, Toast.LENGTH_SHORT).show();
         }
     }
 

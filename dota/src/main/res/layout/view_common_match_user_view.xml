@@ -16,9 +16,17 @@
         android:layout_height="@dimen/steam_user_view_image_size"
         tools:ignore="ContentDescription" />
 
+    <Button
+        android:id="@+id/view_common_match_friend_button"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
+        android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
+
     <RelativeLayout
         android:id="@+id/view_common_match_view_right_container"
-        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_toLeftOf="@id/view_common_match_friend_button"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
