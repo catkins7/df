@@ -1,7 +1,6 @@
-0.5.4 Bugfixes
+0.5.4 Bugfixes and Small Improvements
 ---------------------------
-add game mode for when we don't know, as well as when its an unknown (new) game mode.  
-  -that was its still blank when we are loading, but not blank if its a new mode after its loaded
+Add a Star next to players on the PEOPLE tab so you can easily star/unstar them
 
 use updated abilities.json?
 

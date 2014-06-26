@@ -140,6 +140,8 @@ public class Match implements Comparable {
         Event(R.string.game_mode_event),
         AllRandomDeathMatch(R.string.game_mode_ardm),
         Mid1v1(R.string.game_mode_1v1_mid),
+
+        NoMatchDetails(R.string.game_mode_no_match_details),
         Unknown(R.string.game_mode_unknown);
 
         private int stringResourceId;
@@ -299,7 +301,7 @@ public class Match implements Comparable {
     }
     public GameMode getGameMode() {
         if (!hasMatchDetails) {
-            return GameMode.Unknown;
+            return GameMode.NoMatchDetails;
         }
 
         return GameMode.fromInt(gameMode);

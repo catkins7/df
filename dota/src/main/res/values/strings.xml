@@ -78,7 +78,8 @@
     <string name="game_mode_event">Event</string>
     <string name="game_mode_ardm">All Random DM</string>
     <string name="game_mode_1v1_mid">1v1 Mid</string>
-    <string name="game_mode_unknown"/>
+    <string name="game_mode_no_match_details"/>
+    <string name="game_mode_unknown">Unknown Mode</string>
 
     <string name="match_summary_time_ago_minute">%1$d minute ago</string>
     <string name="match_summary_time_ago_minutes">%1$d minutes ago</string>
