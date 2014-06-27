@@ -36,7 +36,7 @@
             android:textSize="@dimen/font_size_medium"
             android:textColor="@color/off_white"
             android:gravity="clip_vertical|right"
-            android:layout_width="100dp"
+            android:layout_width="64dp"
             android:layout_height="@dimen/text_view_height_medium"/>
 
         <TextView
@@ -45,7 +45,7 @@
             android:textSize="@dimen/font_size_small"
             android:textColor="@color/off_gray"
             android:gravity="clip_vertical|right"
-            android:layout_width="100dp"
+            android:layout_width="64dp"
             android:layout_height="@dimen/text_view_height_small"/>
 
     </RelativeLayout>
