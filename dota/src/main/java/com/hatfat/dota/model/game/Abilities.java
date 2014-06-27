@@ -19,8 +19,6 @@ import java.util.List;
 public class Abilities {
     //abilities json downloaded from here:
     //https://github.com/kronusme/dota2-api/blob/master/data/abilities.json
-    private final static String ABILITY_FILE_NAME = "abilities.json";
-
     public final static String ABILITY_DATA_LOADED_NOTIFICATION = "ABILITY_DATA_LOADED_NOTIFICATION";
 
     private static Abilities singleton;

@@ -18,6 +18,7 @@
 
     <Button
         android:id="@+id/view_common_match_friend_button"
+        android:focusable="false"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
