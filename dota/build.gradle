@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 tasks.whenTaskAdded { task ->
     if (task.name == "validateReleaseSigning")
@@ -9,12 +9,12 @@ tasks.whenTaskAdded { task ->
 }
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 20
     buildToolsVersion '20.0.0'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 20
         versionCode 120
         versionName "0.5.4"
     }
