@@ -1,7 +1,5 @@
 0.5.4 Bugfixes and Small Improvements
 ---------------------------
-add country flag to steam user row?
-
 use updated abilities.json?
 
 
@@ -9,9 +7,6 @@ use updated abilities.json?
 
 TODO OTHER
 ---------------------------
-update to okhttp 2.0.0 once retrofit supports it
-- and update picasso as well
-
 update abilities.json
 
 refresh steam user from server if cell is made and it doesn't have the info?  (similar to the match view stuff?)
