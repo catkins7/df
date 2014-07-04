@@ -1,7 +1,5 @@
 0.5.5 Bugfixes
 ---------------------------
-crashes
-
 dialog on startup, or at some point that tells the user the valve api isn't working right now?
 
 
