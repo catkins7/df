@@ -310,7 +310,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     }
 
     private void updateMatchInfoViews() {
-        if (publicMatchesTextView == null || isDetached()) {
+        if (publicMatchesTextView == null || !isAdded()) {
             return;
         }
 
