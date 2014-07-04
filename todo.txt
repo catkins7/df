@@ -1,6 +1,5 @@
 0.5.5 Bugfixes
 ---------------------------
-dialog on startup, or at some point that tells the user the valve api isn't working right now?
 
 
 
@@ -17,6 +16,10 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
+dialog on startup, or at some point that tells the user the valve api isn't working right now?
+
+spinner for network activity?
+
 Recent tab, showing all games from the last 3-7 days?  Last week maybe?  not divided by public or anything like that
 
 player RECORDS? (most kills, deaths, etc) with link to the match
