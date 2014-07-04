@@ -246,8 +246,11 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Match match = matchAdapter.getItem(i);
-                Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
-                startActivity(intent);
+
+                if (match != null) {
+                    Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
+                    startActivity(intent);
+                }
             }
         });
     }

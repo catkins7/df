@@ -52,7 +52,12 @@ public class MatchListAdapter extends BaseAdapter {
 
     @Override
     public Match getItem(int i) {
-        return Matches.get().getMatch(matchIds.get(i));
+        if (i < matchIds.size()) {
+            return Matches.get().getMatch(matchIds.get(i));
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
