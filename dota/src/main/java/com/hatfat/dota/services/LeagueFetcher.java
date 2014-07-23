@@ -1,7 +1,5 @@
 package com.hatfat.dota.services;
 
-import android.util.Log;
-
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.DotaResult;
