@@ -97,6 +97,11 @@ public abstract class CharltonActivity extends Activity {
 
                 actionBar.addTab(tab);
             }
+
+            int startingTabIndex = getDefaultTabIndex();
+            if (startingTabIndex > 0 && startingTabIndex < actionBar.getTabCount()) {
+                actionBar.selectTab(actionBar.getTabAt(startingTabIndex));
+            }
         }
         else if (tabs.size() == 1) {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -206,6 +211,10 @@ public abstract class CharltonActivity extends Activity {
 
     protected boolean isLoadingActivity() {
         return false;
+    }
+
+    protected int getDefaultTabIndex() {
+        return 0; //the first tab should be selected by default
     }
 
     protected abstract List<CharltonTab> createTabs();

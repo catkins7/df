@@ -39,6 +39,7 @@
     <string name="tab_search_results_title">Search Results</string>
     <string name="tab_starred_players_title">Starred</string>
     <string name="tab_add_player_title">Find Player</string>
+    <string name="tab_live_leagues_title">Leagues</string>
 
     <string name="default_charlton_text">%1$s.</string>
     <string name="starred_players_charlton_text">%1$s, I\'m Charlton Heston.\nThese are your starred players.</string>
@@ -201,6 +202,8 @@
     <string name="add_new_player_search_hint">Player Name or Steam ID</string>
     <string name="add_new_player_charlton_text">Let me help you find a player.</string>
     <string name="add_new_player_search_results_text">Here are the results for the search \'%1$s\'.</string>
+
+    <string name="live_leagues_fragment_charlton_text">Current live leagues.</string>
 
     <string name="no_steam_users">No players found.</string>
     <string name="no_starred_users">No starred players.</string>

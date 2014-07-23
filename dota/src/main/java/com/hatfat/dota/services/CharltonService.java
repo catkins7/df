@@ -3,9 +3,11 @@ package com.hatfat.dota.services;
 import com.hatfat.dota.model.DotaResponse;
 import com.hatfat.dota.model.DotaResult;
 import com.hatfat.dota.model.game.HeroData;
+import com.hatfat.dota.model.league.LiveLeagueList;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.player.PlayerSummaries;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -37,4 +39,10 @@ public interface CharltonService {
 
     @GET("/IDOTA2Match_570/GetMatchDetails/V001/?key=" + STEAM_DEV_KEY)
     public void getMatchDetails(@Query("match_id") String matchId, Callback<DotaResult<Match>> matchHistoryCallback);
+
+    @GET("/IDOTA2Match_570/GetLeagueListing/v0001/?key=" + STEAM_DEV_KEY)
+    public void getLeagueListing(@Query("language") String language, Callback<DotaResult<LiveLeagueList>> matchHistoryCallback);
+
+//    @GET("/IDOTA2Match_570/GetLiveLeagueGames/v0001/?key=" + STEAM_DEV_KEY)
+//    public void getLeagueLiveMatch(@Query("match_id") String matchId, Callback<DotaResult<Match>> matchHistoryCallback);
 }

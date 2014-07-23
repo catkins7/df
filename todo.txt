@@ -1,8 +1,10 @@
-0.5.6 Bugfixes
+0.5.6 TODO
 ---------------------------
-update abilities.json
 
-spinner for network activity?
+0.5.6 README
+---------------------------
+- Updated abilities to include Drow Ranger's Gust ability.
+- If you have no starred players, you are shown the Add Player tab by default.
 
 
 
@@ -17,6 +19,14 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
+-leagues???!!!
+
+spinner for network activity?
+
+re-order player stats tabs as suggested by joe?
+
+rework stats tab(s) to have a modes dropdown (recent, ranked, public, other?)
+
 dialog on startup, or at some point that tells the user the valve api isn't working right now?
 
 Recent tab, showing all games from the last 3-7 days?  Last week maybe?  not divided by public or anything like that
