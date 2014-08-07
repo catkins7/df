@@ -1,6 +1,5 @@
 0.5.7 TODO
 ---------------------------
--Fix issue where fetch all matches is fetching in reverse order
 -disk cache for picasso?  so images are saved when its out of memory?? 
 
 
@@ -8,7 +7,8 @@
 
 0.5.7 README
 ---------------------------
-
+-Fixed a rare crash when generating statistics.
+-Fetch all matches should fetch matches in the correct order now.
 
 
 

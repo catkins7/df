@@ -302,7 +302,8 @@ public class FetchMatchesDialogHelper {
 
     private synchronized String popNextMatchId() {
         if (matchIds.size() > 0) {
-            return matchIds.removeFirst();
+            //return the last match id (which will be the most recent).
+            return matchIds.removeLast();
         }
         else {
             return null;
