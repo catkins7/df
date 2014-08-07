@@ -165,6 +165,12 @@ public class DotaStatistics {
             items.clear();
 
             Player player = match.getPlayerForSteamUser(user);
+
+            if (player == null) {
+                //no player for this user, so just skip to the next match
+                continue;
+            }
+
             Hero hero = Heroes.get().getHero(player.getHeroIdString());
 
             if (hero == null) {
