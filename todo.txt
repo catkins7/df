@@ -1,13 +1,12 @@
-0.5.7 TODO
+0.5.8 TODO
 ---------------------------
 
 
 
 
-0.5.7 README
+0.5.8 README
 ---------------------------
--Fixed a rare crash when generating statistics.
--Fetch all matches should get newer matches first now.
+
 
 
 
