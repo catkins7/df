@@ -7,7 +7,7 @@
 0.5.7 README
 ---------------------------
 -Fixed a rare crash when generating statistics.
--Fetch all matches should fetch matches in the correct order now.
+-Fetch all matches should get newer matches first now.
 
 
 
