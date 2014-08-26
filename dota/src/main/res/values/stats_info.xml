@@ -4,7 +4,7 @@
         name="stats_info_string_array">
 
         <item><![CDATA[
-        The <b><u>Summary</u></b> tab displays a quick glance of a player\'s win percentage for public and ranked games.  It also contains a list of all known matches for this player.  A match with a gold highlight indicates that the player was \"Player of the Game\" for that match.
+        The <b><u>Summary</u></b> tab displays a quick glance of a player\'s win percentage for public and ranked games.  It also contains a list of all known matches for this player.  A match with a gold highlight indicates that the player was \"Player of the Game\" for that match.  The graph at the top left is the \"trend\" graph, showing the players\' success over the last 50 games.
         ]]></item>
 
         <item><![CDATA[
@@ -20,15 +20,19 @@
         ]]></item>
 
         <item><![CDATA[
+        The <b><u>All Heroes</u></b> tab displays a list of all heroes played in any Public or Ranked match.  Tap any hero for a breakdown of those specific games.
+        ]]></item>
+
+        <item><![CDATA[
+        The <b><u>Match Ups</u></b> tab shows the players\' win rate versus different heroes, sorted by success.  Tap a hero to view specific games.
+        ]]></item>
+
+        <item><![CDATA[
         The <b><u>Ranked</u></b> and <b><u>Public</u></b> tabs have many more statistics than the Summary tab.  Only games that lasted more than five minutes are used in any statistics calculation!
         ]]></item>
 
         <item><![CDATA[
         The <b><u>Other</u></b> tab contains statistics for all matches not used in the <b>Public</b> and <b>Ranked</b> tabs.  This includes matches that were excluded because they are less than five minutes long.
-        ]]></item>
-
-        <item><![CDATA[
-        The <b><u>All Heroes</u></b> tab displays a list of all heroes played in any Public or Ranked match.  Tap any hero for a breakdown of those specific games.
         ]]></item>
 
         <item><![CDATA[

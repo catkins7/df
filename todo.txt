@@ -1,17 +1,33 @@
 0.5.8 TODO
 ---------------------------
+-check lint
+-update libraries
+-fresh install
+-upgrade install
+
+-TESTING!!
 
 
 
 
 0.5.8 README
 ---------------------------
+-anonymous to public match issue fix?
+
+-Matchups!
+ -text all match list and stats (by hero, match up, mode, friend) charlton text, and everythign else
+
+-added player of the game %
+-updated player tab order
+-added trend graphs!
 
 
 
 
 TODO OTHER
 ---------------------------
+optimizations on statistics calculation, so it doesn't calculate everything if it doesn't need it?
+
 refresh steam user from server if cell is made and it doesn't have the info?  (similar to the match view stuff?)
  -case in match summary when a steam user fetch call fails, and the name doesn't update ever if it succeeds later.
 
@@ -24,8 +40,6 @@ Features Backlog
 
 spinner for network activity?
 
-re-order player stats tabs as suggested by joe?
-
 rework stats tab(s) to have a modes dropdown (recent, ranked, public, other?)
 
 dialog on startup, or at some point that tells the user the valve api isn't working right now?
@@ -35,8 +49,6 @@ Recent tab, showing all games from the last 3-7 days?  Last week maybe?  not div
 player RECORDS? (most kills, deaths, etc) with link to the match
 
 compare stats with a friend's side by side?
-
-matchups?  Players win rate vs different heroes on the enemy team
 
 steam friend's list?
  -https://developer.valvesoftware.com/wiki/Steam_Web_API

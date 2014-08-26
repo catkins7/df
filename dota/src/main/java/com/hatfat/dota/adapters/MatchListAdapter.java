@@ -108,7 +108,7 @@ public class MatchListAdapter extends BaseAdapter {
         }
 
         Match match = getItem(i);
-        match.getMatchDetailsIfNeeded();
+        match.getMatchDetailsIfNeededForUser(user);
         MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
 
         if (matchView == null) {

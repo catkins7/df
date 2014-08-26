@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@drawable/off_black_button_background"
+                android:padding="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/view_stats_matchup_row_icon_image_view"
+            android:padding="1dp"
+            android:background="@drawable/default_background_border"
+            android:layout_width="@dimen/hero_image_width"
+            android:layout_height="@dimen/hero_image_height"
+            tools:ignore="ContentDescription" />
+
+    <RelativeLayout
+            android:layout_toRightOf="@id/view_stats_matchup_row_icon_image_view"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        
+        <TextView
+                android:id="@+id/view_stats_matchup_row_game_count_text_view"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/off_white"
+                android:textSize="@dimen/font_size_small"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/text_view_height_small" />
+
+        <TextView
+                android:id="@+id/view_stats_matchup_row_game_count_label_text_view"
+                android:text="@string/player_statistics_matchup_matches_label_text_plural"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/medium_gray"
+                android:textSize="@dimen/font_size_small"
+                android:layout_toRightOf="@id/view_stats_matchup_row_game_count_text_view"
+                android:layout_marginLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_view_height_small" />
+
+        <TextView
+                android:id="@+id/view_stats_matchup_row_win_percent_text_view"
+                android:layout_below="@id/view_stats_matchup_row_game_count_text_view"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/off_white"
+                android:textSize="@dimen/font_size_small"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/text_view_height_small" />
+
+        <TextView
+                android:text="@string/player_statistics_win_percent_label_text"
+                android:layout_below="@id/view_stats_matchup_row_game_count_text_view"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/medium_gray"
+                android:textSize="@dimen/font_size_small"
+                android:layout_toRightOf="@id/view_stats_matchup_row_win_percent_text_view"
+                android:layout_marginLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_view_height_small" />
+
+    </RelativeLayout>
+</RelativeLayout>

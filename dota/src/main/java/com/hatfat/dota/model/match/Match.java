@@ -142,6 +142,7 @@ public class Match implements Comparable {
         Mid1v1(R.string.game_mode_1v1_mid),
 
         NoMatchDetails(R.string.game_mode_no_match_details),
+        AllModes(R.string.game_mode_all_modes),
         Unknown(R.string.game_mode_unknown);
 
         private int stringResourceId;
@@ -400,6 +401,18 @@ public class Match implements Comparable {
         }
     }
 
+    public boolean isSteamUserInMatch(SteamUser user) {
+        if (players != null) {
+            for (Player player : players) {
+                if (player.getAccountId() == user.getAccountIdLong()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public String getTimeAgoString(Resources resources) {
         long currentTime = new Date().getTime() / 1000; //current time in seconds
         long timeAgo = currentTime - startTime;
@@ -564,10 +577,8 @@ public class Match implements Comparable {
 
         if (originallyHadMatchDetails && match.hasMatchDetails) {
             //compare each player and prefer either which has the real player as opposed to an anonymous one
-
             if (players == null) {
                 shouldBroadcast = true;
-
                 players = match.players;
             }
             else {
@@ -603,6 +614,14 @@ public class Match implements Comparable {
 
     public void getMatchDetailsIfNeeded() {
         if (!hasMatchDetails) {
+            MatchFetcher.fetchMatchDetails(getMatchId());
+        }
+    }
+
+    public void getMatchDetailsIfNeededForUser(SteamUser user) {
+        boolean isUserInMatch = isSteamUserInMatch(user);
+
+        if (!hasMatchDetails || !isUserInMatch) {
             MatchFetcher.fetchMatchDetails(getMatchId());
         }
     }

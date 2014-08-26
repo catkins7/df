@@ -31,6 +31,7 @@ import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.services.MatchFetcher;
+import com.hatfat.dota.view.GraphView;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
 
@@ -58,6 +59,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
     private ListView matchesListView;
     private Button friendToggleButton;
     private Button fetchAllMatchesButton;
+    private GraphView graphView;
 
     private MatchListAdapter matchAdapter;
 
@@ -105,6 +107,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         matchesListView = (ListView) view.findViewById(R.id.fragment_dota_player_summary_matches_list_view);
         friendToggleButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_friend_button);
         fetchAllMatchesButton = (Button) view.findViewById(R.id.fragment_dota_player_summary_fetch_all_button);
+        graphView = (GraphView) view.findViewById(R.id.fragment_dota_player_summary_graph_view);
 
         friendToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,6 +324,23 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         publicMatchesTextView.setText(summaryStrings[0]);
         rankedMatchesTextView.setText(summaryStrings[1]);
         thirdRowTextView.setText(summaryStrings[2]);
+
+        //set values for the trend graph
+        LinkedList<String> matches = new LinkedList(user.getMatches());
+        List<String> graphMatches = new LinkedList();
+
+        while (graphMatches.size() < 50 && matches.size() > 0) {
+            String matchId = matches.getLast();
+            Match match = Matches.get().getMatch(matches.getLast());
+
+            if (match.shouldBeUsedInRealStatistics()) {
+                graphMatches.add(0, matchId);
+            }
+
+            matches.removeLast();
+        }
+
+        graphView.setValuesFromMatchListForUser(graphMatches, user);
     }
 
     private void updateFriendButtonBackground() {

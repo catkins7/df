@@ -22,4 +22,7 @@
     <color name="dire_red">#ff772222</color>
     <color name="dire_red_dark">#ff552222</color>
 
+    <color name="graph_red">#ffaa2222</color>
+    <color name="graph_green">#ff22aa22</color>
+
 </resources>

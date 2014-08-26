@@ -14,6 +14,7 @@ import com.hatfat.dota.activities.PlayerMatchListActivity;
 import com.hatfat.dota.model.game.DotaStatistics;
 import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteHeroRowView;
 import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteItemRowView;
+import com.hatfat.dota.view.DotaPlayerStatisticsMatchUpRowView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -27,9 +28,10 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         ROW_LOADING(2),
         ROW_TEXT(3),
         ROW_SPACER(4),
+        ROW_MATCH_UP(5),
 
-        ROW_NO_REUSE(5),
-        ROW_NUMBER_OF_TYPES(6);
+        ROW_NO_REUSE(6),
+        ROW_NUMBER_OF_TYPES(7);
 
         private int type;
 
@@ -53,7 +55,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         SECTION_MODE_INFO,
         SECTION_MOST_SUCCESS,
         SECTION_LEAST_SUCCESS,
-        SECTION_ALL_HEROES
+        SECTION_ALL_HEROES,
+        SECTION_MATCH_UPS
     }
 
     private class StatsSection {
@@ -79,7 +82,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 case SECTION_NO_DATA:
                     return 1;
                 case SECTION_MATCHES_SUMMARY:
-                    return 12;
+                    return 13;
                 case SECTION_ALL_HEROES:
                     if (stats.getAllHeroes().size() <= 0) {
                         return 0;
@@ -126,6 +129,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                     return 1;
                 case SECTION_CSSCORE:
                     return 2;
+                case SECTION_MATCH_UPS:
+                    return stats.getMatchUps().size() + 1;
                 default:
                     return 0;
             }
@@ -168,6 +173,14 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             }
             else if (this.type == StatsSectionType.SECTION_CSSCORE) {
                 return StatsSectionRowType.ROW_TEXT;
+            }
+            else if (this.type == StatsSectionType.SECTION_MATCH_UPS) {
+                if (position == 0) {
+                    return StatsSectionRowType.ROW_TEXT;
+                }
+                else {
+                    return StatsSectionRowType.ROW_MATCH_UP;
+                }
             }
 
             //default I suppose
@@ -236,6 +249,7 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         switch (section.type) {
             case SECTION_MODE_INFO:
             case SECTION_ALL_HEROES:
+            case SECTION_MATCH_UPS:
             case SECTION_FAVORITE_HEROES:
             case SECTION_LEAST_SUCCESS:
             case SECTION_MOST_SUCCESS:
@@ -330,7 +344,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     ArrayList<String> matchIds = new ArrayList(stats.getMatchIds());
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
-                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), stats.hero.getLocalizedName(), stats.hero.getFullVerticalPortraitUrl(),matchIds);
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), stats.hero.getLocalizedName(), stats.hero.getFullVerticalPortraitUrl(), matchIds,
+                            PlayerMatchListActivity.MatchListTextMode.NORMAL_MODE);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -413,7 +428,8 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     ArrayList<String> matchIds = new ArrayList(modeStats.getMatchIds());
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
-                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, null, matchIds);
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, null, matchIds,
+                            PlayerMatchListActivity.MatchListTextMode.ALTERNATE_MODE);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -504,6 +520,10 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 titleTextView.setText(R.string.player_statistics_avg_duration_title_text);
                 subtitleTextView.setText(section.stats.getAvgDurationString(resources));
             }
+            else if (position == 12) {
+                titleTextView.setText(R.string.player_statistics_potg_percent_title_text);
+                subtitleTextView.setText(section.stats.getPotGPercentString(resources));
+            }
 
             convertView.setBackgroundResource(R.drawable.unselectable_background);
 
@@ -553,6 +573,51 @@ public class DotaStatisticsAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public View getViewForMatchUpSection(int position, View convertView, ViewGroup parent, List<DotaStatistics.MatchUpStats> matchUpStats, String titleText) {
+        if (position == 0) {
+            //title row
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.view_stats_text_row, parent, false);
+            }
+
+            prepareTextRow(convertView);
+
+            TextView titleTextView = (TextView) convertView.findViewById(R.id.view_stats_text_row_title_text_view);
+            titleTextView.setText(titleText);
+
+            return convertView;
+        }
+        else {
+            //match up hero row
+            int matchUpPosition = position - 1;
+            final DotaStatistics.MatchUpStats stats = matchUpStats.get(matchUpPosition);
+
+            DotaPlayerStatisticsMatchUpRowView statsView = (DotaPlayerStatisticsMatchUpRowView) convertView;
+
+            if (statsView == null) {
+                statsView = new DotaPlayerStatisticsMatchUpRowView(parent.getContext());
+            }
+
+            statsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<String> matchIds = new ArrayList(stats.getMatchIds());
+                    String label = String.format(resources.getString(R.string.player_statistics_match_ups_match_list_vs_text), stats.hero.getLocalizedName());
+                    Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
+                            v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, stats.hero.getFullVerticalPortraitUrl(), matchIds,
+                            PlayerMatchListActivity.MatchListTextMode.MATCH_UP_MODE);
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+            statsView.setMatchUpStats(stats);
+
+            return statsView;
+        }
     }
 
     //view must be view_stats_text_row
@@ -608,6 +673,9 @@ public class DotaStatisticsAdapter extends BaseAdapter {
 
             case SECTION_LEAST_SUCCESS:
                 return getViewForHeroSection(sectionRow, convertView, parent, section.stats.getLeastSuccessfulHeroes(), resources.getString(R.string.player_statistics_least_success_heroes_title_text));
+
+            case SECTION_MATCH_UPS:
+                return getViewForMatchUpSection(sectionRow, convertView, parent, section.stats.getMatchUps(), resources.getString(R.string.player_statistics_match_ups_title_text));
 
             default:
                 textView = new TextView(parent.getContext());
@@ -678,6 +746,9 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 break;
             case ALL_HEROES:
                 sections.add(new StatsSection(StatsSectionType.SECTION_ALL_HEROES, dotaStatistics));
+                break;
+            case MATCH_UPS:
+                sections.add(new StatsSection(StatsSectionType.SECTION_MATCH_UPS, dotaStatistics));
                 break;
             case RANKED_STATS:
                 sections.add(

@@ -22,50 +22,60 @@ import android.widget.TextView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.MatchActivity;
+import com.hatfat.dota.activities.PlayerMatchListActivity;
 import com.hatfat.dota.adapters.MatchListAdapter;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
+import com.hatfat.dota.view.GraphView;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PlayerMatchListFragment extends CharltonFragment {
 
     private static String PLAYER_MATCH_LIST_USER_ID_KEY = "PLAYER_MATCH_LIST_USER_ID_KEY";
-    private static String PLAYER_MATCH_LIST_LABEL_KEY = "PLAYER_MATCH_LIST_LABEL_KEY";
-    private static String PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY = "PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY";
-    private static String PLAYER_MATCH_LIST_MATCHES_KEY = "PLAYER_MATCH_LIST_MATCHES_KEY";
+    private static String PLAYER_MATCH_LIST_LABEL_KEY   = "PLAYER_MATCH_LIST_LABEL_KEY";
+    private static String PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY
+                                                          = "PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY";
+    private static String PLAYER_MATCH_LIST_MATCHES_KEY   = "PLAYER_MATCH_LIST_MATCHES_KEY";
+    private static String PLAYER_MATCH_LIST_TEXT_MODE_KEY = "PLAYER_MATCH_LIST_TEXT_MODE_KEY";
 
     private BroadcastReceiver receiver;
 
-    private SteamUser user;
-    private List<String> matchIds;
-    private String matchesLabel;
-    private String secondaryImageUrl;
+    private SteamUser                                 user;
+    private List<String>                              matchIds;
+    private String                                    matchesLabel;
+    private String                                    secondaryImageUrl;
+    private PlayerMatchListActivity.MatchListTextMode textMode;
 
-    private ListView matchListView;
+    private ListView         matchListView;
     private MatchListAdapter matchAdapter;
 
-    private TextView userNameTextView;
-    private TextView labelTextView;
-    private TextView winPercentTextView;
-    private TextView gameCountTextView;
+    private TextView  userNameTextView;
+    private TextView  labelTextView;
+    private TextView  winPercentTextView;
+    private TextView  gameCountTextView;
     private ImageView leftImageView;
     private ImageView rightImageView;
+    private GraphView graphView;
 
     private Target rightTarget;
 
-    public static Bundle newBundleForUserAndMatches(String userId, String label, String secondaryImageUrl, ArrayList<String> matchIds) {
+    public static Bundle newBundleForUserAndMatches(String userId, String label,
+            String secondaryImageUrl, ArrayList<String> matchIds,
+            PlayerMatchListActivity.MatchListTextMode textMode) {
         Bundle args = new Bundle();
         args.putString(PLAYER_MATCH_LIST_USER_ID_KEY, userId);
         args.putString(PLAYER_MATCH_LIST_LABEL_KEY, label);
         args.putString(PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY, secondaryImageUrl);
         args.putStringArrayList(PLAYER_MATCH_LIST_MATCHES_KEY, matchIds);
+        args.putInt(PLAYER_MATCH_LIST_TEXT_MODE_KEY, textMode.mode);
         return args;
     }
 
@@ -79,6 +89,8 @@ public class PlayerMatchListFragment extends CharltonFragment {
         matchIds = getArguments().getStringArrayList(PLAYER_MATCH_LIST_MATCHES_KEY);
         matchesLabel = getArguments().getString(PLAYER_MATCH_LIST_LABEL_KEY);
         secondaryImageUrl = getArguments().getString(PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY);
+        textMode = PlayerMatchListActivity.MatchListTextMode
+                .fromInt(getArguments().getInt(PLAYER_MATCH_LIST_TEXT_MODE_KEY));
 
         signalCharltonActivityToUpdateTab();
 
@@ -150,6 +162,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
         gameCountTextView = (TextView) view.findViewById(R.id.fragment_player_match_list_third_row_text_view);
         leftImageView = (ImageView) view.findViewById(R.id.fragment_player_match_list_left_image_view);
         rightImageView = (ImageView) view.findViewById(R.id.fragment_player_match_list_right_image_view);
+        graphView = (GraphView) view.findViewById(R.id.fragment_player_match_list_graph_view);
 
         matchAdapter = new MatchListAdapter(user);
         matchAdapter.setMatches(matchIds);
@@ -244,6 +257,11 @@ public class PlayerMatchListFragment extends CharltonFragment {
                     getResources().getString(R.string.player_match_list_match_count_text_singular),
                     matchIds.size()));
         }
+
+        //set values for the trend graph
+        int numToGraph = Math.min(50, matchIds.size());
+        List<String>  graphMatches = matchIds.subList(matchIds.size() - numToGraph, matchIds.size());
+        graphView.setValuesFromMatchListForUser(graphMatches, user);
     }
 
     private float getWinPercentage() {
@@ -278,13 +296,17 @@ public class PlayerMatchListFragment extends CharltonFragment {
     @Override
     public String getCharltonMessageText(Context context) {
         if (user != null) {
-            if (secondaryImageUrl != null) {
-                return String.format(context.getResources().getString(R.string.player_match_list_charlton_text),
-                        user.getDisplayName(), matchesLabel);
-            }
-            else {
-                return String.format(context.getResources().getString(R.string.player_match_list_charlton_text_alternate),
-                        user.getDisplayName(), matchesLabel);
+            switch (textMode) {
+                case ALTERNATE_MODE:
+                    return String.format(context.getResources().getString(R.string.player_match_list_charlton_text_alternate),
+                            user.getDisplayName(), matchesLabel);
+                case MATCH_UP_MODE:
+                    return String.format(context.getResources().getString(R.string.player_match_list_charlton_text_match_up),
+                            user.getDisplayName(), matchesLabel);
+                case NORMAL_MODE:
+                default:
+                    return String.format(context.getResources().getString(R.string.player_match_list_charlton_text),
+                            user.getDisplayName(), matchesLabel);
             }
         }
         else {

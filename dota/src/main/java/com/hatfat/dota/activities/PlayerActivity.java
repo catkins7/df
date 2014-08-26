@@ -59,6 +59,8 @@ public class PlayerActivity extends CharltonActivity {
                 DotaStatistics.DotaStatisticsMode.OTHER_STATS);
         Bundle allHeroesBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
                 DotaStatistics.DotaStatisticsMode.ALL_HEROES);
+        Bundle matchUpsBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
+                DotaStatistics.DotaStatisticsMode.MATCH_UPS);
 
         String summaryTitle = getResources().getString(R.string.tab_player_summary_title);
         String favoritesTitle = getResources().getString(R.string.tab_player_favorites_title);
@@ -68,6 +70,7 @@ public class PlayerActivity extends CharltonActivity {
         String publicTitle = getResources().getString(R.string.tab_player_public_stats_title);
         String otherTitle = getResources().getString(R.string.tab_player_other_stats_title);
         String allHeroesTitle = getResources().getString(R.string.tab_player_all_heroes_stats_title);
+        String matchUpsTitle = getResources().getString(R.string.tab_player_match_ups_title);
 
         CharltonTab<DotaPlayerSummaryFragment> playerSummaryTab = new CharltonTab(this, summaryTitle, DotaPlayerSummaryFragment.class, playerSummaryBundle);
         CharltonTab<DotaPlayerStatisticsFragment> favoritesTab = new CharltonTab(this, favoritesTitle, DotaPlayerStatisticsFragment.class, favoritesBundle);
@@ -77,6 +80,7 @@ public class PlayerActivity extends CharltonActivity {
         CharltonTab<DotaPlayerStatisticsFragment> publicTab = new CharltonTab(this, publicTitle, DotaPlayerStatisticsFragment.class, publicBundle);
         CharltonTab<DotaPlayerStatisticsFragment> otherTab = new CharltonTab(this, otherTitle, DotaPlayerStatisticsFragment.class, otherBundle);
         CharltonTab<DotaPlayerStatisticsFragment> allHeroesTab = new CharltonTab(this, allHeroesTitle, DotaPlayerStatisticsFragment.class, allHeroesBundle);
+        CharltonTab<DotaPlayerStatisticsFragment> matchUpsTab = new CharltonTab(this, matchUpsTitle, DotaPlayerStatisticsFragment.class, matchUpsBundle);
 
         tabs.add(playerSummaryTab);
 
@@ -85,10 +89,11 @@ public class PlayerActivity extends CharltonActivity {
             tabs.add(favoritesTab);
             tabs.add(successTab);
             tabs.add(friendsTab);
+            tabs.add(allHeroesTab);
+            tabs.add(matchUpsTab);
             tabs.add(rankedTab);
             tabs.add(publicTab);
             tabs.add(otherTab);
-            tabs.add(allHeroesTab);
         }
 
         return tabs;

@@ -125,7 +125,8 @@ public class PlayerFriendsFragment extends CharltonFragment {
                 SteamUser otherUser = SteamUsers.get().getByAccountId(matches.getUserTwoAccountId());
                 String label = otherUser.getDisplayName();
 
-                Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(getActivity().getApplicationContext(), steamId, label, otherUser.getAvatarFullUrl(),new ArrayList(matches.getCommonMatches()));
+                Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(getActivity().getApplicationContext(), steamId, label, otherUser.getAvatarFullUrl(), new ArrayList(matches.getCommonMatches()),
+                        PlayerMatchListActivity.MatchListTextMode.NORMAL_MODE);
                 startActivity(intent);
             }
         });

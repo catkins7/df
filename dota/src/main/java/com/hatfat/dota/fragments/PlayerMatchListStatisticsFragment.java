@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.hatfat.dota.R;
+import com.hatfat.dota.activities.PlayerMatchListActivity;
 import com.hatfat.dota.adapters.DotaStatisticsAdapter;
 import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.game.DotaStatistics;
@@ -25,25 +26,30 @@ import java.util.LinkedList;
 
 public class PlayerMatchListStatisticsFragment extends CharltonFragment {
 
-    private static final String PLAYER_MATCH_LIST_STATS_USER_ID_KEY = "PLAYER_MATCH_LIST_STATS_USER_ID_KEY";
-    private static final String PLAYER_MATCH_LIST_STATS_LABEL_KEY = "PLAYER_MATCH_LIST_STATS_LABEL_KEY";
-    private static final String PLAYER_MATCH_LIST_STATS_MATCHES_KEY = "PLAYER_MATCH_LIST_STATS_MATCHES_KEY";
-    private static final String PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY = "PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY";
+    private static final String PLAYER_MATCH_LIST_STATS_USER_ID_KEY
+                                                                  = "PLAYER_MATCH_LIST_STATS_USER_ID_KEY";
+    private static final String PLAYER_MATCH_LIST_STATS_LABEL_KEY
+                                                                    = "PLAYER_MATCH_LIST_STATS_LABEL_KEY";
+    private static final String PLAYER_MATCH_LIST_STATS_MATCHES_KEY
+                                                                      = "PLAYER_MATCH_LIST_STATS_MATCHES_KEY";
+    private static final String PLAYER_MATCH_LIST_STATS_TEXT_MODE_KEY
+                                                                      = "PLAYER_MATCH_LIST_STATS_TEXT_MODE_KEY";
 
-    private String label;
-    private SteamUser user;
-    private ArrayList<String> matchIds;
-    private boolean alternateText;
+    private String                                    label;
+    private SteamUser                                 user;
+    private ArrayList<String>                         matchIds;
+    private PlayerMatchListActivity.MatchListTextMode mode;
 
-    private boolean needsCalculation;
+    private boolean               needsCalculation;
     private DotaStatisticsAdapter adapter;
 
-    public static Bundle newBundleForUserAndMatches(String userId, String label, ArrayList<String> matchIds, boolean alternateText) {
+    public static Bundle newBundleForUserAndMatches(String userId, String label,
+            ArrayList<String> matchIds, PlayerMatchListActivity.MatchListTextMode textMode) {
         Bundle args = new Bundle();
         args.putString(PLAYER_MATCH_LIST_STATS_USER_ID_KEY, userId);
         args.putString(PLAYER_MATCH_LIST_STATS_LABEL_KEY, label);
         args.putStringArrayList(PLAYER_MATCH_LIST_STATS_MATCHES_KEY, matchIds);
-        args.putBoolean(PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY, alternateText);
+        args.putInt(PLAYER_MATCH_LIST_STATS_TEXT_MODE_KEY, textMode.mode);
         return args;
     }
 
@@ -62,7 +68,8 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
 
         label = getArguments().getString(PLAYER_MATCH_LIST_STATS_LABEL_KEY);
         matchIds = getArguments().getStringArrayList(PLAYER_MATCH_LIST_STATS_MATCHES_KEY);
-        alternateText = getArguments().getBoolean(PLAYER_MATCH_LIST_STATS_ALTERNATE_TEXT_KEY);
+        mode = PlayerMatchListActivity.MatchListTextMode
+                .fromInt(getArguments().getInt(PLAYER_MATCH_LIST_STATS_TEXT_MODE_KEY));
 
         signalCharltonActivityToUpdateTab();
     }
@@ -157,15 +164,20 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
     @Override
     public String getCharltonMessageText(Context context) {
         if (user != null) {
-            if (alternateText) {
-                return String.format(context.getResources()
-                                .getString(R.string.player_match_list_stats_tab_charlton_text_alternate),
-                        user.getDisplayName(), label);
-            }
-            else {
-                return String.format(context.getResources()
-                                .getString(R.string.player_match_list_stats_tab_charlton_text),
-                        user.getDisplayName(), label);
+            switch (mode) {
+                case ALTERNATE_MODE:
+                    return String.format(context.getResources()
+                                    .getString(R.string.player_match_list_stats_tab_charlton_text_alternate),
+                            user.getDisplayName(), label);
+                case MATCH_UP_MODE:
+                    return String.format(context.getResources()
+                                    .getString(R.string.player_match_list_stats_tab_charlton_text_match_up),
+                            user.getDisplayName(), label);
+                case NORMAL_MODE:
+                default:
+                    return String.format(context.getResources()
+                                    .getString(R.string.player_match_list_stats_tab_charlton_text),
+                            user.getDisplayName(), label);
             }
         }
         else {

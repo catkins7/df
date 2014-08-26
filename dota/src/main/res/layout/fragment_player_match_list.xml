@@ -12,23 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/fragment_player_match_list_right_image_view"
+        <com.hatfat.dota.view.GraphView
+            android:id="@+id/fragment_player_match_list_graph_view"
             android:padding="1dp"
             android:background="@drawable/default_background_border"
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@+id/fragment_player_match_list_left_image_view"
-            android:layout_marginTop="@dimen/default_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            tools:ignore="ContentDescription" />
+            android:layout_alignParentTop="true"
+            android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
+            android:layout_height="@dimen/text_view_height_large"/>
 
         <TextView
             android:id="@+id/fragment_player_match_list_name_text_view"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/fragment_player_match_list_right_image_view"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/fragment_player_match_list_graph_view"
+            android:layout_marginLeft="@dimen/default_padding"
             android:textSize="@dimen/font_size_large"
             android:textColor="@color/off_white"
             android:gravity="left|center_vertical"
@@ -37,6 +34,20 @@
             android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_view_height_large"/>
+
+        <ImageView
+            android:id="@+id/fragment_player_match_list_right_image_view"
+            android:padding="1dp"
+            android:background="@drawable/default_background_border"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/fragment_player_match_list_name_text_view"
+            android:layout_alignBottom="@+id/fragment_player_match_list_left_image_view"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
+            android:layout_height="@dimen/dota_player_summary_fragment_image_view_size"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/fragment_player_match_list_left_image_view"
@@ -53,6 +64,7 @@
             android:id="@+id/fragment_player_match_list_label_text_view"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
             android:layout_below="@id/fragment_player_match_list_name_text_view"
             android:layout_toRightOf="@id/fragment_player_match_list_left_image_view"
             android:layout_toLeftOf="@id/fragment_player_match_list_right_image_view"
@@ -68,6 +80,7 @@
         <TextView
             android:id="@+id/fragment_player_match_list_matches_text_view"
             android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
             android:layout_below="@id/fragment_player_match_list_label_text_view"
             android:layout_toRightOf="@id/fragment_player_match_list_left_image_view"
             android:layout_toLeftOf="@id/fragment_player_match_list_right_image_view"
@@ -83,6 +96,7 @@
         <TextView
             android:id="@+id/fragment_player_match_list_third_row_text_view"
             android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
             android:layout_below="@id/fragment_player_match_list_matches_text_view"
             android:layout_toRightOf="@id/fragment_player_match_list_left_image_view"
             android:layout_toLeftOf="@id/fragment_player_match_list_right_image_view"

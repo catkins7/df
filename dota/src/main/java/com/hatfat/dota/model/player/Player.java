@@ -115,7 +115,7 @@ public class Player {
         return accountId;
     }
     public boolean isAnonymous() {
-        return accountId == Long.valueOf(SteamUsers.ANONYMOUS_ID);
+        return accountId == Long.valueOf(SteamUser.getAccountIdFromSteamId(SteamUsers.ANONYMOUS_ID));
     }
 
     public String getHeroIdString() {

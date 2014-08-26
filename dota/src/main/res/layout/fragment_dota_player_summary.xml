@@ -28,11 +28,21 @@
             android:layout_width="@dimen/dota_player_summary_fragment_right_button_size"
             android:layout_height="@dimen/dota_player_summary_fragment_right_button_size"/>
 
+        <com.hatfat.dota.view.GraphView
+            android:id="@+id/fragment_dota_player_summary_graph_view"
+            android:padding="1dp"
+            android:background="@drawable/default_background_border"
+            android:layout_alignParentTop="true"
+            android:layout_width="@dimen/dota_player_summary_fragment_image_view_size"
+            android:layout_height="@dimen/text_view_height_large"/>
+
         <TextView
             android:id="@+id/fragment_dota_player_summary_persona_text_view"
             android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/fragment_dota_player_summary_graph_view"
             android:layout_toLeftOf="@id/fragment_dota_player_summary_friend_button"
             android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginLeft="@dimen/default_padding"
             android:textSize="@dimen/font_size_large"
             android:textColor="@color/off_white"
             android:gravity="left|center_vertical"

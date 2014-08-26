@@ -47,10 +47,10 @@ public class DotaPlayerStatisticsFavoriteHeroRowView extends RelativeLayout {
         winPercentTextView.setText(heroStats.getWinPercentString(getResources()));
 
         if (heroStats.isMatchCountGreaterThanOne()) {
-            gameCountLabelTextView.setText(R.string.player_statistics_favorite_hero_matches_label_text_plural);
+            gameCountLabelTextView.setText(R.string.player_statistics_matches_label_text_plural);
         }
         else {
-            gameCountLabelTextView.setText(R.string.player_statistics_favorite_hero_matches_label_text_single);
+            gameCountLabelTextView.setText(R.string.player_statistics_matches_label_text_single);
         }
 
         for (DotaStatistics.ItemStats itemStats : heroStats.favoriteHeroItems) {

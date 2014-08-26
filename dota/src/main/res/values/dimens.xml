@@ -52,4 +52,7 @@
     <dimen name="victory_text_width">60dp</dimen>
     <dimen name="match_top_text_left_right_padding">4dp</dimen>
 
+    <dimen name="graph_line_width">2dp</dimen>
+
+
 </resources>

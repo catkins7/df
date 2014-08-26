@@ -112,10 +112,6 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
         ListView listView = (ListView) view
                 .findViewById(R.id.fragment_dota_player_statistics_list_view);
         listView.setAdapter(adapter);
-
-        if (!needsBackground()) {
-            listView.setBackgroundColor(0);
-        }
     }
 
     private void fetchStatistics() {
@@ -135,6 +131,7 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                             case ALL_HEROES:
                             case ALL_FAVORITES:
                             case ALL_SUCCESS_STATS:
+                            case MATCH_UPS:
                                 statsMatches.add(match);
                                 break;
                             case RANKED_STATS:
@@ -221,23 +218,6 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
         TextDialogHelper.showStatsDialog(getActivity());
     }
 
-    private boolean needsBackground() {
-        if (statsMode != null) {
-            switch (statsMode) {
-                case OTHER_STATS:
-                case PUBLIC_STATS:
-                case RANKED_STATS:
-                case ALL_FAVORITES:
-                    return true;
-                case ALL_SUCCESS_STATS:
-                case ALL_HEROES:
-                    return false;
-            }
-        }
-
-        return true;
-    }
-
     @Override
     public String getCharltonMessageText(Context context) {
         Resources resources = context.getResources();
@@ -262,6 +242,9 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                 case ALL_HEROES:
                     return String.format(resources
                             .getString(R.string.player_statistics_charlton_text_all_heroes_stats), user.getDisplayName());
+                case MATCH_UPS:
+                    return String.format(resources.getString(R.string.player_statistics_charlton_text_match_up_stats), user.getDisplayName());
+
             }
         }
 

@@ -273,23 +273,28 @@ public class FetchMatchesDialogHelper {
             protected Void doInBackground(Void... params) {
                 Match match = Matches.get().getMatch(matchId);
 
-                if (match != null && !match.hasMatchDetails()) {
-                    charltonService.getMatchDetails(match.getMatchId(), new Callback<DotaResult<Match>>() {
-                        @Override
-                        public void success(DotaResult<Match> result, Response response) {
-                            Match match = result.result;
-                            match.setHasMatchDetails(true);
+                //if the user isn't in the match, we need to download no matter what
+                //(was likely downloaded previously when user was anonymous)
+                boolean isUserInMatch = match.isSteamUserInMatch(user);
 
-                            Matches.get().addMatch(match);
+                if (match != null && (!match.hasMatchDetails() || !isUserInMatch)) {
+                    charltonService.getMatchDetails(match.getMatchId(),
+                            new Callback<DotaResult<Match>>() {
+                                @Override
+                                public void success(DotaResult<Match> result, Response response) {
+                                    Match match = result.result;
+                                    match.setHasMatchDetails(true);
 
-                            finishedFetchingMatchId(matchId);
-                        }
+                                    Matches.get().addMatch(match);
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            finishedFetchingMatchIdWithError(matchId);
-                        }
-                    });
+                                    finishedFetchingMatchId(matchId);
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    finishedFetchingMatchIdWithError(matchId);
+                                }
+                            });
                 }
                 else {
                     finishedFetchingMatchId(matchId);
