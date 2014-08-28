@@ -27,6 +27,9 @@ public class GraphView extends View {
 
     private Paint paint;
 
+    private Rect bounds;
+    List<PointF> points;
+
     public GraphView(Context context) {
         super(context);
         init(context);
@@ -44,6 +47,9 @@ public class GraphView extends View {
 
     private void init(Context context) {
         this.values = new LinkedList();
+
+        bounds = new Rect();
+        points = new LinkedList();
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
@@ -85,7 +91,7 @@ public class GraphView extends View {
     @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Rect bounds = canvas.getClipBounds();
+        canvas.getClipBounds(bounds);
 
         //calculate min/max values that the graph will have
         int value = 0;
@@ -129,7 +135,7 @@ public class GraphView extends View {
         float xPos = xStepSize;
         value = 0;
 
-        List<PointF> points = new LinkedList();
+        points.clear();
 
         for (int v : values) {
             value += v;

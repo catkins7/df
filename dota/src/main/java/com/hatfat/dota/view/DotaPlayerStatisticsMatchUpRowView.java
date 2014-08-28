@@ -9,14 +9,7 @@ import android.widget.TextView;
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.game.DotaStatistics;
-import com.hatfat.dota.model.match.Match;
-import com.hatfat.dota.model.match.Matches;
-import com.hatfat.dota.model.player.Player;
-import com.hatfat.dota.model.user.SteamUser;
 import com.squareup.picasso.Picasso;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by scottrick on 8/20/14.

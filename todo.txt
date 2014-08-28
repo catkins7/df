@@ -1,25 +1,18 @@
 0.5.8 TODO
 ---------------------------
--check lint
--update libraries
--fresh install
--upgrade install
-
 -TESTING!!
+-Tag and release
 
 
 
 
 0.5.8 README
 ---------------------------
--anonymous to public match issue fix?
-
--Matchups!
- -text all match list and stats (by hero, match up, mode, friend) charlton text, and everythign else
-
--added player of the game %
--updated player tab order
--added trend graphs!
+-Added Match Ups tab to the player summary screen.
+-Added trend graphs to show a player's current trend (win/loss) history.
+-Added Player of the Game percentage to the statistics tabs.
+-Fixed a problem when a player changes their match history to public.
+-Other small improvements and fixes.
 
 
 

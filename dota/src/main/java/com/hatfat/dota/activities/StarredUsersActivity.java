@@ -18,11 +18,11 @@ public class StarredUsersActivity extends CharltonActivity {
 
         String starredTitle = getResources().getString(R.string.tab_starred_players_title);
         String addPlayerTitle = getResources().getString(R.string.tab_add_player_title);
-        String leaguesTitle = getResources().getString(R.string.tab_live_leagues_title);
+//        String leaguesTitle = getResources().getString(R.string.tab_live_leagues_title);
 
         CharltonTab<StarredPlayerListFragment> starredTab = new CharltonTab(this, starredTitle, StarredPlayerListFragment.class, null);
         CharltonTab<AddNewPlayerFragment> newPlayerTab = new CharltonTab(this, addPlayerTitle, AddNewPlayerFragment.class, null);
-        CharltonTab<LiveLeaguesFragment> leaguesTab = new CharltonTab(this, leaguesTitle, LiveLeaguesFragment.class, null);
+//        CharltonTab<LiveLeaguesFragment> leaguesTab = new CharltonTab(this, leaguesTitle, LiveLeaguesFragment.class, null);
 
         tabs.add(starredTab);
         tabs.add(newPlayerTab);

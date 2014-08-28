@@ -304,12 +304,14 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
             publicMatchesTextView.setVisibility(View.VISIBLE);
             rankedMatchesTextView.setVisibility(View.VISIBLE);
             thirdRowTextView.setVisibility(View.VISIBLE);
+            graphView.setVisibility(View.VISIBLE);
         }
         else {
             fetchAllMatchesButton.setVisibility(View.GONE);
             publicMatchesTextView.setVisibility(View.GONE);
             rankedMatchesTextView.setVisibility(View.GONE);
             thirdRowTextView.setVisibility(View.GONE);
+            graphView.setVisibility(View.GONE);
         }
 
         updateFriendButtonBackground();
