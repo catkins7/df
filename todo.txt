@@ -1,18 +1,11 @@
-0.5.8 TODO
+0.5.9 TODO
 ---------------------------
--TESTING!!
--Tag and release
 
 
 
 
-0.5.8 README
+0.5.9 README
 ---------------------------
--Added Match Ups tab to the player summary screen.
--Added trend graphs to show a player's current trend (win/loss) history.
--Added Player of the Game percentage to the statistics tabs.
--Fixed a problem when a player changes their match history to public.
--Other small improvements and fixes.
 
 
 
