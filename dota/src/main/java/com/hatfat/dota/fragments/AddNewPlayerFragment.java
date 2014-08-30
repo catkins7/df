@@ -172,8 +172,12 @@ public class AddNewPlayerFragment extends CharltonFragment {
                 }
             }
 
-            Intent resultsIntent = SearchResultsActivity.intentForResultsWithMessage(getActivity().getApplicationContext(), userIds, getSearchString());
-            startActivity(resultsIntent);
+            if (getActivity() != null) {
+                Intent resultsIntent = SearchResultsActivity
+                        .intentForResultsWithMessage(getActivity().getApplicationContext(), userIds,
+                                getSearchString());
+                startActivity(resultsIntent);
+            }
         }
     }
 
