@@ -2,12 +2,15 @@
 ---------------------------
 -Joe's account, vs elder titan, date is wrong
    --> Match id 230456632
+   --> Looks like it was data issue from old old matches saved in previous formats.  Fixed now, so probalby not worth fixing.
 
 -slow loading on joes phone?  Startup mostly.
 
 -joes crash
 
+427
 
+16312
 
 
 
