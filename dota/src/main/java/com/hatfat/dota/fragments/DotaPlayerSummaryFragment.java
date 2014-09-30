@@ -35,6 +35,7 @@ import com.hatfat.dota.view.GraphView;
 import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -329,17 +330,13 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
         //set values for the trend graph
         LinkedList<String> matches = new LinkedList(user.getMatches());
+        Collections.sort(matches, Match.getMatchIdComparator());
+
         List<String> graphMatches = new LinkedList();
 
-        while (graphMatches.size() < 50 && matches.size() > 0) {
-            String matchId = matches.getLast();
-            Match match = Matches.get().getMatch(matches.getLast());
-
-            if (match.shouldBeUsedInRealStatistics()) {
-                graphMatches.add(0, matchId);
-            }
-
-            matches.removeLast();
+        while (graphMatches.size() < GraphView.MAX_NUMBER_OF_MATCHES_IN_GRAPH && matches.size() > 0) {
+            String matchId = matches.removeFirst();
+            graphMatches.add(0, matchId);
         }
 
         graphView.setValuesFromMatchListForUser(graphMatches, user);

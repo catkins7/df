@@ -140,7 +140,7 @@ public class Match implements Comparable {
         Event(R.string.game_mode_event),
         AllRandomDeathMatch(R.string.game_mode_ardm),
         Mid1v1(R.string.game_mode_1v1_mid),
-
+        RankedAllPick(R.string.game_mode_ranked_all_pick),
         NoMatchDetails(R.string.game_mode_no_match_details),
         AllModes(R.string.game_mode_all_modes),
         Unknown(R.string.game_mode_unknown);
@@ -197,6 +197,8 @@ public class Match implements Comparable {
                     return AllRandomDeathMatch;
                 case 21:
                     return Mid1v1;
+                case 22:
+                    return RankedAllPick;
                 default:
                     return Unknown;
             }
@@ -334,6 +336,7 @@ public class Match implements Comparable {
             case LimitedHeroes:
             case CaptainsDraft:
             case BalancedDraft:
+            case RankedAllPick:
                 //only use games that are at least 5 minutes long
                 return duration >= 5 * 60;
 

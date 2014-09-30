@@ -28,6 +28,7 @@
 
     <string name="tab_loading_title">Loading</string>
     <string name="tab_match_summary_title">Summary</string>
+    <string name="tab_match_raw_details_title">Details</string>
     <string name="tab_player_summary_title">Summary</string>
     <string name="tab_player_favorites_title">Favorites</string>
     <string name="tab_player_success_title">Success</string>
@@ -80,6 +81,7 @@
     <string name="game_mode_event">Event</string>
     <string name="game_mode_ardm">All Random DM</string>
     <string name="game_mode_1v1_mid">1v1 Mid</string>
+    <string name="game_mode_ranked_all_pick">Ranked All Pick</string>
     <string name="game_mode_no_match_details"/>
     <string name="game_mode_all_modes">All Modes</string>
     <string name="game_mode_unknown">Unknown Mode</string>
@@ -98,6 +100,8 @@
     <string name="match_summary_mode_label">Game Mode</string>
     <string name="match_summary_time_ago_label">Time Ago</string>
     <string name="match_summary_no_player_of_the_game">None</string>
+
+    <string name="match_raw_details_charlton_text">These are the raw details for match %1$s.</string>
 
     <string name="match_result_unknown"/>
     <string name="match_result_radiant_victory">Radiant Victory</string>

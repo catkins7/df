@@ -34,6 +34,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PlayerMatchListFragment extends CharltonFragment {
@@ -258,8 +260,16 @@ public class PlayerMatchListFragment extends CharltonFragment {
         }
 
         //set values for the trend graph
-        int numToGraph = Math.min(50, matchIds.size());
-        List<String>  graphMatches = matchIds.subList(matchIds.size() - numToGraph, matchIds.size());
+        LinkedList<String> matches = new LinkedList(matchIds);
+        Collections.sort(matches, Match.getMatchIdComparator());
+
+        List<String> graphMatches = new LinkedList();
+
+        while (graphMatches.size() < GraphView.MAX_NUMBER_OF_MATCHES_IN_GRAPH && matches.size() > 0) {
+            String matchId = matches.removeFirst();
+            graphMatches.add(0, matchId);
+        }
+
         graphView.setValuesFromMatchListForUser(graphMatches, user);
     }
 

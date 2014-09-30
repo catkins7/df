@@ -1,16 +1,5 @@
 0.5.9 TODO
 ---------------------------
--Joe's account, vs elder titan, date is wrong
-   --> Match id 230456632
-   --> Looks like it was data issue from old old matches saved in previous formats.  Fixed now, so probalby not worth fixing.
-
--slow loading on joes phone?  Startup mostly.
-
--joes crash
-
-427
-
-16312
 
 
 
@@ -18,6 +7,9 @@
 0.5.9 README
 ---------------------------
 -Fixed a crash when backing out of player search.
+-Fixed an issue with the trend graph sometimes being incorrect.
+-update items.txt for new item
+-Added Ranked All Pick game mode.
 
 
 
@@ -36,6 +28,9 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
+-Add extra match summary page, with all the other player info im not showing now.  
+	-Take a polish sweep on the match summary page?  
+
 -leagues???!!!
 
 spinner for network activity?
@@ -60,6 +55,10 @@ pro players list?  pro teams?  for easy access to pro player profiles.  maybe an
 Premium version of the app, after play store general release?  would be a paid version ($4?) that has additional features 
  - graphs (kda, win/lost graph, etc)   (Trends Tab?)
  - it looks like K+A/D might be indicator or skill.  or  K+A/D / TeamScore.  It might be worth plotting some of these values in a spreadsheet and seeing
+
+ -Joe's account, vs elder titan, date is wrong
+   --> Match id 230456632
+   --> Looks like it was data issue from old old matches saved in previous formats.  Fixed now, so probalby not worth fixing.
 
 
 

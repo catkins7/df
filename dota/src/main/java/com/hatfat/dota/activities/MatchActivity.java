@@ -39,11 +39,15 @@ public class MatchActivity extends CharltonActivity {
         LinkedList<CharltonTab> tabs = new LinkedList();
 
         Bundle matchSummaryBundle = MatchSummaryFragment.newBundleForMatch(matchId);
+//        Bundle matchDetailsBundle = MatchRawDetailsFragment.newBundleForMatch(matchId);
 
         CharltonTab<MatchSummaryFragment> matchSummaryTab = new CharltonTab(this, getResources().getString(
                 R.string.tab_match_summary_title), MatchSummaryFragment.class, matchSummaryBundle);
+//        CharltonTab<MatchSummaryFragment> matchDetailsTab = new CharltonTab(this, getResources().getString(
+//                R.string.tab_match_raw_details_title), MatchRawDetailsFragment.class, matchDetailsBundle);
 
         tabs.add(matchSummaryTab);
+//        tabs.add(matchDetailsTab);
 
         return tabs;
     }

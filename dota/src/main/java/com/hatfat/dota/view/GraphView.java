@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class GraphView extends View {
 
+    public static final int MAX_NUMBER_OF_MATCHES_IN_GRAPH = 50;
+
     private List<Integer> values;
 
     private Paint paint;
