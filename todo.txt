@@ -1,15 +1,11 @@
-0.5.9 TODO
+0.5.10 TODO
 ---------------------------
 
 
 
 
-0.5.9 README
+0.5.10 README
 ---------------------------
--Fixed a crash when backing out of player search.
--Fixed an issue with the trend graph sometimes being incorrect.
--update items.txt for new item
--Added Ranked All Pick game mode.
 
 
 
