@@ -6,6 +6,7 @@
 
 0.5.10 README
 ---------------------------
+-Fixed an issue with item recipes using the actual items image instead of the recipe image.
 
 
 

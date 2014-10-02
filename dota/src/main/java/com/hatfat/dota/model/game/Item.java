@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item implements Comparable<Item> {
     private static final String baseItemIconUrl = "http://media.steampowered.com/apps/dota2/images/items/";
+    private static final String recipePrefix = "recipe";
     private static final String largeHorizontalSuffix = "_lg.png";
 
     @SerializedName("name")
@@ -20,7 +21,20 @@ public class Item implements Comparable<Item> {
     }
 
     public String getLargeHorizontalPortraitUrl() {
-        return getBaseUrlString() + largeHorizontalSuffix;
+        if (isRecipe()) {
+            return getRecipeLargeHorizontalPotraitUrl();
+        }
+        else {
+            return getBaseUrlString() + largeHorizontalSuffix;
+        }
+    }
+
+    public boolean isRecipe() {
+        return name.substring(5).startsWith(recipePrefix);
+    }
+
+    public String getRecipeLargeHorizontalPotraitUrl() {
+        return baseItemIconUrl + recipePrefix + largeHorizontalSuffix;
     }
 
     public String getName() {
