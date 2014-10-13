@@ -33,6 +33,7 @@
     <string name="tab_player_favorites_title">Favorites</string>
     <string name="tab_player_success_title">Success</string>
     <string name="tab_player_friends_title">People</string>
+    <string name="tab_player_recent_title">Recent Stats</string>
     <string name="tab_player_ranked_stats_title">Ranked Stats</string>
     <string name="tab_player_public_stats_title">Public Stats</string>
     <string name="tab_player_other_stats_title">Other Stats</string>
@@ -145,9 +146,10 @@
     <string name="player_match_list_stats_tab_text">stats</string>
     <string name="player_match_list_stats_tab_title_text">%1$s Matches</string>
 
-    <string name="player_statistics_not_enough_data_text">Not enough match data.</string>
+    <string name="player_statistics_not_enough_data_text">No match data.</string>
     <string name="player_statistics_public_prefix_text">Public</string>
     <string name="player_statistics_ranked_prefix_text">Ranked</string>
+    <string name="player_statistics_recent_prefix_text">Recent</string>
     <string name="player_statistics_other_prefix_text">Other</string>
     <string name="player_statistics_loading_text">Calculating…</string>
     <string name="player_statistics_favorite_heroes_title_text">Favorite Heroes</string>
@@ -201,6 +203,7 @@
     <string name="player_statistics_charlton_text_default">Please enjoy some statistics.</string>
     <string name="player_statistics_charlton_text_success">These are %1$s\'s most and least successful heroes.</string>
     <string name="player_statistics_charlton_text_all_favorites">These are %1$s\'s most used heroes and items.</string>
+    <string name="player_statistics_charlton_text_recent_stats">Take a look at %1$s\'s match statistics for the last %2$d days.</string>
     <string name="player_statistics_charlton_text_ranked_stats">Here are %1$s\'s ranked match statistics.  The real deal.</string>
     <string name="player_statistics_charlton_text_public_stats">These are %1$s\'s public matches… bleh.</string>
     <string name="player_statistics_charlton_text_other_stats">Other match statistics for %1$s.</string>

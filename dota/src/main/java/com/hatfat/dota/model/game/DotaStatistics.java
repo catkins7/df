@@ -28,7 +28,8 @@ public class DotaStatistics {
         OTHER_STATS(5),
         ALL_HEROES(6),
         CUSTOM_STATS(7),
-        MATCH_UPS(8);
+        MATCH_UPS(8),
+        RECENT_STATS(9);
 
         private int statsMode;
 
@@ -58,6 +59,8 @@ public class DotaStatistics {
                     return CUSTOM_STATS;
                 case 8:
                     return MATCH_UPS;
+                case 9:
+                    return RECENT_STATS;
                 default:
                     return PUBLIC_STATS;
             }
@@ -69,6 +72,8 @@ public class DotaStatistics {
                     return resources.getString(R.string.player_statistics_public_prefix_text);
                 case RANKED_STATS:
                     return resources.getString(R.string.player_statistics_ranked_prefix_text);
+                case RECENT_STATS:
+                    return resources.getString(R.string.player_statistics_recent_prefix_text);
                 case OTHER_STATS:
                     return resources.getString(R.string.player_statistics_other_prefix_text);
                 default:

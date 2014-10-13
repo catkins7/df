@@ -780,6 +780,16 @@ public class DotaStatisticsAdapter extends BaseAdapter {
                 sections.add(new StatsSection(StatsSectionType.SECTION_MODE_INFO, dotaStatistics,
                         resources.getString(R.string.player_statistics_modes_info_title_text)));
                 break;
+            case RECENT_STATS:
+                sections.add(
+                        new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics,
+                                resources.getString(
+                                        R.string.player_statistics_recent_matches_title_text)));
+//                sections.add(
+//                        new StatsSection(StatsSectionType.SECTION_CSSCORE, dotaStatistics));
+                sections.add(new StatsSection(StatsSectionType.SECTION_MODE_INFO, dotaStatistics,
+                        resources.getString(R.string.player_statistics_modes_info_title_text)));
+                break;
             case CUSTOM_STATS:
                 sections.add(
                         new StatsSection(StatsSectionType.SECTION_MATCHES_SUMMARY, dotaStatistics, customLabel));

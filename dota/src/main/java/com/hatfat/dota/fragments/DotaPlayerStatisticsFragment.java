@@ -26,12 +26,15 @@ import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
+import java.util.Date;
 import java.util.LinkedList;
 
 public class DotaPlayerStatisticsFragment extends CharltonFragment {
 
     private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_STEAM_USER_ID_KEY";
     private static final String DOTA_PLAYER_STATISTICS_FRAGMENT_MODE_KEY = "DOTA_PLAYER_STATISTICS_FRAGMENT_MODE_KEY";
+
+    private final int NUMBER_OF_DAYS_FOR_RECENT_MATCHES = 14;
 
     private BroadcastReceiver receiver;
     private boolean needsRecalculation;
@@ -112,6 +115,7 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
         ListView listView = (ListView) view
                 .findViewById(R.id.fragment_dota_player_statistics_list_view);
         listView.setAdapter(adapter);
+        listView.setVerticalScrollBarEnabled(false);
     }
 
     private void fetchStatistics() {
@@ -122,6 +126,8 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
             protected DotaStatistics doInBackground(SteamUser... params) {
                 SteamUser user = params[0];
                 LinkedList<Match> statsMatches = new LinkedList();
+
+                long currentTime = new Date().getTime() / 1000; //current time in seconds
 
                 for (String matchId : user.getMatches()) {
                     Match match = Matches.get().getMatch(matchId);
@@ -141,6 +147,17 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                                 break;
                             case PUBLIC_STATS:
                                 if (match.isPublicMatchmaking()) {
+                                    statsMatches.add(match);
+                                }
+                                break;
+                            case RECENT_STATS:
+                                long timeAgo = currentTime - match.getStartTime();
+
+                                timeAgo /= 60; //minutes ago
+                                timeAgo /= 60; // hours ago
+                                timeAgo /= 24; // days ago
+
+                                if (timeAgo <= NUMBER_OF_DAYS_FOR_RECENT_MATCHES) {
                                     statsMatches.add(match);
                                 }
                                 break;
@@ -230,6 +247,9 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                 case ALL_SUCCESS_STATS:
                     return String.format(resources.getString(
                             R.string.player_statistics_charlton_text_success), user.getDisplayName());
+                case RECENT_STATS:
+                    return String.format(resources.
+                            getString(R.string.player_statistics_charlton_text_recent_stats), user.getDisplayName(), NUMBER_OF_DAYS_FOR_RECENT_MATCHES);
                 case RANKED_STATS:
                     return String.format(resources
                             .getString(R.string.player_statistics_charlton_text_ranked_stats), user.getDisplayName());

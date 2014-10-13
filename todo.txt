@@ -1,12 +1,12 @@
-0.5.10 TODO
+0.5.11 TODO
 ---------------------------
 
+ 
 
 
-
-0.5.10 README
+0.5.11 README
 ---------------------------
--Fixed an issue with item recipes using the actual items image instead of the recipe image.
+-Added Recent Stats tab.  
 
 
 
@@ -36,8 +36,6 @@ rework stats tab(s) to have a modes dropdown (recent, ranked, public, other?)
 
 dialog on startup, or at some point that tells the user the valve api isn't working right now?
 
-Recent tab, showing all games from the last 3-7 days?  Last week maybe?  not divided by public or anything like that
-
 player RECORDS? (most kills, deaths, etc) with link to the match
 
 compare stats with a friend's side by side?
@@ -63,6 +61,9 @@ Premium version of the app, after play store general release?  would be a paid v
 Someday
 ---------------------------
 bundle all dagons/difussal/necronomicon into the same item for stats calculation?
+
+
+
 
 Q&A thoughts:
  -accurate items.txt  (item costs often wrong (diffusal 2, dagon, necronomicon, many recipe costs incorrect, etc)

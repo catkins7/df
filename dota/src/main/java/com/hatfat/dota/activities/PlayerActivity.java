@@ -51,6 +51,8 @@ public class PlayerActivity extends CharltonActivity {
         Bundle successBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
                 DotaStatistics.DotaStatisticsMode.ALL_SUCCESS_STATS);
         Bundle friendsBundle = PlayerFriendsFragment.newBundleForUser(steamUserId);
+        Bundle recentBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
+                DotaStatistics.DotaStatisticsMode.RECENT_STATS);
         Bundle rankedBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
                 DotaStatistics.DotaStatisticsMode.RANKED_STATS);
         Bundle publicBundle = DotaPlayerStatisticsFragment.newBundleForUser(steamUserId,
@@ -66,6 +68,7 @@ public class PlayerActivity extends CharltonActivity {
         String favoritesTitle = getResources().getString(R.string.tab_player_favorites_title);
         String successTitle = getResources().getString(R.string.tab_player_success_title);
         String friendsTitle = getResources().getString(R.string.tab_player_friends_title);
+        String recentTitle = getResources().getString(R.string.tab_player_recent_title);
         String rankedTitle = getResources().getString(R.string.tab_player_ranked_stats_title);
         String publicTitle = getResources().getString(R.string.tab_player_public_stats_title);
         String otherTitle = getResources().getString(R.string.tab_player_other_stats_title);
@@ -76,6 +79,7 @@ public class PlayerActivity extends CharltonActivity {
         CharltonTab<DotaPlayerStatisticsFragment> favoritesTab = new CharltonTab(this, favoritesTitle, DotaPlayerStatisticsFragment.class, favoritesBundle);
         CharltonTab<DotaPlayerStatisticsFragment> successTab = new CharltonTab(this, successTitle, DotaPlayerStatisticsFragment.class, successBundle);
         CharltonTab<PlayerFriendsFragment> friendsTab = new CharltonTab(this, friendsTitle, PlayerFriendsFragment.class, friendsBundle);
+        CharltonTab<DotaPlayerStatisticsFragment> recentTab = new CharltonTab(this, recentTitle, DotaPlayerStatisticsFragment.class, recentBundle);
         CharltonTab<DotaPlayerStatisticsFragment> rankedTab = new CharltonTab(this, rankedTitle, DotaPlayerStatisticsFragment.class, rankedBundle);
         CharltonTab<DotaPlayerStatisticsFragment> publicTab = new CharltonTab(this, publicTitle, DotaPlayerStatisticsFragment.class, publicBundle);
         CharltonTab<DotaPlayerStatisticsFragment> otherTab = new CharltonTab(this, otherTitle, DotaPlayerStatisticsFragment.class, otherBundle);
@@ -91,6 +95,7 @@ public class PlayerActivity extends CharltonActivity {
             tabs.add(friendsTab);
             tabs.add(allHeroesTab);
             tabs.add(matchUpsTab);
+            tabs.add(recentTab);
             tabs.add(rankedTab);
             tabs.add(publicTab);
             tabs.add(otherTab);
