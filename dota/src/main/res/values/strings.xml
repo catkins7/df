@@ -194,7 +194,7 @@
     <string name="player_statistics_favorite_hero_purchase_count_label_text_single">purchase</string>
     <string name="player_statistics_favorite_hero_purchase_count_label_text_plural">purchases</string>
 
-    <string name="player_statistics_recent_matches_title_text">Recent Ranked Matches</string>
+    <string name="player_statistics_recent_matches_title_text">Recent Matches</string>
     <string name="player_statistics_all_public_matches_title_text">Public Matches</string>
     <string name="player_statistics_all_ranked_matches_title_text">Ranked Matches</string>
     <string name="player_statistics_other_matches_title_text">Other Matches</string>

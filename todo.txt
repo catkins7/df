@@ -6,6 +6,7 @@
 
 0.5.12 README
 ---------------------------
+-Fixed text issue on the Recent Stats tab.
 
 
 
