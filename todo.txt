@@ -1,8 +1,5 @@
 0.5.12 TODO
 ---------------------------
--flesh out the "Dota Friend" feature.  Have a few different dota2 characters and charlton be possible options.  Depending on the user's selection, use a different set of talking icons on the top of the screen?  Maybe change the text (on start-up anyway?), and the special text when you click on the hero chat bubble.
-  -windrunner, cm, slardar, ogre magi, omni, pudge, clockwerk, puck, kotl, enchantress, axe
-  -update the main icon with the current friend, if possible?
 
 
 
@@ -28,6 +25,10 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
+-flesh out the "Dota Friend" feature.  Have a few different dota2 characters and charlton be possible options.  Depending on the user's selection, use a different set of talking icons on the top of the screen?  Maybe change the text (on start-up anyway?), and the special text when you click on the hero chat bubble.
+  -windrunner, cm, slardar, ogre magi, omni, pudge, clockwerk, puck, kotl, enchantress, axe
+  -update the main icon with the current friend, if possible?
+
 -rating prompt?  after the user has opened the app 25 times or so?
 
 -Add extra match summary page, with all the other player info im not showing now.  
