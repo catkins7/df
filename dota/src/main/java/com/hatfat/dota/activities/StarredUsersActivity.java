@@ -2,7 +2,6 @@ package com.hatfat.dota.activities;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.fragments.AddNewPlayerFragment;
-import com.hatfat.dota.fragments.LiveLeaguesFragment;
 import com.hatfat.dota.fragments.StarredPlayerListFragment;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.tabs.CharltonTab;

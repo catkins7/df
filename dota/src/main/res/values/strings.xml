@@ -22,6 +22,8 @@
     <string name="about_dialog_email_address">dota2friend@gmail.com</string>
     <string name="about_dialog_email_suggested_subject">Dota 2 Friend Feedback</string>
 
+    <string name="friend_options_menu_title">Customize Friend...</string>
+
     <string name="no_hero">No Hero</string>
     <string name="level">Level</string>
     <string name="creep_score">cs</string>

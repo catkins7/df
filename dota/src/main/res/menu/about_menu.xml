@@ -4,4 +4,9 @@
     <item
         android:id="@+id/about_menu_about_id"
         android:title="@string/about_dialog_title" />
+
+    <item
+            android:id="@+id/friend_options_menu_id"
+            android:title="@string/friend_options_menu_title" />
+
 </menu>

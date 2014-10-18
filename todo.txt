@@ -4,7 +4,14 @@
   -windrunner, cm, slardar, ogre magi, omni, pudge, clockwerk, puck, kotl, enchantress, axe
   -update the main icon with the current friend, if possible?
 
+-be able to change the color pallete to be based on the selected dota frienD?  Either the default color palette or one based on the friend image?
+   -use the L library color palette generator?
+   
 
+
+Update text everywhere to not refer to charlton, but to your dota 2 friend.
+ -in the app
+ -on the play store
 
 
 0.6.0 README

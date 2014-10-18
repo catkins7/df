@@ -226,6 +226,9 @@ public class StarredPlayerListFragment extends CharltonFragment {
             case R.id.about_menu_about_id:
                 showAboutDialog();
                 return true;
+            case R.id.friend_options_menu_id:
+                showFriendsDialog();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -233,6 +236,11 @@ public class StarredPlayerListFragment extends CharltonFragment {
 
     private void showAboutDialog() {
         TextDialogHelper.showAboutDialog(getActivity());
+    }
+
+    private void showFriendsDialog() {
+        FriendOptionsDialogFragment optionsFragment = new FriendOptionsDialogFragment();
+        optionsFragment.show(getFragmentManager(), "friendsDialog");
     }
 
     @Override
