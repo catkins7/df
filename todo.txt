@@ -6,12 +6,16 @@
 
 -be able to change the color pallete to be based on the selected dota frienD?  Either the default color palette or one based on the friend image?
    -use the L library color palette generator?
-   
 
+New ICONS:
+	all icons are the dota logo faded out to the top right, with the "Friend" in the top right.
+	if there isn't a dota friend selected yet, the friend icon is a question mark.
 
 Update text everywhere to not refer to charlton, but to your dota 2 friend.
  -in the app
  -on the play store
+
+
 
 
 0.6.0 README

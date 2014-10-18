@@ -147,7 +147,7 @@ public class LoadingFragment extends CharltonFragment {
             @Override
             protected Void doInBackground(Void... params) {
                 if (isAdded()) {
-                    Friends.get().load();
+                    Friends.get().load(DotaFriendApplication.CONTEXT);
                 }
                 return null;
             }
