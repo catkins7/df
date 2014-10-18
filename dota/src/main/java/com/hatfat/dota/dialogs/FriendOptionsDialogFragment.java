@@ -1,4 +1,4 @@
-package com.hatfat.dota.fragments;
+package com.hatfat.dota.dialogs;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -10,19 +10,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.LoadingActivity;
+import com.hatfat.dota.model.friend.Friends;
 
 public class FriendOptionsDialogFragment extends DialogFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friend_options, container, false);
 
+        Button createShortcutButton = (Button) view.findViewById(R.id.fragment_friend_options_create_shortcut_button);
+        createShortcutButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                createFriendShortcut(v.getContext());
+            }
+        });
+
         return view;
     }
 
-    private static void shortcutAdd(Context context, String name, int number) {
+    private void createFriendShortcut(Context context) {
         // Intent to be send, when shortcut is pressed by user ("launched")
         Intent shortcutIntent = new Intent(context, LoadingActivity.class);
 
@@ -32,16 +41,18 @@ public class FriendOptionsDialogFragment extends DialogFragment {
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(0xffffffff);
 
+        Friends.Friend friend = Friends.get().getCurrentFriend();
+
         Paint paint = new Paint();
-        paint.setColor(0xFF00aaaa);
+        paint.setColor(0xFF006622);
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(100);
-        canvas.drawText("" + number, 128, 128, paint);
+        paint.setTextSize(120);
+        canvas.drawText(String.valueOf(friend.getType()), 128, 128, paint);
 
         // Decorate the shortcut
         Intent addIntent = new Intent();
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, name);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, context.getString(R.string.customize_friend_create_shortcut_name));
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, bitmap);
 
         // Inform launcher to create shortcut

@@ -23,6 +23,9 @@
     <string name="about_dialog_email_suggested_subject">Dota 2 Friend Feedback</string>
 
     <string name="friend_options_menu_title">Customize Friend...</string>
+    <string name="customize_friend_create_shortcut_description_text">It is not possible to change the Dota 2 Friend app icon.  However, it is possible to make a custom shortcut with your currently selected Dota Friend!</string>
+    <string name="customize_friend_create_shortcut_button_text">Create Shortcut</string>
+    <string name="customize_friend_create_shortcut_name">Dota 2 Friend</string>
 
     <string name="no_hero">No Hero</string>
     <string name="level">Level</string>

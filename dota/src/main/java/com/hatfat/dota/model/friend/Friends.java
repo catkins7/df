@@ -68,6 +68,10 @@ public class Friends {
 
     }
 
+    public Friend getCurrentFriend() {
+        return currentFriend;
+    }
+
     public void load(Context context) {
         if (isLoaded) {
             broadcastUsersLoadedFromDisk();

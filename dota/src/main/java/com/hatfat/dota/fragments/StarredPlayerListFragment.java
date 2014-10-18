@@ -23,6 +23,7 @@ import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.activities.CharltonActivity;
 import com.hatfat.dota.activities.PlayerActivity;
+import com.hatfat.dota.dialogs.FriendOptionsDialogFragment;
 import com.hatfat.dota.dialogs.TextDialogHelper;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;

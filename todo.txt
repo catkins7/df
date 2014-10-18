@@ -13,7 +13,7 @@ New ICONS:
 
 Update text everywhere to not refer to charlton, but to your dota 2 friend.
  -in the app
- -on the play store
+ -on the play store (Who will be your dota friend?)
 
 
 
