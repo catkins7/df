@@ -8,6 +8,6 @@
 
     <stroke
         android:width="@dimen/charlton_border_width"
-        android:color="@color/off_gray" />
+        android:color="@color/medium_gray" />
 
 </shape>

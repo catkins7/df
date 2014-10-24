@@ -726,21 +726,7 @@ public class Match implements Comparable {
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }
 
-    private static Comparator<Match> comparator;
     private static Comparator<String> matchIdComparator;
-
-    public static Comparator<Match> getComparator() {
-        if (comparator == null) {
-            comparator = new Comparator<Match>() {
-                @Override
-                public int compare(Match match, Match match2) {
-                    return match2.matchId.compareToIgnoreCase(match.matchId);
-                }
-            };
-        }
-
-        return comparator;
-    }
 
     public static Comparator<String> getMatchIdComparator() {
         if (matchIdComparator == null) {
@@ -783,7 +769,6 @@ public class Match implements Comparable {
     public int hashCode() {
         return Integer.parseInt(matchId);
     }
-
 
     @Override
     public int compareTo(Object o) {

@@ -54,5 +54,6 @@
 
     <dimen name="graph_line_width">2dp</dimen>
 
+    <dimen name="friend_image_size">64dp</dimen>
 
 </resources>

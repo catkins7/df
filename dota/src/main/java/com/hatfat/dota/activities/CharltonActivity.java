@@ -4,33 +4,39 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
 import com.hatfat.dota.dialogs.TextDialogHelper;
+import com.hatfat.dota.model.friend.Friends;
 import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.tabs.CharltonTab;
 import com.hatfat.dota.util.CharltonBubbleDrawable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 public abstract class CharltonActivity extends Activity {
 
-    private static Random rand = new Random();
-    private static int currentHestonDrawableId = 0;
-    private static int currentHestonCountsLeft = 0;
+    private static Random sharedRandom = null;
+
+    private BroadcastReceiver receiver;
 
     private boolean charltonDialogVisible = false;
 
@@ -116,15 +122,26 @@ public abstract class CharltonActivity extends Activity {
         }
 
         super.onCreate(savedInstanceState);
+
+        //set the initial friend image
+        updateFriendImage();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        startListening();
+
         if (!isLoadingActivity() && !isDataLoaded()) {
             throw new RuntimeException("starting this activity with no data!");
         }
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
+
+        stopListening();
     }
 
     private boolean isDataLoaded() {
@@ -143,56 +160,36 @@ public abstract class CharltonActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static Random getSharedRandom() {
+        if (sharedRandom == null) {
+            Date currentDate = new Date();
+            sharedRandom = new Random(currentDate.getTime());
+        }
+
+        return sharedRandom;
+    }
+
     public void updateWithCharltonTab(CharltonTab tab) {
-        String newCharltonText = tab.getFragment().getCharltonMessageText(getApplicationContext());
+        updateFriendTextForTab(tab);
+    }
+
+    private void updateFriendImage() {
+        Drawable friendDrawable = getResources().getDrawable(Friends.get().getCurrentFriend().getImageResourceId(this));
+        LayerDrawable layeredDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.heston_layered);
+        layeredDrawable.setDrawableByLayerId(R.id.heston_layered_drawable_id, friendDrawable);
+
+        getActionBar().setIcon(layeredDrawable);
+    }
+
+    private void updateFriendTextForTab(CharltonTab tab) {
+        String newCharltonText = tab.getFragment().getCharltonMessageText(this);
 
         if (newCharltonText != null) {
             charltonTitleTextView.setText(newCharltonText);
         }
         else {
-            String randomGreeting = getResources().getString(CharltonActivity.getRandomHestonStringResource(getApplicationContext()));
-            randomGreeting = String.format(getResources().getString(R.string.default_charlton_text),
-                    randomGreeting);
-
-            charltonTitleTextView.setText(randomGreeting);
+            charltonTitleTextView.setText(Friends.get().getCurrentFriend().getGreeting());
         }
-
-        updateCharltonImage();
-    }
-
-    public static int getRandomHestonStringResource(Context context) {
-        int randomHeston = Math.abs(rand.nextInt()) % 7; //7 total heston greetings
-        String stringName = "greeting" + randomHeston;
-        return context.getResources().getIdentifier(stringName, "string",
-                context.getPackageName());
-    }
-
-    public static int getRandomHestonDrawableResource(Context context) {
-        int randomHeston = Math.abs(rand.nextInt()) % 15; //15 total heston images currently
-        String drawableName = "heston" + randomHeston;
-        return context.getResources().getIdentifier(drawableName, "drawable",
-                context.getPackageName());
-    }
-
-    private static LayerDrawable getCharltonDrawableForId(Context context, int id) {
-        Drawable newHestonDrawable = context.getResources().getDrawable(id);
-        LayerDrawable layeredDrawable = (LayerDrawable) context.getResources().getDrawable(R.drawable.heston_layered);
-        layeredDrawable.setDrawableByLayerId(R.id.heston_layered_drawable_id, newHestonDrawable);
-
-        return layeredDrawable;
-    }
-
-    private void updateCharltonImage() {
-        if (currentHestonCountsLeft <= 0) {
-            //we need to set a new charlton image!
-            currentHestonDrawableId = getRandomHestonDrawableResource(getApplicationContext());
-            currentHestonCountsLeft = Math.abs(rand.nextInt()) % 10 + 20; //20 to 29 times before it changes
-        }
-
-        Drawable charltonDrawable = getCharltonDrawableForId(getApplicationContext(), currentHestonDrawableId);
-        getActionBar().setIcon(charltonDrawable);
-
-        currentHestonCountsLeft--;
     }
 
     public void signalUpdateActiveCharltonTab() {
@@ -202,7 +199,31 @@ public abstract class CharltonActivity extends Activity {
             selectedTabIndex = getActionBar().getSelectedNavigationIndex();
         }
 
-        updateWithCharltonTab(tabs.get(selectedTabIndex));
+        updateFriendTextForTab(tabs.get(selectedTabIndex));
+    }
+
+    private void startListening() {
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (intent.getAction()) {
+                    case Friends.CURRENT_FRIEND_CHANGED_NOTIFICATION:
+                    case Friends.FRIENDS_LOADED_NOTIFICATION:
+                        updateFriendImage();
+                        signalUpdateActiveCharltonTab();
+                        break;
+                }
+            }
+        };
+
+        IntentFilter friendFilter = new IntentFilter();
+        friendFilter.addAction(Friends.CURRENT_FRIEND_CHANGED_NOTIFICATION);
+        friendFilter.addAction(Friends.FRIENDS_LOADED_NOTIFICATION);
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).registerReceiver(receiver, friendFilter);
+    }
+
+    private void stopListening() {
+        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).unregisterReceiver(receiver);
     }
 
     protected boolean hasParentActivity() {

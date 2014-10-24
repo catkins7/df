@@ -3,6 +3,7 @@ package com.hatfat.dota.model.game;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.services.HeroFetcher;
@@ -115,5 +116,12 @@ public class Heroes {
                 return null;
             }
         }.execute();
+    }
+
+    public void dump() {
+        for (String heroId : heroes.keySet()) {
+            Hero hero = heroes.get(heroId);
+            Log.e("Heroes", heroId + " --> " + hero.getLocalizedName());
+        }
     }
 }

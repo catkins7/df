@@ -21,7 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hatfat.dota.R;
-import com.hatfat.dota.activities.CharltonActivity;
+import com.hatfat.dota.model.friend.Friend;
+import com.hatfat.dota.model.friend.Friends;
 
 public class TextDialogHelper {
 
@@ -31,7 +32,8 @@ public class TextDialogHelper {
 
     public static void showHestonDialog(final Activity activity, final
             DialogInterface.OnDismissListener dismissListener) {
-        int charltonResource = CharltonActivity.getRandomHestonDrawableResource(activity);
+        Friend charlton = Friends.get().getFriend("charlton");
+        int charltonResource = charlton.getImageResourceId(activity);
         Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), charltonResource);
         int size = (int) activity.getResources().getDimension(R.dimen.charlton_dialog_image_size);
         bitmap = Bitmap.createScaledBitmap(bitmap, size, size, true);

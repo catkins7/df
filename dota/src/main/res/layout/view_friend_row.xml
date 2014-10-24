@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/view_friend_row_container_relative_layout"
+                android:background="@drawable/off_black_button_background"
+                android:padding="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/view_friend_row_friend_image_view"
+            android:padding="1dp"
+            android:background="@drawable/default_background_border"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="@dimen/friend_image_size"
+            android:layout_height="@dimen/friend_image_size"
+            tools:ignore="ContentDescription" />
+
+    <RelativeLayout
+            android:id="@+id/view_friend_row_text_container"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/view_friend_row_friend_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/view_friend_row_top_textview"
+                android:layout_alignParentTop="true"
+                android:textSize="@dimen/font_size_medium"
+                android:textColor="@color/off_white"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_view_height_medium"/>
+
+        <TextView
+                android:id="@+id/view_friend_row_bottom_textview"
+                android:layout_below="@id/view_friend_row_top_textview"
+                android:textSize="@dimen/font_size_small"
+                android:textColor="@color/off_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

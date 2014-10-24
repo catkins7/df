@@ -1,0 +1,221 @@
+{
+  "friends": [
+    {
+      "friendId": "charlton",
+      "name": "Charlton Heston",
+      "canBeRandomed": false,
+      "descriptions": [
+        "You maniacs! You blew it up!",
+        "Oh, there were women. Lots of women, lots of love-making, but no love. You see, that was the kind of world we'd made. So I left, because there was no one to hold me there.",
+        "I can't help thinking that somewhere in the universe there has to be something better than man - has to be.",
+        "But one more thing - if anybody's listening, that is. Nothing scientific. It's purely personal. But seen from out here everything seems different. Time bends. Space is boundless. It squashes a man's ego. I feel lonely. That's about it. Tell me, though. Does man, that marvel of the universe, that glorious paradox who sent me to the stars, still make war against his brother? Keep his neighbor's children starving?",
+        "It's a mad house! A mad house!",
+        "Doctor, would an ape make a human doll that talks?"
+      ],
+      "greetings": [
+        "Hello.",
+        "Greetings.",
+        "Hi.",
+        "Good day.",
+        "Hi there.",
+        "Hello there.",
+        "Howdy."
+      ],
+      "starredGreetings": [
+        "Hello, Charlton Heston here.\nThese are your starred players.",
+        "Greetings! This is Charlton Heston.\nHere are your starred players.",
+        "Howdy, Charles here.\nTake a look at your starred players."
+      ],
+      "images": [
+        "heston0",
+        "heston1",
+        "heston2",
+        "heston3",
+        "heston4",
+        "heston5",
+        "heston6",
+        "heston7",
+        "heston8",
+        "heston9",
+        "heston10",
+        "heston11",
+        "heston12",
+        "heston13",
+        "heston14"
+      ]
+    },
+    {
+      "friendId": "ogre",
+      "name": "Ogre Magi",
+      "canBeRandomed": true,
+      "greetings": [
+        "Hey! He said hey!",
+        "My turn.",
+        "Yup. Yup.",
+        "Is that a squirrel? Come on.",
+        "Let's go North! No, South!",
+        "They picked me! No one ever picks me.",
+        "I'm the Ogre Magi! No, you are!",
+        "After you. No, me first!",
+		"What, it ain't started already? I thought it started.",
+		"Now that's skill. Well I practice a lot.",
+		"That's how we do. Pure skill.",
+		"Expertise! From the experts."        
+      ],
+      "starredGreetings": [
+        "Ogre here!\nStarred players are below.",
+        "We say hi!\nYour starred players are below.",
+        "Hi! Hi!\nWe found your starred players!",
+        "Ogre Magi is back.\nAnd with your starred players!"
+      ],
+      "images": [
+        "friend_ogre_1",
+        "friend_ogre_2"
+      ]
+    },
+    {
+      "friendId": "enchantress",
+      "name": "Enchantress",
+      "canBeRandomed": true,
+      "greetings": [
+        "Light of foot, light of heart!",
+        "Shady lanes and sunny glades await!",
+        "It's a hop, skip and a jump!",
+        "With skipping grace.",
+        "Sproink!",
+        "Prancing on.",
+        "Gamboling on!",
+        "Sproink?"
+      ],
+      "starredGreetings": [
+        "Sproink!\nHere are your starred players!",
+        "Enchantress gamboling on!\nStarred players are here.",
+        "Hello! Enchantress is in.\nThese are your starred players."
+      ],
+      "images": [
+        "friend_enchantress_1",
+        "friend_enchantress_2"
+      ]
+    },
+    {
+      "friendId": "slardar",
+      "name": "Slardar",
+      "canBeRandomed": true,
+      "greetings": [
+        "From the deeps, I rise.",
+        "Guardian of the deeps.",
+        "Deep ones guide me.",
+        "The deep ones send me forth.",
+        "A swift current.",
+        "My strength increases.",
+        "My deepest sympathies.",
+        "A soldier's fortune.",
+        "I guard what slumbers in the deeps."
+      ],
+      "starredGreetings": [
+        "I am Slardar.\nThese are your starred players.",
+        "Slardar here, back from the deeps.\nStarred players below.",
+        "Greetings from the deeps.\nSlardar brings your starred players."
+      ],
+      "images": [
+        "friend_slardar_1",
+        "friend_slardar_2"
+      ]
+    },
+    {
+      "friendId": "puck",
+      "name": "Puck",
+      "canBeRandomed": true,
+      "greetings": [
+        "Commendable notion.",
+        "We are in accord.",
+        "This should be less tiresome than another age in chrysalis.",
+        "What is this, a game of some sort?",
+        "With alacrity.",
+        "Puck!",
+        "In your tongue, I am known as Puck.",
+        "Very well.",
+        "Here I am!",
+        "Behold!",
+        "Silence!",
+        "Puck out!",
+        "See ya!"
+      ],
+      "starredGreetings": [
+        "I am known as Puck.\nThese are your starred players.",
+        "One Puck, two Puck, three Puck more!\nHere are starred players galore.",
+        "Puck is here.\nAlong with your starred players."
+      ],
+      "images": [
+        "friend_puck_1",
+        "friend_puck_2"
+      ]
+    },
+    {
+      "friendId": "axe",
+      "name": "Axe",
+      "canBeRandomed": true,
+      "greetings": [
+        "There is no team in Axe!",
+        "A cut above the rest.",
+        "Axe is ready!",
+        "Axe will whittle them down one by one.",
+        "Into war's teeth!",
+        "Rest is for the dead!",
+        "Good day to fight!",
+        "Enemies need killing!",
+        "A slice of the action!",
+        "Axe here!",
+        "Let the carnage begin.",
+        "The Axe-man comes!",
+        "There can be no battle till Axe is at hand. And Axe is.",
+        "Come and get it!",
+        "Come to Axe!",
+        "Show your worth!",
+        "Prove yourself!",
+        "Fight if you can!"
+      ],
+      "starredGreetings": [
+        "Axe is ready.\nAnd so are your starred players.",
+        "Axe returns.\nHere are starred players.",
+        "Axe brings the Red Mist!\nAlong with your starred players."
+      ],
+      "images": [
+        "friend_axe_1",
+        "friend_axe_2"
+      ]
+    },
+    {
+      "friendId": "pudge",
+      "name": "Pudge",
+      "canBeRandomed": true,
+      "greetings": [
+        "They call me the Butcher.",
+        "Someone needed a Butcher?",
+        "Come to Pudge!",
+        "Look who's coming for dinner!",
+        "Chopper time!",
+        "Ahhh... fresh meat!",
+        "Oy, fresh meat!",
+        "Pudge is here.",
+        "Make room for Pudge!",
+        "Butcher's in business.",
+        "Make room!",
+        "So much meat, so little time.",
+        "Look at all that meat just waiting to be carved.",
+        "Reel 'em in!",
+        "Hooked 'em!",
+        "Mmm. Smell the fresh air."
+      ],
+      "starredGreetings": [
+        "Oy, Pudge here!\nHere are your starred players.",
+        "Make room for Pudge!\nYour starred players are here.",
+        "Pudge here.\nThese are your starred players."
+      ],
+      "images": [
+        "friend_pudge_1",
+        "friend_pudge_2"
+      ]
+    }
+  ]
+}

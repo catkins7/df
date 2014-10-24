@@ -21,10 +21,11 @@ import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
 import com.hatfat.dota.R;
-import com.hatfat.dota.activities.CharltonActivity;
 import com.hatfat.dota.activities.PlayerActivity;
 import com.hatfat.dota.dialogs.FriendOptionsDialogFragment;
 import com.hatfat.dota.dialogs.TextDialogHelper;
+import com.hatfat.dota.model.friend.Friend;
+import com.hatfat.dota.model.friend.Friends;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.view.SteamUserView;
@@ -246,10 +247,16 @@ public class StarredPlayerListFragment extends CharltonFragment {
 
     @Override
     public String getCharltonMessageText(Context context) {
-        Resources resources = context.getResources();
+        Friend currentFriend = Friends.get().getCurrentFriend();
+        String starredGreeting = currentFriend.getStarredGreeting();
 
-        String randomGreeting = resources.getString(CharltonActivity.getRandomHestonStringResource(context));
-        return String.format(resources.getString(R.string.starred_players_charlton_text),
-                randomGreeting);
+        if (starredGreeting != null) {
+            return starredGreeting;
+        }
+        else {
+            Resources resources = context.getResources();
+            return String.format(resources.getString(R.string.starred_players_charlton_text),
+                    currentFriend.getName());
+        }
     }
 }

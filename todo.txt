@@ -1,19 +1,39 @@
 0.6.0 TODO
 ---------------------------
--flesh out the "Dota Friend" feature.  Have a few different dota2 characters and charlton be possible options.  Depending on the user's selection, use a different set of talking icons on the top of the screen?  Maybe change the text (on start-up anyway?), and the special text when you click on the hero chat bubble.
-  -windrunner, cm, slardar, ogre magi, omni, pudge, clockwerk, puck, kotl, enchantress, axe
-  -update the main icon with the current friend, if possible?
+-auto retry ONCE for each match when fetching all matches?
+
+-flesh out the "Dota Friend" feature.
+
+-special text when you click on the hero chat bubble.
+	-update dialog when you press on the chat bubble.
+
+-Finish shortcut creation
+  	all icons are the dota logo faded out to the top right, with the "Friend" in the top right.
+	if there isn't a dota friend selected yet, the friend icon is a question mark.
 
 -be able to change the color pallete to be based on the selected dota frienD?  Either the default color palette or one based on the friend image?
    -use the L library color palette generator?
 
-New ICONS:
-	all icons are the dota logo faded out to the top right, with the "Friend" in the top right.
-	if there isn't a dota friend selected yet, the friend icon is a question mark.
+New App Icon
 
-Update text everywhere to not refer to charlton, but to your dota 2 friend.
- -in the app
- -on the play store (Who will be your dota friend?)
+Update play store stext
+ -Who will be your dota friend?
+
+-Talk to dane on friday and see if he would help out with art?
+  -default app icon + shortcut friend icon pieces
+  -download all matches icon
+  -starred/unstarred icon
+
+PROFILE 
+ -clicking into player summary fragment
+   -Move heavy match list sorting work into background thread?
+ -other slow transitions
+
+test fresh install
+test upgrade
+memory tests
+android lint check
+update libraries
 
 
 
@@ -38,6 +58,11 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
+-Update Match->matchId to be a Long.  
+	-Update everywhere to use matchId as a Long instead of a String.
+	-Update the disk loaders.  
+	-This will help match sorting performance hugely.
+
 -rating prompt?  after the user has opened the app 25 times or so?
 
 -Add extra match summary page, with all the other player info im not showing now.  

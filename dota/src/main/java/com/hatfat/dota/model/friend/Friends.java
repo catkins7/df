@@ -3,56 +3,34 @@ package com.hatfat.dota.model.friend;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.hatfat.dota.DotaFriendApplication;
+import com.google.gson.Gson;
 
-import java.util.Random;
+import com.hatfat.dota.R;
+import com.hatfat.dota.activities.CharltonActivity;
+import com.hatfat.dota.model.DotaGson;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 public class Friends {
 
-    private final static String FRIENDS_PREF_FILE = "FRIENDS_PREF_FILE";
-    private final static String SELECTED_FRIEND_KEY = "SELECTED_FRIEND_KEY";
+    private final static String FRIENDS_PREF_FILE   = "FRIENDS_PREF_FILE";
+    private final static String SELECTED_FRIEND_PREFS_KEY = "CURRENT_FRIEND_KEY";
 
     public final static String FRIENDS_LOADED_NOTIFICATION = "FRIENDS_LOADED_NOTIFICATION";
+    public final static String CURRENT_FRIEND_CHANGED_NOTIFICATION = "CURRENT_FRIEND_CHANGED_NOTIFICATION";
 
-    public enum Friend {
-        NO_FRIEND(0),
-        CHARLTON(1),
-
-        OGRE_MAGI(2),
-        ENCHANTRESS(3);
-
-        public static final int numberOfRandomableFriends = 2;
-        private int type;
-
-        Friend(int type) {
-            this.type = type;
-        }
-
-        public static Friend fromInt(int type) {
-            switch (type) {
-                case 0:
-                    return NO_FRIEND;
-                case 1:
-                    return CHARLTON;
-                case 2:
-                    return OGRE_MAGI;
-                case 3:
-                    return ENCHANTRESS;
-                default:
-                    return NO_FRIEND;
-            }
-        }
-
-        public int getType() {
-            return type;
-        }
-    }
-
-    private boolean isLoaded;
+    private HashMap<String, Friend> friends; //string friendId --> friend object
 
     private Friend currentFriend;
+    private Friend dummyFriend;
 
     private static Friends singleton;
 
@@ -65,56 +43,116 @@ public class Friends {
     }
 
     private Friends() {
+        friends = new HashMap();
 
-    }
-
-    public Friend getCurrentFriend() {
-        return currentFriend;
+        dummyFriend = new Friend();
     }
 
     public void load(Context context) {
-        if (isLoaded) {
-            broadcastUsersLoadedFromDisk();
+        if (friends != null && friends.size() > 0) {
+            //already loaded
+            return;
         }
-        else {
-            loadFromDisk(context);
-        }
-    }
 
-    private void broadcastUsersLoadedFromDisk() {
-        Intent intent = new Intent(FRIENDS_LOADED_NOTIFICATION);
-        LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
-    }
+        Resources resources = context.getResources();
 
-    private void loadFromDisk(Context context) {
-        isLoaded = true;
+        //parse local json file
+        InputStream inputStream = resources.openRawResource(R.raw.friends);
+        Reader reader = new InputStreamReader(inputStream);
+
+        Gson gson = DotaGson.getDotaGson();
+        FriendData friendData = gson.fromJson(reader, FriendData.class);
+
+        setNewFriendData(friendData);
 
         SharedPreferences settings = context.getSharedPreferences(FRIENDS_PREF_FILE, 0);
-        int friendType = settings.getInt(SELECTED_FRIEND_KEY, Friend.NO_FRIEND.getType());
+        String currentFriendId = settings.getString(SELECTED_FRIEND_PREFS_KEY, null);
 
-        currentFriend = Friend.fromInt(friendType);
+        currentFriend = getFriend(currentFriendId);
 
-        if (currentFriend == Friend.NO_FRIEND) {
+        if (currentFriend == null) {
             //no friend selected yet!  lets select a random one
-            Random rand = new Random();
-            int randomNum = rand.nextInt(Friend.numberOfRandomableFriends) + 2;
-            currentFriend = Friend.fromInt(randomNum);
+            List<Friend> randomableFriends = getRandomableFriendsList();
 
+            if (randomableFriends.size() <= 0) {
+                randomableFriends = getSortedFriendsList();
+            }
+
+            int randomFriendIndex = CharltonActivity.getSharedRandom().nextInt(randomableFriends.size());
+            currentFriend = randomableFriends.get(randomFriendIndex);
             saveFriendSelection(context);
         }
 
-        broadcastUsersLoadedFromDisk();
+        broadcastFriendsLoadedFromDisk(context);
+    }
+
+    private void setNewFriendData(FriendData data) {
+        friends.clear();
+
+        for (Friend friend : data.friends) {
+            friends.put(friend.getFriendId(), friend)
+            ;
+        }
+    }
+
+    public Friend getFriend(String friendId) {
+        return friends.get(friendId);
+    }
+
+    private void broadcastFriendsLoadedFromDisk(Context context) {
+        Intent intent = new Intent(FRIENDS_LOADED_NOTIFICATION);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    private void broadcastCurrentFriendChanged(Context context) {
+        Intent intent = new Intent(CURRENT_FRIEND_CHANGED_NOTIFICATION);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public Friend getCurrentFriend() {
+        if (currentFriend != null) {
+            return currentFriend;
+        }
+        else {
+            return dummyFriend;
+        }
+    }
+
+    public List<Friend> getSortedFriendsList() {
+        List<Friend> friendsList = new LinkedList(friends.values());
+        Collections.sort(friendsList);
+
+        return friendsList;
+    }
+
+    public List<Friend> getRandomableFriendsList() {
+        List<Friend> randomableFriends = new LinkedList();
+
+        for (Friend friend : friends.values()) {
+            if (friend.canBeRandomed()) {
+                randomableFriends.add(friend);
+            }
+        }
+
+        return randomableFriends;
+    }
+
+    public void selectNewFriend(Friend newFriend, Context context) {
+        if (((Object)newFriend).equals(currentFriend)) {
+            return;
+        }
+
+        currentFriend = newFriend;
+        saveFriendSelection(context);
     }
 
     private void saveFriendSelection(Context context) {
         SharedPreferences settings = context.getSharedPreferences(FRIENDS_PREF_FILE, 0);
         SharedPreferences.Editor editor = settings.edit();
 
-        editor.putInt(SELECTED_FRIEND_KEY, currentFriend.getType());
+        editor.putString(SELECTED_FRIEND_PREFS_KEY, currentFriend.getFriendId());
         editor.commit();
-    }
 
-    public boolean isLoaded() {
-        return isLoaded;
+        broadcastCurrentFriendChanged(context);
     }
 }

@@ -79,6 +79,8 @@ public class SteamUser {
     boolean isFakeUser; //true for Anonymous users and Bots
     TreeSet<String> matches;
 
+    private long cachedAccountId = -1;
+
     public enum SteamPlayerState
     { //  0 - Offline, 1 - Online, 2 - Busy, 3 - Away, 4 - Snooze, 5 - looking to trade, 6 - looking to play
         SteamPlayerState_Offline("Offline"),
@@ -164,7 +166,11 @@ public class SteamUser {
         return SteamUser.getAccountIdFromSteamId(steamId);
     }
     public long getAccountIdLong() {
-        return Long.valueOf(getAccountId());
+        if (cachedAccountId < 0) {
+            cachedAccountId = Long.valueOf(getAccountId());
+        }
+
+        return cachedAccountId;
     }
     public long getSteamIdLong() {
         return Long.valueOf(steamId);
