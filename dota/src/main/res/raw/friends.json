@@ -10,7 +10,7 @@
         "I can't help thinking that somewhere in the universe there has to be something better than man - has to be.",
         "But one more thing - if anybody's listening, that is. Nothing scientific. It's purely personal. But seen from out here everything seems different. Time bends. Space is boundless. It squashes a man's ego. I feel lonely. That's about it. Tell me, though. Does man, that marvel of the universe, that glorious paradox who sent me to the stars, still make war against his brother? Keep his neighbor's children starving?",
         "It's a mad house! A mad house!",
-        "Doctor, would an ape make a human doll that talks?"
+        "Doctor, would an ape make a human doll - that talks?"
       ],
       "greetings": [
         "Hello.",
@@ -23,7 +23,7 @@
       ],
       "starredGreetings": [
         "Hello, Charlton Heston here.\nThese are your starred players.",
-        "Greetings! This is Charlton Heston.\nHere are your starred players.",
+        "Greetings!\nThis is Charlton Heston.",
         "Howdy, Charles here.\nTake a look at your starred players."
       ],
       "images": [
@@ -142,8 +142,8 @@
         "See ya!"
       ],
       "starredGreetings": [
-        "I am known as Puck.\nThese are your starred players.",
-        "One Puck, two Puck, three Puck more!\nHere are starred players galore.",
+        "I am known as Puck.\nAnd these are known as your starred players.",
+        "One Puck, two Puck, three Puck more!",
         "Puck is here.\nAlong with your starred players."
       ],
       "images": [
@@ -209,7 +209,7 @@
       ],
       "starredGreetings": [
         "Oy, Pudge here!\nHere are your starred players.",
-        "Make room for Pudge!\nYour starred players are here.",
+        "Make room for Pudge!\nAnd make room for your starred players.",
         "Pudge here.\nThese are your starred players."
       ],
       "images": [
