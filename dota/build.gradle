@@ -34,7 +34,7 @@ android {
         beta {
             applicationIdSuffix ".beta"
             versionNameSuffix "-beta"
-            runProguard false
+            minifyEnabled true
             signingConfig signingConfigs.beta
         }
     }
