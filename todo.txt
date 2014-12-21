@@ -10,6 +10,7 @@ LEAVER abandoned stuff
 
 	gray out games that have abandons and don't score them anymore?  
 
+-swiping between tabs?
 
 -flesh out the "Dota Friend" feature.
 
