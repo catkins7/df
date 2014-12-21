@@ -26,7 +26,13 @@ public interface CharltonService {
     public void getMatchHistory(@Query("account_id") String accountId, Callback<DotaResult<MatchHistory>> matchHistoryCallback);
 
     @GET("/IDOTA2Match_570/GetMatchHistory/V001/?key=" + STEAM_DEV_KEY)
+    public void getMatchHistoryForHeroId(@Query("account_id") String accountId, @Query("hero_id") String heroId, Callback<DotaResult<MatchHistory>> matchHistoryCallback);
+
+    @GET("/IDOTA2Match_570/GetMatchHistory/V001/?key=" + STEAM_DEV_KEY)
     public void getMatchHistoryAtMatchId(@Query("account_id") String accountId, @Query("start_at_match_id") String startMatchId, Callback<DotaResult<MatchHistory>> matchHistoryCallback);
+
+    @GET("/IDOTA2Match_570/GetMatchHistory/V001/?key=" + STEAM_DEV_KEY)
+    public void getMatchHistoryAtMatchIdForHeroId(@Query("account_id") String accountId, @Query("start_at_match_id") String startMatchId, @Query("hero_id") String heroId, Callback<DotaResult<MatchHistory>> matchHistoryCallback);
 
     @GET("/IDOTA2Match_570/GetMatchHistory/V001/?key=" + STEAM_DEV_KEY)
     public void getMatchHistoryByPlayerName(@Query("player_name") String playerName, Callback<DotaResult<MatchHistory>> matchHistoryCallback);

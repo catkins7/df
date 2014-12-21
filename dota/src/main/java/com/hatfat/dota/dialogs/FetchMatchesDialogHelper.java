@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.hatfat.dota.R;
 import com.hatfat.dota.model.DotaResult;
+import com.hatfat.dota.model.game.Hero;
+import com.hatfat.dota.model.game.Heroes;
 import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.match.MatchHistory;
 import com.hatfat.dota.model.match.Matches;
@@ -49,6 +51,10 @@ public class FetchMatchesDialogHelper {
 
     private CharltonService charltonService;
     private SteamUser user;
+
+    private int totalNumHeroesToFetch;
+    private List<Hero> heroMatchesToFetch;
+    private List<Hero> heroesInProgress;
 
     private TreeSet<Match> fetchResults;
     private LinkedList<String> matchIds;
@@ -133,88 +139,123 @@ public class FetchMatchesDialogHelper {
     private void startFetchingMatchList() {
         state = FetchMatchesState.FETCH_MATCHES_STATE_FETCHING_MATCH_LIST;
 
-        charltonService.getMatchHistory(user.getAccountId(), new Callback<DotaResult<MatchHistory>>() {
-            @Override
-            public void success(DotaResult<MatchHistory> matchHistoryDotaResult, Response response) {
-                finishedWithMatches(matchHistoryDotaResult.result);
-            }
+        heroesInProgress = new LinkedList();
 
-            @Override
-            public void failure(RetrofitError error) {
-                finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
-                showFetchingErrorDialog();
+        //update our hero list to fetch
+        heroMatchesToFetch = Heroes.get().getAll();
+        totalNumHeroesToFetch = heroMatchesToFetch.size();
+
+        if (heroMatchesToFetch.size() <= 0) {
+            //there's nothing to get, so we're done!
+            finishedWithMatches(new MatchHistory(), null);
+        }
+        else {
+            int numberOfConcurrentRequests = Runtime.getRuntime().availableProcessors() * 2;
+            for (int i = 0; i < numberOfConcurrentRequests; i++) {
+                startFetchingNextHeroMatchList();
             }
-        });
+        }
     }
 
-    private void fetchMatchListFromMatchId(final String matchId) {
-        charltonService.getMatchHistoryAtMatchId(user.getAccountId(), matchId, new Callback<DotaResult<MatchHistory>>() {
-            @Override
-            public void success(DotaResult<MatchHistory> matchHistoryDotaResult, Response response) {
-                finishedWithMatches(matchHistoryDotaResult.result);
-            }
+    private void startFetchingNextHeroMatchList() {
+        Hero nextHero = popNextHero();
 
-            @Override
-            public void failure(RetrofitError error) {
-                finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
-                showFetchingErrorDialog();
-            }
-        });
+        if (nextHero != null) {
+            addInProgressHero(nextHero);
+            fetchNextHeroMatchList(null, nextHero);
+        }
+        else {
+            finishedWithMatches(new MatchHistory(), null);
+        }
     }
 
-    //not used currently since min/max date params don't work
-    private void fetchMatchListBeforeDate(long date) {
-        charltonService.getMatchHistoryBeforeDate(user.getAccountId(), date, new Callback<DotaResult<MatchHistory>>() {
-            @Override
-            public void success(DotaResult<MatchHistory> matchHistoryDotaResult,
-                    Response response) {
-                finishedWithMatches(matchHistoryDotaResult.result);
-            }
+    private void fetchNextHeroMatchList(final String matchId, final Hero hero) {
+        if (matchId == null) {
+            //starting anew
+            charltonService.getMatchHistoryForHeroId(user.getAccountId(), hero.getHeroIdString(),
+                    new Callback<DotaResult<MatchHistory>>() {
+                        @Override public void success(DotaResult<MatchHistory> matchHistoryDotaResult, Response response) {
+                            finishedWithMatches(matchHistoryDotaResult.result, hero);
+                        }
 
-            @Override
-            public void failure(RetrofitError error) {
-                finishedWithMatches(new MatchHistory()); //just pretend we finished with no matches
-            }
-        });
+                        @Override public void failure(RetrofitError error) {
+                            //just pretend we finished with no matches
+                            finishedWithMatches(new MatchHistory(), hero);
+                            showFetchingErrorDialog();
+                        }
+                    });
+        }
+        else {
+            //continuing from previous matchId
+            charltonService.getMatchHistoryAtMatchIdForHeroId(user.getAccountId(), matchId, hero.getHeroIdString(),
+                    new Callback<DotaResult<MatchHistory>>() {
+                        @Override public void success(DotaResult<MatchHistory> matchHistoryDotaResult, Response response) {
+                            finishedWithMatches(matchHistoryDotaResult.result, hero);
+                        }
+
+                        @Override public void failure(RetrofitError error) {
+                            //just pretend we finished with no matches
+                            finishedWithMatches(new MatchHistory(), hero);
+                            showFetchingErrorDialog();
+                        }
+                    });
+        }
     }
 
-    private void finishedWithMatches(MatchHistory matchHistory) {
+    private void finishedWithMatches(MatchHistory matchHistory, Hero hero) {
         if (!isCanceled) {
             fetchResults.addAll(matchHistory.getMatches());
         }
 
         if (!isCanceled && matchHistory.getResultsRemaining() > 0) {
             //there are more matches to fetch, and we're not canceled, so lets get them!
-            fetchMatchListFromMatchId(matchHistory.getMatches().get(matchHistory.getMatches().size() - 1).getMatchId());
-//            fetchMatchListBeforeDate(fetchResults.first().getStartTime());
+            fetchNextHeroMatchList(
+                    matchHistory.getMatches().get(matchHistory.getMatches().size() - 1)
+                            .getMatchId(), hero);
         }
         else {
-            matchListProgress = 0.5f;
+            //finished with this hero
+            removeInProgressHero(hero);
+
+            float percentDone = 1.0f - (float)(heroMatchesToFetch.size() + heroesInProgress.size()) / (float)totalNumHeroesToFetch;
+            matchListProgress = 0.95f * percentDone;
             updateProgressBar();
 
-            //no more matches to fetch!  we are done here...
-            LinkedList<Match> matches = new LinkedList(fetchResults);
+            if (!isCanceled && heroMatchesToFetch.size() > 0) {
+                //more heroes to fetch, so move to the next one
+                startFetchingNextHeroMatchList();
+            }
+            else if (heroesInProgress.size() <= 0) {
+                matchListProgress = 0.95f;
+                updateProgressBar();
 
-            //go through all known matches, and add any of them that should be in the user's history as well
-            for (Match match : Matches.get().getAllMatches()) {
-                if (match.getPlayerForSteamUser(user) != null) {
-                    //the user was in this match, so add them!
-                    if (!matches.contains(match)) {
-                        matches.add(match);
+                //no more matches to fetch!  we are done here...
+                LinkedList<Match> matches = new LinkedList(fetchResults);
+
+                //go through all known matches, and add any of them that should be in the user's history as well
+                for (Match match : Matches.get().getAllMatches()) {
+                    if (match.getPlayerForSteamUser(user) != null) {
+                        //the user was in this match, so add them!
+                        if (!matches.contains(match)) {
+                            matches.add(match);
+                        }
                     }
                 }
+
+                if (!isCanceled) {
+                    user.addMatches(matches);
+                }
+
+                //add the match search results to the matches singleton no matter what
+                Matches.get().addMatches(matches);
+
+                matchListProgress = 1.0f;
+
+                nextState();
             }
-
-            if (!isCanceled) {
-                user.addMatches(matches);
+            else {
+                //we're done, but the other threads aren't yet
             }
-
-            //add the match search results to the matches singleton no matter what
-            Matches.get().addMatches(matches);
-
-            matchListProgress = 1.0f;
-
-            nextState();
         }
     }
 
@@ -319,6 +360,24 @@ public class FetchMatchesDialogHelper {
         return new LinkedList(matchIds);
     }
 
+    private synchronized Hero popNextHero() {
+        if (heroMatchesToFetch.size() > 0) {
+            //return the next Hero
+            return heroMatchesToFetch.remove(0);
+        }
+        else {
+            return null;
+        }
+    }
+
+    private synchronized void addInProgressHero(Hero hero) {
+        heroesInProgress.add(hero);
+    }
+
+    private synchronized void removeInProgressHero(Hero hero) {
+        heroesInProgress.remove(hero);
+    }
+
     private synchronized void addInProgressMatchId(String matchId) {
         matchIdsInProgress.add(matchId);
     }
@@ -365,8 +424,8 @@ public class FetchMatchesDialogHelper {
         }
 
         float barPercent = 0.0f;
-        barPercent += matchListProgress * 0.05f;
-        barPercent += matchDetailsProgress * 0.95f;
+        barPercent += matchListProgress * 0.3f;
+        barPercent += matchDetailsProgress * 0.7f;
         barPercent += saveProgress * 0.00f;
 
         float loadingBarMaxWidth = (float) messageTextView.getWidth();

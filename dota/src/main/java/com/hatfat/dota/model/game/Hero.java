@@ -23,6 +23,10 @@ public class Hero {
         return localizedName;
     }
 
+    public String getHeroIdString() {
+        return String.valueOf(heroId);
+    }
+
     private String getBaseUrlString() {
         return baseHeroIconUrl + name.substring(14);
     }

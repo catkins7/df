@@ -69,6 +69,10 @@ public class Heroes {
         return heroes.get(heroIdString);
     }
 
+    public List<Hero> getAll() {
+        return new LinkedList(heroes.values());
+    }
+
     private void broadcastHeroesLoaded() {
         Intent intent = new Intent(HERO_DATA_LOADED_NOTIFICATION);
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
