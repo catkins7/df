@@ -1,12 +1,9 @@
 0.6.0 TODO
 ---------------------------
 
- --> Fix hero image icon outline not being the right shape!!
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-
 Implement SUPER match fetch; scroll through each HERO id as well, so we can get the first 500 matches of each hero type!
 	-auto retry ONCE for each match when fetching all matches?
+    -performance sluggishness fixes?
 
 LEAVER abandoned stuff 
 	http://dev.dota2.com/showthread.php?t=58317&highlight=leaver_status
