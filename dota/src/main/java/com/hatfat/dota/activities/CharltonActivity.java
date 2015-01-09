@@ -2,6 +2,7 @@ package com.hatfat.dota.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -13,10 +14,14 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.hatfat.dota.DotaFriendApplication;
@@ -54,7 +59,7 @@ public abstract class CharltonActivity extends Activity {
             finish();
         }
 
-        ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(hasParentActivity());
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(R.layout.actionbar_charlton);
@@ -92,14 +97,56 @@ public abstract class CharltonActivity extends Activity {
 
         tabs = createTabs();
 
+        setContentView(R.layout.activity_charlton_tabs);
+
+        final CharltonPagerAdapter adapter = new CharltonPagerAdapter(getFragmentManager(), tabs);
+        final ViewPager pager = (ViewPager)findViewById(R.id.activity_charlton_tabs_viewpager);
+        pager.setAdapter(adapter);
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
+
+            }
+
+            @Override public void onPageSelected(int position) {
+                actionBar.selectTab(actionBar.getTabAt(position));
+
+                final InputMethodManager imm = (InputMethodManager) getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(pager.getWindowToken(), 0);
+
+                tabs.get(position).getFragment().tabWasForegrounded();
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         if (tabs.size() > 1) {
             //more than one tab, so setup the tabbed interface
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-            for (CharltonTab charltonTab : tabs) {
+            for (final CharltonTab charltonTab : tabs) {
                 ActionBar.Tab tab = actionBar.newTab()
                         .setText(charltonTab.getCharltonTabText())
-                        .setTabListener(charltonTab);
+                        .setTabListener(new ActionBar.TabListener() {
+                            @Override public void onTabSelected(ActionBar.Tab tab,
+                                    FragmentTransaction ft) {
+                                pager.setCurrentItem(tabs.indexOf(charltonTab));
+                                updateWithCharltonTab(charltonTab);
+                            }
+
+                            @Override public void onTabUnselected(ActionBar.Tab tab,
+                                    FragmentTransaction ft) {
+
+                            }
+
+                            @Override public void onTabReselected(ActionBar.Tab tab,
+                                    FragmentTransaction ft) {
+
+                            }
+                        });
 
                 actionBar.addTab(tab);
             }
@@ -111,14 +158,6 @@ public abstract class CharltonActivity extends Activity {
         }
         else if (tabs.size() == 1) {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-
-            FragmentManager manager = getFragmentManager();
-            FragmentTransaction ft = manager.beginTransaction();
-
-            tabs.get(0).attach(ft);
-
-            ft.commit();
-            manager.executePendingTransactions();
         }
 
         super.onCreate(savedInstanceState);
@@ -239,4 +278,25 @@ public abstract class CharltonActivity extends Activity {
     }
 
     protected abstract List<CharltonTab> createTabs();
+
+    private class CharltonPagerAdapter extends FragmentPagerAdapter {
+
+        List<CharltonTab> tabs;
+
+        public CharltonPagerAdapter(FragmentManager fm, List<CharltonTab> tabs) {
+            super(fm);
+
+            this.tabs = tabs;
+        }
+
+        @Override
+        public int getCount() {
+            return tabs.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return tabs.get(position).getFragment();
+        }
+    }
 }

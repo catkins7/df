@@ -84,17 +84,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
         else {
             hideSearching();
             searchEditText.requestFocus();
-
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT);
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        hideKeyboard();
     }
 
     private void showSearching() {
@@ -155,6 +145,7 @@ public class AddNewPlayerFragment extends CharltonFragment {
         });
     }
 
+    /* not supported at the moment */
     private void doAccountSearch(final String searchString) {
         searchFinishedWithResults(null);
     }

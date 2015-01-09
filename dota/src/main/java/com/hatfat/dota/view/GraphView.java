@@ -63,14 +63,14 @@ public class GraphView extends View {
         postInvalidate();
     }
 
-    public void setValuesFromMatchListForUser(List<String> matchIds, SteamUser user) {
+    public void setValuesFromMatchListForUser(List<Long> matchIds, SteamUser user) {
         //update the graph view
         List<Integer> graphValues = new LinkedList();
 
         //start point
         graphValues.add(0);
 
-        for (String matchId : matchIds) {
+        for (Long matchId : matchIds) {
             Match match = Matches.get().getMatch(matchId);
             Player player = match.getPlayerForSteamUser(user);
 

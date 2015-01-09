@@ -98,7 +98,9 @@ public class LoadingFragment extends CharltonFragment {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                Heroes.get().load();
+                if (isAdded()) {
+                    Heroes.get().load();
+                }
                 return null;
             }
         }.execute();
@@ -108,7 +110,9 @@ public class LoadingFragment extends CharltonFragment {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                SteamUsers.get().load(getResources()); //initialize the SteamUsers singleton
+                if (isAdded()) {
+                    SteamUsers.get().load(getResources()); //initialize the SteamUsers singleton
+                }
                 return null;
             }
         }.execute();

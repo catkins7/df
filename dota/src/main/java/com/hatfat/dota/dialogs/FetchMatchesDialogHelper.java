@@ -57,8 +57,8 @@ public class FetchMatchesDialogHelper {
     private List<Hero> heroesInProgress;
 
     private TreeSet<Match> fetchResults;
-    private LinkedList<String> matchIds;
-    private LinkedList<String> matchIdsInProgress;
+    private LinkedList<Long> matchIds;
+    private LinkedList<Long> matchIdsInProgress;
 
     public FetchMatchesDialogHelper(SteamUser user) {
         this.user = user;
@@ -96,6 +96,7 @@ public class FetchMatchesDialogHelper {
         nextState();
     }
 
+    /* show an error dialog explaining there was a problem fetching a match or fetching match history */
     private void showFetchingErrorDialog() {
         Activity ownerActivity = dialog.getOwnerActivity();
 
@@ -162,14 +163,14 @@ public class FetchMatchesDialogHelper {
 
         if (nextHero != null) {
             addInProgressHero(nextHero);
-            fetchNextHeroMatchList(null, nextHero);
+            fetchNextHeroMatchList(null, nextHero, false);
         }
         else {
             finishedWithMatches(new MatchHistory(), null);
         }
     }
 
-    private void fetchNextHeroMatchList(final String matchId, final Hero hero) {
+    private void fetchNextHeroMatchList(final Long matchId, final Hero hero, final boolean isRetry) {
         if (matchId == null) {
             //starting anew
             charltonService.getMatchHistoryForHeroId(user.getAccountId(), hero.getHeroIdString(),
@@ -179,24 +180,36 @@ public class FetchMatchesDialogHelper {
                         }
 
                         @Override public void failure(RetrofitError error) {
-                            //just pretend we finished with no matches
-                            finishedWithMatches(new MatchHistory(), hero);
-                            showFetchingErrorDialog();
+                            if (isRetry) {
+                                //just pretend we finished with no matches
+                                finishedWithMatches(new MatchHistory(), hero);
+                            }
+                            else {
+                                //try again, its our first time!
+                                fetchNextHeroMatchList(matchId, hero, true);
+                            }
                         }
                     });
         }
         else {
             //continuing from previous matchId
-            charltonService.getMatchHistoryAtMatchIdForHeroId(user.getAccountId(), matchId, hero.getHeroIdString(),
+            charltonService.getMatchHistoryAtMatchIdForHeroId(user.getAccountId(), String.valueOf(matchId),
+                    hero.getHeroIdString(),
                     new Callback<DotaResult<MatchHistory>>() {
-                        @Override public void success(DotaResult<MatchHistory> matchHistoryDotaResult, Response response) {
+                        @Override public void success(
+                                DotaResult<MatchHistory> matchHistoryDotaResult,
+                                Response response) {
                             finishedWithMatches(matchHistoryDotaResult.result, hero);
                         }
 
                         @Override public void failure(RetrofitError error) {
-                            //just pretend we finished with no matches
-                            finishedWithMatches(new MatchHistory(), hero);
-                            showFetchingErrorDialog();
+                            if (isRetry) {
+                                //just pretend we finished with no matches
+                                finishedWithMatches(new MatchHistory(), hero);
+                            }
+                            else {
+                                fetchNextHeroMatchList(matchId, hero, true);
+                            }
                         }
                     });
         }
@@ -211,7 +224,7 @@ public class FetchMatchesDialogHelper {
             //there are more matches to fetch, and we're not canceled, so lets get them!
             fetchNextHeroMatchList(
                     matchHistory.getMatches().get(matchHistory.getMatches().size() - 1)
-                            .getMatchId(), hero);
+                            .getMatchIdLong(), hero, false);
         }
         else {
             //finished with this hero
@@ -269,7 +282,7 @@ public class FetchMatchesDialogHelper {
 
         if (matchIds.size() <= 0) {
             //there's nothing to get, so we're done!
-            finishedFetchingMatchId("NO MATCHES TO FETCH");
+            finishedFetchingMatchId(null);
         }
         else {
             int numberOfConcurrentRequests = Runtime.getRuntime().availableProcessors() * 2;
@@ -279,7 +292,7 @@ public class FetchMatchesDialogHelper {
         }
     }
 
-    private void finishedFetchingMatchId(String matchId) {
+    private void finishedFetchingMatchId(Long matchId) {
         if (matchId != null) {
             removeInProgressMatchId(matchId);
         }
@@ -303,12 +316,12 @@ public class FetchMatchesDialogHelper {
         }
     }
 
-    private void finishedFetchingMatchIdWithError(String matchId) {
+    private void finishedFetchingMatchIdWithError(Long matchId) {
         //just continue for now
         finishedFetchingMatchId(matchId);
     }
 
-    private void fetchDetailsForMatch(final String matchId) {
+    private void fetchDetailsForMatch(final Long matchId, final boolean isRetry) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -333,7 +346,13 @@ public class FetchMatchesDialogHelper {
 
                                 @Override
                                 public void failure(RetrofitError error) {
-                                    finishedFetchingMatchIdWithError(matchId);
+                                    if (isRetry) {
+                                        finishedFetchingMatchIdWithError(matchId);
+                                    }
+                                    else {
+                                        //we failed, so retry once!
+                                        fetchDetailsForMatch(matchId, true);
+                                    }
                                 }
                             });
                 }
@@ -346,7 +365,7 @@ public class FetchMatchesDialogHelper {
         }.execute();
     }
 
-    private synchronized String popNextMatchId() {
+    private synchronized Long popNextMatchId() {
         if (matchIds.size() > 0) {
             //return the last match id (which will be the most recent).
             return matchIds.removeLast();
@@ -356,7 +375,7 @@ public class FetchMatchesDialogHelper {
         }
     }
 
-    private synchronized List<String> copyMatchIdList() {
+    private synchronized List<Long> copyMatchIdList() {
         return new LinkedList(matchIds);
     }
 
@@ -378,16 +397,16 @@ public class FetchMatchesDialogHelper {
         heroesInProgress.remove(hero);
     }
 
-    private synchronized void addInProgressMatchId(String matchId) {
+    private synchronized void addInProgressMatchId(Long matchId) {
         matchIdsInProgress.add(matchId);
     }
 
-    private synchronized void removeInProgressMatchId(String matchId) {
+    private synchronized void removeInProgressMatchId(Long matchId) {
         matchIdsInProgress.remove(matchId);
     }
 
     private void fetchNextMatchDetails() {
-        String matchId = popNextMatchId();
+        Long matchId = popNextMatchId();
 
         if (isCanceled || matchId == null) {
             //nothing more to fetch, we are done!
@@ -395,7 +414,7 @@ public class FetchMatchesDialogHelper {
         }
 
         addInProgressMatchId(matchId);
-        fetchDetailsForMatch(matchId);
+        fetchDetailsForMatch(matchId, false);
     }
 
     private void startSaving() {

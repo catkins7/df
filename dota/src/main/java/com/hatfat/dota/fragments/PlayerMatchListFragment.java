@@ -33,7 +33,6 @@ import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +49,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
     private BroadcastReceiver receiver;
 
     private SteamUser                                 user;
-    private List<String>                              matchIds;
+    private List<Long>                                matchIds;
     private String                                    matchesLabel;
     private String                                    secondaryImageUrl;
     private PlayerMatchListActivity.MatchListTextMode textMode;
@@ -69,13 +68,13 @@ public class PlayerMatchListFragment extends CharltonFragment {
     private Target rightTarget;
 
     public static Bundle newBundleForUserAndMatches(String userId, String label,
-            String secondaryImageUrl, ArrayList<String> matchIds,
+            String secondaryImageUrl, long[] matchIds,
             PlayerMatchListActivity.MatchListTextMode textMode) {
         Bundle args = new Bundle();
         args.putString(PLAYER_MATCH_LIST_USER_ID_KEY, userId);
         args.putString(PLAYER_MATCH_LIST_LABEL_KEY, label);
         args.putString(PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY, secondaryImageUrl);
-        args.putStringArrayList(PLAYER_MATCH_LIST_MATCHES_KEY, matchIds);
+        args.putLongArray(PLAYER_MATCH_LIST_MATCHES_KEY, matchIds);
         args.putInt(PLAYER_MATCH_LIST_TEXT_MODE_KEY, textMode.mode);
         return args;
     }
@@ -86,8 +85,13 @@ public class PlayerMatchListFragment extends CharltonFragment {
 
         String userId = getArguments().getString(PLAYER_MATCH_LIST_USER_ID_KEY);
 
+        long[] matchIdsRaw = getArguments().getLongArray(PLAYER_MATCH_LIST_MATCHES_KEY);
+        matchIds = new LinkedList();
+        for (long id : matchIdsRaw) {
+            matchIds.add(id);
+        }
+
         user = SteamUsers.get().getBySteamId(userId);
-        matchIds = getArguments().getStringArrayList(PLAYER_MATCH_LIST_MATCHES_KEY);
         matchesLabel = getArguments().getString(PLAYER_MATCH_LIST_LABEL_KEY);
         secondaryImageUrl = getArguments().getString(PLAYER_MATCH_LIST_SECONDARY_IMAGE_KEY);
         textMode = PlayerMatchListActivity.MatchListTextMode
@@ -118,7 +122,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
                 }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
                     //reload the match row for this match
-                    String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    Long updatedMatchId = intent.getLongExtra(Match.MATCH_UPDATED_ID_KEY, 0);
                     if (user.getMatches().contains(updatedMatchId)) {
                         updateViews();
                     }
@@ -130,7 +134,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
                             if (view instanceof MatchViewForPlayerBasic) {
                                 MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
 
-                                if (matchView.getMatch().getMatchId().equals(updatedMatchId)) {
+                                if (updatedMatchId.equals(matchView.getMatch().getMatchIdLong())) {
                                     matchView.notifyMatchUpdated();
                                 }
                             }
@@ -176,7 +180,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Match match = matchAdapter.getItem(i);
                 Intent intent = MatchActivity
-                        .intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
+                        .intentForMatch(getActivity().getApplicationContext(), match.getMatchIdLong());
                 startActivity(intent);
             }
         });
@@ -260,13 +264,13 @@ public class PlayerMatchListFragment extends CharltonFragment {
         }
 
         //set values for the trend graph
-        LinkedList<String> matches = new LinkedList(matchIds);
+        LinkedList<Long> matches = new LinkedList(matchIds);
         Collections.sort(matches, Match.getMatchIdComparator());
 
-        List<String> graphMatches = new LinkedList();
+        List<Long> graphMatches = new LinkedList();
 
         while (graphMatches.size() < GraphView.MAX_NUMBER_OF_MATCHES_IN_GRAPH && matches.size() > 0) {
-            String matchId = matches.removeFirst();
+            Long matchId = matches.removeFirst();
             graphMatches.add(0, matchId);
         }
 
@@ -277,7 +281,7 @@ public class PlayerMatchListFragment extends CharltonFragment {
         int winCount = 0;
         int matchCount = 0;
 
-        for (String matchId : matchIds) {
+        for (Long matchId : matchIds) {
             Match match = Matches.get().getMatch(matchId);
 
             if (match.hasMatchDetails()) {

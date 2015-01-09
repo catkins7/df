@@ -16,9 +16,9 @@ public class MatchRawDetailsFragment extends CharltonFragment {
 
     private Match match;
 
-    public static Bundle newBundleForMatch(String matchId) {
+    public static Bundle newBundleForMatch(Long matchId) {
         Bundle args = new Bundle();
-        args.putString(MATCH_RAW_DETAILS_FRAGMENT_MATCH_ID_KEY, matchId);
+        args.putLong(MATCH_RAW_DETAILS_FRAGMENT_MATCH_ID_KEY, matchId);
         return args;
     }
 
@@ -26,7 +26,7 @@ public class MatchRawDetailsFragment extends CharltonFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String matchId = getArguments().getString(MATCH_RAW_DETAILS_FRAGMENT_MATCH_ID_KEY);
+        Long matchId = getArguments().getLong(MATCH_RAW_DETAILS_FRAGMENT_MATCH_ID_KEY);
 
         if (matchId == null) {
             throw new RuntimeException("must be created with a match id");

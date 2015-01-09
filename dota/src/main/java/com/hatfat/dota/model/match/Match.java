@@ -268,6 +268,8 @@ public class Match implements Comparable {
     private transient Item itemOfTheMatch;
     private transient Player playerOfTheMatch;
 
+    private transient long matchIdLong = -1;
+
     public Match(String matchId) {
         this.matchId = matchId;
     }
@@ -278,6 +280,13 @@ public class Match implements Comparable {
 
     public String getMatchId() {
         return matchId;
+    }
+    public long getMatchIdLong() {
+        if (matchIdLong < 0) {
+            matchIdLong = Long.parseLong(matchId);
+        }
+
+        return matchIdLong;
     }
     public MatchResult getMatchResult() {
         if (!hasMatchDetails) {
@@ -722,30 +731,18 @@ public class Match implements Comparable {
 
     private void broadcastMatchChanged() {
         Intent intent = new Intent(MATCH_UPDATED);
-        intent.putExtra(MATCH_UPDATED_ID_KEY, matchId);
+        intent.putExtra(MATCH_UPDATED_ID_KEY, getMatchIdLong());
         LocalBroadcastManager.getInstance(DotaFriendApplication.CONTEXT).sendBroadcast(intent);
     }
 
-    private static Comparator<String> matchIdComparator;
+    private static Comparator<Long> matchIdComparator;
 
-    public static Comparator<String> getMatchIdComparator() {
+    public static Comparator<Long> getMatchIdComparator() {
         if (matchIdComparator == null) {
-            matchIdComparator = new Comparator<String>() {
+            matchIdComparator = new Comparator<Long>() {
                 @Override
-                public int compare(String matchId, String matchId2) {
-                    long firstNum = Long.valueOf(matchId);
-                    long secondNum = Long.valueOf(matchId2);
-
-                    if (firstNum == secondNum) {
-                        return 0;
-                    }
-
-                    if (firstNum > secondNum) {
-                        return -1;
-                    }
-                    else {
-                        return 1;
-                    }
+                public int compare(Long matchId, Long matchId2) {
+                    return -matchId.compareTo(matchId2);
                 }
             };
         }

@@ -113,6 +113,7 @@
 
     <ListView
         android:id="@+id/fragment_player_match_list_matches_list_view"
+        android:fastScrollEnabled="true"
         android:layout_marginTop="@dimen/default_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

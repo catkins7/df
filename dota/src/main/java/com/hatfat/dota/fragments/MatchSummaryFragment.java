@@ -62,9 +62,9 @@ public class MatchSummaryFragment extends CharltonFragment {
         }
     }
 
-    public static Bundle newBundleForMatch(String matchId) {
+    public static Bundle newBundleForMatch(Long matchId) {
         Bundle args = new Bundle();
-        args.putString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY, matchId);
+        args.putLong(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY, matchId);
         return args;
     }
 
@@ -72,7 +72,7 @@ public class MatchSummaryFragment extends CharltonFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String matchId = getArguments().getString(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY);
+        Long matchId = getArguments().getLong(MATCH_SUMMARY_FRAGMENT_MATCH_ID_KEY);
 
         if (matchId == null) {
             throw new RuntimeException("must be created with a match id");
@@ -298,9 +298,9 @@ public class MatchSummaryFragment extends CharltonFragment {
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(Match.MATCH_UPDATED)) {
                     //reload the match row for this match
-                    String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    Long updatedMatchId = intent.getLongExtra(Match.MATCH_UPDATED_ID_KEY, 0);
 
-                    if (match.getMatchId().equals(updatedMatchId)) {
+                    if (updatedMatchId.equals(match.getMatchIdLong())) {
                         if (matchAdapter == null) {
                             //was created without match details, need to setup the listview now
                             setupListView();

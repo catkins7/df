@@ -9,7 +9,6 @@ import com.hatfat.dota.fragments.PlayerMatchListFragment;
 import com.hatfat.dota.fragments.PlayerMatchListStatisticsFragment;
 import com.hatfat.dota.tabs.CharltonTab;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,10 +49,10 @@ public class PlayerMatchListActivity extends CharltonActivity {
     private String            label;
     private String            secondaryImageUrl;
     private MatchListTextMode mode;
-    private ArrayList<String> matchIds;
+    private long[]            matchIds;
 
     public static Intent intentForUserLabelAndMatches(Context context, String steamUserId,
-            String label, String secondaryImageUrl, ArrayList<String> matchIds,
+            String label, String secondaryImageUrl, long[] matchIds,
             MatchListTextMode textMode) {
         Intent intent = new Intent(context, PlayerMatchListActivity.class);
         intent.putExtra(PLAYER_MATCH_LIST_ACTIVITY_STEAM_USER_ID_KEY, steamUserId);
@@ -69,7 +68,7 @@ public class PlayerMatchListActivity extends CharltonActivity {
         steamUserId = getIntent().getStringExtra(PLAYER_MATCH_LIST_ACTIVITY_STEAM_USER_ID_KEY);
         label = getIntent().getStringExtra(PLAYER_MATCH_LIST_ACTIVITY_LABEL_KEY);
         secondaryImageUrl = getIntent().getStringExtra(PLAYER_MATCH_LIST_ACTIVITY_SECONDARY_IMAGE_URL_KEY);
-        matchIds = getIntent().getStringArrayListExtra(PLAYER_MATCH_LIST_ACTIVITY_MATCHES_KEY);
+        matchIds = getIntent().getLongArrayExtra(PLAYER_MATCH_LIST_ACTIVITY_MATCHES_KEY);
         mode = MatchListTextMode.fromInt(getIntent().getIntExtra(PLAYER_MATCH_LIST_ACTIVITY_TEXT_MODE_KEY, MatchListTextMode.NORMAL_MODE.mode));
 
         if (steamUserId == null || label == null || matchIds == null) {

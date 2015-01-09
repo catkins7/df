@@ -16,8 +16,6 @@ import com.hatfat.dota.model.match.Match;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
-import java.util.ArrayList;
-
 public class MatchListFragment extends CharltonFragment {
 
     private static final String MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY = "MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY";
@@ -25,9 +23,9 @@ public class MatchListFragment extends CharltonFragment {
 
     private MatchListAdapter matchesAdapter;
 
-    public static Bundle newBundleForMatchIdsAndUser(ArrayList<String> matchIds, String steamUserId) {
+    public static Bundle newBundleForMatchIdsAndUser(long[] matchIds, String steamUserId) {
         Bundle args = new Bundle();
-        args.putStringArrayList(MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY, matchIds);
+        args.putLongArray(MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY, matchIds);
         args.putString(MATCH_LIST_FRAGMENT_STEAM_USER_ID_KEY, steamUserId);
         return args;
     }
@@ -36,7 +34,7 @@ public class MatchListFragment extends CharltonFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<String> matchIds = getArguments().getStringArrayList(MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY);
+        long[] matchIds = getArguments().getLongArray(MATCH_LIST_FRAGMENT_MATCHES_ID_LIST_KEY);
         String steamUserId = getArguments().getString(MATCH_LIST_FRAGMENT_STEAM_USER_ID_KEY);
 
         SteamUser user = SteamUsers.get().getBySteamId(steamUserId);
@@ -56,7 +54,7 @@ public class MatchListFragment extends CharltonFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Match match = matchesAdapter.getItem(i);
-                Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
+                Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchIdLong());
                 startActivity(intent);
             }
         });

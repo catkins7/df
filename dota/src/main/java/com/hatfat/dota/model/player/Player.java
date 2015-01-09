@@ -103,6 +103,30 @@ public class Player {
 
     private transient Item itemOfTheMatch;
 
+    public enum LeaverStatus {
+
+        NONE(0, false),
+        DISCONNECTED(1, false),
+        DISCONNECTED_TOO_LONG(2, true),
+        ABANDONED(3, true),
+        AFK(4, true),
+        NEVER_CONNECTED(5, false),
+        NEVER_CONNECTED_TOO_LONG(6, false),
+        UNKNOWN(400, false);
+
+        private int status;
+        private boolean isAbandon;
+
+        private LeaverStatus(int status, boolean isAbandon) {
+            this.status = status;
+            this.isAbandon = isAbandon;
+        }
+
+        public boolean isAbandon() {
+            return isAbandon;
+        }
+    }
+
     public SteamUser getSteamUser() {
         return SteamUsers.get().getByAccountId(String.valueOf(accountId));
     }

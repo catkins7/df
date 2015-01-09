@@ -223,7 +223,7 @@ public class DotaStatistics {
                         matchUpMap.put(matchUpHero, matchUpStats);
                     }
 
-                    matchUpStats.addMatch(match.getMatchId());
+                    matchUpStats.addMatch(match.getMatchIdLong());
 
                     if (matchWasVictory) {
                         matchUpStats.winCount++;
@@ -270,7 +270,7 @@ public class DotaStatistics {
                 modeStatsMap.put(match.getGameMode(), modeStats);
             }
 
-            modeStats.addMatch(match.getMatchId());
+            modeStats.addMatch(match.getMatchIdLong());
 
             //add to the all mode stats as well
             ModeStats allModeStats = modeStatsMap.get(Match.GameMode.AllModes);
@@ -280,7 +280,7 @@ public class DotaStatistics {
                 modeStatsMap.put(Match.GameMode.AllModes, allModeStats);
             }
 
-            allModeStats.addMatch(match.getMatchId());
+            allModeStats.addMatch(match.getMatchIdLong());
 
             //calculate hero stats
             HeroStats heroStats = heroStatsMap.get(hero);
@@ -290,7 +290,7 @@ public class DotaStatistics {
                 heroStatsMap.put(hero, heroStats);
             }
 
-            heroStats.addMatch(match.getMatchId());
+            heroStats.addMatch(match.getMatchIdLong());
 
             if (matchWasVictory) {
                 modeStats.winCount++;
@@ -854,7 +854,7 @@ public class DotaStatistics {
 
     public static class ModeStats {
         public Match.GameMode mode;
-        public List<String> matchIds;
+        public List<Long> matchIds;
         public int winCount;
 
         public ModeStats(Match.GameMode mode) {
@@ -863,7 +863,7 @@ public class DotaStatistics {
             winCount = 0;
         }
 
-        public void addMatch(String matchId) {
+        public void addMatch(Long matchId) {
             matchIds.add(matchId);
         }
 
@@ -871,7 +871,7 @@ public class DotaStatistics {
             return matchIds.size();
         }
 
-        public List<String> getMatchIds() {
+        public List<Long> getMatchIds() {
             return matchIds;
         }
 
@@ -895,7 +895,7 @@ public class DotaStatistics {
 
     public static class MatchUpStats {
         public Hero hero;
-        public List<String> matchIds;
+        public List<Long> matchIds;
         public int winCount;
         public SteamUser user;
 
@@ -904,7 +904,7 @@ public class DotaStatistics {
             matchIds = new LinkedList();
         }
 
-        public void addMatch(String matchId) {
+        public void addMatch(Long matchId) {
             matchIds.add(matchId);
         }
 
@@ -912,7 +912,7 @@ public class DotaStatistics {
             return matchIds.size();
         }
 
-        public List<String> getMatchIds() {
+        public List<Long> getMatchIds() {
             return matchIds;
         }
 
@@ -936,7 +936,7 @@ public class DotaStatistics {
 
     public static class HeroStats {
         public Hero hero;
-        public List<String> matchIds;
+        public List<Long> matchIds;
         public int winCount;
 
         public HashMap<Item, ItemStats> itemStatsMap = new HashMap();
@@ -947,7 +947,7 @@ public class DotaStatistics {
             matchIds = new LinkedList();
         }
 
-        public void addMatch(String matchId) {
+        public void addMatch(Long matchId) {
             matchIds.add(matchId);
         }
 
@@ -966,7 +966,7 @@ public class DotaStatistics {
             return matchIds.size();
         }
 
-        public List<String> getMatchIds() {
+        public List<Long> getMatchIds() {
             return matchIds;
         }
 

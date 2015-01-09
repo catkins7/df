@@ -204,7 +204,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
                     //reload the match row for this match
-                    String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    Long updatedMatchId = intent.getLongExtra(Match.MATCH_UPDATED_ID_KEY, 0);
                     if (user.getMatches().contains(updatedMatchId)) {
                         //a match in this users' match list was updated, so we need to save on exit
                         userMatchesHaveChanged = true;
@@ -218,7 +218,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                             if (view instanceof MatchViewForPlayerBasic) {
                                 MatchViewForPlayerBasic matchView = (MatchViewForPlayerBasic) view;
 
-                                if (matchView.getMatch().getMatchId().equals(updatedMatchId)) {
+                                if (updatedMatchId.equals(matchView.getMatch().getMatchIdLong())) {
                                     matchView.notifyMatchUpdated();
                                 }
                             }
@@ -252,7 +252,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
                 Match match = matchAdapter.getItem(i);
 
                 if (match != null) {
-                    Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchId());
+                    Intent intent = MatchActivity.intentForMatch(getActivity().getApplicationContext(), match.getMatchIdLong());
                     startActivity(intent);
                 }
             }
@@ -261,7 +261,7 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
 
     private void updateMatchList() {
         if (matchesListView != null && matchAdapter != null) {
-            matchAdapter.setMatches(new LinkedList(user.getMatches()));
+            matchAdapter.setMatches(user.getMatches());
         }
     }
 
@@ -329,13 +329,13 @@ public class DotaPlayerSummaryFragment extends CharltonFragment {
         thirdRowTextView.setText(summaryStrings[2]);
 
         //set values for the trend graph
-        LinkedList<String> matches = new LinkedList(user.getMatches());
+        LinkedList<Long> matches = new LinkedList(user.getMatches());
         Collections.sort(matches, Match.getMatchIdComparator());
 
-        List<String> graphMatches = new LinkedList();
+        List<Long> graphMatches = new LinkedList();
 
         while (graphMatches.size() < GraphView.MAX_NUMBER_OF_MATCHES_IN_GRAPH && matches.size() > 0) {
-            String matchId = matches.removeFirst();
+            Long matchId = matches.removeFirst();
             graphMatches.add(0, matchId);
         }
 

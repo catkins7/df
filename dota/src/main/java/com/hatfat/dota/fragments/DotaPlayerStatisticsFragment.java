@@ -98,6 +98,16 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
     }
 
     @Override
+    public void tabWasForegrounded() {
+        super.tabWasForegrounded();
+
+        if (needsRecalculation) {
+            adapter.setNewStatistics(null, DotaStatistics.DotaStatisticsMode.ALL_FAVORITES);
+            fetchStatistics();
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dota_player_statistics, container, false);
@@ -129,7 +139,7 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
 
                 long currentTime = new Date().getTime() / 1000; //current time in seconds
 
-                for (String matchId : user.getMatches()) {
+                for (Long matchId : user.getMatches()) {
                     Match match = Matches.get().getMatch(matchId);
 
                     if (match.shouldBeUsedInRealStatistics()) {
@@ -195,7 +205,7 @@ public class DotaPlayerStatisticsFragment extends CharltonFragment {
                     }
                 }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
-                    String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    Long updatedMatchId = intent.getLongExtra(Match.MATCH_UPDATED_ID_KEY, 0);
                     if (user.getMatches().contains(updatedMatchId)) {
                         needsRecalculation = true;
                     }

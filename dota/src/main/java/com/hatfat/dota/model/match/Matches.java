@@ -27,7 +27,7 @@ public class Matches {
 
     private static Matches singleton;
 
-    private HashMap<String, Match> matches; //matchId --> match
+    private HashMap<Long, Match> matches; //matchId --> match
 
     public static Matches get() {
         if (singleton == null) {
@@ -101,12 +101,12 @@ public class Matches {
             return;
         }
 
-        if (matches.containsKey(match.matchId)) {
-            Match existingMatch = matches.get(match.matchId);
+        if (matches.containsKey(match.getMatchIdLong())) {
+            Match existingMatch = matches.get(match.getMatchIdLong());
             existingMatch.updateWithMatch(match);
         }
         else {
-            matches.put(match.matchId, match);
+            matches.put(match.getMatchIdLong(), match);
         }
     }
 
@@ -120,12 +120,12 @@ public class Matches {
         }
     }
 
-    public Match getMatch(String matchId) {
+    public Match getMatch(Long matchId) {
         if (matches.containsKey(matchId)) {
             return matches.get(matchId);
         }
         else {
-            Match newMatch = new Match(matchId);
+            Match newMatch = new Match(String.valueOf(matchId));
             matches.put(matchId, newMatch);
 
             //don't auto fetch
@@ -141,7 +141,7 @@ public class Matches {
         long startTime = System.currentTimeMillis();
         LinkedList matchesList = new LinkedList();
 
-        for (String matchId : user.getMatches()) {
+        for (Long matchId : user.getMatches()) {
             matchesList.add(getMatch(matchId));
         }
 

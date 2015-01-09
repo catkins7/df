@@ -114,7 +114,7 @@
 
     <string name="player_summary_fetch_all_dialog_title">Fetch All Matches?</string>
     <string name="player_summary_fetch_all_dialog_stop_text">Stop</string>
-    <string name="player_summary_fetch_all_dialog_message">It is only possible to fetch a user\'s last 500 matches.\n\nIt is recommended that you proceed only on WiFi or a fast internet connection.</string>
+    <string name="player_summary_fetch_all_dialog_message">It is recommended that you proceed only on WiFi or a fast internet connection.</string>
     <string name="player_summary_fetch_all_dialog_confirm_button_text">Fetch</string>
     <string name="player_summary_fetch_all_dialog_fetching_match_list_text">Fetching match list…</string>
     <string name="player_summary_fetch_all_dialog_fetching_match_details_text">Fetching match details…</string>

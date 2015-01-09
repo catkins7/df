@@ -14,7 +14,7 @@ public class CommonMatches implements Comparable {
     private String userOneAccountId;
     private String userTwoAccountId;
 
-    private List<String> commonMatches;
+    private List<Long> commonMatches;
 
     //description values set by the calculateInfo method
     private int totalGameCount = 0;
@@ -34,11 +34,11 @@ public class CommonMatches implements Comparable {
         return userTwoAccountId;
     }
 
-    public void addMatch(String matchId) {
+    public void addMatch(Long matchId) {
         commonMatches.add(matchId);
     }
 
-    public List<String> getCommonMatches() {
+    public List<Long> getCommonMatches() {
         return commonMatches;
     }
 
@@ -76,7 +76,7 @@ public class CommonMatches implements Comparable {
     public void calculateInfo() {
         SteamUser user1 = SteamUsers.get().getByAccountId(userOneAccountId);
 
-        for (String matchId : commonMatches) {
+        for (Long matchId : commonMatches) {
             Match match = Matches.get().getMatch(matchId);
 
             if (match.hasMatchDetails()) {

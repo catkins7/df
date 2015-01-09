@@ -18,11 +18,12 @@ import com.hatfat.dota.view.MatchViewForPlayerBasic;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class MatchListAdapter extends BaseAdapter {
 
     private SteamUser user;
-    private List<String> matchIds;
+    private List<Long> matchIds;
     private boolean fetchingMatches;
 
     public MatchListAdapter(SteamUser user) {
@@ -30,7 +31,23 @@ public class MatchListAdapter extends BaseAdapter {
         this.matchIds = new LinkedList();
     }
 
-    public void setMatches(List<String> newMatchIds) {
+    public void setMatches(long[] newMatchIds) {
+        matchIds = new LinkedList();
+        for (long id : newMatchIds) {
+            matchIds.add(id);
+        }
+
+        Collections.sort(matchIds, Match.getMatchIdComparator());
+        notifyDataSetChanged();
+    }
+
+    public void setMatches(TreeSet<Long> newMatchIds) {
+        matchIds = new LinkedList(newMatchIds);
+        Collections.sort(matchIds, Match.getMatchIdComparator());
+        notifyDataSetChanged();
+    }
+
+    public void setMatches(List<Long> newMatchIds) {
         matchIds = new LinkedList(newMatchIds);
         Collections.sort(matchIds, Match.getMatchIdComparator());
         notifyDataSetChanged();

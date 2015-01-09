@@ -77,7 +77,7 @@ public class SteamUser {
     String locCityId;
 
     boolean isFakeUser; //true for Anonymous users and Bots
-    TreeSet<String> matches;
+    TreeSet<Long> matches;
 
     private long cachedAccountId = -1;
 
@@ -175,7 +175,7 @@ public class SteamUser {
     public long getSteamIdLong() {
         return Long.valueOf(steamId);
     }
-    public TreeSet<String> getMatches() {
+    public TreeSet<Long> getMatches() {
         //return a copy of the matches set, to prevent concurrent threading issues
         return new TreeSet(matches);
     }
@@ -188,7 +188,7 @@ public class SteamUser {
         int rankedGameCount = 0;
         int matchesWithDetailsCount = 0;
 
-        for (String matchId : matches) {
+        for (Long matchId : matches) {
             Match match = Matches.get().getMatch(matchId);
 
             if (match.hasMatchDetails()) {
@@ -258,8 +258,8 @@ public class SteamUser {
         boolean addedNewMatch = false;
 
         for (Match match : matches) {
-            if (!this.matches.contains(match.getMatchId())) {
-                this.matches.add(match.getMatchId());
+            if (!this.matches.contains(match.getMatchIdLong())) {
+                this.matches.add(match.getMatchIdLong());
                 addedNewMatch = true;
             }
         }
@@ -269,14 +269,14 @@ public class SteamUser {
         }
     }
 
-    public void removeMatchesIfNoDetails(List<String> matchIds) {
+    public void removeMatchesIfNoDetails(List<Long> matchIds) {
         if (matchIds == null) {
             return;
         }
 
         boolean removedMatch = false;
 
-        for (String matchId : matchIds) {
+        for (Long matchId : matchIds) {
             if (matches.contains(matchId)) {
                 Match match = Matches.get().getMatch(matchId);
 

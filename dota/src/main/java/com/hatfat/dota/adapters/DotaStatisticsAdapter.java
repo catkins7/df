@@ -16,7 +16,6 @@ import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteHeroRowView;
 import com.hatfat.dota.view.DotaPlayerStatisticsFavoriteItemRowView;
 import com.hatfat.dota.view.DotaPlayerStatisticsMatchUpRowView;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -342,7 +341,11 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             statsView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<String> matchIds = new ArrayList(stats.getMatchIds());
+                    long[] matchIds = new long[stats.getMatchIds().size()];
+                    for (int i = 0; i < stats.getMatchIds().size(); i++) {
+                        matchIds[i] = stats.getMatchIds().get(i);
+                    }
+
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
                             v.getContext(), dotaStatistics.getSteamUser().getSteamId(), stats.hero.getLocalizedName(), stats.hero.getFullVerticalPortraitUrl(), matchIds,
                             PlayerMatchListActivity.MatchListTextMode.NORMAL_MODE);
@@ -426,7 +429,11 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<String> matchIds = new ArrayList(modeStats.getMatchIds());
+                    long[] matchIds = new long[modeStats.getMatchIds().size()];
+                    for (int i = 0; i < modeStats.getMatchIds().size(); i++) {
+                        matchIds[i] = modeStats.getMatchIds().get(i);
+                    }
+
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
                             v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, null, matchIds,
                             PlayerMatchListActivity.MatchListTextMode.ALTERNATE_MODE);
@@ -605,7 +612,11 @@ public class DotaStatisticsAdapter extends BaseAdapter {
             statsView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<String> matchIds = new ArrayList(stats.getMatchIds());
+                    long[] matchIds = new long[stats.getMatchIds().size()];
+                    for (int i = 0; i < stats.getMatchIds().size(); i++) {
+                        matchIds[i] = stats.getMatchIds().get(i);
+                    }
+
                     String label = String.format(resources.getString(R.string.player_statistics_match_ups_match_list_vs_text), stats.hero.getLocalizedName());
                     Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(
                             v.getContext(), dotaStatistics.getSteamUser().getSteamId(), label, stats.hero.getFullVerticalPortraitUrl(), matchIds,

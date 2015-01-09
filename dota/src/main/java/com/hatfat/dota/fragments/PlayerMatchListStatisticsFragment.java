@@ -21,8 +21,8 @@ import com.hatfat.dota.model.match.Matches;
 import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class PlayerMatchListStatisticsFragment extends CharltonFragment {
 
@@ -37,18 +37,18 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
 
     private String                                    label;
     private SteamUser                                 user;
-    private ArrayList<String>                         matchIds;
+    private List<Long>                                matchIds;
     private PlayerMatchListActivity.MatchListTextMode mode;
 
     private boolean               needsCalculation;
     private DotaStatisticsAdapter adapter;
 
     public static Bundle newBundleForUserAndMatches(String userId, String label,
-            ArrayList<String> matchIds, PlayerMatchListActivity.MatchListTextMode textMode) {
+            long[] matchIds, PlayerMatchListActivity.MatchListTextMode textMode) {
         Bundle args = new Bundle();
         args.putString(PLAYER_MATCH_LIST_STATS_USER_ID_KEY, userId);
         args.putString(PLAYER_MATCH_LIST_STATS_LABEL_KEY, label);
-        args.putStringArrayList(PLAYER_MATCH_LIST_STATS_MATCHES_KEY, matchIds);
+        args.putLongArray(PLAYER_MATCH_LIST_STATS_MATCHES_KEY, matchIds);
         args.putInt(PLAYER_MATCH_LIST_STATS_TEXT_MODE_KEY, textMode.mode);
         return args;
     }
@@ -66,8 +66,13 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
             user = SteamUsers.get().getBySteamId(steamUserId);
         }
 
+        long[] matchIdsRaw = getArguments().getLongArray(PLAYER_MATCH_LIST_STATS_MATCHES_KEY);
+        matchIds = new LinkedList();
+        for (long id : matchIdsRaw) {
+            matchIds.add(id);
+        }
+
         label = getArguments().getString(PLAYER_MATCH_LIST_STATS_LABEL_KEY);
-        matchIds = getArguments().getStringArrayList(PLAYER_MATCH_LIST_STATS_MATCHES_KEY);
         mode = PlayerMatchListActivity.MatchListTextMode
                 .fromInt(getArguments().getInt(PLAYER_MATCH_LIST_STATS_TEXT_MODE_KEY));
 
@@ -113,7 +118,7 @@ public class PlayerMatchListStatisticsFragment extends CharltonFragment {
                 LinkedList<Match> statsMatches = new LinkedList();
 
                 //just use ALL matches from this list!
-                for (String matchId : matchIds) {
+                for (Long matchId : matchIds) {
                     Match match = Matches.get().getMatch(matchId);
                     statsMatches.add(match);
                 }

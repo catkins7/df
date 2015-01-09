@@ -1,16 +1,10 @@
 0.6.0 TODO
 ---------------------------
 
-Implement SUPER match fetch; scroll through each HERO id as well, so we can get the first 500 matches of each hero type!
-	-auto retry ONCE for each match when fetching all matches?
-    -performance sluggishness fixes?
-
 LEAVER abandoned stuff 
 	http://dev.dota2.com/showthread.php?t=58317&highlight=leaver_status
-
 	gray out games that have abandons and don't score them anymore?  
 
--swiping between tabs?
 
 -flesh out the "Dota Friend" feature.
 
@@ -21,9 +15,6 @@ LEAVER abandoned stuff
   	all icons are the dota logo faded out to the top right, with the "Friend" in the top right.
 	if there isn't a dota friend selected yet, the friend icon is a question mark.
 
--be able to change the color pallete to be based on the selected dota frienD?  Either the default color palette or one based on the friend image?
-   -use the L library color palette generator?
-
 New App Icon
 
 Update play store stext
@@ -33,24 +24,21 @@ Update play store stext
   -default app icon + shortcut friend icon pieces
   -download all matches icon
   -starred/unstarred icon
-
-PROFILE 
- -clicking into player summary fragment
-   -Move heavy match list sorting work into background thread?
- -other slow transitions
+  -have him look at the Match Summary page and see if he has any ideas?
 
 test fresh install
 test upgrade
 memory tests
 android lint check
-update libraries
+update items.txt
+test in airplane mode
 
 
 
 
 0.6.0 README
 ---------------------------
-
+ -improved match fetching allows more matches per user (up to 500 per hero)
 
 
 
@@ -68,11 +56,6 @@ refresh steam user from server if cell is made and it doesn't have the info?  (s
 
 Features Backlog
 ---------------------------
--Update Match->matchId to be a Long.  
-	-Update everywhere to use matchId as a Long instead of a String.
-	-Update the disk loaders.  
-	-This will help match sorting performance hugely.
-
 -rating prompt?  after the user has opened the app 25 times or so?
 
 -Add extra match summary page, with all the other player info im not showing now.  

@@ -15,9 +15,9 @@ public class MatchActivity extends CharltonActivity {
 
     private static final String MATCH_ACTIVITY_MATCH_ID_EXTRA_KEY = "MATCH_ACTIVITY_MATCH_ID_EXTRA_KEY";
 
-    private String matchId;
+    private Long matchId;
 
-    public static Intent intentForMatch(Context context, String matchId) {
+    public static Intent intentForMatch(Context context, Long matchId) {
         Intent intent = new Intent(context, MatchActivity.class);
         intent.putExtra(MatchActivity.MATCH_ACTIVITY_MATCH_ID_EXTRA_KEY, matchId);
         return intent;
@@ -25,7 +25,7 @@ public class MatchActivity extends CharltonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        matchId = getIntent().getStringExtra(MATCH_ACTIVITY_MATCH_ID_EXTRA_KEY);
+        matchId = getIntent().getLongExtra(MATCH_ACTIVITY_MATCH_ID_EXTRA_KEY, 0);
 
         if (matchId == null) {
             throw new RuntimeException("Must be initialized with a match id");

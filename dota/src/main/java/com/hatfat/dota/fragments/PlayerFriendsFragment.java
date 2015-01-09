@@ -29,7 +29,6 @@ import com.hatfat.dota.model.user.SteamUser;
 import com.hatfat.dota.model.user.SteamUsers;
 import com.hatfat.dota.view.CommonMatchSteamUserView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -125,7 +124,12 @@ public class PlayerFriendsFragment extends CharltonFragment {
                 SteamUser otherUser = SteamUsers.get().getByAccountId(matches.getUserTwoAccountId());
                 String label = otherUser.getDisplayName();
 
-                Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(getActivity().getApplicationContext(), steamId, label, otherUser.getAvatarFullUrl(), new ArrayList(matches.getCommonMatches()),
+                long[] matchIds = new long[matches.getCommonMatches().size()];
+                for (int i = 0; i < matches.getCommonMatches().size(); i++) {
+                    matchIds[i] = matches.getCommonMatches().get(i);
+                }
+
+                Intent intent = PlayerMatchListActivity.intentForUserLabelAndMatches(getActivity().getApplicationContext(), steamId, label, otherUser.getAvatarFullUrl(), matchIds,
                         PlayerMatchListActivity.MatchListTextMode.NORMAL_MODE);
                 startActivity(intent);
             }
@@ -141,9 +145,9 @@ public class PlayerFriendsFragment extends CharltonFragment {
                 SteamUser user = params[0];
                 HashMap<String, CommonMatches> commonMatchesMap = new HashMap(); //steamUserId --> CommonMatches list
 
-                TreeSet<String> matches = user.getMatches();
+                TreeSet<Long> matches = user.getMatches();
 
-                for (String matchId : matches) {
+                for (Long matchId : matches) {
                     Match match = Matches.get().getMatch(matchId);
 
                     if (!match.hasMatchDetails()) {
@@ -225,7 +229,7 @@ public class PlayerFriendsFragment extends CharltonFragment {
                     }
                 }
                 else if (intent.getAction().equals(Match.MATCH_UPDATED)) {
-                    String updatedMatchId = intent.getStringExtra(Match.MATCH_UPDATED_ID_KEY);
+                    Long updatedMatchId = intent.getLongExtra(Match.MATCH_UPDATED_ID_KEY, 0);
                     if (user.getMatches().contains(updatedMatchId)) {
                         needsRecalculation = true;
                     }
